@@ -1,0 +1,33 @@
+/*
+ * dependencies.css v1.1
+ * All css dependencies place here
+ *
+ * License:
+ * For License Information check out - https://wrapbootstrap.com
+ * 
+ * Copyright 2014, Stilearning
+ * http://stilearning.com
+ */
+
+
+
+@import url('../js/plugin/ionicons/css/ionicons.min.css');
+
+@import url('../js/plugin/jquery-icheck/skins/all.css');
+@import url('../js/plugin/select2/select2.css');
+@import url('../js/plugin/mjaalnir-bootstrap-colorpicker/css/bootstrap-colorpicker.min.css');
+@import url('../js/plugin/bootstrap3-datetimepicker/css/bootstrap-datetimepicker.min.css');
+@import url('../js/plugin/bootstrap-daterangepicker/daterangepicker-bs3.css');
+@import url('../js/plugin/multiselect/css/multi-select.css');
+@import url('../js/plugin/bootstrap-wysihtml5/bootstrap3-wysihtml5.css');
+@import url('../js/plugin/bootstrap-markdown/css/bootstrap-markdown.min.css');
+@import url('../js/plugin/dropzone/css/dropzone.css');
+
+@import url('../js/plugin/datatables/css/datatables.css');
+
+@import url('../js/plugin/messenger/css/messenger.css');
+@import url('../js/plugin/messenger/css/messenger-theme-flat.css');
+@import url('../js/plugin/messenger/css/messenger-theme-future.css');
+@import url('../js/plugin/messenger/css/messenger-theme-air.css');
+
+/*@import url('../js/plugin/');

@@ -1,0 +1,46 @@
+{% extends "::layout/layout.html.twig" %}
+{% block body %}
+<div class="container">
+	<div style="height:100px;"> &nbsp; </div>
+    <div class="row">
+    	<div class="col-md-2">
+        {% include '::modulesBase/nav.html.twig' %}     
+        </div>   
+        <div class="col-md-10">
+
+            <ul class=""  >
+                 {% for i in 0..10 %}
+                <li class="col-md-4 col-sm-6 thumbnail" style="background: #bbb; " >
+                    <div class="row ">
+                    	<div class="col-md-5">
+	                        <img src="{{ asset('img/thumb5.jpg') }}" alt="image produit {{i}}" width="100" >
+	                    </div>
+	                    <div class="col-md-7">   
+	                        <div class="caption">
+	                            <h4>produit {{i}}</h4>
+	                            <p>100,00 €</p>
+	                            <a class="btn btn-primary" href="{{ path('presentation', {'id': i  })  }}">Plus d'infos</a>
+	                            <a class="btn btn-success" href="{{ path('panier')  }}">Ajouter au panier</a>
+	                        </div>
+                    	</div>
+                    </div>
+                </li>
+               {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+                <ul class="pagination">
+                    <li class="disabled"><span>Précédent</span></li>
+                    <li class="disabled"><span>1</span></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">Suivant</a></li>
+                </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

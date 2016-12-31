@@ -1,0 +1,16 @@
+1206e2,::1,GET,http://localhost/Ecom/web/app_dev.php/,1482183620,688ba2,200
+688ba2,::1,GET,http://localhost/Ecom/web/app_dev.php/,1482183620,,500
+268423,::1,GET,http://localhost/Ecom/web/app_dev.php/,1482183703,3a0c63,200
+3a0c63,::1,GET,http://localhost/Ecom/web/app_dev.php/,1482183703,,500
+9e81a1,127.0.0.1,GET,http://localhost/Ecom/web/app_dev.php/_fragment?_path=_format%3Dhtml%26_locale%3Dfr%26_controller%3DPagesBundle%253APages%253Amenu,1482183815,3e5078,200
+3e5078,::1,GET,http://localhost/Ecom/web/app_dev.php/,1482183815,,200
+3d4b05,127.0.0.1,GET,http://localhost/Ecom/web/app_dev.php/_fragment?_path=_format%3Dhtml%26_locale%3Dfr%26_controller%3DPagesBundle%253APages%253Amenu,1482183833,738615,200
+738615,::1,GET,http://localhost/Ecom/web/app_dev.php/page/1,1482183833,,200
+b9215c,127.0.0.1,GET,http://localhost/Ecom/web/app_dev.php/_fragment?_path=_format%3Dhtml%26_locale%3Dfr%26_controller%3DPagesBundle%253APages%253Amenu,1482183848,36abf3,200
+36abf3,::1,GET,http://localhost/Ecom/web/app_dev.php/page/2,1482183849,,200
+5e57c3,127.0.0.1,GET,http://localhost/Ecom/web/app_dev.php/_fragment?_path=_format%3Dhtml%26_locale%3Dfr%26_controller%3DPagesBundle%253APages%253Amenu,1482184517,18fdf0,200
+18fdf0,::1,GET,http://localhost/Ecom/web/app_dev.php/,1482184517,,200
+760cfa,127.0.0.1,GET,http://localhost/Ecom/web/app_dev.php/_fragment?_path=_format%3Dhtml%26_locale%3Dfr%26_controller%3DPagesBundle%253APages%253Amenu,1482184532,57a9fc,200
+57a9fc,::1,GET,http://localhost/Ecom/web/app_dev.php/page/1,1482184532,,200
+801426,127.0.0.1,GET,http://localhost/Ecom/web/app_dev.php/_fragment?_path=_format%3Dhtml%26_locale%3Dfr%26_controller%3DPagesBundle%253APages%253Amenu,1482184543,96a6b1,200
+96a6b1,::1,GET,http://localhost/Ecom/web/app_dev.php/page/2,1482184543,,200

@@ -1,0 +1,19 @@
+produits:
+    path:     /
+    defaults: { _controller: EcomBundle:Produits:produits }
+
+presentation:
+    path:     /produit/{id}
+    defaults: { _controller: EcomBundle:Produits:presentation }
+
+panier:
+    path:     /panier
+    defaults: { _controller: EcomBundle:Panier:panier }
+
+livraison:
+    path:     /panier/livraison
+    defaults: { _controller: EcomBundle:Panier:livraison }
+
+validation:
+    path:     /panier/validation
+    defaults: { _controller: EcomBundle:Panier:validation }

@@ -1,0 +1,31 @@
+{% extends "::layout/layout.html.twig" %}
+{% block body %}
+<div class="container">
+	<div class="wedge80 "> &nbsp; </div>	
+    <div class="row">
+
+    	
+	   	<div class="col-md-2">
+	        {% include '::modulesBase/nav.html.twig' %}     
+	    </div>   
+	    <div class="col-sm-10 thumbnail">
+	        <div class="row ">
+	        	<div class="col-md-6">
+	                <img src="../../img/thumb5.jpg" alt="image produit {{ id }} " width="300" >
+	            </div>
+	            <div class="col-md-6">   
+	                <div class="caption">
+	                    <h4>produit {{id}}</h4>
+	                    <p>100,00 €</p>
+	                    <div class="wedge80"> &nbsp; </div>
+	                    <a class="btn btn-greyish" href="{{ path('produits') }}">Retour</a>
+	                    <a class="btn btn-brownish" href="{{ path('panier')  }}">Ajouter au panier</a>
+	                </div>
+	            </div>
+	        </div>
+        	<div class="wedge50"> &nbsp; </div>
+        </div>
+    <div class="wedge80"> &nbsp; </div>
+    </div>
+</div>
+{% endblock %}
