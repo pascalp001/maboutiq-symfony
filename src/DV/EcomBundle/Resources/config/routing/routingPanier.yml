@@ -1,0 +1,24 @@
+panier:
+    path:     /
+    defaults: { _controller: EcomBundle:Panier:panier }
+
+ajouter:
+    path:     /ajouter/{id}
+    defaults: { _controller: EcomBundle:Panier:ajouter }
+
+supprimer:
+    path:     /supprimer/{id}
+    defaults: { _controller: EcomBundle:Panier:supprimer }
+
+livraison:
+    path:     /livraison
+    defaults: { _controller: EcomBundle:Panier:livraison }
+
+validation:
+    path:     /validation
+    defaults: { _controller: EcomBundle:Panier:validation }
+
+livraisonAdresseSuppr:
+    path:     /livraison/adresse/suppression/{id}
+    defaults: { _controller: EcomBundle:Panier:adresseSuppression }
+

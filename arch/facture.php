@@ -4,7 +4,7 @@
 
             <?php include '../layout/col-left-co.php'; ?>
 				
-				<div class="span9">
+				<div class="col-md-9">
                     <h2>Factures</h2>
                     <form>
                     <table class="table table-striped table-hover">

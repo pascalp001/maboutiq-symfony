@@ -2,15 +2,17 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Pascalp Version Développement{% endblock %}</title>
+        <title>{% block titre %}Pascalp e-commerce Version Développement{% endblock %}</title>
+        <meta name="keywords" content="{% block motsCles %}{% endblock %}"/>
+        <meta name="description" content="{% block description %}{% endblock %}"/>
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}" />
             <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-theme.css') }}" />
-           <link rel="stylesheet" href="{{ asset('css/main.css')}}" />    
+            <link rel="stylesheet" href="{{ asset('css/main.css')}}" />    
             <link rel="stylesheet" href="{{ asset('css/style.css')}}" />
 
         {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('LogoProGdev.ico') }}" />
     </head>
     <body>
         <div class="navbar navbar-inverse navbar-fixed-top"> 
@@ -22,7 +24,7 @@
 	                    <span class="icon-bar"></span>
 	                    <span class="icon-bar"></span>
 	                </button>
-	                <a class="navbar-brand" href="{{path('produits')}}">LOGO!!!</a>
+	                <a class="navbar-brand" href="{{path('produits')}}"><img src="{{ asset('img/LogoProG8.PNG')}}" width="70px" title="LOGO!!!" alt="LOGO!!!" style="margin-top:-5px" ></a>
 	            </div>
 	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			      	<ul class="nav navbar-nav">
@@ -41,14 +43,8 @@
 				          </ul>
 				        </li>
 			      	</ul>
+                    {% render(controller('EcomBundle:Produits:recherche')) %}
 
-	                <form class="navbar-form navbar-right">
-	                    <div class="form-group">
-		                    <input type="text" id="Search" name="Search"  class="form-control" placeholder="Rechercher" 
-		                    style="color:yellow; line-height: 20px; font-size: 15px;">
-	                    </div>
-	                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-	                </form>
 	                
 	            </div>
 
@@ -65,7 +61,7 @@
             <footer id="footer" class="vspace20">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-4 offset1">
+                        <div class="col-md-offset-1 col-md-4 ">
                             <h4>Informations</h4>
                             <ul class="nav nav-stacked">
                                 {% render(controller('PagesBundle:Pages:menu')) %}
@@ -74,19 +70,19 @@
 
                         <div class="col-md-4">
                             <h4>Notre entrepôt</h4>
-                            <p><i class="icon-map-marker"></i>&nbsp;AdresseDeLentrepot</p>
+                            <p><i class="icon-map-marker"></i>&nbsp;{{adresse}}</p>
                         </div>
 
                         <div class="col-md-2">
                             <h4>Nous contacter</h4>
-                            <p><i class="icon-phone"></i>&nbsp;Tel: 01 02 03 04 05</p>
+                            <p><i class="icon-phone"></i>&nbsp;Tel: {{telephone}}</p>
                             <p><i class="icon-print"></i>&nbsp;Fax: 01 02 03 04 05</p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-4">
-                            <p>&copy; Copyright 2016 - ProG-developpement IT</p>
+                            <p>&copy; Copyright {{"now"|date('Y')}} - ProG-developpement IT</p>
                         </div>
                     </div>
                 </div>

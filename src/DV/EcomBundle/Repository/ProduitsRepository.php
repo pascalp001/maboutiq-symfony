@@ -1,6 +1,6 @@
 <?php
 
-namespace DV\EcomBundle\Entity;
+namespace DV\EcomBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -12,4 +12,37 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProduitsRepository extends EntityRepository
 {
+	public function findArray($array)
+	{
+		//On envoie un tableau contenant nos produits...
+		$qb = $this->createQueryBuilder('u')
+			->select('u')
+			->where('u.id IN (:array)')
+			->setParameter('array', $array);
+		return $qb->getQuery()->getResult();		
+	}
+
+	public function byCategorie($categorie)
+	{
+		// 'u' est un alias qui va représenter un produit (puisqu'on le sélectionne dans l'entité Produit)
+		// :categorie va représenter la catégorie passée en paramètre c'est à dire $categorie
+		$qb = $this->createQueryBuilder('u')
+			->select('u')
+			->where('u.categorie = :categorie')
+			->andWhere('u.disponible = 1')
+			->orderBy('u.id')
+			->setParameter('categorie', $categorie);
+		return $qb->getQuery()->getResult();
+	}
+
+	public function recherche($chaine)
+	{
+		$qb = $this->createQueryBuilder('u')
+			->select('u')
+			->where('u.nom like :chaine')
+			->andWhere('u.disponible = 1') 
+			->orderBy('u.id')
+			->setParameter('chaine', $chaine);
+		return $qb->getQuery()->getResult();
+	}
 }

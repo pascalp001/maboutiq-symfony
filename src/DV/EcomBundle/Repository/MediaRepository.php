@@ -1,6 +1,6 @@
 <?php
 
-namespace DV\EcomBundle\Entity;
+namespace DV\EcomBundle\Repository;
 
 /**
  * MediaRepository

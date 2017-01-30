@@ -10,10 +10,13 @@
  */
 
 body{
-	position: relative;
+	/*position: relative;
+	top:640px;*/
+	margin:80px;
 	height: 100%;
 	overflow: hidden;
 }
+
 .row{
 	margin:0;
 	margin-bottom: 20px;

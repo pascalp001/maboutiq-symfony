@@ -5179,6 +5179,7 @@ a.list-group-item.active > .badge,
 
 .pagination > li {
   display: inline;
+  list-style: none;
 }
 
 .pagination > li > a,

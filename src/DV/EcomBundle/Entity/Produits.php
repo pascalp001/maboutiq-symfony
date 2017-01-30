@@ -37,7 +37,7 @@ class Produits
     * @ORM\ManyToOne(targetEntity="DV\EcomBundle\Entity\Categories", cascade={"persist","remove"} )
     * @ORM\JoinColumn(nullable=false)
     */
-     private $categories ;
+     private $categorie ;
 
     /**
      * @var string
@@ -285,5 +285,29 @@ class Produits
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    /**
+     * Set categorie
+     *
+     * @param \DV\EcomBundle\Entity\Categories $categorie
+     *
+     * @return Produits
+     */
+    public function setCategorie(\DV\EcomBundle\Entity\Categories $categorie)
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * Get categorie
+     *
+     * @return \DV\EcomBundle\Entity\Categories
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
     }
 }

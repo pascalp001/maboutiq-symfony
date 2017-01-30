@@ -122,6 +122,66 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
 
         }
 
+        if (0 === strpos($pathinfo, '/admin/pages')) {
+            // adminPages
+            if (rtrim($pathinfo, '/') === '/admin/pages') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'adminPages');
+                }
+
+                return array (  '_controller' => 'Pages\\PagesBundle\\Controller\\PagesAdminController::indexAction',  '_route' => 'adminPages',);
+            }
+
+            // adminPages_show
+            if (preg_match('#^/admin/pages/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'adminPages_show')), array (  '_controller' => 'Pages\\PagesBundle\\Controller\\PagesAdminController::showAction',));
+            }
+
+            // adminPages_new
+            if ($pathinfo === '/admin/pages/new') {
+                return array (  '_controller' => 'Pages\\PagesBundle\\Controller\\PagesAdminController::newAction',  '_route' => 'adminPages_new',);
+            }
+
+            // adminPages_create
+            if ($pathinfo === '/admin/pages/create') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_adminPages_create;
+                }
+
+                return array (  '_controller' => 'Pages\\PagesBundle\\Controller\\PagesAdminController::createAction',  '_route' => 'adminPages_create',);
+            }
+            not_adminPages_create:
+
+            // adminPages_edit
+            if (preg_match('#^/admin/pages/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'adminPages_edit')), array (  '_controller' => 'Pages\\PagesBundle\\Controller\\PagesAdminController::editAction',));
+            }
+
+            // adminPages_update
+            if (preg_match('#^/admin/pages/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('POST', 'PUT'))) {
+                    $allow = array_merge($allow, array('POST', 'PUT'));
+                    goto not_adminPages_update;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'adminPages_update')), array (  '_controller' => 'Pages\\PagesBundle\\Controller\\PagesAdminController::updateAction',));
+            }
+            not_adminPages_update:
+
+            // adminPages_delete
+            if (preg_match('#^/admin/pages/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
+                    $allow = array_merge($allow, array('POST', 'DELETE'));
+                    goto not_adminPages_delete;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'adminPages_delete')), array (  '_controller' => 'Pages\\PagesBundle\\Controller\\PagesAdminController::deleteAction',));
+            }
+            not_adminPages_delete:
+
+        }
+
         // page
         if (0 === strpos($pathinfo, '/page') && preg_match('#^/page/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
             return $this->mergeDefaults(array_replace($matches, array('_route' => 'page')), array (  '_controller' => 'Pages\\PagesBundle\\Controller\\PagesController::pageAction',));
@@ -136,28 +196,72 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
             return array (  '_controller' => 'DV\\EcomBundle\\Controller\\ProduitsController::produitsAction',  '_route' => 'produits',);
         }
 
-        if (0 === strpos($pathinfo, '/p')) {
-            // presentation
-            if (0 === strpos($pathinfo, '/produit') && preg_match('#^/produit/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'presentation')), array (  '_controller' => 'DV\\EcomBundle\\Controller\\ProduitsController::presentationAction',));
+        // presentation
+        if (0 === strpos($pathinfo, '/produit') && preg_match('#^/produit/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'presentation')), array (  '_controller' => 'DV\\EcomBundle\\Controller\\ProduitsController::presentationAction',));
+        }
+
+        // categorieProduits
+        if (0 === strpos($pathinfo, '/categorie') && preg_match('#^/categorie/(?P<categorie>[^/]++)$#s', $pathinfo, $matches)) {
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'categorieProduits')), array (  '_controller' => 'DV\\EcomBundle\\Controller\\ProduitsController::produitsAction',));
+        }
+
+        // rechercheProduits
+        if ($pathinfo === '/recherche') {
+            return array (  '_controller' => 'DV\\EcomBundle\\Controller\\ProduitsController::rechercheTraitementAction',  '_route' => 'rechercheProduits',);
+        }
+
+        if (0 === strpos($pathinfo, '/panier')) {
+            // panier
+            if (rtrim($pathinfo, '/') === '/panier') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'panier');
+                }
+
+                return array (  '_controller' => 'DV\\EcomBundle\\Controller\\PanierController::panierAction',  '_route' => 'panier',);
             }
 
-            if (0 === strpos($pathinfo, '/panier')) {
-                // panier
-                if ($pathinfo === '/panier') {
-                    return array (  '_controller' => 'DV\\EcomBundle\\Controller\\PanierController::panierAction',  '_route' => 'panier',);
-                }
+            // ajouter
+            if (0 === strpos($pathinfo, '/panier/ajouter') && preg_match('#^/panier/ajouter/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'ajouter')), array (  '_controller' => 'DV\\EcomBundle\\Controller\\PanierController::ajouterAction',));
+            }
 
-                // livraison
-                if ($pathinfo === '/panier/livraison') {
-                    return array (  '_controller' => 'DV\\EcomBundle\\Controller\\PanierController::livraisonAction',  '_route' => 'livraison',);
-                }
+            // supprimer
+            if (0 === strpos($pathinfo, '/panier/supprimer') && preg_match('#^/panier/supprimer/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'supprimer')), array (  '_controller' => 'DV\\EcomBundle\\Controller\\PanierController::supprimerAction',));
+            }
 
-                // validation
-                if ($pathinfo === '/panier/validation') {
-                    return array (  '_controller' => 'DV\\EcomBundle\\Controller\\PanierController::validationAction',  '_route' => 'validation',);
-                }
+            // livraison
+            if ($pathinfo === '/panier/livraison') {
+                return array (  '_controller' => 'DV\\EcomBundle\\Controller\\PanierController::livraisonAction',  '_route' => 'livraison',);
+            }
 
+            // validation
+            if ($pathinfo === '/panier/validation') {
+                return array (  '_controller' => 'DV\\EcomBundle\\Controller\\PanierController::validationAction',  '_route' => 'validation',);
+            }
+
+            // livraisonAdresseSuppr
+            if (0 === strpos($pathinfo, '/panier/livraison/adresse/suppression') && preg_match('#^/panier/livraison/adresse/suppression/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'livraisonAdresseSuppr')), array (  '_controller' => 'DV\\EcomBundle\\Controller\\PanierController::adresseSuppressionAction',));
+            }
+
+        }
+
+        // validationCommande
+        if (0 === strpos($pathinfo, '/api/banque') && preg_match('#^/api/banque/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'validationCommande')), array (  '_controller' => 'DV\\EcomBundle\\Controller\\CommandesController::validationCommandeAction',));
+        }
+
+        if (0 === strpos($pathinfo, '/profile/factures')) {
+            // factures
+            if ($pathinfo === '/profile/factures') {
+                return array (  '_controller' => 'Utilisateurs\\UtilisateursBundle\\Controller\\UtilisateursController::facturesAction',  '_route' => 'factures',);
+            }
+
+            // facturePDF
+            if (0 === strpos($pathinfo, '/profile/factures/pdf') && preg_match('#^/profile/factures/pdf/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'facturePDF')), array (  '_controller' => 'Utilisateurs\\UtilisateursBundle\\Controller\\UtilisateursController::facturePDFAction',));
             }
 
         }

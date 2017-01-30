@@ -15,3 +15,8 @@ parameters:
     debug_toolbar: true
     debug_redirects: false
     use_assetic_controller: true
+twig:
+    globals:
+        telephone: '06 20 44 47 77'
+        adresse: '35 rue de Gravelines 86100 Châtellerault'
+        email: pascalp001@free.fr

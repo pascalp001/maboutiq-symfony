@@ -1,29 +1,56 @@
 {% extends "::layout/layout.html.twig" %}
+ {% block titre %} {{produit.nom}} {% endblock %}
 {% block body %}
-<div class="container">
-	<div class="wedge80 "> &nbsp; </div>	
-    <div class="row">
-
-    	
+<div class="container">	
+    <div class="row" >
 	   	<div class="col-md-2">
-	        {% include '::modulesBase/nav.html.twig' %}     
+	        {% include '::modulesBase/nav.html.twig' %}  
+	        {% render(controller('EcomBundle:Panier:menu')) %}   
 	    </div>   
 	    <div class="col-sm-10 thumbnail">
+	    	<form action="{{path('ajouter',{'id': produit.id})  }}" method="get">
 	        <div class="row ">
 	        	<div class="col-md-6">
-	                <img src="../../img/thumb5.jpg" alt="image produit {{ id }} " width="300" >
+	                <img src="{{produit.image.path}}" alt="image produit {{ produit.id }} " width="300" >
 	            </div>
 	            <div class="col-md-6">   
 	                <div class="caption">
-	                    <h4>produit {{id}}</h4>
-	                    <p>100,00 €</p>
-	                    <div class="wedge80"> &nbsp; </div>
-	                    <a class="btn btn-greyish" href="{{ path('produits') }}">Retour</a>
-	                    <a class="btn btn-brownish" href="{{ path('panier')  }}">Ajouter au panier</a>
+	                    <h4>{{produit.nom}}</h4>
+	                    <h5>{{produit.categorie.nom}}</h5>
+	                    <p>{{produit.description}}</p>
+	                    <h4>{{produit.prix|tva(produit.tva.multiplicate)  }} €</h4>	                    
+	                    <div class="wedge40"> &nbsp; </div>
+	                    {% if panier[produit.id] is not defined %}  
+				            <div class="row ">
+				                <div class="col-md-4">Quantité :	                    	
+	                    		</div>	 
+	                    		<input type="number" step="1" min="0" max="10" value="1" name="qte" class="col-md-2" />                  		                    
+			                </div>
+	                    {% else %}
+				            <div class="row ">
+				                <div class="col-md-4">Déjà dans votre panier </div>	                  
+			                </div>
+	                    {% endif %}
+	                    <div class="wedge40"> &nbsp; </div>
 	                </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-offset-2 col-md-4">
+	                    <a  href="{{ path('produits') }}" class="btn btn-greyish">Retour</a>
 	            </div>
+	            {% if panier[produit.id] is not defined %}  
+	                <div class="col-md-5">	            
+		                    <button type="submit" class="btn btn-brownish" >Ajouter au panier</button>                   	                
+		            </div>
+		        {% else %}
+	                <div class="col-md-5">	            
+		                    <a href="{{path('panier') }}" class="btn btn-brownish" >Voir votre panier</a>                   	                
+		            </div>		        	
+	            {% endif %}
 	        </div>
         	<div class="wedge50"> &nbsp; </div>
+        	</form>
         </div>
     <div class="wedge80"> &nbsp; </div>
     </div>

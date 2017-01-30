@@ -1,46 +1,62 @@
 {% extends "::layout/layout.html.twig" %}
+ {% block titre %} Pascalp Version Développement > Liste des produits disponibles {% endblock %}
 {% block body %}
 <div class="container">
-	<div style="height:100px;"> &nbsp; </div>
     <div class="row">
     	<div class="col-md-2">
-        {% include '::modulesBase/nav.html.twig' %}     
+        {% include '::modulesBase/nav.html.twig' %}   
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %}  
+        {% else %}
+            {% include 'UtilisateursBundle:Default:modulesUsed/utilisateurs.html.twig' %}  
+        {% endif %}
+        {% render(controller('EcomBundle:Panier:menu')) %}
         </div>   
         <div class="col-md-10">
-
-            <ul class=""  >
-                 {% for i in 0..10 %}
-                <li class="col-md-4 col-sm-6 thumbnail" style="background: #bbb; " >
-                    <div class="row ">
-                    	<div class="col-md-5">
-	                        <img src="{{ asset('img/thumb5.jpg') }}" alt="image produit {{i}}" width="100" >
-	                    </div>
-	                    <div class="col-md-7">   
-	                        <div class="caption">
-	                            <h4>produit {{i}}</h4>
-	                            <p>100,00 €</p>
-	                            <a class="btn btn-primary" href="{{ path('presentation', {'id': i  })  }}">Plus d'infos</a>
-	                            <a class="btn btn-success" href="{{ path('panier')  }}">Ajouter au panier</a>
-	                        </div>
-                    	</div>
+            <div class="row">
+                <div class="col-md-12">
+                    {% if produits|length != 0 %}
+                    <ul class=""  >
+                        {% for produit in produits %}
+                            <li class="col-md-4 col-sm-6 thumbnail" style="background: #bbb; " >
+                                <div class="row ">
+                                    <div class="col-md-5">
+                                        <img src="{{ produit.image.path }}" alt="image produit {{produit.id}}" title="{{produit.id}}" width="100" >
+                                    </div>
+                                    <div class="col-md-7">   
+                                        <div class="caption">
+                                            <h4>{{produit.nom}}</h4>
+                                            <p> {{produit.prix|tva(produit.tva.multiplicate) |number_format(2) }} €</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-md-5">                       
+                                            <a class="btn btn-primary" href="{{ path('presentation', {'id': produit.id  })  }}">Plus d'infos</a>
+                                    </div>
+                                    <div class="col-md-5">   
+                                        {% if panier[produit.id] is not defined %}                          
+                                            <a class="btn btn-success" href="{{ path('ajouter',{'id':produit.id })  }}">Ajouter au panier</a>
+                                        {% endif %}
+                                    </div>
+                                 
+                                </div>
+                            </li>
+                       {% endfor %} 
+                    </ul>
+                    {% else %}
+                        Aucun produit
+                    {% endif %}
+                </div>
+                <!--<div class="col-md-12">-->
+                    <div class="navigation" style="list-style: none;">
+                    {{ knp_pagination_render(produits) }}
                     </div>
-                </li>
-               {% endfor %}
-            </ul>
+                <!--</div>-->
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-offset-2 col-md-8">
-                <ul class="pagination">
-                    <li class="disabled"><span>Précédent</span></li>
-                    <li class="disabled"><span>1</span></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">Suivant</a></li>
-                </ul>
-        </div>
-    </div>
+
 </div>
+
 {% endblock %}
