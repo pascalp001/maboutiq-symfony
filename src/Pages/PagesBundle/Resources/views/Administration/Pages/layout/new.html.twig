@@ -1,15 +1,18 @@
 {% extends '::layout/layoutAdmin.html.twig' %}
 
 {% block body -%}
-    <h1>Pages creation</h1>
+<h2>Pages creation</h2>
+<div class="col-md-10">
+  {{ form(form) }}
+</div>
 
-    {{ form(form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('adminPages') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+<div class="col-md-12">
+	<ul class="record_actions">
+	    <li>
+	        <a href="{{ path('adminPages') }}">
+	            Retour
+	        </a>
+	    </li>
+	</ul>
+</div>
 {% endblock %}
