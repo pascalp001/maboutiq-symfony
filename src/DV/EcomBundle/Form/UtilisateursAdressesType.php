@@ -16,13 +16,13 @@ class UtilisateursAdressesType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('prenom')
+            ->add('prenom', null, array('required' => false))
             ->add('telephone')
             ->add('adresse')
+            ->add('complement', null, array('required' => false))
             ->add('cp')
             ->add('ville')
-            ->add('pays')
-            ->add('complement', null, array('required' => false))
+            ->add('pays', 'text', array('empty_data' => 'France'))           
             //->add('utilisateur')
         ;
     }

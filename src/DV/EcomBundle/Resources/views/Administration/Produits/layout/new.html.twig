@@ -1,0 +1,119 @@
+{% extends '::layout/layoutAdmin.html.twig' %}
+
+{% block body -%}
+<div >
+    <h1>Creation d'un nouveau produit</h1>
+    <form action="{{path('adminProduits_create') }}" method="POST" {{form_enctype(form) }}  class="form-group" >
+
+        <div class="row form-group">
+            <label class="col-sm-2 control-label" for="input">{{ form_label(form.nom) }} </label>
+            <div class="col-sm-3">{{ form_widget(form.nom, {'attr' : {'class':'form-control','placeholder':'Nom' } }) }} </div>
+        </div>
+        <div class="row form-group">
+            <label class="col-sm-2 control-label" for="input">{{
+                form_label(form.categorie) }}
+            </label>
+            <div class="col-sm-3">{{ form_widget(form.categorie, {'attr' :
+                {'class':'form-control','placeholder':'Catégorie' } }) }}
+            </div>
+        </div>
+        <div class="row form-group">
+            <label class="col-sm-2 control-label" for="input">{{
+                form_label(form.image) }}</label>
+            <div class="col-sm-6">{{ form_widget(form.image, {'attr' :
+                {'class':'form-control','placeholder':'image' } }) }}</div>
+        </div>
+
+        <div class="row form-group">
+            <label class="col-sm-2 control-label" for="input">{{
+                form_label(form.descripcourt, 'Courte description') }}</label>
+            <div class="col-sm-8">{{ form_widget(form.descripcourt, {'attr' :
+                {'class':'form-control','placeholder':'Texte résumé' } }) }}</div>
+        </div>
+        <div class="row form-group">
+            <label class="col-sm-2 control-label" for="input">{{
+                form_label(form.description) }}</label>
+            <div class="col-sm-8">{{ form_widget(form.description, {'attr' :
+                {'class':'form-control','placeholder':'Texte descriptif' } }) }} {{form_widget(form.descripcourt) }}</div>
+        </div>
+
+        <div class="row form-group">
+            <label class="col-sm-2 control-label" for="input">{{
+                form_label(form.donneestech, 'Données techniques') }}</label>
+            <div class="col-sm-8">{{ form_widget(form.donneestech, {'attr' :
+                {'class':'form-control','placeholder':'Précisions techniques' } }) }}</div>
+        </div>
+
+        <div class="row form-group">
+            <label class="col-sm-2 control-label" for="input">{{
+                form_label(form.prix) }}</label>
+            <div class="col-sm-3">{{ form_widget(form.prix, {'attr' :
+                {'class':'form-control','placeholder':'Prix' } }) }}</div>
+        </div>
+
+    <div class="row form-group">
+        <label class="col-sm-2 control-label" for="input">{{
+            form_label(form.poids) }}</label>
+        <div class="col-sm-3">{{ form_widget(form.poids, {'attr' :
+            {'class':'form-control'} }) }}</div>
+    </div>
+
+    <div class="row form-group">
+        <label class="col-sm-2 control-label" for="input">{{
+            form_label(form.taille) }}</label>
+        <div class="col-sm-3">{{ form_widget(form.taille, {'attr' :
+            {'class':'form-control'} }) }}</div>
+    </div>
+
+    <div class="row form-group">
+        <label class="col-sm-2 control-label" for="input">{{
+            form_label(form.largeur) }}</label>
+        <div class="col-sm-3">{{ form_widget(form.largeur, {'attr' :
+            {'class':'form-control'} }) }}</div>
+    </div>
+
+    <div class="row form-group">
+        <label class="col-sm-2 control-label" for="input">{{
+            form_label(form.epaiss) }}</label>
+        <div class="col-sm-3">{{ form_widget(form.epaiss, {'attr' :
+            {'class':'form-control'} }) }}</div>
+    </div>
+
+    <div class="row form-group">
+        <label class="col-sm-2 control-label" for="input">{{
+            form_label(form.disponible) }}</label>
+        <div class="col-sm-3">{{ form_widget(form.disponible, {'attr' :
+            {'class':'form-control', 'value':'1' } }) }}</div>
+    </div> 
+
+    <div class="row form-group">
+        <label class="col-sm-2 control-label" for="input">{{
+            form_label(form.stockreel) }}</label>
+        <div class="col-sm-3">{{ form_widget(form.stockreel, {'attr' :
+            {'class':'form-control', 'value':'1' } }) }}</div>
+    </div> 
+
+    <div class="row form-group">
+        <label class="col-sm-2 control-label" for="input">{{
+            form_label(form.tva) }}</label>
+        <div class="col-sm-3">{{ form_widget(form.tva, {'attr' :
+            {'class':'form-control', 'value':'1' } }) }}</div>
+    </div> 
+
+    <div class="row form-group">
+        <label class="col-sm-2 control-label" for="input">{{
+            form_label(form.popularite) }}</label>
+        <div class="col-sm-3">{{ form_widget(form.popularite, {'attr' :
+            {'class':'form-control', 'value':'1' } }) }}</div>
+    </div> 
+    {{form_end(form)}}
+	</form>
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('adminProduits') }}">
+                Retour
+            </a>
+        </li>
+    </ul>
+</div>
+{% endblock %}

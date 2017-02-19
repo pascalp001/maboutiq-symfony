@@ -28,13 +28,13 @@ class Produits
      private $image ;
 
     /**
-    * @ORM\ManyToOne(targetEntity="DV\EcomBundle\Entity\Tva", cascade={"persist","remove"} )
+    * @ORM\ManyToOne(targetEntity="DV\EcomBundle\Entity\Tva", cascade={"persist"} )
     * @ORM\JoinColumn(nullable=false)
     */
      private $tva ;
 
     /**
-    * @ORM\ManyToOne(targetEntity="DV\EcomBundle\Entity\Categories", cascade={"persist","remove"} )
+    * @ORM\ManyToOne(targetEntity="DV\EcomBundle\Entity\Categories", cascade={"persist"} )
     * @ORM\JoinColumn(nullable=false)
     */
      private $categorie ;
@@ -54,11 +54,60 @@ class Produits
     private $description;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcourt", type="text")
+     */
+    private $descripcourt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="donneestech", type="text", nullable=true)
+     */
+    private $donneestech;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="prix", type="float")
      */
     private $prix;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="poids", type="integer")
+     */
+    private $poids;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="taille", type="float", nullable=true)
+     */
+    private $taille;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="largeur", type="float", nullable=true)
+     */
+    private $largeur;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="epaiss", type="float", nullable=true)
+     */
+    private $epaiss;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="popularite", type="integer")
+     */
+    private $popularite;
 
     /**
      * @var boolean
@@ -67,6 +116,19 @@ class Produits
      */
     private $disponible;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="stockreel", type="integer")
+     */
+    private $stockreel;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="stockvirtuel", type="integer")
+     */
+    private $stockvirtuel;
 
     /**
      * Get id
@@ -309,5 +371,221 @@ class Produits
     public function getCategorie()
     {
         return $this->categorie;
+    }
+
+    /**
+     * Set descripcourt
+     *
+     * @param string $descripcourt
+     *
+     * @return Produits
+     */
+    public function setDescripcourt($descripcourt)
+    {
+        $this->descripcourt = $descripcourt;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcourt
+     *
+     * @return string
+     */
+    public function getDescripcourt()
+    {
+        return $this->descripcourt;
+    }
+
+    /**
+     * Set donneestech
+     *
+     * @param string $donneestech
+     *
+     * @return Produits
+     */
+    public function setDonneestech($donneestech)
+    {
+        $this->donneestech = $donneestech;
+
+        return $this;
+    }
+
+    /**
+     * Get donneestech
+     *
+     * @return string
+     */
+    public function getDonneestech()
+    {
+        return $this->donneestech;
+    }
+
+    /**
+     * Set poids
+     *
+     * @param integer $poids
+     *
+     * @return Produits
+     */
+    public function setPoids($poids)
+    {
+        $this->poids = $poids;
+
+        return $this;
+    }
+
+    /**
+     * Get poids
+     *
+     * @return integer
+     */
+    public function getPoids()
+    {
+        return $this->poids;
+    }
+
+    /**
+     * Set taille
+     *
+     * @param float $taille
+     *
+     * @return Produits
+     */
+    public function setTaille($taille)
+    {
+        $this->taille = $taille;
+
+        return $this;
+    }
+
+    /**
+     * Get taille
+     *
+     * @return float
+     */
+    public function getTaille()
+    {
+        return $this->taille;
+    }
+
+    /**
+     * Set largeur
+     *
+     * @param float $largeur
+     *
+     * @return Produits
+     */
+    public function setLargeur($largeur)
+    {
+        $this->largeur = $largeur;
+
+        return $this;
+    }
+
+    /**
+     * Get largeur
+     *
+     * @return float
+     */
+    public function getLargeur()
+    {
+        return $this->largeur;
+    }
+
+    /**
+     * Set epaiss
+     *
+     * @param float $epaiss
+     *
+     * @return Produits
+     */
+    public function setEpaiss($epaiss)
+    {
+        $this->epaiss = $epaiss;
+
+        return $this;
+    }
+
+    /**
+     * Get epaiss
+     *
+     * @return float
+     */
+    public function getEpaiss()
+    {
+        return $this->epaiss;
+    }
+
+    /**
+     * Set popularite
+     *
+     * @param integer $popularite
+     *
+     * @return Produits
+     */
+    public function setPopularite($popularite)
+    {
+        $this->popularite = $popularite;
+
+        return $this;
+    }
+
+    /**
+     * Get popularite
+     *
+     * @return integer
+     */
+    public function getPopularite()
+    {
+        return $this->popularite;
+    }
+
+    /**
+     * Set stockreel
+     *
+     * @param integer $stockreel
+     *
+     * @return Produits
+     */
+    public function setStockreel($stockreel)
+    {
+        $this->stockreel = $stockreel;
+
+        return $this;
+    }
+
+    /**
+     * Get stockreel
+     *
+     * @return integer
+     */
+    public function getStockreel()
+    {
+        return $this->stockreel;
+    }
+
+    /**
+     * Set stockvirtuel
+     *
+     * @param integer $stockvirtuel
+     *
+     * @return Produits
+     */
+    public function setStockvirtuel($stockvirtuel)
+    {
+        $this->stockvirtuel = $stockvirtuel;
+
+        return $this;
+    }
+
+    /**
+     * Get stockvirtuel
+     *
+     * @return integer
+     */
+    public function getStockvirtuel()
+    {
+        return $this->stockvirtuel;
     }
 }

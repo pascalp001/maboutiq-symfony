@@ -5,6 +5,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class RedirectionListener
 {
@@ -12,7 +13,7 @@ class RedirectionListener
 	{
 		$this->session = $session;
 		$this->router = $container->get('router');
-		$this->securityContext = $container->get('security.context');
+		$this->securityContext = $container->get('security.context');//$this->securityContext = $container->get('security.context'); = $container->get('security.token_storage');
 	}
 
 	public function onKernelRequest(GetResponseEvent $event)

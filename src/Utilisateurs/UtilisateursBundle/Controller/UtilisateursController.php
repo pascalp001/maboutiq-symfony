@@ -27,6 +27,8 @@ class UtilisateursController extends Controller
         	return $this->redirect($this->generateUrl('factures'));
         }
 
+        $this->container->get('setNewFacture')->facture($facture);
+        /*
      	$html = $this->renderView('UtilisateursBundle:Default:layout/facturePDF.html.twig', array('facture' => $facture));
      	//$html = $this->container->get('templating')->render('UtilisateursBundle:Default:layout/facturePDF.html.twig', array('facture' => $facture));
         $html2pdf = new \Html2Pdf_Html2Pdf('P','A4','fr');
@@ -35,8 +37,8 @@ class UtilisateursController extends Controller
         $html2pdf->pdf->SetSubject('Facture ProG-developpement IT');
         $html2pdf->pdf->SetKeywords('facture, ProG-developpement IT');
         $html2pdf->pdf->SetDisplayMode('real');
-        $html2pdf->writeHTML($html); 
-     
+        $html2pdf->writeHTML($html);       
         return new Response($html2pdf->Output('Facture.pdf'), 200, array('Content-type'=> 'application/pdf') );
+        */
      }   
 }

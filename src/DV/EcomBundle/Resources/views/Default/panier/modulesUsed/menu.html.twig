@@ -1,16 +1,16 @@
-<div class="well">
-<ul class="nav nav-list">
-        <div style="height:100px;">&nbsp;</div>
-        <li class="nav-header glyphicon glyphicon-shopping-cart"> PANIER :</li>
-            <li>
+<ul class="nav navbar-nav">
+        <li class=" glyphicon glyphicon-shopping-cart"> PANIER:&nbsp;</li>
+        <li class="">
             {% if articles == 0 %} 
-                Aucun article dans votre panier 
+                Aucun article 
             {% elseif articles == 1 %} 
-                1 article dans votre panier 
+                1 article &nbsp;
             {% else %}
-             {{articles}} articles dans votre panier 
+             {{articles}} articles  &nbsp;
             {% endif %}
         </li>
 
+        <li class="panier-eye-cont" ><a href="{{path('panier') }}" class="glyphicon glyphicon-eye-open btn-eye panier-eye" title="voir le panier" ></a> </li>
+
     
-</ul></div>
+</ul>

@@ -1,3 +1,19 @@
+routingAdmin:
+    resource:  "@EcomBundle/Resources/config/routing/routingAdmin.yml"
+    prefix: /admin
+
+routingCommandesAdmin:
+    resource: "@EcomBundle/Resources/config/routing/routingCommandesAdmin.yml"
+    prefix:   /admin/commandes
+
+routingCategoriesAdmin:
+    resource: "@EcomBundle/Resources/config/routing/routingCategoriesAdmin.yml"
+    prefix:   /admin/categories
+
+routingProduitsAdmin:
+    resource: "@EcomBundle/Resources/config/routing/routingProduitsAdmin.yml"
+    prefix:   /admin/produits
+
 routingProduits:
     resource:  "@EcomBundle/Resources/config/routing/routingProduits.yml"
     prefix: /

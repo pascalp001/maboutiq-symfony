@@ -1,0 +1,35 @@
+{% extends '::layout/layoutAdmin.html.twig' %}
+
+{% block body -%}
+    <h1>Liste des commandes</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Référence</th>  
+                <th>Client</th>  
+
+                <th>Valider</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('adminCommandes_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{% if entity.date %}{{ entity.date|date('d-m-Y H:i:s') }}{% endif %}</td>
+                <td>{{ entity.reference }}</td>
+                <td>{{ entity.utilisateur.username }} ({#{{ entity.utilisateur.username.adresses.prenom }}{{ entity.utilisateur.username.adresses.nom }}#})</td>
+                <td>{{ entity.valider }}</td>
+                <td>
+                        <a href="{{ path('adminShowFacture', { 'id': entity.id }) }}" target="_blank" ><i class="glyphicon glyphicon-eye-open"></i></a>
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% endblock %}

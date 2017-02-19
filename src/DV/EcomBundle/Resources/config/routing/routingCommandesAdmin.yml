@@ -1,0 +1,34 @@
+adminCommandes:
+    path:     /
+    defaults: { _controller: "EcomBundle:CommandesAdmin:index" }
+
+adminShowFacture:
+    path:     /facture/{id}
+    defaults:  { _controller: "EcomBundle:CommandesAdmin:facturePDF" }
+
+adminCommandes_show:
+    path:     /{id}/show
+    defaults: { _controller: "EcomBundle:CommandesAdmin:show" }
+
+adminCommandes_new:
+    path:     /new
+    defaults: { _controller: "EcomBundle:CommandesAdmin:new" }
+
+adminCommandes_create:
+    path:     /create
+    defaults: { _controller: "EcomBundle:CommandesAdmin:create" }
+    methods:  POST
+
+adminCommandes_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "EcomBundle:CommandesAdmin:edit" }
+
+adminCommandes_update:
+    path:     /{id}/update
+    defaults: { _controller: "EcomBundle:CommandesAdmin:update" }
+    methods:  [POST, PUT]
+
+adminCommandes_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "EcomBundle:CommandesAdmin:delete" }
+    methods:  [POST, DELETE]

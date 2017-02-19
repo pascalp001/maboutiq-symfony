@@ -21,3 +21,7 @@ services:
     setNewReference:
         class:  DV\EcomBundle\Services\GetReference
         arguments: [@security.context, @doctrine.orm.entity_manager]
+
+    setNewFacture:
+        class:  DV\EcomBundle\Services\GetFacture
+        arguments: [@service_container]

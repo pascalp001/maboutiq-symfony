@@ -2,8 +2,8 @@
 
 {% block body %}
 <div class="container">
-        
-        <div style="height:100px;"> &nbsp; </div>    <div class="row">
+        {% include 'EcomBundle:Default:panier/modulesUsed/menupanier.html.twig' %}  
+        <div class="wedge15;"> &nbsp; </div>    <div class="row">
 
         <div class="col-md-2">
             {% include '::modulesBase/nav.html.twig' %}
@@ -65,7 +65,7 @@
 
                 <button type="submit" class="btn btn-success pull-right">Payer</button>
             </form>
-            <a href="{{path ('livraison')}}" class="btn btn-primary ">Retour</a>
+            <a href="{{path ('adresses')}}" class="btn btn-primary ">Retour</a>
         </div>
     </div>
 </div>

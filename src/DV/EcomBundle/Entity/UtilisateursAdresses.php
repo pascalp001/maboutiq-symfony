@@ -38,7 +38,7 @@ class UtilisateursAdresses
     /**
      * @var string
      *
-     * @ORM\Column(name="prenom", type="string", length=50)
+     * @ORM\Column(name="prenom", type="string", length=50, nullable=true)
      */
     private $prenom;
 

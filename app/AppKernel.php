@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new DV\EcomBundle\EcomBundle(),
             new Pages\PagesBundle\PagesBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Liip\ImagineBundle\LiipImagineBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

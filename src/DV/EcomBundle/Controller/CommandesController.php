@@ -3,9 +3,9 @@
 namespace DV\EcomBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use DV\EcomBundle\Form\UtilisateursAdressesType;
 use DV\EcomBundle\Entity\UtilisateursAdresses;
 use DV\EcomBundle\Entity\Commandes;
@@ -17,7 +17,7 @@ class CommandesController extends Controller
   {
           
     $em = $this->getDoctrine()->getManager();  
-    $generator = $this->container->get('security.secure_random'); //va créer un token aléatoire
+    $generator = $this->container->get('security.secure_random'); //va crï¿½er un token alï¿½atoire
     $session = $request->getSession();
     $adresse = $session->get('adresse');
     $panier = $session->get('panier');
@@ -30,7 +30,7 @@ class CommandesController extends Controller
     foreach($produits as $produit)
     {
       $prixHT = ($produit->getPrix() * $panier[$produit->getId()]);
-      $prixTTC = $prixHT / $produit->getTva()->getMultiplicate();
+      $prixTTC = $prixHT * $produit->getTva()->getMultiplicate();
       $totalHT += $prixHT;
 
       if (!isset($commande['tva']['%'.$produit->getTva()->getValeur()]))
@@ -43,14 +43,14 @@ class CommandesController extends Controller
       $commande['produit'][$produit->getId()] = array('reference' => $produit->getNom(),
                                                        'quantite' => $panier[$produit->getId()],
                                                          'prixHT' => round($produit->getPrix(),2),
-                                                        'prixTTC' => round($produit->getPrix()/$produit->getTva()->getMultiplicate(),2));
+                                                        'prixTTC' => round($produit->getPrix()*$produit->getTva()->getMultiplicate(),2));
     }
       $commande['livraison'] = array('prenom'=> $livraison->getPrenom(), 'nom'=> $livraison->getNom(), 'telephone'=> $livraison->getTelephone(),'adresse'=> $livraison->getAdresse(), 'cp'=> $livraison->getCp(), 'ville'=> $livraison->getVille(), 'pays'=> $livraison->getPays(), 'complement'=> $livraison->getComplement());
       $commande['facturation'] = array('prenom'=> $facturation->getPrenom(), 'nom'=> $facturation->getNom(), 'telephone'=> $facturation->getTelephone(),'adresse'=> $facturation->getAdresse(), 'cp'=> $facturation->getCp(), 'ville'=> $facturation->getVille(), 'pays'=> $facturation->getPays(), 'complement'=> $facturation->getComplement());
     
     $commande['totalHT'] = round($totalHT,2);
     $commande['totalTTC'] = round($totalHT+$totalTVA,2);
-    $commande['token'] = bin2hex($generator->nextBytes(20)); //génération token aléatoire
+    $commande['token'] = bin2hex($generator->nextBytes(20)); //gï¿½nï¿½ration token alï¿½atoire
 
     return $commande;
   }
@@ -63,11 +63,11 @@ class CommandesController extends Controller
         elseif($em->getRepository('EcomBundle:Commandes')->find($session->get('commande'))) { $commande = $em->getRepository('EcomBundle:Commandes')->find($session->get('commande'));}
         else { $commande = new Commandes();}
 
-        //On prépare la commande :
+        //On prÃ©pare la commande :
         $commande->setUtilisateur($this->container->get('security.context')->getToken()->getUser());
         $commande->setDate(new \DateTime());
         $commande->setValider(0);
-        $commande->setReference(0); //On initialise la référence à 0, mais un service va déterminer le numéro de commande
+        $commande->setReference(0); //On initialise la rÃ©fÃ©rence Ã  0, mais un service va dÃ©terminer le numÃ©ro de commande
         $commande->setCommande($this->facture($request));
 
          if (!$session->has('commande')){
@@ -80,10 +80,13 @@ class CommandesController extends Controller
          return new Response($commande->getId());
     }
 
+    /*
+     * Cette mÃ©thode remplace l'api banque
+     */
     public function validationCommandeAction($id, Request $request)
     {
       $em = $this->getDoctrine()->getManager();
-      //On actualise la commande "validée" avec numéro de commande / facturation :
+      //On actualise la commande "validï¿½e" avec numï¿½ro de commande / facturation :
       $commande = $em->getRepository('EcomBundle:Commandes')->find($id);
       if(!$commande || $commande->getValider() == 1) throw $this->createNotFoundException('La commande n\'existe pas');
       $commande->setValider(1);
@@ -95,8 +98,20 @@ class CommandesController extends Controller
       $session->remove('adresse');
       $session->remove('panier');
       $session->remove('commande');
-      //Message "succès" :
-      $this->get('session')->getFlashBag()->add('success', 'Votre commande est validée avec succès');
+
+      //Mail de validation :
+      $message = \Swift_Message::newInstance()
+              ->setSubject('Validation de votre commande')
+              ->setFrom(array('pascal.p8610@gmail.com'=>"ProG-dev"))
+              ->setTo($commande->getUtilisateur()->getEmailCanonical())
+              ->setCharset('utf-8')
+              ->setContentType('text/html')
+              ->setBody($this->renderView('EcomBundle:Default:SwiftLayout/validCommande.html.twig', 
+                array('utilisateur'=> $commande->getUtilisateur())));
+      $this->get('mailer')->send($message);
+
+      //Message "succÃ¨s" :
+      $this->get('session')->getFlashBag()->add('success', 'Votre commande est validï¿½e avec succï¿½s');
       return $this->redirect($this->generateUrl('factures'));
     }
 }

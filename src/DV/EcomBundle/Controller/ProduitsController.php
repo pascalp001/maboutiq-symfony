@@ -17,7 +17,7 @@ class ProduitsController extends Controller
         else
     	   $findProduits = $em->getRepository('EcomBundle:Produits')->findBy(array('disponible' => 1));  
         
-        $produits  = $this->get('knp_paginator') ->paginate( $findProduits,  $request->query->get('page', 1), 2 );
+        $produits  = $this->get('knp_paginator') ->paginate( $findProduits,  $request->query->get('page', 1), 3 );
 
         $session = $request->getSession();      
         if($session->has('panier')) 

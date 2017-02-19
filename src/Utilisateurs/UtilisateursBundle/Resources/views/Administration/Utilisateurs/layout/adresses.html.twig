@@ -1,0 +1,19 @@
+{% extends '::layout/layoutAdmin.html.twig' %}
+
+{% block body -%}
+    <h1>Liste des adresses de l'utilisateur</h1>
+    {% for adresse in utilisateur.adresses %}
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <h4>Adresse {{ loop.index }} :</h4>
+
+                {{ adresse.adresse}}, {{ adresse.cp}} {{ adresse.ville}} - {{ adresse.pays}}
+                <br/> {{ adresse.prenom}} {{ adresse.nom}}
+                <br/><br/>
+            </div>
+        </div>
+    {% endfor %}
+    <br/>
+    <a href="{{path('adminUtilisateurs')  }}" class="btn btn-greyish pull-right" >Retour</a>
+
+{% endblock %}

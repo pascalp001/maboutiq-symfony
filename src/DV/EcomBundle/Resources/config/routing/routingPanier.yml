@@ -2,13 +2,21 @@ panier:
     path:     /
     defaults: { _controller: EcomBundle:Panier:panier }
 
-ajouter:
+ajoutpanier1:
+    path:     /ajouter/{id}
+    defaults: { _controller: EcomBundle:Panier:ajouter }
+
+ajoutpanier2:
     path:     /ajouter/{id}
     defaults: { _controller: EcomBundle:Panier:ajouter }
 
 supprimer:
     path:     /supprimer/{id}
     defaults: { _controller: EcomBundle:Panier:supprimer }
+    
+adresses:
+    path:     /adresses
+    defaults: { _controller: EcomBundle:Panier:adresses }
 
 livraison:
     path:     /livraison

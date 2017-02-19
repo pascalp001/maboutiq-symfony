@@ -1,0 +1,35 @@
+  <section >
+    <div>
+      <ul id="order_step" class="step clearfix">
+        <li class="step_current first"> <span><em>01.</em>Récapitulatif</span> </li>
+
+        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+        <a  title="Se connecter"  href="{{ path('fos_user_security_login') }}" ><li class="step_todo second"  > <span><em>02.</em>Connexion</span> </li></a>
+        {% else %}
+        <li class="step_current second decal-G" > <span><em>02.</em>Connexion</span> </li>
+        {% endif %}
+
+        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+        <li class="step_todo third" ><span><em>03.</em>Adresse</span> </li>
+        {% else %}
+          <a title="Rentrer une adresse"  href="{{path ('livraison')}}"   ><li class="step_todo third" >
+            <span><em>03.</em>Adresse</span>
+          </li></a>
+          <!--<li class="step_current third decal-G" ng-show="connect==true && adress==true"> <span><em>03.</em>Adresse</span> </li>-->
+        {% endif %}
+
+
+        <li class="step_todo four" > <span><em>04.</em>Livraison</span> </li>
+        <!--<a title="Modalités de livraison"  href="#/livraison" ng-click="modifPanier()" ng-show="connect==true && adress==true && frport<0" ><li class="step_todo third" style="" >
+          <span><em>04.</em>Livraison</span>
+        </li></a> 
+        <li class="step_current four decal-G" ng-show="connect==true && adress==true && frport>=0" > <span><em>04.</em>Livraison</span> </li>  -->
+
+             
+        <li id="step_end" class="step_todo last"  >  <span><em>05.</em>Paiement</span> </li>
+        <!--<a title="Paiement de la commande"  href="#/paiement/" ng-click="modifPanier2()" ng-show=" connect==true && adress==true && frport>=0 && paye==false"><li id="step_end" class="step_todo last">
+          <span><em>05.</em>Paiement</span> </li></a>  
+        <li class="step_current last decal-G" ng-show="paye==true"  > <span><em>05.</em>Paiement</span> </li>     -->           
+      </ul>
+    </div>
+  </section>

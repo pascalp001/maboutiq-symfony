@@ -1,7 +1,8 @@
 <?php
 namespace DV\EcomBundle\Services;
 
-use Symfony\Component\Security\Core\SecurityContextInterface;
+//use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class GetReference 
 {

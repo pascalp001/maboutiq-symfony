@@ -11,13 +11,13 @@ class TvaData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $tva1 = new Tva(); //Font suite les setters des champs à définir
-        $tva1->setMultiplicate('0.982'); 
-        $tva1->setNom('TVA 1.75%'); 
-        $tva1->setValeur('1.75');
+        $tva1->setMultiplicate('1.055'); 
+        $tva1->setNom('TVA 5.5%'); 
+        $tva1->setValeur('5.50');
         $manager->persist($tva1);
 
         $tva2 = new Tva(); //Font suite les setters des champs à définir
-        $tva2->setMultiplicate('0.833'); 
+        $tva2->setMultiplicate('1.20'); 
         $tva2->setNom('TVA 20%'); 
         $tva2->setValeur('20');
         $manager->persist($tva2);

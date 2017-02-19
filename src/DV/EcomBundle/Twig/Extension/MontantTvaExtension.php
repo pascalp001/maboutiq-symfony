@@ -9,7 +9,7 @@ class MontantTvaExtension extends \Twig_Extension
 
     function montantTva($prixHT, $tva)
 	{
-        return round(($prixHT/$tva - $prixHT) , 2);
+        return round(($prixHT*$tva - $prixHT) , 2); //TVA = TTC - HT ; TTC = HTx( 1+ valeur/100)
 	}
 
  	public function getName()

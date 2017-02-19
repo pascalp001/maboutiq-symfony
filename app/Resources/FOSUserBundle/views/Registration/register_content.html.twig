@@ -18,10 +18,11 @@
                     {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }} 
                     <div class="row thumbnail">
                         <div class="col-sm-12">
-                          <div class="row">
-                            <div class="col-sm-12">
-                            {{ form_widget(form)}} 
-                            </div> <br/>
+                          <div class="row form-group fosuser">
+                            <div class="col-sm-12 ">  {{ form_widget(form)}}  </div> 
+                            <div class="col-sm-12 ">  {# form_widget(form.username)}}  </div>
+                            <div class="col-sm-12 ">  {{ form_widget(form.plainPassword)#}  </div>
+                            <br/>
                           </div> 
                           <div class="row">
                             <div class="col-sm-offset-2 col-sm-6">

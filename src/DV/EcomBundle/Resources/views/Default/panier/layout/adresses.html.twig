@@ -1,0 +1,103 @@
+{% extends "::layout/layout.html.twig" %}
+{% block body %}
+<div class="container">
+    {% include 'EcomBundle:Default:panier/modulesUsed/menupanier.html.twig' %}          
+    <div class="wedge15"> &nbsp; </div>   
+
+    <div class="row">
+        <div class="col-md-12">
+            
+            <div id="collapseOne" class="accordion-body collapse in">
+                <div class="accordion-inner">
+                    <div class="col-sm-4"><h2>Adresses</h2>
+                        {% if utilisateur.adresses|length != 0 %}
+                            <form action="{{path('validation')}}" method="POST" >
+
+                                <h4>Adresse de facturation</h4>
+                                {% for adresse in utilisateur.adresses %}
+                                    <label class="radio">
+                                        <input type="radio" name="facturation" value="{{adresse.id}}" {% if loop.index0 == 0 %}checked="checked" {% endif %} >
+                                        {{adresse.adresse}}{{' '~adresse.cp}}{{' '~adresse.ville}}<a href="{{path('livraisonAdresseSuppr', {'id': adresse.id}) }}"><i class="glyphicon glyphicon-trash"></i></a>
+                                        </br> {{adresse.prenom}} {{' '~adresse.nom}}
+                                    </label>
+                                {% endfor %}
+
+                                </br></br>
+
+                                <h4>Adresse de livraison</h4>
+                                {% for adresse in utilisateur.adresses %}
+                                    <label class="radio">
+                                        <input type="radio" name="livraison" value="{{adresse.id}}" {% if loop.index0 == 0 %}checked="checked" {% endif %} >
+                                        {{adresse.adresse}}{{' '~adresse.cp}}{{' '~adresse.ville}}<a href="{{path('livraisonAdresseSuppr', {'id': adresse.id}) }}"><i class="glyphicon glyphicon-trash"></i></a>
+                                        </br> {{adresse.prenom}} {{' '~adresse.nom}}
+                                    </label>
+                                {% endfor %}
+
+                                </br></br>
+                                <button class="btn btn-primary" type="submit">Valider mes adresses <br/>de facturation et de livraison</button>
+                            </form>
+                        {% else %} Pas d'adresse connue actuellement...
+                        {% endif %}
+                        <br/><br/>
+                        <a  href="{{ path('panier') }}" class="btn btn-greyish">Retour : revoir le panier</a>
+                    </div>
+                    <div class=" col-sm-1" style="font-size:100px; "><br/><div > &#9668; </div></div>
+                    <div class="col-sm-offset-1 col-sm-4" style="border:3px solid #ccc;">
+                        <h4>Ajouter une nouvelle adresse</h4>
+                        {{ form_start(form, {'action': path('livraison'), 'method':'POST'})}}
+                        {# <form action="{{path('livraison') }}" method="POST" >#}
+                        
+                        <div class="row form-group ">
+                            <div class="col-sm-4 control-label" for="input">{{ form_label(form.nom) }}</div>
+                            <div class="col-sm-8">{{ form_widget(form.nom, {'attr' :
+                                {'class':'form-control'} }) }}</div>
+                        </div>
+                        <div class="row form-group ">
+                            <div class="col-sm-4 control-label" for="input">{{ form_label(form.prenom) }}</div>
+                            <div class="col-sm-8">{{ form_widget(form.prenom, {'attr' :
+                                {'class':'form-control'} }) }}</div>     
+                        </div>  
+                        <div class="row form-group ">
+                            <div class="col-sm-4 control-label" for="input">{{ form_label(form.telephone) }}</div>
+                            <div class="col-sm-8">{{ form_widget(form.telephone, {'attr' :
+                                {'class':'form-control'} }) }}</div>     
+                        </div>  
+                        <div class="row form-group ">
+                            <div class="col-sm-4 control-label" for="input">{{ form_label(form.adresse) }}</div>
+                            <div class="col-sm-8">{{ form_widget(form.adresse, {'attr' :
+                                {'class':'form-control'} }) }}</div>     
+                        </div>     
+                        <div class="row form-group ">
+                            <div class="col-sm-4 control-label" for="input">{{ form_label(form.complement) }}</div>
+                            <div class="col-sm-8">{{ form_widget(form.complement, {'attr' :
+                                {'class':'form-control'} }) }}</div>     
+                        </div>     
+                        <div class="row form-group ">
+                            <div class="col-sm-4 control-label" for="input">{{ form_label(form.cp) }}</div>
+                            <div class="col-sm-8">{{ form_widget(form.cp, {'attr' :
+                                {'class':'form-control'} }) }}</div>     
+                        </div>   
+                        <div class="row form-group ">
+                            <div class="col-sm-4 control-label" for="input">{{ form_label(form.ville) }}</div>
+                            <div class="col-sm-8">{{ form_widget(form.ville, {'attr' :
+                                {'class':'form-control'} }) }}</div>     
+                        </div> 
+                        <div class="row form-group ">
+                            <div class="col-sm-4 control-label" for="input">{{ form_label(form.pays) }}</div>
+                            <div class="col-sm-8">{{ form_widget(form.pays, {'attr' :
+                                {'class':'form-control', 'value':'France'} }) }}</div>     
+                        </div> 
+
+                         <center><button type="submit" class="btn btn-primary" >Ajouter cette adresse</button></center>
+                         <br/>
+                        {#</form>#}
+                        {{ form_end(form) }}
+                        <br/>
+                    </div>
+                </div>
+            </div>
+                    
+        </div>
+    </div> 
+</div>
+{% endblock %}
