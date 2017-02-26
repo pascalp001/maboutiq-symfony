@@ -60,13 +60,19 @@ class CommandesController extends Controller
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
         if (!$session->has('commande'))  { $commande = new Commandes();}
-        elseif($em->getRepository('EcomBundle:Commandes')->find($session->get('commande'))) { $commande = $em->getRepository('EcomBundle:Commandes')->find($session->get('commande'));}
+        elseif($em->getRepository('EcomBundle:Commandes')->find($session->get('commande'))) 
+        {
+         $commande = $em->getRepository('EcomBundle:Commandes')->find($session->get('commande'));
+        }
         else { $commande = new Commandes();}
 
         //On prépare la commande :
         $commande->setUtilisateur($this->container->get('security.context')->getToken()->getUser());
         $commande->setDate(new \DateTime());
         $commande->setValider(0);
+        $commande->setPreparer(0);
+        $commande->setLivrer(0);
+        $commande->setArchiver(0);
         $commande->setReference(0); //On initialise la référence à 0, mais un service va déterminer le numéro de commande
         $commande->setCommande($this->facture($request));
 
@@ -111,7 +117,7 @@ class CommandesController extends Controller
       $this->get('mailer')->send($message);
 
       //Message "succès" :
-      $this->get('session')->getFlashBag()->add('success', 'Votre commande est valid�e avec succ�s');
+      $this->get('session')->getFlashBag()->add('success', 'Votre commande est validée avec succès');
       return $this->redirect($this->generateUrl('factures'));
     }
 }

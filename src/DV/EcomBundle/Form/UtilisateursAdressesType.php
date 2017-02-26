@@ -22,7 +22,9 @@ class UtilisateursAdressesType extends AbstractType
             ->add('complement', null, array('required' => false))
             ->add('cp')
             ->add('ville')
-            ->add('pays', 'text', array('empty_data' => 'France'))           
+            ->add('pays', 'text', array('empty_data' => 'France')) 
+            ->add('fact', 'checkbox', array('label' => 'facturation', 'required' => false, 'value' => true))  
+            ->add('livr', 'checkbox', array('label' => 'livraison', 'required' => false, 'value' => true))  
             //->add('utilisateur')
         ;
     }

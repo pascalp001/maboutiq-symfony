@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use DV\EcomBundle\Entity\Produits;
+use DV\EcomBundle\Entity\Tva;
 use DV\EcomBundle\Form\ProduitsType;
 
 /**
@@ -71,7 +72,7 @@ class ProduitsAdminController extends Controller
         ));*/
         $form = $this->createForm(new ProduitsType(), $entity );
 
-        $form->add('submit', 'submit', array('label' => 'Créer le nouveau produit'));
+        $form->add('submit', 'submit', array('label' => 'Créer le nouveau produit', 'attr'=>array('class'=>'btn btn-success')));
 
         return $form;
     }
@@ -83,6 +84,12 @@ class ProduitsAdminController extends Controller
     public function newAction()
     {
         $entity = new Produits();
+        $tva = new Tva();
+        $em = $this->getDoctrine()->getManager();
+        $tva = $em->getRepository('EcomBundle:Tva')->findOneByNom('TVA 20%');
+        
+        $entity->setTva($tva);
+        //$entity->add($tvaPrefer);
         $form   = $this->createCreateForm($entity);
 
         return $this->render('EcomBundle:Administration:Produits/layout/new.html.twig', array(
@@ -153,7 +160,7 @@ class ProduitsAdminController extends Controller
 
         $form = $this->createForm(new ProduitsType(), $entity);
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Modifier ce produit'));
 
         return $form;
     }

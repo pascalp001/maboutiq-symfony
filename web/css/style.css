@@ -1,4 +1,5 @@
 /*Modifs bootstrap */
+
 .thumbnail {list-style: none; }
 
 .pagination {
@@ -136,6 +137,10 @@
       background-position: 0 0; cursor: pointer; }
     .c-rating__mitem.is-active { background-position: -40px 0;}
     .c-rating__mitem.half-rating { background-position: -20px 0;}
+    .gloup-lg {display: block;}
+    .gloup-md {display: block;}
+    .gloup-sm {display: block;}
+    .gloup-xs {display: block;}
 }
 @media screen and (max-width:1024px) and (min-width:801px){
     .imgwidth5 {width:350px;}
@@ -166,6 +171,10 @@
       background-position: 0 0; cursor: pointer; }
     .c-rating__mitem.is-active { background-position: -40px 0;}
     .c-rating__mitem.half-rating { background-position: -20px 0;}
+    .gloup-lg {display: none;}
+    .gloup-md {display: block;}
+    .gloup-sm {display: block;}
+    .gloup-xs {display: block;}
 }
 
 @media screen and (max-width:800px) and (min-width:691px){   
@@ -201,6 +210,10 @@
       background-position: 0 0; cursor: pointer; }
     .c-rating__mitem.is-active { background-position: -28px 0;}
     .c-rating__mitem.half-rating { background-position: -14px 0;}   
+    .gloup-lg {display: none;}
+    .gloup-md {display: none;}
+    .gloup-sm {display: block;}
+    .gloup-xs {display: block;}
 
 }
 
@@ -233,7 +246,11 @@
         background: url("../img/starsxs.png");
       background-position: 0 0; cursor: pointer; }
     .c-rating__mitem.is-active { background-position: -18px 0;}
-    .c-rating__mitem.half-rating { background-position: -9px 0;}   
+    .c-rating__mitem.half-rating { background-position: -9px 0;}  
+    .gloup-lg {display: none;}
+    .gloup-md {display: none;}
+    .gloup-sm {display: none;}
+    .gloup-xs {display: block;} 
 }
 @media all and (max-device-width:480px){
     .imgwidth1 {width:150px;}
@@ -263,13 +280,21 @@
       background-position: 0 0; cursor: pointer; }
     .c-rating__mitem.is-active { background-position: -18px 0;}
     .c-rating__mitem.half-rating { background-position: -9px 0;}   
+    .gloup-lg {display: none;}
+    .gloup-md {display: none;}
+    .gloup-sm {display: none;}
+    .gloup-xs {display: none;} 
 }
 
+/*Tableaux */
 .sectn {margin-top:20px;margin-bottom:20px;background-color:lightgrey; color: #2c3e50; width:100%;padding:20px;}
 table {border-collapse:collapse; width:98%;}
 tr {border:1px solid #bbb;}
 .bordoff {border:none;}
-td {text-align:center;}
+td, th {text-align:center;}
+.table-store {background:#a3a3af; color:#334;}
+.table-store th{font-weight:600; color:#223;background:#92929f;}
+.table-store tr{padding-bottom:3px; padding-top:3px;}
 
 /*couleurs*/
 .body-color {background-color:#34495e; color:#ecf0f1;}
@@ -688,6 +713,8 @@ a:hover .modulelogin-login {
 .modulelogin-interne a:hover {
   text-decoration:none;
 }
+
+
 /* Etiquettes produit*/
 .thumbnail {/*
   min-width:305px;
@@ -732,3 +759,57 @@ a:hover .modulelogin-login {
   line-height: 17px; 
   font-size: 14px;
 }
+.form-group-bordered {
+   border:1px solid #579;
+}
+/* Menu side-bar qui collapse sur la droite (ou vers la gauche) */
+/*
+  <div class="container">
+    <div class="row" id="row-main">
+
+      <!--<div class="col-md-3" id="sidebar">  <h3>Partie 'menu side-bar' droite</h3> </div> -->
+
+      <div class="col-md-9" id="content"> <h3>Partie centrale</h3> 
+      <button type="button" class="btn btn-default toggle-sidebar">&#8801; Ouvre/ferme</button>
+      </div>
+
+      <div class="col-md-3" id="sidebar">  <h3>Partie 'menu side-bar' droite</h3> </div>
+
+    </div>ÛÙý
+  </div>
+  <script>
+    $(document).ready(function () {
+      $(".toggle-sidebar").click(function () {
+        $("#sidebar").toggleClass("collapsed");
+        $("#content").toggleClass("col-md-12 col-md-9");        
+        return false;
+      });
+    });
+  </script>
+*/
+    #content, #sidebar {  min-height: 500px; }
+    #row-main { overflow-x: hidden;  }
+    #content {    
+      -webkit-transition: width 0.3s ease;  -moz-transition: width 0.3s ease;  -o-transition: width 0.3s ease;
+      transition: width 0.3s ease;
+    }
+    .col-md-10 .width-12, .col-md-12 .width-10 {   display: none; }
+    #sidebar {     
+      -webkit-transition: margin 0.3s ease; -moz-transition: margin 0.3s ease;  -o-transition: margin 0.3s ease;
+      transition: margin 0.3s ease;
+    }
+    .collapsed { 
+      display: none; 
+      max-width: 3px; 
+      }
+    .collapsed .well{ 
+      display: none; 
+      max-width: 3px; 
+      }
+
+    @media (min-width: 992px) {
+      .collapsed {
+        display: block;
+        margin-right: -25%; /* => margin-left: -25%*/
+      }
+    }

@@ -59,6 +59,13 @@ class UtilisateursAdresses
     /**
      * @var string
      *
+     * @ORM\Column(name="complement", type="string", length=125, nullable=true)
+     */
+    private $complement;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="cp", type="string", length=50)
      */
     private $cp;
@@ -77,13 +84,21 @@ class UtilisateursAdresses
      */
     private $pays;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="complement", type="string", length=125, nullable=true)
-     */
-    private $complement;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="fact", type="boolean")
+     */
+    private $fact;
+
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="livr", type="boolean")
+     */
+    private $livr;
 
     /**
      * Get id
@@ -309,5 +324,53 @@ class UtilisateursAdresses
     public function getUtilisateur()
     {
         return $this->utilisateur;
+    }
+
+    /**
+     * Set fact
+     *
+     * @param boolean $fact
+     *
+     * @return UtilisateursAdresses
+     */
+    public function setFact($fact)
+    {
+        $this->fact = $fact;
+
+        return $this;
+    }
+
+    /**
+     * Get fact
+     *
+     * @return boolean
+     */
+    public function getFact()
+    {
+        return $this->fact;
+    }
+
+    /**
+     * Set livr
+     *
+     * @param boolean $livr
+     *
+     * @return UtilisateursAdresses
+     */
+    public function setLivr($livr)
+    {
+        $this->livr = $livr;
+
+        return $this;
+    }
+
+    /**
+     * Get livr
+     *
+     * @return boolean
+     */
+    public function getLivr()
+    {
+        return $this->livr;
     }
 }

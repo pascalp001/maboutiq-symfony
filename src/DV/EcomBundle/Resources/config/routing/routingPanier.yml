@@ -18,9 +18,9 @@ adresses:
     path:     /adresses
     defaults: { _controller: EcomBundle:Panier:adresses }
 
-livraison:
+frlivraison:
     path:     /livraison
-    defaults: { _controller: EcomBundle:Panier:livraison }
+    defaults: { _controller: EcomBundle:Panier:frlivraison }
 
 validation:
     path:     /validation

@@ -3,16 +3,18 @@
 {% block body -%}
     <h1>Liste des commandes</h1>
 
-    <table class="records_list">
+    <table class="table table-store records_list">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Date</th>
                 <th>Référence</th>  
                 <th>Client</th>  
-
-                <th>Valider</th>
-                <th>Actions</th>
+                <th>Préparé</th>
+                <th>Livré</th>
+                <th >Voir BL</th>
+                <th >Voir Fact</th>
+                <th>Archiver</th>
             </tr>
         </thead>
         <tbody>
@@ -21,12 +23,19 @@
                 <td><a href="{{ path('adminCommandes_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{% if entity.date %}{{ entity.date|date('d-m-Y H:i:s') }}{% endif %}</td>
                 <td>{{ entity.reference }}</td>
-                <td>{{ entity.utilisateur.username }} ({#{{ entity.utilisateur.username.adresses.prenom }}{{ entity.utilisateur.username.adresses.nom }}#})</td>
+                <td>{{ entity.utilisateur.username }} 
+                    {% if entity.commande.facturation.nom is defined %}({% endif %}
+                    {% if entity.commande.facturation.prenom is defined %} {{ entity.commande.facturation.prenom }}{% endif %}
+                    {{ entity.commande.facturation.nom }}
+                    {% if entity.commande.facturation.nom is defined %} ){% endif %}</td>
                 <td>{{ entity.valider }}</td>
+                <td>livré</td>
+                <td>BL</td>
                 <td>
                         <a href="{{ path('adminShowFacture', { 'id': entity.id }) }}" target="_blank" ><i class="glyphicon glyphicon-eye-open"></i></a>
 
                 </td>
+                <td>Archivé</td>
             </tr>
         {% endfor %}
         </tbody>

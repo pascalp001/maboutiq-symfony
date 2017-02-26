@@ -45,4 +45,13 @@ class ProduitsRepository extends EntityRepository
 			->setParameter('chaine', $chaine);
 		return $qb->getQuery()->getResult();
 	}
+
+	public function preferred_tva($tva)
+	{
+		$qb = $this->createQueryBuilder('t')
+			->select('t')
+			->where('t.nom = :tva')
+			->setParameter('tva', $tva);
+		return $qb->getQuery()->getResult();		
+	}
 }

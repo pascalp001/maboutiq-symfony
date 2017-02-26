@@ -1,0 +1,90 @@
+{% extends "::layout/layout.html.twig" %}
+{% block body %}
+<div class="container">
+    {% include 'EcomBundle:Default:panier/modulesUsed/menupanier.html.twig' %}          
+    <div class="wedge15"> &nbsp; </div>   
+
+    <div class="bordure">
+      <div class="row"  >                
+        <div class=" col-sm-12">
+        <h4>Choisissez votre option de livraison pour cette adresse :</h4>
+        </div>
+      </div>
+      <div class="row"  >
+        <div class=" col-sm-12">
+        {{}} adresse de livraison...
+        </div>
+      </div>
+      <div class="wedge10">&nbsp;</div> 
+      <div class="row "  >
+        <div class=" col-sm-1">
+          <center>
+          <input type="radio" ng-model="modpost" value="1" checked />
+          </center>
+        </div>
+        <div class="col-sm-11 bordure">
+          <div class="row "  >
+            <div class=" col-sm-2 fondGrisClair">
+            <center>
+              <img src="img/mRelay.png" style="height:88px">               
+            </center>
+            </div>
+            <div class=" col-sm-2 fondGrisClair">
+              <h4 style="color:red; width:100px">e-LIVRAISON DE VOS COLIS</h4>
+            </div>
+            <div class=" col-sm-6 bordvertiL90">
+              <em>Mondial Relay</em> expédiés sous 48h et livrés en 3 jours ouvrés. Le meilleur prix et la livraison la plus rapide
+            </div>
+            <div class=" col-sm-2 bordvertiL90">
+              {#{{coutMR+' '}}€ TTC #}coutMR € TTC
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wedge30">&nbsp;</div> 
+      <div class="row "  >
+        <div class=" col-sm-1">
+          <center>
+          <input type="radio" ng-model="modpost" value="2" />
+          </center>
+        </div>
+        <div class="col-sm-11 bordure">
+          <div class="row "  >
+            <div class=" col-sm-4 fondGrisClair">
+              <img src="img/colissimo.jpg" style="height:88px">
+            </div>
+            <div class=" col-sm-6 bordvertiL90">
+              <em>Colissimo</em> expédiés sous 48h à 72h
+            </div>
+            <div class=" col-sm-2 bordvertiL90">
+              {#{{coutColi+' '}}€ TTC#}coutColi € TTC
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wedge30">&nbsp;</div> 
+      <div class="row " ng-show="dim==true" >
+        <div class=" col-sm-1">
+          <center>
+          <input type="radio" ng-model="modpost" value="3" />
+          </center>
+        </div>
+        <div class="col-sm-11 bordure">
+          <div class="row "  >
+            <div class=" col-sm-4 fondGrisClair">
+              <img src="img/LettreSuivie.jpg" style="height:88px">
+            </div>
+            <div class=" col-sm-6 bordvertiL90">
+              <em>Lettre suivie</em> expédiés dans enveloppe bulle affranchie ("document" de moins de 3cm d'épaisseur) sous 48h à 72h
+            </div>
+            <div class=" col-sm-2 bordvertiL90">
+              {#{{coutPost+' '}}€ TTC#} coutPost € TTC
+            </div>
+          </div>
+        </div>
+      </div>
+      <br/>
+    </div>
+
+</div>
+{% endblock %}

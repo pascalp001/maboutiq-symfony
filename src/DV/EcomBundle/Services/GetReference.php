@@ -17,6 +17,10 @@ class GetReference
 	{
 		$reference = $this->em->getRepository('EcomBundle:Commandes')->findOneBy(array('valider'=>1), array('id'=> 'DESC') ,1 ,1); //1 seul élément
 		if (!$reference) return 1; //si pas encore de facture, la référence est 1
-		else return $reference->getReference() + 1; //incrémentation
+		else {
+			//var_dump($reference->getReference());
+			//die();
+			return $reference->getReference() + 1; //incrémentation
+		}
 	}
 }

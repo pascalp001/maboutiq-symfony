@@ -102,6 +102,16 @@
     {% block javascripts %}
         <script src="{{ asset('js/plugin/jquery/jquery.min.js')}}"></script>
         <script src="{{ asset('bootstrap/js/bootstrap.js')}}"></script>
+    
+      <script>  $(document).ready(function () {
+      $(".toggle-sidebar").click(function () {
+        //alert('ici');
+        $("#sidebar").toggleClass("collapsed");
+        $("#content").toggleClass("col-md-12 col-md-10");        
+        return false;
+      });
+    });
+      </script>
     {% endblock %}
 </body>
 </html>

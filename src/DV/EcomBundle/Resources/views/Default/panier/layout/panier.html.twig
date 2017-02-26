@@ -8,14 +8,20 @@
 {% endfor %}
 {% block body %}
 <div class="container">
-        
-        <div style="height:100px;"> &nbsp; </div>    <div class="row">
-
-    	<div class="col-md-2">
-    		{% include '::modulesBase/nav.html.twig' %}
-    	</div>
-         {% include 'EcomBundle:Default:panier/modulesUsed/menupanier.html.twig' %}  
-        <div class="col-md-10">
+    <div class="row">
+    <div class="col-xs-1">
+     <button type="button" class="btn btn-default toggle-sidebar"><span class="h3">&#8801; </span></button>
+    </div> 
+    <div class="col-xs-11">
+     {% include 'EcomBundle:Default:panier/modulesUsed/menupanier.html.twig' %}   
+    </div>
+    </div>
+    <div class="wedge5"> &nbsp; </div>   
+    <div class="row" id="row-main">
+        <div class="col-md-2" id="sidebar">  
+            {% include '::modulesBase/nav.html.twig' %}
+        </div> 
+        <div class="col-md-10" id="content"> 
             {% for flashMessage in app.session.flashbag.get('success') %}
                 <div class="alert alert-success">{{flashMessage}}</div>
             {% endfor %}

@@ -11,26 +11,30 @@
                 <div class="accordion-inner">
                     <div class="col-sm-4"><h2>Adresses</h2>
                         {% if utilisateur.adresses|length != 0 %}
-                            <form action="{{path('validation')}}" method="POST" >
+                            <form action="{{path('frlivraison')}}" method="POST" >
 
                                 <h4>Adresse de facturation</h4>
                                 {% for adresse in utilisateur.adresses %}
+                                    {% if adresse.fact %}
                                     <label class="radio">
                                         <input type="radio" name="facturation" value="{{adresse.id}}" {% if loop.index0 == 0 %}checked="checked" {% endif %} >
                                         {{adresse.adresse}}{{' '~adresse.cp}}{{' '~adresse.ville}}<a href="{{path('livraisonAdresseSuppr', {'id': adresse.id}) }}"><i class="glyphicon glyphicon-trash"></i></a>
                                         </br> {{adresse.prenom}} {{' '~adresse.nom}}
                                     </label>
+                                    {% endif %}
                                 {% endfor %}
 
                                 </br></br>
 
                                 <h4>Adresse de livraison</h4>
                                 {% for adresse in utilisateur.adresses %}
+                                    {% if adresse.livr %}
                                     <label class="radio">
                                         <input type="radio" name="livraison" value="{{adresse.id}}" {% if loop.index0 == 0 %}checked="checked" {% endif %} >
                                         {{adresse.adresse}}{{' '~adresse.cp}}{{' '~adresse.ville}}<a href="{{path('livraisonAdresseSuppr', {'id': adresse.id}) }}"><i class="glyphicon glyphicon-trash"></i></a>
                                         </br> {{adresse.prenom}} {{' '~adresse.nom}}
                                     </label>
+                                    {% endif %}
                                 {% endfor %}
 
                                 </br></br>
@@ -41,11 +45,10 @@
                         <br/><br/>
                         <a  href="{{ path('panier') }}" class="btn btn-greyish">Retour : revoir le panier</a>
                     </div>
-                    <div class=" col-sm-1" style="font-size:100px; "><br/><div > &#9668; </div></div>
+                    <div class=" col-sm-1 gloup-md" style="font-size:100px; "><br/><div > &#9668; </div></div>
                     <div class="col-sm-offset-1 col-sm-4" style="border:3px solid #ccc;">
-                        <h4>Ajouter une nouvelle adresse</h4>
-                        {{ form_start(form, {'action': path('livraison'), 'method':'POST'})}}
-                        {# <form action="{{path('livraison') }}" method="POST" >#}
+                        <center><h4>Ajouter une nouvelle adresse</h4></center>
+                        {{ form_start(form, {'action': path('adresses'), 'method':'POST'})}}
                         
                         <div class="row form-group ">
                             <div class="col-sm-4 control-label" for="input">{{ form_label(form.nom) }}</div>
@@ -87,10 +90,16 @@
                             <div class="col-sm-8">{{ form_widget(form.pays, {'attr' :
                                 {'class':'form-control', 'value':'France'} }) }}</div>     
                         </div> 
-
+                        <div class="row form-group ">
+                            <div class="col-sm-offset-1 col-sm-1">{{ form_widget(form.fact, {'attr' :
+                                {'class':'form-control'} }) }}</div> 
+                            <div class="col-sm-3 control-label" for="input">{{ form_label(form.fact) }}</div>    
+                            <div class="col-sm-offset-2 col-sm-1">{{ form_widget(form.livr, {'attr' :
+                                {'class':'form-control'} }) }}</div> 
+                            <div class="col-sm-3 control-label" for="input">{{ form_label(form.livr) }}</div>  
+                        </div> 
                          <center><button type="submit" class="btn btn-primary" >Ajouter cette adresse</button></center>
                          <br/>
-                        {#</form>#}
                         {{ form_end(form) }}
                         <br/>
                     </div>

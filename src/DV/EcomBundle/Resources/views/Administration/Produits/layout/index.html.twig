@@ -3,12 +3,13 @@
 {% block body -%}
     <h1>Liste des produits</h1>
 
-    <table class="records_list">
+    <table class="table table-store records_list">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
-                <th>Prix</th>
+                <th>Prix HT</th>
+                <th>Prix TTC</th>
                 <th>Disponible</th>
                 <th colspan="2">Actions</th>
             </tr>
@@ -19,23 +20,21 @@
                 <td><a href="{{ path('adminProduits_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.nom }}</td>
                 <td>{{ entity.prix }}</td>
+                <td>{{ entity.prix|tva(entity.tva.multiplicate) |number_format(2)}}</td>
                 <td>{{ entity.disponible }}</td>
                 <td>
-                        <a href="{{ path('adminProduits_show', { 'id': entity.id }) }}"><i class="glyphicon glyphicon-eye-open"></i></a>
+                        <a href="{{ path('adminProduits_show', { 'id': entity.id }) }}" title="voir le produit"><i class="glyphicon glyphicon-eye-open"></i></a>
                 </td>
                 <td>
-                        <a href="{{ path('adminProduits_edit', { 'id': entity.id }) }}"><i class="glyphicon glyphicon-edit"></i></a>
+                        <a href="{{ path('adminProduits_edit', { 'id': entity.id }) }}" title="modifier le produit"><i class="glyphicon glyphicon-edit"></i></a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-        <ul>
-        <li>
+        <br/>
             <a href="{{ path('adminProduits_new') }}">
-                Créer un nouveau produit
+                <button type="button" class="btn btn-greyish">Créer un nouveau produit</button>
             </a>
-        </li>
-    </ul>
+
     {% endblock %}
