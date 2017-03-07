@@ -11,7 +11,7 @@
         <table id="enTete">
             <tr>
                 <td colspan="1"></td>
-                <td colspan="1"><h1>Facture</h1></td>
+                <td colspan="1"><h1>Bon de livraison</h1></td>
                 <td colspan="1"></td>
             </tr>
             <tr>
@@ -25,51 +25,40 @@
                 <td class="color">{{ facture.reference }}</td>
             </tr>
         </table>
-        <ul id="coordonnes">
+        <div class="row">
+        <div class="col-sm-3">
+        <ul id="coordonnesBL">
+            <li>Facturation :</li>
             <li>{{ facture.commande.facturation.nom }} {{ facture.commande.facturation.prenom }}</li>
             <li>{{ facture.commande.facturation.adresse }}</li>
             <li>{{ facture.commande.facturation.cp }} {{ facture.commande.facturation.ville }} - {{ facture.commande.facturation.pays }}</li>
         </ul>
+        </div>
+        <div class="col-sm-3">
+        <ul id="coordonnesBL">
+            <li>Livraison :</li>
+            <li>{{ facture.commande.livraison.nom }} {{ facture.commande.livraison.prenom }}</li>
+            <li>{{ facture.commande.livraison.adresse }}</li>
+            <li>{{ facture.commande.livraison.cp }} {{ facture.commande.livraison.ville }} - {{ facture.commande.livraison.pays }}</li>
+        </ul>
+        </div>
+        </div>
         <table id="entity">
             <tr>
-                <td width="280">DESIGNATION</td>
-                <td width="105">QUANTITE</td>
-                <td width="100">P.U - HT</td>
-                <td width="105">MONTANT HT</td>
-                <td width="105">MONTANT TTC</td>
+                <td width="200">DÉSIGNATION</td>
+                <td width="105">QUANTITÉ FACTURÉE</td>
+                <td width="105">QUANTITÉ LIVRÉE</td>
             </tr>
             {% for produit in facture.commande.produit %}
                 <tr>
                     <td class="color">{{ produit.reference }}</td>
                     <td class="color">{{ produit.quantite }}</td>
-                    <td class="color">{{ produit.prixHT }} €</td>
-                    <td class="color">{{ produit.quantite * produit.prixHT }} €</td>
-                    <td class="color">{{ produit.quantite * produit.prixTTC }} €</td>
+                    <td class="color">{{ produit.quantite }}</td>
                 </tr>
             {% endfor %}
         </table>
-        <table id="total">
-            <tr>
-                <td width="120">TOTAL HT :</td>
-                <td width="100" class="color">{{ facture.commande.totalHT }} €</td>
-            </tr>
-            {% for key, tva in facture.commande.tva %}
-            <tr>
-                <td width="120">TVA <span class="color min">{{ key }}</span> :</td>
-                <td width="100" class="color">{{ tva }} €
-                </td>
-            </tr>
-             {% endfor %}
-            <tr>
-                <td width="120">FRAIS DE PORT* :</td>
-                <td width="100" class="color">{{ facture.commande.frPort }} €</td>
-            </tr>
-            <tr>
-                <td width="120">TOTAL TTC :</td>
-                <td width="100" class="color">{{ facture.commande.totalTTC }} €</td>
-            </tr>
-        </table>  
-        <span style="margin-top:50px;">* : Transport effectué par {{ facture.commande.org }}</span>
+
+        <span style="margin-top:50px; font-size: 20px;"> Transport effectué par {{ facture.commande.org }}</span>
         <div id="footer">
 
             <span class="color strong" > {{ adresse }} </span>

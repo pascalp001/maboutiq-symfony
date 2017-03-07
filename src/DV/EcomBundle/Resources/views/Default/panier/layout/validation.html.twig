@@ -2,99 +2,113 @@
 {% block titre %} Pascalp Version Développement > Validation de la commande {% endblock %}
 {% block body %}
 <div class="container">
-        <div class="col-xs-1"> &nbsp; </div> 
-  <div class="col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}  
-        <div class="wedge15;"> &nbsp; </div>    <div class="row">
+    <div class="row">
+        <div class="col-xs-1">
+            <button type="button" class="btn btn-default navbar-nontoggle toggle-sidebar">
 
-        <div class="col-md-2">
-            {% include '::modulesBase/nav.html.twig' %}
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+            </button>
+        </div> 
+        <div class="col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}
         </div>
-
-        <div class="col-md-10">
+    </div>
+    <div class="wedge5"> &nbsp; </div>   
+    <div class="row" id="row-main">
+        <div class="col-md-2 " id="sidebar">  
+            {% include '::modulesBase/nav.html.twig' %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %}  
+            {% else %}
+                {% include 'UtilisateursBundle:Default:modulesUsed/utilisateurs.html.twig' %}  
+            {% endif %}
+        </div> 
+        <div class="col-md-12" id="content"> 
+            <div class="wedge15;"> &nbsp; </div> 
             <h2>Valider mon panier</h2>
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>Références</th>
-                            <th>Quantité</th>
-                            <th>Prix unit. HT</th>
-                            <th>Prix unit. TTC</th>
-                            <th>Total HT</th>
-                            <th>Total TTC</th>
-                        </tr>
-                    </thead>
-                    
-                    <tbody>
-                    {% if commande.commande.produit is not defined %}
-                        <tr  ><td colspan="6">Le paiement a été effectué : vous ne pouvez pas revenir en arrière.
-                        Pour annuler votre commande et votre règlement, vous devez nous en aviser par envoi d'un e-mail à :
-                        contact@prog-d.com
-                        </td></tr>
-                        
-                    {% else %}
-                        {% for produit in commande.commande.produit %}
-                        <tr>
-                            <td>{{produit.reference}}</td>
-                            <td>
-                                {{produit.quantite }}                               
-                            </td>
-                            <td>{{produit.prixHT |number_format(2)}} €</td>
-                            <td>{{produit.prixTTC|number_format(2)}} €</td>
-                            <td>{{produit.prixHT * produit.quantite |number_format(2)}} €</td>  
-                            <td>{{produit.prixTTC * produit.quantite |number_format(2) }} €</td>                        
-                        </tr>
-                        {% endfor %}
-                    {% endif %}
-                    </tbody>
-                </table>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Références</th>
+                        <th>Quantité</th>
+                        <th>Prix unit. HT</th>
+                        <th>Prix unit. TTC</th>
+                        <th>Total HT</th>
+                        <th>Total TTC</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
                 {% if commande.commande.produit is not defined %}
-                    <a href="{{path ('produits')}}" class="btn btn-primary ">Retour boutique</a>
-                {% else %}  
-                <div class="row" >
-                    <div class="col-sm-7">
-                        <div class="row" >
-                            <div class="col-md-6">
-                                <dl class="pull-left">
-                                    <dt><h4>Adresse de facturation</h4></dt>
-                                    <dt>{{ commande.commande.facturation.prenom}} {{ commande.commande.facturation.nom}}</dt>
-                                    <dt>{{ commande.commande.facturation.adresse}} </dt>
-                                    <dt>{{ commande.commande.facturation.cp}} {{ commande.commande.facturation.ville}} {% if commande.commande.facturation.pays != "France" %} - {{ commande.commande.facturation.pays}} {% endif %} </dt>
-                                </dl>
-                            </div> 
-                            <div class="col-sm-6">
-                                <dl class="pull-left">
-                                    <dt><h4>Adresse de livraison</h4></dt>
-                                    <dt>{{ commande.commande.livraison.prenom}} {{ commande.commande.livraison.nom}}</dt>
-                                    <dt>{{ commande.commande.livraison.adresse}} </dt>
-                                    <dt>{{ commande.commande.livraison.cp}} {{ commande.commande.livraison.ville}} {% if commande.commande.livraison.pays != "France" %} - {{ commande.commande.livraison.pays}} {% endif %}</dt>
-                                </dl>
-                            </div> 
-                        </div>                      
-                    </div>
-                    <div class="col-sm-5">
-                        <div class="row" >
-                            <div class="col-sm-12">
-                                <dl class="dl-horizontal pull-right">
-                                    <dt>Total HT :</dt> <dd>{{commande.commande.totalHT|number_format(2)}}€</dd>
-                                    {% for key, tva in commande.commande.tva %}
-                                      <dt>TVA {{key}} :</dt> <dd>{{ tva |number_format(2)}}€</dd>
-                                    {% endfor %}
-                                </dl>
-                            </div>
-                        </div>
-                        <div class="row" >
-                            <div class="col-sm-12">
-                                <dl class="dl-horizontal pull-right">
-                                    <dt>Frais de port :<dd> {{commande.commande.frPort|number_format(2)}}€</dd>
-                                    <dt style="font-size: 13px;" >( {{commande.commande.org}} - {{commande.commande.nom}} )</dt><dd> &nbsp; </dt>
-                                    </dt>
-                                    <dt>Total TTC :</dt> <dd>{{commande.commande.totalTTC |number_format(2)}}€</dd>
-                                </dl>
-                            </div>
-                        </div>
-
-                    </div>
+                    <tr  ><td colspan="6">Le paiement a été effectué : vous ne pouvez pas revenir en arrière.
+                    Pour annuler votre commande et votre règlement, vous devez nous en aviser par envoi d'un e-mail à :
+                    contact@prog-d.com
+                    </td></tr>
+                    
+                {% else %}
+                    {% for produit in commande.commande.produit %}
+                    <tr>
+                        <td>{{produit.reference}}</td>
+                        <td>
+                            {{produit.quantite }}                               
+                        </td>
+                        <td>{{produit.prixHT |number_format(2)}} €</td>
+                        <td>{{produit.prixTTC|number_format(2)}} €</td>
+                        <td>{{produit.prixHT * produit.quantite |number_format(2)}} €</td>  
+                        <td>{{produit.prixTTC * produit.quantite |number_format(2) }} €</td>                        
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+            {% if commande.commande.produit is not defined %}
+                <a href="{{path ('produits')}}" class="btn btn-primary ">Retour boutique</a>
+            {% else %}  
+            <div class="row" >
+                <div class="col-sm-7" >
+                    <div class="row" >
+                        <div class="col-md-6" >
+                            <dl class="pull-left" >
+                                <dt><h4>Adresse de facturation</h4></dt>
+                                <dt>{{ commande.commande.facturation.prenom}} {{ commande.commande.facturation.nom}}</dt>
+                                <dt>{{ commande.commande.facturation.adresse}} </dt>
+                                <dt>{{ commande.commande.facturation.cp}} {{ commande.commande.facturation.ville}} {% if commande.commande.facturation.pays != "France" %} - {{ commande.commande.facturation.pays}} {% endif %} </dt>
+                            </dl>
+                        </div> 
+                        <div class="col-sm-6" >
+                            <dl class="pull-left" >
+                                <dt><h4>Adresse de livraison</h4></dt>
+                                <dt>{{ commande.commande.livraison.prenom}} {{ commande.commande.livraison.nom}}</dt>
+                                <dt>{{ commande.commande.livraison.adresse}} </dt>
+                                <dt>{{ commande.commande.livraison.cp}} {{ commande.commande.livraison.ville}} {% if commande.commande.livraison.pays != "France" %} - {{ commande.commande.livraison.pays}} {% endif %}</dt>
+                            </dl>
+                        </div> 
+                    </div>                      
                 </div>
+                <div class="col-sm-5">
+                    <div class="row" >
+                        <div class="col-sm-12" >
+                            <dl class="dl-horizontal pull-right" >
+                                <dt>Total HT :</dt> <dd>{{commande.commande.totalHT|number_format(2)}}€</dd>
+                                {% for key, tva in commande.commande.tva %}
+                                  <dt>TVA {{key}} :</dt> <dd>{{ tva |number_format(2)}}€</dd>
+                                {% endfor %}
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-sm-12">
+                            <dl class="dl-horizontal pull-right">
+                                <dt>Frais de port :</dt><dd> {{commande.commande.frPort|number_format(2)}}€</dd>
+                                <dt style="font-size: 13px;" >( {{commande.commande.org}} - {{commande.commande.nom}} )</dt><dd> &nbsp; </dd>
+                                <dt>Total TTC :</dt> <dd>{{commande.commande.totalTTC |number_format(2)}}€</dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
                  
             <div class="clearfix"></div>
             {# Formulaire pour envoi vers l'API banque (ici envoyé vers validationCommandeAction(): #}

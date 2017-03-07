@@ -20,7 +20,22 @@ class GetReference
 		else {
 			//var_dump($reference->getReference());
 			//die();
-			return $reference->getReference() + 1; //incrémentation
+			$ref = $reference->getReference();
+			for($i=0;$i<8;$i++)
+			{
+				//Codage de la référence : [type client]:1 [année]:17 [mois]:03 [n° à 3 chiffres]: 004
+				switch (strlen($ref))
+				{
+					case 1: $ref = "0".$ref;
+					case 2: $ref = "0".$ref;
+					case 3: $ref = date('m').$ref;
+					case 5: $ref = date('y').$ref;
+					case 7: $ref = "1".$ref;
+				}
+			}
+			$ref = $ref+1;	//incrémentation
+
+			return $ref; 
 		}
 	}
 }

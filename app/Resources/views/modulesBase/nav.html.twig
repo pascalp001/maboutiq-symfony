@@ -1,11 +1,11 @@
 
     
-<div class="well">
+<div class="well sidebar">
     <ul class="nav nav-list">
     	<div style="height:100px;">&nbsp;</div>
-        <li class="nav-header"><a href="{{path('produits') }}" > Nos produits</a></li>
+        <li class="nav-header"><a href="{{path('produits') }}" class="sidebar sup"> Nos produits</a></li>
          {% render(controller('EcomBundle:Categories:menu')) %}
-         {% if is_granted('ROLE_ADMIN') %} <li class="nav-header"><a href="{{path('adminCommandes') }}" >Administration</a></li> {% endif %}
+         {% if is_granted('ROLE_ADMIN') %} <li class="nav-header"><a href="{{path('adminCommandes') }}" class="sidebar sup" >Administration</a></li> {% endif %}
     </ul>
 </div>
 

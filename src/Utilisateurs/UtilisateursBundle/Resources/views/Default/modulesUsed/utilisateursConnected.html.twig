@@ -1,19 +1,19 @@
-<div class="well">
+<div class="well sidebar">
     <ul class="nav nav-list">
         <li>
-            <a href="{{path('fos_user_profile_show')}}">Mes informations</a>
+            <a class="sidebar sup" href="{{path('factures')}}">Mon compte</a>
         </li>
         <li>
-            <a href="{{path('fos_user_profile_edit')}}">Editer mes informations</a>
+            <a class="sidebar sup" href="{{path('fos_user_profile_show')}}">Mes informations</a>
         </li>
         <li>
-            <a href="{{path('fos_user_change_password')}}">Changer mon mot de passe</a>
+            <a class="sidebar sub" href="{{path('fos_user_profile_edit')}}">Modifier mes informations</a>
         </li>
         <li>
-            <a href="{{path('factures')}}">Mon compte</a>
+            <a class="sidebar sub" href="{{path('fos_user_change_password')}}">Changer mon mot de passe</a>
         </li>
         <li>
-            <a href="{{path('fos_user_security_logout')}}">Déconnexion</a>
+            <a class="sidebar sub" href="{{path('fos_user_security_logout')}}">Déconnexion</a>
         </li>
     </ul>
 </div>

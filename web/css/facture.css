@@ -36,6 +36,17 @@ ul#coordonnes li {
     height:20px;
 }
 
+ul#coordonnesBL {
+    float:left;
+    margin-top:30px;
+    margin-left:10px;
+    list-style:none;
+}
+
+ul#coordonnesBL li {
+    height:20px;
+}
+
 table#enTete {
     position:absolute;
     top:5px;

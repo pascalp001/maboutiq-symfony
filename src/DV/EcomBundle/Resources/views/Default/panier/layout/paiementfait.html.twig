@@ -2,18 +2,27 @@
 {% block titre %} Pascalp Version Développement > Paiement effectué {% endblock %}
 {% block body %}
 <div class="container">
-           <div class="col-xs-1"> &nbsp; </div> 
-  <div class="col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}  
-    <div class="wedge10"> &nbsp; </div> 
- <div class="pull-right panier" >{% render(controller('EcomBundle:Panier:menu')) %}</div>
- <div class="wedge5"> &nbsp; </div> 
+    <div class="row">
+        <div class="col-xs-1">
+            <button type="button" class="btn btn-default navbar-nontoggle toggle-sidebar">
 
-	<div class="row">
-        <div class="col-md-2">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+        </div> 
+        <div class="col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}  
+            <div class="wedge10"> &nbsp; </div> 
+            <div class="pull-right panier" >{% render(controller('EcomBundle:Panier:menu')) %}</div>
+            <div class="wedge5"> &nbsp; </div> 
+        </div>    
+    </div>
+	<div class="row" id="row-main">
+        <div class="col-md-2 "  id="sidebar">
         {% include '::modulesBase/nav.html.twig' %}   
         {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %} 
         </div> 
-		<div class="col-md-9">
+		<div class="col-md-12" id="content">
             {% for flashMessage in app.session.flashbag.get('success') %}
                 <div class="alert alert-success">
                     {{ flashMessage }}
@@ -40,8 +49,9 @@
                             <tr><td><center>Aucune commande actuellement</center></td>
                             </tr>
                         {% endif %}
-                        {% for commande in commandes %}
-                        <tr>
+                        {% for commande in commandes|reverse %}
+                        {% if loop.index == 1 %} <tr style="font-weight: 400; background:#b3b3bf; color:#334;">
+                        {% else %}<tr style=" color: #667; ">{% endif %}
                             <td>ref : {{ commande.reference }}</td>
                             <td>{{ commande.date |date('d/m/Y') }}</td>
                             <td>{{ commande.commande.totalTTC }}€</td>

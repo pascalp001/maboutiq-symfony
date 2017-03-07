@@ -148,7 +148,7 @@ class CommandesController extends Controller
     public function paiementfaitAction()
     {
     $em = $this->getDoctrine()->getManager();
-    $commandes = $em->getRepository('EcomBundle:Commandes')->findByFacture($this->getUser())  ; 
+    $commandes = $em->getRepository('EcomBundle:Commandes')->findByFacture($this->getUser(), array('id' => 'desc'))  ; 
 
     return $this->render('EcomBundle:Default:panier/layout/paiementfait.html.twig', array('commandes' => $commandes));
     }

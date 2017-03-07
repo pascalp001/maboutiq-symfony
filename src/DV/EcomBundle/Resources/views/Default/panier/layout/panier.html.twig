@@ -1,4 +1,5 @@
 {% extends "::layout/layout.html.twig" %}
+{% block titre %} Pascalp Version Développement > Produits dans le panier {% endblock %}
 {% set totalHT = 0 %}
 {% set totalTTC = 0 %}
 {% set refTva = {} %}
@@ -9,20 +10,26 @@
 {% block body %}
 <div class="container">
     <div class="row">
-    <div class="col-xs-1">
-     <button type="button" class="btn btn-default navbar-nontoggle toggle-sidebar">
+        <div class="col-xs-1">
+            <button type="button" class="btn btn-default navbar-nontoggle toggle-sidebar">
 
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-    </div> 
-    <div class="col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}
-    </div>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+            </button>
+        </div> 
+        <div class="col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}
+        </div>
     </div>
     <div class="wedge5"> &nbsp; </div>   
     <div class="row" id="row-main">
         <div class="col-md-2 " id="sidebar">  
             {% include '::modulesBase/nav.html.twig' %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %}  
+            {% else %}
+                {% include 'UtilisateursBundle:Default:modulesUsed/utilisateurs.html.twig' %}  
+            {% endif %}
         </div> 
         <div class="col-md-12" id="content"> 
             {% for flashMessage in app.session.flashbag.get('success') %}

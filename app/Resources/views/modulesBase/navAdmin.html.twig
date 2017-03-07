@@ -1,37 +1,38 @@
 <div class="col-md-3">
 
-	<div class="well">
+	<div class="well sidebar">
 	    <ul class="nav nav-list">
 	    	<!--<div style="height:100px;">&nbsp;</div>-->
 	        <li class="nav-header">
-	        	<a href="{{path('adminProduits') }}" >Produits</a>
+	        	<a href="{{path('adminProduits') }}" class="sidebar sup" >Produits</a>
 	        </li>
 	        <li>
-	        	<a href="{{path('adminCategories') }}" >Catégories produits</a>
+	        	<a href="{{path('adminCategories') }}" class="sidebar ">Catégories produits</a>
 	        </li>
 	    </ul>
 	</div>
 
-	<div class="well">
+	<div class="well sidebar">
 	    <ul class="nav nav-list">
 	    	<!--<div style="height:100px;">&nbsp;</div>-->
-	        <li class="nav-header">
-	        	<a href="{{path('adminUtilisateurs') }}" >Clients</a>
-	        </li>
 	        <li>
-	        	<a href="{{path('adminCommandes') }}" >Commandes</a>
+	        	<a href="{{path('adminCommandes') }}"  class="sidebar sup">Commandes</a>
+	        </li>	    	
+	        <li class="nav-header">
+	        	<a href="{{path('adminUtilisateurs') }}"  class="sidebar " >Clients</a>
 	        </li>
+
 	    </ul>
 	</div>
 
-	<div class="well">
+	<div class="well sidebar">
 	    <ul class="nav nav-list">
 	    	<!--<div style="height:100px;">&nbsp;</div>-->
 	        <li class="nav-header">
-	        	<a href="{{path('adminPages') }}" >pages</a>
+	        	<a href="{{path('adminPages') }}" class="sidebar " >pages</a>
 	        </li>
 	        <li class="nav-header">
-	        	<a href="{{path('adminTarif') }}" >tarifs frais de port</a>
+	        	<a href="{{path('adminTarif') }}" class="sidebar " >tarifs frais de port</a>
 	        </li>
 	    </ul>
 	</div>

@@ -1,6 +1,6 @@
 {% for categorie in categories %}
 	<li>
-		<a href="{{path('categorieProduits', {'categorie' : categorie.id}) }}">{{categorie.nom}}</a>
+		<a href="{{path('categorieProduits', {'categorie' : categorie.id}) }}" class="sidebar sub">{{categorie.nom}}</a>
 	</li>
 	
 {% endfor %}

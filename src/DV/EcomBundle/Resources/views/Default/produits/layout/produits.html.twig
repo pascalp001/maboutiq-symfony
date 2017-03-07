@@ -4,7 +4,7 @@
 <div class="container ">
     <div class="pull-right panier" >{% render(controller('EcomBundle:Panier:menu')) %}</div>      
     <div class="row">
-    	<div class="col-sm-2 navbar-default">
+    	<div class="col-sm-2 ">
         {% include '::modulesBase/nav.html.twig' %}   
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %}  
