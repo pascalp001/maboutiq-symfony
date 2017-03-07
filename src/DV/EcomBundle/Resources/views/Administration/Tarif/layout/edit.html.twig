@@ -1,0 +1,159 @@
+{% extends '::layout/layoutAdmin.html.twig' %}
+
+{% block body -%}
+
+<h1>Modification du tarif</h1>
+<form action="{{path('adminTarif_update', { 'id': entity.id} ) }}"method="POST" {{form_enctype(edit_form) }}  >
+
+	<div class="row form-group form-group-bordered">
+        <label class="col-sm-2 control-label" for="input">{{ form_label(edit_form.org) }} </label>
+        <div class="col-sm-5">{{ form_widget(edit_form.org, {'attr' : {'class':'form-control','placeholder':'Organisme' } }) }} </div>
+    </div>
+
+   	<div class="row form-group form-group-bordered">
+        <label class="col-sm-2 control-label" for="input">{{ form_label(edit_form.nom) }} </label>
+        <div class="col-sm-5">{{ form_widget(edit_form.nom, {'attr' : {'class':'form-control','placeholder':'Nom donné au tarif' } }) }} </div>
+    </div>
+
+    <div class="row form-group form-group-bordered">
+        <label class="col-sm-2 control-label" for="input">{{ form_label(edit_form.typPays) }} </label>
+        <div class="col-sm-5">{{ form_widget(form.typPays, {'attr' : {'class':'form-control','placeholder':'1=Fr, 2=DOM, 3=Eur, 4=IntNat' } }) }} </div>
+    </div>
+
+	<div class="row form-group form-group-bordered">
+        <label class="col-sm-2 control-label" for="input">{{ form_label(edit_form.annee) }} </label>
+        <div class="col-sm-5">{{ form_widget(edit_form.annee, {'attr' : {'class':'form-control','placeholder':'Organisme' } }) }} </div>
+    </div>
+
+	<div class="row form-group form-group-bordered">
+        <label class="col-sm-2 control-label" for="input">{{ form_label(edit_form.maxdim) }} </label>
+        <div class="col-sm-5">{{ form_widget(edit_form.maxdim, {'attr' : {'class':'form-control','placeholder':'Dimension maximale cm' } }) }}</div>
+        <div class="col-sm-1">cm</div>
+        <label class="col-sm-2 control-label" for="input">{{ form_label(edit_form.maxepais) }} </label>
+        <div class="col-sm-5">{{ form_widget(edit_form.maxepais, {'attr' : {'class':'form-control','placeholder':'Epaisseur maximale cm' } }) }}</div>
+        <div class="col-sm-1">cm</div>
+        {{ form_errors(edit_form.maxepais)}}
+    </div>
+
+	<div class="row form-group form-group-bordered">
+        <div class="col-sm-4"><center>Jusqu'à poids </center></div>
+        <div class="col-sm-5"><center>Prix € </center></div>
+    </div>
+
+	<div class="row form-group form-group-bordered">
+        <label class="col-sm-1 control-label" for="input">P0 </label>
+        <div class=" col-sm-3"><input type="number" value="0" class="form-control disabled" disabled /></div>
+        <div class="col-sm-1">g </div>
+        <label class="col-sm-offset-1 col-sm-1 control-label" for="input">{{ form_label(edit_form.t0) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.t0, {'attr' : {'class':'form-control','placeholder':'Prix en €' } }) }} </div>
+        <div class="col-sm-1">€ </div>
+    </div>
+
+	<div class="row form-group form-group-bordered">
+        <label class="col-sm-1 control-label" for="input">{{ form_label(edit_form.p1) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.p1, {'attr' : {'class':'form-control','placeholder':'Poids en g' } }) }} </div>
+        <div class="col-sm-1">g </div>
+        <label class="col-sm-offset-1 col-sm-1 control-label" for="input">{{ form_label(edit_form.t1) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.t1, {'attr' : {'class':'form-control','placeholder':'Prix en €' } }) }} </div>
+        <div class="col-sm-1">€ </div>
+    </div>
+
+	<div class="row form-group form-group-bordered">
+        <label class="col-sm-1 control-label" for="input">{{ form_label(edit_form.p2) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.p2, {'attr' : {'class':'form-control','placeholder':'Poids en g' } }) }} </div>
+        <div class="col-sm-1">g </div>
+        <label class="col-sm-offset-1 col-sm-1 control-label" for="input">{{ form_label(edit_form.t2) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.t2, {'attr' : {'class':'form-control','placeholder':'Prix en €' } }) }} </div>
+        <div class="col-sm-1">€ </div>
+    </div>
+
+
+	<div class="row form-group form-group-bordered">
+        <label class="col-sm-1 control-label" for="input">{{ form_label(edit_form.p3) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.p3, {'attr' : {'class':'form-control','placeholder':'Poids en g' } }) }} </div>
+        <div class="col-sm-1">g </div>
+        <label class="col-sm-offset-1 col-sm-1 control-label" for="input">{{ form_label(edit_form.t3) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.t3, {'attr' : {'class':'form-control','placeholder':'Prix en €' } }) }} </div>
+        <div class="col-sm-1">€ </div>
+    </div>
+
+	<div class="row form-group form-group-bordered">
+        <label class="col-sm-1 control-label" for="input">{{ form_label(edit_form.p4) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.p4, {'attr' : {'class':'form-control','placeholder':'Poids en g' } }) }} </div>
+        <div class="col-sm-1">g </div>
+        <label class="col-sm-offset-1 col-sm-1 control-label" for="input">{{ form_label(edit_form.t4) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.t4, {'attr' : {'class':'form-control','placeholder':'Prix en €' } }) }} </div>
+        <div class="col-sm-1">€ </div>
+    </div>   
+
+	<div class="row form-group form-group-bordered">
+        <label class="col-sm-1 control-label" for="input">{{ form_label(edit_form.p5) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.p5, {'attr' : {'class':'form-control','placeholder':'Poids en g' } }) }} </div>
+        <div class="col-sm-1">g </div>
+        <label class="col-sm-offset-1 col-sm-1 control-label" for="input">{{ form_label(edit_form.t5) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.t5, {'attr' : {'class':'form-control','placeholder':'Prix en €' } }) }} </div>
+        <div class="col-sm-1">€ </div>
+    </div>
+
+	<div class="row form-group form-group-bordered">
+        <label class="col-sm-1 control-label" for="input">{{ form_label(edit_form.p6) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.p6, {'attr' : {'class':'form-control','placeholder':'Poids en g' } }) }} </div>
+        <div class="col-sm-1">g </div>
+        <label class="col-sm-offset-1 col-sm-1 control-label" for="input">{{ form_label(edit_form.t6) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.t6, {'attr' : {'class':'form-control','placeholder':'Prix en €' } }) }} </div>
+        <div class="col-sm-1">€ </div>
+    </div> 
+
+	<div class="row form-group form-group-bordered">
+        <label class="col-sm-1 control-label" for="input">{{ form_label(edit_form.p7) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.p7, {'attr' : {'class':'form-control','placeholder':'Poids en g' } }) }} </div>
+        <div class="col-sm-1">g </div>
+        <label class="col-sm-offset-1 col-sm-1 control-label" for="input">{{ form_label(edit_form.t7) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.t7, {'attr' : {'class':'form-control','placeholder':'Prix en €' } }) }} </div>
+        <div class="col-sm-1">€ </div>
+    </div>
+
+	<div class="row form-group form-group-bordered">
+        <label class="col-sm-1 control-label" for="input">{{ form_label(edit_form.p8) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.p8, {'attr' : {'class':'form-control','placeholder':'Poids en g' } }) }} </div>
+        <div class="col-sm-1">g </div>
+        <label class="col-sm-offset-1 col-sm-1 control-label" for="input">{{ form_label(edit_form.t8) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.t8, {'attr' : {'class':'form-control','placeholder':'Prix en €' } }) }} </div>
+        <div class="col-sm-1">€ </div>
+    </div>
+
+	<div class="row form-group form-group-bordered">
+        <label class="col-sm-1 control-label" for="input">{{ form_label(edit_form.p9) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.p9, {'attr' : {'class':'form-control','placeholder':'Poids en g' } }) }} </div>
+        <div class="col-sm-1">g </div>
+        <label class="col-sm-offset-1 col-sm-1 control-label" for="input">{{ form_label(edit_form.t9) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.t9, {'attr' : {'class':'form-control','placeholder':'Prix en €' } }) }} </div>
+        <div class="col-sm-1">€ </div>
+    </div>
+
+	<div class="row form-group form-group-bordered">
+        <label class="col-sm-1 control-label" for="input">P10</label>
+        <div class="col-sm-3"><input type="number" value="88888888" class="form-control disabled" disabled /></div>
+        <div class="col-sm-1">g </div>
+        <label class="col-sm-offset-1 col-sm-1 control-label" for="input">{{ form_label(edit_form.t10) }} </label>
+        <div class="col-sm-3">{{ form_widget(edit_form.t10, {'attr' : {'class':'form-control','placeholder':'Prix en €' } }) }} </div>
+        <div class="col-sm-1">€ </div>
+    </div>
+
+<div class="row" >
+    <div class="col-sm-4">
+        <a href="{{ path('adminTarif') }}">
+            <button type="button" class="btn btn-greyish">Retour</button>           
+        </a>
+    </div>
+    <div class="col-sm-4">
+            <button type="submit" class="btn btn-info">Modifier</button>                   
+    </div>
+</form>    
+    <div class="col-sm-4">  
+           <button type="button" class="btn btn-greyish"> {{ form(delete_form) }} </button>   
+
+    </div>
+</div>
+
+{% endblock %}

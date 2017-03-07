@@ -1,39 +1,56 @@
   <section >
     <div>
       <ul id="order_step" class="step clearfix">
+
+        <!-- 01: Récapitulatif-->
         <li class="step_current first"> <span><em>01.</em>Récapitulatif</span> </li>
 
+        <!-- 02: Connexion-->
         {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
         <a  title="Se connecter"  href="{{ path('fos_user_security_login') }}" ><li class="step_todo second"  > <span><em>02.</em>Connexion</span> </li></a>
         {% else %}
         <li class="step_current second decal-G" > <span><em>02.</em>Connexion</span> </li>
         {% endif %}
 
-        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+        <!-- 03: Adresse-->
+        {% if not is_granted('IS_AUTHENTICATED_FULLY') and pmt != true %}
         <li class="step_todo third" ><span><em>03.</em>Adresse</span> </li>
         {% else %}
-          {% if adresse is defined and adresse is not null %}
+          {% if adr or pmt %}
             <li class="step_current third decal-G" > <span><em>03.</em>Adresse</span> </li>
           {% else %}
             <a title="Rentrer une adresse"  href="{{path ('adresses')}}"   ><li class="step_todo third" >
             <span><em>03.</em>Adresse</span> </li></a>
           {% endif %}
         {% endif %}
-
-        {% if adresse is defined and adresse is not null %} <!--frport<0"-->
-          <a title="Modalités de livraison"  href="{{path ('livraison')}}"   ><li class="step_todo third" style="" >
-          <span><em>04.</em>Livraison</span>
-        </li></a> 
-        {% else %}
-          <li class="step_todo four" > <span><em>04.</em>Livraison</span> </li>
-        <!--
-        <li class="step_current four decal-G" ng-show="connect==true && adress==true && frport>=0" > <span><em>04.</em>Livraison</span> </li>  -->
+        
+        <!-- 04: Livraison-->
+        {% if adr is not defined or adr is null or adr == false and pmt != true %} 
+        <li class="step_todo four" > <span><em>04.</em>Livraison</span> </li>   
+        {% else %}   
+          {% if pmt %} 
+            <li class="step_current four decal-G" > <span><em>04.</em>Livraison</span> </li> 
+          {% else %} 
+            {% if livr is not defined or livr is null or livr == false %} 
+            <a title="Modalités de livraison"  href="{{path ('frlivraison')}}"   ><li class="step_todo third" style="" >
+            <span><em>04.</em>Livraison</span>
+            </li></a> 
+            {% else %} 
+            <li class="step_current four decal-G" > <span><em>04.</em>Livraison</span> </li> 
+            {% endif %}
+          {% endif %}
         {% endif %}
-             
-        <li id="step_end" class="step_todo last"  >  <span><em>05.</em>Paiement</span> </li>
-        <!--<a title="Paiement de la commande"  href="#/paiement/" ng-click="modifPanier2()" ng-show=" connect==true && adress==true && frport>=0 && paye==false"><li id="step_end" class="step_todo last">
-          <span><em>05.</em>Paiement</span> </li></a>  
-        <li class="step_current last decal-G" ng-show="paye==true"  > <span><em>05.</em>Paiement</span> </li>     -->           
+        <!-- 05: Paiement-->  
+        {% if livr is not defined or livr is null or livr == false  %}
+        <li class="step_todo last decal-G"  > <span><em>05.</em>Paiement</span> </li>
+        {% else %}
+          {% if pmt is not defined or pmt is null or pmt == false %}
+          <a title="Paiement de la commande"  href="#/paiement/" ><li id="step_end" class="step_todo last">
+          <span><em>05.</em>Paiement</span> </li></a> 
+          {% else %} 
+          <li id="step_end" class="step_current last"  >  <span><em>05.</em>Paiement</span> </li>
+          {% endif %}
+        {% endif %}       
       </ul>
     </div>
   </section>

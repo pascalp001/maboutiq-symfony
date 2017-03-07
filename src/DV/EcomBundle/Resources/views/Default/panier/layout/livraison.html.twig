@@ -1,90 +1,212 @@
 {% extends "::layout/layout.html.twig" %}
+{% block titre %} Pascalp Version Développement > Choix des modalités de livraison {% endblock %}
 {% block body %}
+    
 <div class="container">
-    {% include 'EcomBundle:Default:panier/modulesUsed/menupanier.html.twig' %}          
-    <div class="wedge15"> &nbsp; </div>   
+  <div class="col-xs-1"> &nbsp; </div> 
+  <div class="col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}         
+  <div class="wedge15"> &nbsp; </div>   
 
-    <div class="bordure">
-      <div class="row"  >                
-        <div class=" col-sm-12">
+  <div class="bordure">
+
+    <div class="row"  >                
+      <div class=" col-sm-6">
         <h4>Choisissez votre option de livraison pour cette adresse :</h4>
-        </div>
       </div>
-      <div class="row"  >
-        <div class=" col-sm-12">
-        {{}} adresse de livraison...
-        </div>
+      <div class=" col-sm-6">
+        <h5>{{livraison.prenom}} {{livraison.nom}} : {{livraison.adresse}} {{livraison.complement}} {{livraison.cp}} {{livraison.ville}} {% if livraison.pays != 'France' %} {{livraison.pays}} {% endif %}</h5>
       </div>
-      <div class="wedge10">&nbsp;</div> 
-      <div class="row "  >
-        <div class=" col-sm-1">
-          <center>
-          <input type="radio" ng-model="modpost" value="1" checked />
-          </center>
-        </div>
-        <div class="col-sm-11 bordure">
-          <div class="row "  >
-            <div class=" col-sm-2 fondGrisClair">
+    </div>
+    <div class="wedge10">&nbsp;</div> 
+    {% if frPort['autre'] is defined %}
+    <div class="row "  >
+      <div class=" col-sm-1">
+        <center>
+        <input type="radio" name="modpost" value="1" {% if minI  == "1" %} checked="checked" {% endif %} onClick="lanceChoixPost()" />
+        </center>
+      </div>
+      <div class="col-sm-11 bordure"> <div id="Zone_Widget" style="position:absolute;left:20px; top:100px; z-index:100; display:nome"></div> 
+        <div class="row"  >
+          <div class=" col-sm-2 fondGrisClair">
             <center>
-              <img src="img/mRelay.png" style="height:88px">               
+              <img src="{{ asset('img/mRelay.png')}}" style="height:88px">               
             </center>
-            </div>
-            <div class=" col-sm-2 fondGrisClair">
-              <h4 style="color:red; width:100px">e-LIVRAISON DE VOS COLIS</h4>
-            </div>
-            <div class=" col-sm-6 bordvertiL90">
-              <em>Mondial Relay</em> expédiés sous 48h et livrés en 3 jours ouvrés. Le meilleur prix et la livraison la plus rapide
-            </div>
-            <div class=" col-sm-2 bordvertiL90">
-              {#{{coutMR+' '}}€ TTC #}coutMR € TTC
-            </div>
+          </div>
+          <div class=" col-sm-2 fondGrisClair">
+            <h4 style="color:red; width:100px">e-LIVRAISON DE VOS COLIS</h4>
+          </div>     
+          <div class=" col-sm-6 bordvertiL90">
+            <em>Mondial Relay</em> expédiés sous 48h et livrés en 3 jours ouvrés. Le meilleur prix et la livraison la plus rapide
+              <br/><button type="button" onClick="lancerMR()">Sélectionnez votre Point Relais®Mondial Relay.</button>
+              <div class="row">
+                <div class="col-sm-12" >  
+                    <div id="MR_show" style="background:#edffb2; border:solid 1px #a5f913; padding:5px; font-family:verdana; font-size:10px; margin-top: 10px; margin-left: -5px; display:none">  
+                            
+                          <div style="display:inline-block; vertical-align:top; color:#000;">  
+                
+                              <!-- La balise ayant pour Id "TargetDisplay_Widget" a été paramétrée pour reçevoir l'ID du Point Relais sélectionné -->  
+                              Point Relais Selectionné : <input type="hidden" id="TargetDisplay_Widget"/><br/>  
+                
+                              <!-- La balise ayant pour Id "Target_Widget" a été paramétrée pour reçevoir l'ID du Point Relais sélectionné   
+                              Hidden : <input type="text" id="Target_Widget" /><br/>  -->
+                
+                              <!-- La balise ayant pour Id "TargetDisplayInfoPR_Widget" a été paramétrée pour reçevoir l'adresse du Point Relais sélectionné  
+                              InfosPR : --> <span id="TargetDisplayInfoPR_Widget" > </span>
+                
+                          </div> 
+
+                          <div style="display:none;">  
+                              <!-- Les balises suivantes sont utilisées dans la fonction de CallBack pour reçevoir des données à afficher -->  
+                              <span style="font-weight:bold;text-decoration:underline;">Callback zone</span><br/>  
+                              data.ID = <span id="cb_ID"></span><br/>                               
+                              data.Nom = <span id="cb_Nom"></span><br/>                                
+                              data.Adresse = <span id="cb_Adresse"></span><br/>  
+                              data.Complt = <span id="cb_Complt"></span><br/>                             
+                              data.CP = <span id="cb_CP"></span><br/>                               
+                              data.Ville = <span id="cb_Ville"></span><br/>                                
+                              data.Pays = <span id="cb_Pays"></span><br/>                                
+                          </div>  
+                      </div>  
+                  </div> 
+              </div>
+
+          </div>
+          <div class=" col-sm-2 bordvertiR90">
+            {{frPort['autre'].frPort}}€ TTC 
           </div>
         </div>
       </div>
-      <div class="wedge30">&nbsp;</div> 
-      <div class="row "  >
-        <div class=" col-sm-1">
-          <center>
-          <input type="radio" ng-model="modpost" value="2" />
-          </center>
-        </div>
-        <div class="col-sm-11 bordure">
-          <div class="row "  >
-            <div class=" col-sm-4 fondGrisClair">
-              <img src="img/colissimo.jpg" style="height:88px">
-            </div>
-            <div class=" col-sm-6 bordvertiL90">
-              <em>Colissimo</em> expédiés sous 48h à 72h
-            </div>
-            <div class=" col-sm-2 bordvertiL90">
-              {#{{coutColi+' '}}€ TTC#}coutColi € TTC
-            </div>
+    </div>
+    {% endif %}
+
+    <div class="wedge30">&nbsp;</div> 
+
+    {% if frPort['colissimo'] is defined %}
+    <div class="row "  >
+      <div class=" col-sm-1">
+        <center>
+        <input type="radio" name="modpost" value="2" {% if minI  == "2" %}checked="checked" {% endif %} onClick="lanceChoixPost()" />
+        </center>
+      </div>
+      <div class="col-sm-11 bordure">
+        <div class="row "  >
+          <div class=" col-sm-4 fondGrisClair">
+            <img src="{{ asset('img/colissimo.jpg')}}" style="height:88px">
+          </div>
+          <div class=" col-sm-6 bordvertiL90">
+            <em>Colissimo</em> expédiés sous 48h à 72h
+          </div>
+          <div class=" col-sm-2 bordvertiL90">
+            {{frPort['colissimo'].frPort}} € TTC
           </div>
         </div>
       </div>
-      <div class="wedge30">&nbsp;</div> 
-      <div class="row " ng-show="dim==true" >
-        <div class=" col-sm-1">
-          <center>
-          <input type="radio" ng-model="modpost" value="3" />
-          </center>
-        </div>
-        <div class="col-sm-11 bordure">
-          <div class="row "  >
-            <div class=" col-sm-4 fondGrisClair">
-              <img src="img/LettreSuivie.jpg" style="height:88px">
-            </div>
-            <div class=" col-sm-6 bordvertiL90">
-              <em>Lettre suivie</em> expédiés dans enveloppe bulle affranchie ("document" de moins de 3cm d'épaisseur) sous 48h à 72h
-            </div>
-            <div class=" col-sm-2 bordvertiL90">
-              {#{{coutPost+' '}}€ TTC#} coutPost € TTC
-            </div>
+    </div>
+    {% endif %}
+
+    <div class="wedge30">&nbsp;</div> 
+
+    {% if frPort['petit'] is defined %}
+    <div class="row "  >
+      <div class=" col-sm-1">
+        <center>
+        <input type="radio" name="modpost" value="3" {% if minI == 3 %}checked {% endif %} onClick="lanceChoixPost()" />
+        </center>
+      </div>
+      <div class="col-sm-11 bordure">
+        <div class="row "  >
+          <div class=" col-sm-4 fondGrisClair">
+            <img src="{{ asset('img/LettreSuivie.jpg')}}" style="height:88px">
+          </div>
+          <div class=" col-sm-6 bordvertiL90">
+            <em>Lettre suivie</em> expédiés dans enveloppe bulle affranchie ("document" de moins de 3cm d'épaisseur) sous 48h à 72h
+          </div>
+          <div class=" col-sm-2 bordvertiL90">
+            {{frPort['petit'].frPort}}€ TTC 
           </div>
         </div>
       </div>
-      <br/>
+    </div>
+    {% endif %}
+  <form action="{{path('frlivraison')}}" method="post">
+    <div>
+    <input type="hidden" id="cb_ID" name="" value="" >
+    {{ form(form) }}
+    {# { form_widget(form.modport) }}
+    {{ form_widget(form.nom) }}<!--input type="hidden" id="cb_Nom" name="" value="" -->
+    {{ form_widget(form.prenom) }}
+    {{ form_widget(form.adresse) }}<!--input type="hidden" id="cb_Adresse" name="" value="" --> 
+    {{ form_widget(form.complement) }}
+    {{ form_widget(form.cp) }}<!--input type="hidden" id="cb_CP" name="" value="" --> 
+    {{ form_widget(form.ville) }}<!--input type="hidden" id="cb_Ville" name="" value="" -->  
+    {{ form_widget(form.submit) #} 
+    </div> 
+  </form>
+    <br/>
+ 
     </div>
 
 </div>
+{% endblock %}
+
+    {% block javascripts %}
+    <!-- script utilisé par l'API Mondial-relay -->
+  <script src="{{ asset('js/plugin/jquery/jquery.min.js')}}"></script>
+  <script src="{{ asset('https://maps.googleapis.com/maps/api/js?sensor=false')}}"></script>
+  <script src="{{ asset('https://widget.mondialrelay.com/parcelshop-picker/v3_2_1/scripts/jquery.plugin.mondialrelay.parcelshoppicker.min.js')}}"></script>
+  <script type="text/javascript">  
+
+    function lanceChoixPost(){
+      $(".cb_Modpost").attr("value", $("input[name='modpost']:checked").val());
+    }
+
+    var t;  
+  //$(document).ready(function () {  }
+      function lancerMR(){
+        $("#Zone_Widget").css("display","block");
+        // Charge le widget dans la DIV d'id "Zone_Widget" avec les paramètres indiqués :
+        $("#Zone_Widget").MR_ParcelShopPicker({  
+          Target: "#Target_Widget"                                 
+          , TargetDisplay: "#TargetDisplay_Widget"                 
+          , TargetDisplayInfoPR: "#TargetDisplayInfoPR_Widget"    
+          , Brand: "BDTEST13"                                     // Le code client Mondial Relay  
+// Lorsqu'il est indiqué "BDTEST  ", un message d'avertissement apparait pour avertir que ce sont les paramètres de test qui sont utilisés  
+          , Country: "FR"                                         // Code ISO 2 lettres du pays utilisé pour la recherche  
+          //,AllowedCountries: "FR,ES"                            // Liste des pays selectionnable par l'utilisateur pour la recherche (codes ISO 2 lettres séparés par des virgules)  
+          , PostCode: {{livraison.cp}}                                     // Code postal pour lancer une recherche par défaut  
+          //,EnableGeolocalisatedSearch: "true"                   // Active ou non la possibilité d'effectuer la recherche sur la position courante lorsque le navigateur de l'utilisateur supporte cette fonction (demande au navigateur)  
+          , ColLivMod: "24R"                                     
+          //,Weight: ""                                           // Permet de filtrer les Points Relais selon le Poids (en grammes) du colis à livrer  
+          , NbResults: "7"                                            // Nombre de Point Relais à afficher  
+          //,SearchDelay: "3"                                     // Permet de spécifier le nombre de jour entre la recherche et la dépose du colis dans notre réseau  
+          //,SearchFar: ""                                        // Permet de limiter la recherche des Points Relais à une distance maximum  
+          ,CSS: "1"                                             // Permet de spécifier que vous souhaitez utiliser votre propre feuille de style CSS lorsque vous lui donnez la valeur "0"  
+          //,MapScrollWheel: "false"                              // Active ou non le zoom on scroll sur la carte des résultats  
+          //,MapStreetView: "false"                          
+          ,ShowResultsOnMap: "true"                             // Active ou non l'affichage des résultats sur une carte  
+          , DisplayMapInfo: true                                  // Active ou non l'affichage d'une popup sur la carte avec les informations du point relais  
+          , OnParcelShopSelected:                                 
+              function (data) {                                   // Implémentation de la fonction de traitement, le paramètre Data contient un objet avec les informations du Point Relais  
+                  $("#cb_ID").html(data.ID); 
+                  $("#cb_Nom").html(data.Nom);  
+                  $(".cb_Nom").attr("value", $("#cb_Nom").text()); 
+                  $(".cb_Prenom").attr("value","");
+                  $("#cb_Adresse").html(data.Adresse1);  
+                  $(".cb_Adresse").attr("value", $("#cb_Adresse").text());
+                  $("#cb_Complt").html(data.Adresse2); 
+                  $(".cb_Complt").attr("value",  $("#cb_Complt").text()); 
+                  $("#cb_CP").html(data.CP);  
+                  $(".cb_CP").attr("value", $("#cb_CP").text());
+                  $("#cb_Ville").html(data.Ville); 
+                  $(".cb_Ville").attr("value", $("#cb_Ville").text());
+                  $("#cb_Pays").html(data.Pays);  
+                  $("#MR_show").css("display", "block")
+                  $("#Zone_Widget").css("display", "none"); 
+              }                           
+      });
+       
+    };
+
+ //});  
+    </script>  
 {% endblock %}

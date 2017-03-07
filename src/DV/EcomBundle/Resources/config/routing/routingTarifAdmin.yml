@@ -1,0 +1,26 @@
+adminTarif:
+    path:     /
+    defaults: { _controller: "EcomBundle:TarifAdmin:index" }
+
+adminTarif_new:
+    path:     /new
+    defaults: { _controller: "EcomBundle:TarifAdmin:new" }
+
+adminTarif_create:
+    path:     /create
+    defaults: { _controller: "EcomBundle:TarifAdmin:create" }
+    methods:  POST
+
+adminTarif_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "EcomBundle:TarifAdmin:edit" }
+
+adminTarif_update:
+    path:     /{id}/update
+    defaults: { _controller: "EcomBundle:TarifAdmin:update" }
+    methods:  [POST, PUT]
+
+adminTarif_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "EcomBundle:TarifAdmin:delete" }
+    methods:  [POST, DELETE]

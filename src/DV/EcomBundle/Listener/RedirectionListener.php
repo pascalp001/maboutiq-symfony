@@ -19,7 +19,7 @@ class RedirectionListener
 	public function onKernelRequest(GetResponseEvent $event)
 	{
 		$route = $event->getRequest()->attributes->get('_route'); //récupère la route courrante
-		if ($route == 'livraison' || $route == 'validation') 
+		if ($route == 'adresses' || $route == 'frlivraison' || $route == 'validation') 
 		{
 			//on sécurise l'accès aux pages par l'URL :
 			if($this->session->has('panier'))

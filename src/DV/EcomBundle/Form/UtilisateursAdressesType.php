@@ -5,6 +5,7 @@ namespace DV\EcomBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+//use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UtilisateursAdressesType extends AbstractType
 {
@@ -32,6 +33,7 @@ class UtilisateursAdressesType extends AbstractType
     /**
      * @param OptionsResolverInterface $resolver
      */
+    // public function configureOptions(OptionsResolver $resolver)
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(

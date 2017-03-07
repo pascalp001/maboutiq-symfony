@@ -16,8 +16,8 @@ class ProduitsController extends Controller
             $findProduits = $em->getRepository('EcomBundle:Produits')->byCategorie($categorie);
         else
     	   $findProduits = $em->getRepository('EcomBundle:Produits')->findBy(array('disponible' => 1));  
-        
-        $produits  = $this->get('knp_paginator') ->paginate( $findProduits,  $request->query->get('page', 1), 3 );
+        //page par défaut et nombre de produits par page :
+        $produits  = $this->get('knp_paginator') ->paginate( $findProduits,  $request->query->get('page', 1), 5 );
 
         $session = $request->getSession();      
         if($session->has('panier')) 
@@ -45,12 +45,12 @@ class ProduitsController extends Controller
         return $this->render('EcomBundle:Default:Recherche/modulesUsed/recherche.html.twig', array('form'=>$form->createView() ));
     }
     
-     public function rechercheTraitementAction()
+     public function rechercheTraitementAction(Request $request)
     {
         $form = $this->createForm(new RechercheType());
-    	if ($this->get('request')->getMethod() == 'POST')
+    	if ($request->getMethod() == 'POST')
     	{
-    		$form->bind($this->get('request'));
+    		$form->bind($request);
     		$em = $this->getDoctrine()->getManager();
     		$produits = $em->getRepository('EcomBundle:Produits')->recherche($form['recherche']->getData());
     	}

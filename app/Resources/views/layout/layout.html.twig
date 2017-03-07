@@ -101,17 +101,32 @@
 <!--End page -->
     {% block javascripts %}
         <script src="{{ asset('js/plugin/jquery/jquery.min.js')}}"></script>
-        <script src="{{ asset('bootstrap/js/bootstrap.js')}}"></script>
-    
+        <script src="{{ asset('js/plugin/jquery-ui-1.12.1.custom/jquery-ui.js')}}"></script>
+        <script src="{{ asset('bootstrap/js/bootstrap.js')}}"></script>   
+
+    <!-- script pour afficher ou non la sidebar menu -->
       <script>  $(document).ready(function () {
+        var toggle=false;
       $(".toggle-sidebar").click(function () {
-        //alert('ici');
-        $("#sidebar").toggleClass("collapsed");
-        $("#content").toggleClass("col-md-12 col-md-10");        
+        toggle=!toggle;
+        if(toggle)
+        {   //$("#sidebar").addClass("in" );
+            $("#sidebar").toggleClass("show", 1000, "swing" );
+            $("#content").removeClass("col-md-12").addClass("col-md-10"); 
+        } 
+        else
+        {          
+            $("#sidebar").toggleClass("show", 1000, "swing");
+            $("#content").removeClass("col-md-10").addClass("col-md-12");
+                //$("#sidebar").removeClass("in" );                
+                       
+            
+        }      
         return false;
       });
     });
-      </script>
+    </script>
+
     {% endblock %}
 </body>
 </html>

@@ -3,7 +3,7 @@
 {% block body -%}
 <h1>Modification du produit</h1>
 <form action="{{path('adminProduits_update', { 'id': entity.id} ) }}"method="POST" {{form_enctype(edit_form) }}  >
-	        <div class="row form-group form-group-bordered">
+	<div class="row form-group form-group-bordered">
         <label class="col-sm-2 control-label" for="input">{{ form_label(edit_form.nom) }} </label>
         <div class="col-sm-5">{{ form_widget(edit_form.nom, {'attr' : {'class':'form-control','placeholder':'Nom' } }) }} </div>
     </div>

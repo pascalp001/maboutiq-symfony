@@ -1,7 +1,8 @@
 {% extends "::layout/layout.html.twig" %}
 {% block body %}
 <div class="container">
-    {% include 'EcomBundle:Default:panier/modulesUsed/menupanier.html.twig' %}          
+	<div class="col-xs-1"> &nbsp; </div> 
+    <div class="col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}         
     <div class="wedge15"> &nbsp; </div>   
 
     <div class="row">

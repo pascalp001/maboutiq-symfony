@@ -1,0 +1,49 @@
+{% extends '::layout/layoutAdmin.html.twig' %}
+
+{% block body -%}
+    <h1>Tarifs des frais de port</h1>
+
+    <table class="table table-store records_list">
+        <thead>
+            <tr><th>Organisme</th>
+                <th>Nom du tarif</th>
+                <th>Pays concernés*</th>
+                <th>Année</th>
+                <th>T0</th>
+                <th>< P0 <</th>
+                <th>T1</th>
+                <th>< P1 <</th>
+                <th>T2</th>
+                <th> </th>
+                <th>Modifier</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.org }}</td>
+                <td>{{ entity.nom }}</td>    
+                <td>{{ entity.typPays }}</td>            
+                <td>{{ entity.annee }}</td>
+                <td>{{ entity.t0 |number_format(2)}} €</td>
+                <td>< {{ entity.p0 }}g <</td>
+                <td>{{ entity.t1 |number_format(2)}} €</td>
+                <td>< {{ entity.p1 }}g <</td>
+                <td>{{ entity.t2 |number_format(2)}} €</td>
+                <td>...</td>
+               
+                <td>
+                    
+                        <a href="{{ path('adminTarif_edit', { 'id': entity.id }) }}" title="modifier le tarif" ><i class="glyphicon glyphicon-edit"></i></a>
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br/>
+            <a href="{{ path('adminTarif_new') }}">
+                <button type="button" class="btn btn-greyish">Créer un nouveau tarif</button>
+            </a>
+            * : 1=France, 2=DOM, 3=Europe, 4=International
+    {% endblock %}

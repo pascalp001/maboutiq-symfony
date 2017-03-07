@@ -72,7 +72,7 @@ class ProduitsAdminController extends Controller
         ));*/
         $form = $this->createForm(new ProduitsType(), $entity );
 
-        $form->add('submit', 'submit', array('label' => 'Créer le nouveau produit', 'attr'=>array('class'=>'btn btn-success')));
+        $form->add('submit', 'submit', array('label' => 'Créer le nouveau produit', 'attr'=>array('class'=>'btn btn-info')));
 
         return $form;
     }

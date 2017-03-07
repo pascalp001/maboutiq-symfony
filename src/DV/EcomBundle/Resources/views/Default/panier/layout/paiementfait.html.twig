@@ -1,0 +1,65 @@
+{% extends "::layout/layout.html.twig" %}
+{% block titre %} Pascalp Version Développement > Paiement effectué {% endblock %}
+{% block body %}
+<div class="container">
+           <div class="col-xs-1"> &nbsp; </div> 
+  <div class="col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}  
+    <div class="wedge10"> &nbsp; </div> 
+ <div class="pull-right panier" >{% render(controller('EcomBundle:Panier:menu')) %}</div>
+ <div class="wedge5"> &nbsp; </div> 
+
+	<div class="row">
+        <div class="col-md-2">
+        {% include '::modulesBase/nav.html.twig' %}   
+        {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %} 
+        </div> 
+		<div class="col-md-9">
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}  
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <div class="alert alert-warning">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}  
+            <h2>Mon compte</h2>
+                <table class="table table-store table-hover">
+                    <thead>
+                        <tr>
+                            <th>Références</th>
+                            <th>Date</th>
+                            <th>Prix TTC</th>
+                            <th>Statut</th>
+                            <th>voir pdf</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if commandes|length == 0 %}
+                            <tr><td><center>Aucune commande actuellement</center></td>
+                            </tr>
+                        {% endif %}
+                        {% for commande in commandes %}
+                        <tr>
+                            <td>ref : {{ commande.reference }}</td>
+                            <td>{{ commande.date |date('d/m/Y') }}</td>
+                            <td>{{ commande.commande.totalTTC }}€</td>
+                            {% if commande.livrer == 1 %} <td>livré</td>
+                            {% else %}
+                                {% if commande.preparer == 1 %} <td>préparé</td>
+                                {% else %} <td>en cours</td>
+                                {% endif %}   
+                            {% endif %}   
+                            <td><a href="{{path('facturePDF', { 'id' : commande.id }) }}" target="_blank" title="voir et imprimer la facture en format pdf"><i class="glyphicon glyphicon-eye-open"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="wedge20"> &nbsp; </div> 
+                <a href="{{path ('produits')}}" class="btn btn-primary ">Retour boutique</a>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

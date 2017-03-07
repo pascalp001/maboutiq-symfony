@@ -1,3 +1,7 @@
+routingTarifAdmin:
+    resource: "@EcomBundle/Resources/config/routing/routingTarifAdmin.yml"
+    prefix:   /admin/Tarif
+
 routingAdmin:
     resource:  "@EcomBundle/Resources/config/routing/routingAdmin.yml"
     prefix: /admin
