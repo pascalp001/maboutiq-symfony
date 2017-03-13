@@ -32,6 +32,10 @@ class ProduitsController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$produit = $em->getRepository('EcomBundle:Produits')->find($id);
     	if (!$produit) throw  $this->createNotFoundException('La page n\'existe pas'); 
+        $popularite = $produit->getPopularite();
+        $produit->setPopularite($popularite+1);
+        $em->persist($produit);
+        $em->flush();
         $session = $this->getRequest()->getSession();      
         if($session->has('panier')) 
             {$panier = $session->get('panier');}

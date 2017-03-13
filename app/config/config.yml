@@ -93,6 +93,10 @@ liip_imagine:
 
     filter_sets:
         cache: ~
+        imgProduitFormat0:  
+            quality: 75
+            filters:
+                thumbnail: { size: [40, 28], mode: outbound }
         imgProduitFormat1:  
             quality: 75
             filters:

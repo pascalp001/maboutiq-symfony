@@ -17,6 +17,7 @@ class TarifType extends AbstractType
         $builder
             ->add('nom', 'text', array('label' => 'Nom du tarif'))
             ->add('org', 'text', array('label' => 'Organisme'))
+            ->add('img', 'text', array('label' => 'Url image'))
             ->add('typPays', 'text', array('label' => 'Classe pays'))
             ->add('annee', 'text', array('label' => 'Année'))
             ->add('maxdim', 'text', array('label' => 'Dimension maxi'))

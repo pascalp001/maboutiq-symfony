@@ -37,6 +37,13 @@ class Tarif
     private $org;
 
     /**
+     * @var string
+     *
+    * @ORM\Column(name="img", type="string", length=255)
+     */
+    private $img;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="typPays", type="integer")
@@ -820,5 +827,53 @@ class Tarif
     public function getOrg()
     {
         return $this->org;
+    }
+
+    /**
+     * Set typPays
+     *
+     * @param integer $typPays
+     *
+     * @return Tarif
+     */
+    public function setTypPays($typPays)
+    {
+        $this->typPays = $typPays;
+
+        return $this;
+    }
+
+    /**
+     * Get typPays
+     *
+     * @return integer
+     */
+    public function getTypPays()
+    {
+        return $this->typPays;
+    }
+
+    /**
+     * Set maxepais
+     *
+     * @param integer $maxepais
+     *
+     * @return Tarif
+     */
+    public function setMaxepais($maxepais)
+    {
+        $this->maxepais = $maxepais;
+
+        return $this;
+    }
+
+    /**
+     * Get maxepais
+     *
+     * @return integer
+     */
+    public function getMaxepais()
+    {
+        return $this->maxepais;
     }
 }

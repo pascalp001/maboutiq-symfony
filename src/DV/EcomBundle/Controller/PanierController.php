@@ -76,7 +76,15 @@ class PanierController extends Controller
         $session =  $request->getSession(); 
         if (!$session->has('panier')) $session->set('panier', array()); //equivaut à if(!isset($_SESSION['panier']))... on initialise à un tableau vide
         $panier = $session->get('panier');
+        //Incrémentation de la popularité :
+        $em = $this->getDoctrine()->getManager();
+        $produit = $em->getRepository('EcomBundle:Produits')->find($id);        
+        $popularite = $produit->getPopularite();
+        $produit->setPopularite($popularite+1);
+        $em->persist($produit);
+        $em->flush();
         
+        //Rajout du produit dans le panier avec la quantité indiquée :
         if (array_key_exists($id, $panier))
         {
             // ce produit existe déjà dans le panier...            
@@ -272,14 +280,14 @@ class PanierController extends Controller
                 {                    
                     $frPort = $this->calculTarif($tarif, $totalPoids);
                     $frPort = $frPort + 0.4; // suivi 0.4 € 
-                    $tabFrPort['petit']=array('organisme' => $tarif->getOrg(), 'nom' => $tarif->getNom(), 'frPort' => $frPort);
+                    $tabFrPort['petit']=array('organisme' => $tarif->getOrg(), 'nom' => $tarif->getNom(), 'img'=> $tarif->getImg(), 'frPort' => $frPort);
                     $tabFrPort['minI']=3; $tabFrPort['minF']=$frPort; 
                 }
                 elseif(strtolower($tarif->getOrg()) == 'la poste' && $tarif->getMaxepais()>100 )
                 { 
                     $frPort = $this->calculTarif($tarif, $totalPoids);
                     $frPort = $frPort + 0; //  
-                    $tabFrPort['colissimo']=array('organisme' => $tarif->getOrg(), 'nom' => $tarif->getNom(), 'frPort' => $frPort); 
+                    $tabFrPort['colissimo']=array('organisme' => $tarif->getOrg(), 'nom' => $tarif->getNom(), 'img'=> $tarif->getImg(), 'frPort' => $frPort); 
                     if(($tabFrPort['minF']!=0 && $tabFrPort['minF']> $frPort) ||   $tabFrPort['minF'] == 0 )
                     {$tabFrPort['minI']=2; $tabFrPort['minF']=$frPort;}   
                 }
@@ -294,7 +302,7 @@ class PanierController extends Controller
                         if(($tabFrPort['minF']!=0 && $tabFrPort['minF']> $frPortA) ||   $tabFrPort['minF'] == 0 )
                         {$tabFrPort['minI']=1; $tabFrPort['minF']=$frPortA;}          
                     } 
-                    $tabFrPort['autre']=array('organisme' => $tarif->getOrg(), 'nom' => $tarif->getNom(), 'frPort' => $frPortA);               
+                    $tabFrPort['autre']=array('organisme' => $tarif->getOrg(), 'nom' => $tarif->getNom(), 'img'=> $tarif->getImg(), 'frPort' => $frPortA);               
                 }
             } 
             //echo("<br/>ici, minI=".$tabFrPort['minI']." et minF=".$tabFrPort['minF'] );
@@ -322,9 +330,9 @@ class PanierController extends Controller
     public function validationAdressesAction( Request $request)
     { 
         // On arrive ici via la route 'frlivraison' : validation des adresses de livraison et facturation
-        //1 - Si on arrive ici depuis adresses.html.twig, on met les id des adresses en session :
+        // 1 - Si on arrive ici depuis adresses.html.twig, on met les id des adresses en session :
         if($request->getMethod() == "POST") $this->setAdressesOnSession($request);
-        //    - et sinon, dans tous les cas, on récupère les adresses mises en session :
+        // 1bis - et sinon, dans tous les cas, on récupère les adresses mises en session :
         $session = $request->getSession();
         if (!$session->has('adresse')) $session->set('adresse', array()); 
         $adresse = $session->get('adresse');   
@@ -335,14 +343,14 @@ class PanierController extends Controller
         $livraison = $em ->getRepository('EcomBundle:UtilisateursAdresses')->find($adresse['livraison']);
         $facturation = $em ->getRepository('EcomBundle:UtilisateursAdresses')->find($adresse['facturation']);
 
-        // 3 - On met l'adresse de livraison en session :       
+        // 3 - On met l'adresse de livraison en session (distincte de adresse['livraison'] car modifiable):       
         if (!$session->has('livraison')) $session->set('livraison', array()); 
         $session->set('livraison', $livraison); 
 
         // 4 - On calcule les frais de port qu'on passe en session :
         $tabFrPort = $this->frlivraison($produits, $livraison, $request);
-        $session->set('tabFrPort', $tabFrPort);
-        //var_dump( $livraison);
+        $session->set('tabFrPort', $tabFrPort); 
+
         //5 - On prépare un objet Transport destiné au formulaire choix du mode de livraison :
         $transport = new Transport();
         $transport->setNom( $livraison->getNom());
@@ -358,20 +366,17 @@ class PanierController extends Controller
             case 1: $minI = "1"; break;
             case 2: $minI = "2"; break;
             default: $minI ="3"; 
-        }
-        //var_dump($tabFrPort);
-        //echo("minI vaut".$minI);
-        //die();
+        } 
         $form->add('modport', HiddenType::class, array( 'attr' => array('value' =>$minI,'class' => 'cb_Modpost')))
-             ->add('submit', 'submit', array('label' => 'Valider ce choix de livraison', 'attr'=>array('class'=>'btn btn-info')));
+             ->add('submit', 'submit', array('label' => 'Valider ce choix de livraison', 'attr'=>array('class'=>'btn btn-info pull-right')));
 
-       // 6 - On récupère les frais de port et les éléments pour créer la commande l'enregistre et la retourne vers validation.html.twig
+       // 6 - On récupère le choix et les frais de port correspondants, pour créer la commande, l'enregistrer et la retourner vers validation.html.twig
         if($request->getMethod() == "POST")
         {            
-            $form->handleRequest($request); //On récupère le formulaire en cours                        
+            $form->handleRequest($request);                      
             if($form->isValid())
             {
-                // 1 - On récupère le choix du mode de livraison et frais de port correspondant
+                // 61 - On récupère le choix du mode de livraison et frais de port correspondants
                 $session = $request->getSession();  
                 if (!$session->has('tabFrPort')) $tabFrPort = array();
                 $tabFrPort = $session->get('tabFrPort');
@@ -384,10 +389,10 @@ class PanierController extends Controller
                     default: $choixFrPort = null;
                 }
                 if (!$session->has('tabFrPort')) $tabFrPort['choix'] = null;
-                $tabFrPort['choix'] = $choixFrPort; // $tabFrPort['choix'] contient organisme, nom et frPort choisi
+                $tabFrPort['choix'] = $choixFrPort; // $tabFrPort['choix'] contient organisme, image, nom et frPort choisi
                 $session->set('tabFrPort', $tabFrPort); // On met l'ensemble de $tabFrPort en session
 
-                // 2 - On met à jour l'adresse de livraison de la commande si elle a été modifiée (point relais) :       
+                // 62 - On met à jour l'adresse de livraison de la commande si elle a été modifiée (point relais) :       
                 if (!$session->has('livraison')) $livraison = array(); 
                 $livraison = $session->get('livraison'); 
                 $livraison->setNom( $transport->getNom());
@@ -398,24 +403,42 @@ class PanierController extends Controller
                 $livraison->setVille($transport->getVille());  
                 // On met livraison (éventuellement modifié ) en session, mais on laisse intacte la base de données
                 $session->set('livraison', $livraison) ;  
+
+                // 63 - On lance validationAction qui affiche validation.html.twig
                return $this->redirect($this->generateUrl('validation'));      
             }
+            // Erreur validation formulaire :
             return $this->redirect($this->generateUrl('frlivraison'));
-           /*,'produits' => $produits,'facturation' => $facturation, 'panier' => $session->get('panier') */
         }
+
+        //5bis - affichage de livraison.html.twig et du formulaire choix du mode de livraison :
         return $this->render('EcomBundle:Default:panier/layout/livraison.html.twig',  array('livraison' => $livraison, 'frPort' => $tabFrPort, 'minI'=>$minI, 'form'=>$form->createView() ) );
     }   
 
     public function validationAction( Request $request)
     {
-                // On prépare la commande finale en vue de la validation :
-            $em = $this->getDoctrine()->getManager(); 
-            $prepareCommande = $this->forward('EcomBundle:Commandes:prepareCommande');
-            $session = $request->getSession();      
-            $commande = $em->getRepository('EcomBundle:Commandes')->find($prepareCommande->getContent());
+        // On prépare la commande finale (mise en base de données et en session) en vue de la validation :
+        $em = $this->getDoctrine()->getManager(); 
+        $prepareCommande = $this->forward('EcomBundle:Commandes:prepareCommande');
+        $session = $request->getSession();      
+        $commande = $em->getRepository('EcomBundle:Commandes')->find($prepareCommande->getContent());
 
         return $this->render('EcomBundle:Default:panier/layout/validation.html.twig',
         		array('commande' => $commande));
-       
+        // La suite des actions se passe dans CommandesController.php via routingCommande.yml :
+        // paiementAction permet le choix du mode de paiement et affiche paiement.html.twig
+        // Choix 1 (CB banque) et 2 (Paypal) : accès à l'API externe correspondant ; envoi id vendeur+id commande+TTC+date ; réception OK ; payer = 1 ;
+        // Choix 3 (virement) et 4 (chèque) : rien
+        // validationCommandeAction valide la commande complète, efface les données de la commande en session, envoi un mail, envoi un message 'succès', redirige vers paiementfaitAction
+        // paiementfaitAction affiche les commandes du client et paiementfait.html.twig (avant retour boutique) ; affiche statut paiement 'en attente' si virement ou chèque
+   }
+
+   public function showcgvAction( Request $request)
+   {
+        // Affiche les CGV de l'entreprise vendeur dans un nouvel onglet
+        $em = $this->getDoctrine()->getManager();  
+        $id=1;
+        $vendeur = $em->getRepository('EcomBundle:Vendeur')->findOneById($id);
+        return $this->render('PagesBundle:Default:pages/layout/cgv.html.twig', array( 'vendeur'=> $vendeur));   
    }
 }

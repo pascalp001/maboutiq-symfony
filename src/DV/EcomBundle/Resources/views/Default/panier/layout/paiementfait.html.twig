@@ -58,7 +58,10 @@
                             {% if commande.livrer == 1 %} <td>livré</td>
                             {% else %}
                                 {% if commande.preparer == 1 %} <td>préparé</td>
-                                {% else %} <td>en cours</td>
+                                {% else %} 
+                                    {% if commande.payer != 1 %} <td>paiement en attente</td>
+                                    {% else %}<td>en cours</td>
+                                    {% endif %} 
                                 {% endif %}   
                             {% endif %}   
                             <td><a href="{{path('facturePDF', { 'id' : commande.id }) }}" target="_blank" title="voir et imprimer la facture en format pdf"><i class="glyphicon glyphicon-eye-open"></i></a></td>

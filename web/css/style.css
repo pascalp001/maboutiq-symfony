@@ -15,6 +15,28 @@
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
           box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 }
+@media screen and (max-width:690px){
+  .col-xs-2.sidebar {
+    min-width:80px;
+    margin-left:-13px;
+    margin-right:0;
+  }
+  .well.sidebar {
+    min-width:80px;
+    margin-left:-80px;
+    margin-right:0;
+  }
+  .container {
+    margin-left:0;
+    display:block;
+  }
+  .panier {
+    min-width:120px;
+    padding-top:0;
+    font-size:0.8em;
+    color:red;
+  }
+}
 
 .pagination {
   display: inline-block;

@@ -1,0 +1,272 @@
+{% extends "::layout/layout.html.twig" %}
+{% block titre %} Pascalp Version Développement > Choix des modalités de livraison {% endblock %}
+{% block body %}
+    
+<div class="container">
+  <div class="col-xs-1"> &nbsp; </div> 
+  <div class="col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}         
+  <div class="wedge15"> &nbsp; </div>   
+ {% if showboite %} 
+    <!-- ******** Boîte de dialogue : ************ -->
+  <div class="layer_cart_overlay" ></div>  
+  <div class="inscrpt inscrpt3"   >
+    <div class="layer_cart_product">
+
+
+ {% endif %}     
+<!-- Choix des modalités de règlement : ************************************************ -->  
+      <div class="row bordure">
+          <div class="col-xs-12 col-sm-offset-2 col-sm-8 " >
+
+            <h3 class="connexion">SÉLECTIONNEZ VOTRE MODE DE PAIEMENT</h3>
+
+          </div>   
+          <div class="col-xs-12 col-sm-2 " >
+
+            <div class="smallf decal-V">Montant : {{commande.commande.totalTTC |number_format(2)}} € TTC </div>
+
+          </div>     
+      </div>      
+      <div class="wedge10">&nbsp;</div>
+      <div class="bordure">
+
+        <div class="wedge10">&nbsp;</div> 
+
+        <div class="row "  >
+          <div class=" col-sm-1">
+            <center>
+            <input type="radio" name="choixPmt" value="1" onClick="modbq1()" checked />
+            </center>
+          </div>
+          <div class="col-sm-11 ">
+            <div class="row bordure"  >
+              <div class=" col-sm-2 fondGrisClair bordTop wedge70"  >
+                <h4 style="color:gray; ">Carte Bancaire</h4>
+              </div>              
+              <div class=" col-sm-2 fondGrisClair bordTop wedge70" style="min-width:125px; padding:0" >
+              <center >
+                <img src="{{ asset ('img/mastercardvisa.jpg')}}" style="height:25px; margin-top:7px">  
+                <img src="{{ asset ('img/cb.jpg')}}" style="height:25px; margin-top:7px">              
+              </center>
+              </div>
+              <div class="col-sm-6 bordvertiL50">
+                 Paiement immédiat, effectué avec le système de paiement sécurisé {# {sysSecur} #} de la banque {# {nomBqSecur} #}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wedge30">&nbsp;</div> 
+
+        <div class="row "  >
+          <div class=" col-sm-1">
+            <center>
+            <input type="radio" name="choixPmt" value="2" onClick="modbq2()"/>
+            </center>
+          </div>
+          <div class="col-sm-11 ">
+            <div class="row bordure"  >
+              <div class=" col-sm-2 fondGrisClair bordTop wedge70" >
+                <h4 style="color:gray; ">PAYPAL</h4>
+              </div>              
+              <div class=" col-sm-2 fondGrisClair bordTop wedge70"  >
+              <center>
+                <img src="{{ asset ('img/paypal.png')}}" style="width:70px; margin-top:7px">               
+              </center>
+              </div>
+              <div class="col-sm-6 bordvertiL50">
+                 Votre compte paypal est débité du montant total de votre commande dès la validation de votre paiement.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wedge30">&nbsp;</div> 
+
+        <div class="row "  >
+          <div class=" col-sm-1">
+            <center>
+            <input type="radio" name="choixPmt" value="3" onClick="modbq3()" />
+            </center>
+          </div>
+          <div class="col-sm-11  " >
+            <div class="row bordure"  >
+              <div class=" col-sm-4 fondGrisClair bordTop wedge70">
+                <h4 style="color:gray; ">Virement bancaire à la commande</h4>
+              </div>              
+
+              <div class="col-sm-8 bordvertiL50">
+                 Votre commande sera traitée dès réception de votre règlement bancaire sur notre compte (comptez 5 jours ouvrés à partir de votre ordre de virement).
+              </div>
+            </div>
+            <div id="modbq3" class="row collapse" > 
+              	<div class="wedge20">&nbsp;</div> 
+                <div class="row  ">
+                  <div class="col-sm-5" >
+                    <div class="row  bordure" style="margin-left:15px" >
+                      <span class="col-sm-12 " >Compte bancaire {{vendeur.comptebanc}}</span>
+                      <span class="col-sm-12 ">IBAN {{vendeur.iban}} </span>
+                      <span class="col-sm-12 ">Bank Identification Code (BIC) {{vendeur.bic}}  </span>
+                      <span class="col-sm-12 ">Nom de la banque Banque {{vendeur.banque}}  </span>
+                    </div>
+                  </div>
+                </div>
+                <br/>
+                <div class="row">
+                  <div class="col-sm-12" >                 
+                    <span>Le montant de votre virement et le numéro de votre commande figurent sur la plage suivante récapitulatif de commande. Sans réception de votre virement dans les 10 jours, votre commande sera annulée.</span>
+                  </div>
+                </div>
+                <br/>
+                <div class="row">
+                  <div class="col-sm-12" >  
+                    <span>IMPORTANT : Nous vous remercions de <bold>mentionner votre numéro de commande lors de votre virement</bold>. Si cette référence fait défaut ou est incorrecte, votre paiement risque de ne pas être mis en rapport avec votre commande, dans ce cas l'envoi de votre colis sera retardé de plusieurs jours.</span>
+                  </div>
+                </div>
+            </div>
+
+         </div>
+        </div>
+    
+        <div class="wedge30">&nbsp;</div> 
+
+        <div class="row "  >
+          <div class=" col-sm-1">
+            <center>
+            <input type="radio" name="choixPmt" value="4" onClick="modbq4()" />
+            </center>
+          </div>
+          <div class="col-sm-11 ">
+            <div class="row bordure"  >
+              <div class=" col-sm-4 fondGrisClair bordTop wedge70" >
+                <h4 style="color:gray; ">Chèque</h4>
+              </div>              
+
+              <div class="col-sm-8 bordvertiL70">
+                 Votre commande sera traitée dès réception de votre chèque (montant inférieur à 100€) ou dès encaissement sur notre compte (montant supérieur à 100 € - comptez 10 jours ouvrés à partir de votre envoi).
+              </div>
+              <div id="modbq4" class="row collapse"  > 
+                <div class="row">
+                  <div class="col-sm-6" >
+                    <div class="row bordure" style="margin-left:15px" >
+                      <span class="col-sm-12 " >Chèque à envoyer à l'adresse suivante : </span>
+                      <span class="col-sm-12 ">{{vendeur.nomcomplet}} </span>
+                      <span class="col-sm-12 ">{{vendeur.adresse1}}{{vendeur.adresse2}}  </span>
+                      <span class="col-sm-12 ">{{vendeur.cp}} {{vendeur.ville}} </span>
+                    </div>
+                  </div>
+                </div>
+                <br/>
+                <div class="row">
+                  <div class="col-sm-12" >                 
+                    <span>Sans réception de votre chèque dans les 10 jours, votre commande sera annulée.</span>
+                  </div>
+                </div>
+                <br/>
+                <div class="row">
+                  <div class="col-sm-12" >  
+                    <span>IMPORTANT : Nous vous remercions de <bold>mentionner votre numéro de commande au dos de votre chèque</bold>. Si cette référence fait défaut ou est incorrecte, votre paiement risque de ne pas être mis en rapport avec votre commande, dans ce cas l'envoi de votre colis sera retardé de plusieurs jours.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wedge30">&nbsp;</div> 
+
+        <br/>
+      </div>
+
+<!--  retour   ou  Payer: ******************************************* -->
+      <div class="bordure">
+        <div class="wedge5">&nbsp;</div>  
+        <div class="row">                 
+          <div class="col-xs-2">
+			<a href="{{path ('validation')}}" class="btn btn-greyish ">Retour</a>
+          </div>
+
+          <div class="col-sm-offset-4 col-md-offset-8 col-xs-2" >
+
+            <div class="clearfix"></div>
+            {# Formulaire pour envoi vers l'API banque (ici envoyé vers validationCommandeAction(): #}
+            <form action="{{path('paiement', {'id' : commande.id}) }}" method="POST" > 
+    			{{ form(form)}}
+            </form>            
+          </div>
+        </div>         
+      </div>
+     
+      <div class="wedge5">&nbsp;</div> 
+
+    </div>
+  </div >
+
+<!-- BOÎTE DE DIALOGUE : paiement effectué -->
+{% if showboite %}
+  <div ng-show="showAlerte==true">
+    <div class="layer_cart_overlay" ></div>
+    <div class="layer_cart" >
+      <div class="layer_cart_product" style="background:#EEE;" ng-show="toggleVue==1">
+        <div class="wedge30">&nbsp;</div> 
+        <div class="row">
+            <div class="col-xs-12  " >
+              <h4 class="connexion">CONNEXION CENTRE DE PAIEMENT SÉCURISÉ</h4>
+            </div>
+        </div>   
+        <div class="wedge30">&nbsp;</div> 
+        <div class="row">
+            <div class="col-xs-12  bordure" >
+              <div class="wedge20">&nbsp;</div> 
+              <h4 class="connexion">Montant du règlement : {{commandes.commande.totalTTC |number_format(2)}}€ €</h4>
+              <div class="wedge20">&nbsp;</div> 
+            </div>
+        </div>  
+        <div class="row">    
+          <div class="col-xs-12 ">
+              <div class="wedge20">&nbsp;</div> 
+            <center>               
+             <button type="button" class="btn btn-warning" ng-click="toggleVue=2; validPaiement();" title="Accepter le règlement de la commande" >PAIEMENT ACCEPTÉ</button>               
+            </center>
+          </div>
+        </div> 
+        <div style="height:40px">&nbsp;</div>
+      </div> 
+
+      <div class="layer_cart_product" style="background:orange;" ng-show="toggleVue==2">    
+        <div class="row">
+          <div class="col-xs-12 " >
+            <div class="wedge60">&nbsp;</div> 
+            <h4 class="connexion">VOTRE PAIEMENT A BIEN ÉTÉ EFFECTUÉ</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 " >
+            <div class="wedge20">&nbsp;</div> 
+            <h4 class="connexion">NOUS VOUS EN REMERCIONS</h4>
+          </div>
+        </div>
+        <div class="wedge50">&nbsp;</div> 
+          
+        <div class="row">    
+          <div class="col-xs-offset-4 col-xs-4 ">
+            <center>               
+             <a  ><button type="button" class="seConnect"  title="Retour vers le panier" >OK</button>  </a>             
+            </center>
+          </div>
+        </div>  
+        <div style="height:40px">&nbsp;</div>
+{% endif %}
+
+      </div>
+    </div >
+  </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('js/plugin/jquery/jquery.min.js')}}"></script>	
+<script>
+	function modbq1() {  $(".modbq").attr("value", 1);}
+	function modbq2() {  $(".modbq").attr("value", 2);}
+	function modbq3() {  $("#modbq3").toggle(500); $(".modbq").attr("value", 3);}
+	function modbq4() {  $("#modbq4").toggle(500); $(".modbq").attr("value", 4);}
+</script>
+{% endblock %}

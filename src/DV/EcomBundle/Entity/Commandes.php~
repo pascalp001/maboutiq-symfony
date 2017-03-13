@@ -37,6 +37,20 @@ class Commandes
     /**
      * @var boolean
      *
+     * @ORM\Column(name="payer", type="boolean")
+     */
+    private $payer;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="modpmt", type="integer")
+     */
+    private $modpmt;
+
+    /**
+     * @var boolean
+     *
      * @ORM\Column(name="preparer", type="boolean")
      */
     private $preparer;
@@ -182,6 +196,30 @@ class Commandes
     {
         return $this->utilisateur;
     }
+    
+    /**
+     * Set valider
+     *
+     * @param boolean $valider
+     *
+     * @return Commandes
+     */
+    public function setValider($valider)
+    {
+        $this->valider = $valider;
+
+        return $this;
+    }
+
+    /**
+     * Get valider
+     *
+     * @return boolean
+     */
+    public function getValider()
+    {
+        return $this->valider;
+    }
 
     /**
      * Set preparer
@@ -253,4 +291,5 @@ class Commandes
     {
         return $this->archiver;
     }
+
 }

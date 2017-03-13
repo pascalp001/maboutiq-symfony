@@ -37,6 +37,13 @@ class Tarif
     private $org;
 
     /**
+     * @var string
+     *
+    * @ORM\Column(name="img", type="string", length=255)
+     */
+    private $img;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="typPays", type="integer")
@@ -868,5 +875,29 @@ class Tarif
     public function getMaxepais()
     {
         return $this->maxepais;
+    }
+
+    /**
+     * Set img
+     *
+     * @param string $img
+     *
+     * @return Tarif
+     */
+    public function setImg($img)
+    {
+        $this->img = $img;
+
+        return $this;
+    }
+
+    /**
+     * Get img
+     *
+     * @return string
+     */
+    public function getImg()
+    {
+        return $this->img;
     }
 }

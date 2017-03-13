@@ -5,3 +5,7 @@ pages_adminPages:
 page:
     path:     /page/{id}
     defaults: { _controller: PagesBundle:Pages:page}
+
+cgv:
+    path:    /cgv
+    defaults: { _controller: EcomBundle:Panier:showcgv}    

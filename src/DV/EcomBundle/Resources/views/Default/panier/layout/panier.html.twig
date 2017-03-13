@@ -39,6 +39,7 @@
         		<table class="table table-striped table-hover">
         			<thead>
         				<tr>
+                            <th></th>
         					<th>Références</th>
         					<th>Quantité</th>
         					<th>Prix unitaire HT</th>
@@ -55,6 +56,7 @@
                         {% for produit in produits %}
         				<tr>
                             <form action="{{path('ajoutpanier2',{'id': produit.id})  }}" method="get">
+                            <td><img src="{{ produit.image.AssetPath|imagine_filter('imgProduitFormat0')}}" alt="image {{ produit.image.name }}" title="{{produit.image.name}}" width="40px" ></td>
         					<td>{{produit.nom}}</td>
         					<td>
         						<select name="qte" class="col-sm-8" onChange="this.form.submit()">

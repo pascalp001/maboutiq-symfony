@@ -110,7 +110,7 @@
       $(".toggle-sidebar").click(function () {
         toggle=!toggle;
         if(toggle)
-        {   //$("#sidebar").addClass("in" );
+        {   
             $("#sidebar").toggleClass("show", 1000, "swing" );
             $("#content").removeClass("col-md-12").addClass("col-md-10"); 
         } 
@@ -118,9 +118,6 @@
         {          
             $("#sidebar").toggleClass("show", 1000, "swing");
             $("#content").removeClass("col-md-10").addClass("col-md-12");
-                //$("#sidebar").removeClass("in" );                
-                       
-            
         }      
         return false;
       });

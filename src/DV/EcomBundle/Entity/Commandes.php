@@ -37,6 +37,20 @@ class Commandes
     /**
      * @var boolean
      *
+     * @ORM\Column(name="payer", type="boolean")
+     */
+    private $payer;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="modpmt", type="integer")
+     */
+    private $modpmt;
+
+    /**
+     * @var boolean
+     *
      * @ORM\Column(name="preparer", type="boolean")
      */
     private $preparer;
@@ -207,6 +221,55 @@ class Commandes
         return $this->valider;
     }
 
+
+    /**
+     * Set payer
+     *
+     * @param boolean $payer
+     *
+     * @return Commandes
+     */
+    public function setPayer($payer)
+    {
+        $this->payer = $payer;
+
+        return $this;
+    }
+
+    /**
+     * Get payer
+     *
+     * @return boolean
+     */
+    public function getPayer()
+    {
+        return $this->payer;
+    }
+
+    /**
+     * Set modpmt
+     *
+     * @param integer $modpmt
+     *
+     * @return Commandes
+     */
+    public function setModpmt($modpmt)
+    {
+        $this->modpmt = $modpmt;
+
+        return $this;
+    }
+
+    /**
+     * Get modpmt
+     *
+     * @return integer
+     */
+    public function getModpmt()
+    {
+        return $this->modpmt;
+    }
+
     /**
      * Set preparer
      *
@@ -278,4 +341,8 @@ class Commandes
         return $this->archiver;
     }
 
+    public function __toString()
+    {
+        return $this->getNom();
+    }
 }
