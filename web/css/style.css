@@ -849,6 +849,35 @@ a:hover .modulelogin-login {
 .form-group-bordered {
    border:1px solid #579;
 }
+input[type="checkbox"].form-store {display:none;}
+input[type="checkbox"].form-store + label::before{
+    content:"";
+    display:inline-block;
+    border:1px solid red;
+    text-align: left;
+    width:12px;
+    height:12px;
+    background:#cf2;
+    border-radius:12px;
+    cursor: pointer;
+}
+input[type="checkbox"][disabled].form-store + label::before{
+    background:#dd5; opacity:0.5;
+    border:1px solid #553;
+    cursor: default;
+}
+
+input[type="checkbox"].form-store:checked + label::before{
+    background:limegreen;
+    border:1px solid green;
+}
+
+input[disabled].form-store:checked + label::before{
+    background:green;
+    border:1px solid #040;
+    cursor: default;
+}
+
 /* Menu side-bar qui collapse sur la droite (ou vers la gauche) */
 /*
   <div class="container">

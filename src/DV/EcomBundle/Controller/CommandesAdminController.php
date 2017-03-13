@@ -43,6 +43,19 @@ class CommandesAdminController extends Controller
         $this->container->get('setNewFacture')->facture($facture);
     }
 
+    public function bonlivraisonPDFAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        //on récupère la  facture de $id en vérifiant que c'est bien le bon utilisateur et que valider=1 :  
+        $facture = $em->getRepository('EcomBundle:Commandes')->find($id) ; 
+        if(!$facture){
+            $this->getFlashBag()->add('error', 'une erreur est survenue');
+            return $this->redirect($this->generateUrl('adminCommandes'));
+        }
+
+        $this->container->get('setNewBL')->bonlivraison($facture);
+    }    
+
 
     /**
      * Creates a new Commandes entity.

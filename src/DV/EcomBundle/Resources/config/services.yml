@@ -25,3 +25,7 @@ services:
     setNewFacture:
         class:  DV\EcomBundle\Services\GetFacture
         arguments: [@service_container]
+
+    setNewBL:
+        class:  DV\EcomBundle\Services\GetBL
+        arguments: [@service_container]

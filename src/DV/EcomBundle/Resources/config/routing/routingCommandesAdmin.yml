@@ -6,6 +6,10 @@ adminShowFacture:
     path:     /facture/{id}
     defaults:  { _controller: "EcomBundle:CommandesAdmin:facturePDF" }
 
+adminShowBL:
+    path:     /bon_de_livraison/{id}
+    defaults:  { _controller: "EcomBundle:CommandesAdmin:bonlivraisonPDF" }
+
 adminCommandes_show:
     path:     /{id}/show
     defaults: { _controller: "EcomBundle:CommandesAdmin:show" }

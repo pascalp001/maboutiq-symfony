@@ -1,15 +1,18 @@
 {% extends '::layout/layoutAdmin.html.twig' %}
 
 {% block body -%}
+
     <h1>Liste des commandes</h1>
 
     <table class="table table-store records_list">
         <thead>
-            <tr>
+            <tr style="font-size:0.9em">
                 <th>Id</th>
                 <th>Date</th>
                 <th>Référence</th>  
-                <th>Client</th>  
+                <th style="text-align:left; padding-left:20px;">Client</th> 
+                <th style="text-align:left; padding-left:10px;">Validé</th> 
+                <th style="text-align:left; padding-left:10px;">Payé</th> 
                 <th>Préparé</th>
                 <th>Livré</th>
                 <th >Voir BL</th>
@@ -19,26 +22,77 @@
         </thead>
         <tbody>
         {% for entity in entities %}
-            <tr>
+            <tr style="font-size:0.8em">
                 <td><a href="{{ path('adminCommandes_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{% if entity.date %}{{ entity.date|date('d-m-Y H:i:s') }}{% endif %}</td>
+
+                <td>{% if entity.date %}{{ entity.date|date('d/m H')~'h'~entity.date|date('i') }}{% endif %}</td>
+
                 <td>{{ entity.reference }}</td>
-                <td>{{ entity.utilisateur.username }} 
+
+                <td style="text-align:left">{{ entity.utilisateur.username }} 
                     {% if entity.commande.facturation.nom is defined %}({% endif %}
                     {% if entity.commande.facturation.prenom is defined %} {{ entity.commande.facturation.prenom }}{% endif %}
                     {{ entity.commande.facturation.nom }}
                     {% if entity.commande.facturation.nom is defined %} ){% endif %}</td>
-                <td>{{ entity.valider }}</td>
-                <td>livré</td>
-                <td>BL</td>
-                <td>
-                        <a href="{{ path('adminShowFacture', { 'id': entity.id }) }}" target="_blank" ><i class="glyphicon glyphicon-eye-open"></i></a>
 
+                <td {% if entity.valider != 1 %} style="color:red;" {% endif %}><div style="width:20px;border:1px solid #99a;border-radius:4px;margin-left:14px; background:#ccc;">{% if entity.valider != 1 %} 0 {% else %}{{ entity.valider }}{% endif %}</div></td>
+
+                <td style="text-align:left; ">{% if entity.valider == 1 %}
+                        {% if entity.payer == 0 %} <input type="checkbox"  name="paye[{{entity.id}}]" value="0" id="paye{{entity.id}}" class="form-store" ><label for="paye{{entity.id}}" style="font-size:0.8em">&nbsp; attente
+                            {% if entity.modpmt == 3 %}(virt){% endif %}
+                            {% if entity.modpmt == 4 %}(chq){% endif %}</label>
+                        {% else %} <input type="checkbox" name="paye[{{entity.id}}]" value="1" checked disabled id="paye{{entity.id}}" class="form-store"><label for="paye{{entity.id}}" style="font-size:0.8em" >&nbsp; payé
+                            {% if entity.modpmt == 1 %}(CB){% endif %}
+                            {% if entity.modpmt == 2 %}(Payp){% endif %}</label>
+                        {% endif %}
+                    {% else %}&nbsp;&nbsp;&nbsp; -  
+                    {% endif %}
                 </td>
-                <td>Archivé</td>
+
+                <td>{% if entity.valider == 1 %}
+
+                    <input type="checkbox"  name="prepare[{{entity.id}}]" value="0" id="prepare{{entity.id}}" {% if entity.payer == 0 %} disabled {% endif %}class="form-store" >
+                    <label for="prepare{{entity.id}}"  style="font-size:0.8em">&nbsp; préparer</label>
+                    {% else %}&nbsp;&nbsp;&nbsp; -  
+                    {% endif %}
+                </td>
+
+                <td>{% if entity.valider == 1 %}  
+                         <input type="checkbox"  name="livre[{{entity.id}}]" value="0" id="livre{{entity.id}}" {% if entity.preparer == 0 %}disabled {% endif %} class="form-store" >
+                         <label for="livre{{entity.id}}" style="font-size:0.8em">&nbsp; livrer </label>                    
+                    {% else %}&nbsp;&nbsp;&nbsp; -  
+                    {% endif %}
+                </td>
+
+                <td>{% if entity.valider == 1 %}
+                    <a href="{{ path('adminShowBL', { 'id': entity.id }) }}" target="_blank" ><i class="glyphicon glyphicon-eye-open">BL</i></a> 
+                    {% else %}&nbsp;&nbsp;&nbsp; -  
+                    {% endif %}
+                </td>
+
+                <td>{% if entity.valider == 1 %}
+                 <a href="{{ path('adminShowFacture', { 'id': entity.id }) }}" target="_blank" ><i class="glyphicon glyphicon-eye-open">Fact</i></a> 
+                    {% else %}&nbsp;&nbsp;&nbsp; -  
+                    {% endif %}
+                </td>
+
+                <td>{% if entity.valider == 0 or entity.livrer == 1 %}
+                    <input type="checkbox"  name="archive[{{entity.id}}]" value="0" id="archive{{entity.id}}" class="form-store" >
+                    <label for="archive{{entity.id}}"  style="font-size:0.8em">&nbsp; archiver  </label>
+                    {% else %}
+                    <input type="checkbox"  name="archive[{{entity.id}}]" value="0" disabled id="archive{{entity.id}}" class="form-store" >
+                    <label for="archive{{entity.id}}"  style="font-size:0.8em">&nbsp; archiver </label>
+                     {% endif %}                
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    <div style="position:fixed; top:80px; left:450px"><button type="submit" name="send" class="btn btn-greyish" >Valider l'ensemble des modifications ci-dessous</button> </div>
 
+    {% endblock %}
+     {% block javascripts %}
+        <script src="{{ asset('js/plugin/jquery/jquery.min.js')}}"></script>
+        <script src="{{ asset('bootstrap/js/bootstrap.js')}}"></script>
+        <script src="{{ asset('bundles/pages/ckeditor/ckeditor.js')}}"></script>
     {% endblock %}
