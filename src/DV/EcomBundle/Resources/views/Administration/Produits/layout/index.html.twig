@@ -11,6 +11,8 @@
                 <th>Prix HT</th>
                 <th>Prix TTC</th>
                 <th>Disponible</th>
+                <th>Stock réel</th>
+                <th>Popularité</th>
                 <th colspan="2">Actions</th>
             </tr>
         </thead>
@@ -22,6 +24,8 @@
                 <td>{{ entity.prix }}</td>
                 <td>{{ entity.prix|tva(entity.tva.multiplicate) |number_format(2)}}</td>
                 <td>{{ entity.disponible }}</td>
+                <td>{{ entity.stockreel }}</td>
+                <td>{{ entity.popularite }}</td>
                 <td>
                         <a href="{{ path('adminProduits_show', { 'id': entity.id }) }}" title="voir le produit"><i class="glyphicon glyphicon-eye-open"></i></a>
                 </td>

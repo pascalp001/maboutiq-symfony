@@ -4,8 +4,8 @@
 
 <h1>Création d'un nouveau tarif</h1>
 <form action="{{path('adminTarif_create', { 'id': entity.id} ) }}" method="POST" {{form_enctype(form) }}  >
-	{{ form(form)}}
-	{#<div class="row form-group form-group-bordered">
+	
+	<div class="row form-group form-group-bordered">
         <label class="col-sm-2 control-label" for="input">{{ form_label(form.org) }} </label>
         <div class="col-sm-5">{{ form_widget(form.org, {'attr' : {'class':'form-control','placeholder':'(ex: La Poste)' } }) }} </div>
         {{ form_errors(form.org)}}
@@ -16,7 +16,11 @@
         <div class="col-sm-5">{{ form_widget(form.nom, {'attr' : {'class':'form-control','placeholder':'Nom donné au tarif' } }) }} </div>
         {{ form_errors(form.nom)}}
     </div>
-
+    <div class="row form-group form-group-bordered">
+        <label class="col-sm-2 control-label" for="input">{{ form_label(form.img) }} </label>
+        <div class="col-sm-5">{{ form_widget(form.img, {'attr' : {'class':'form-control','placeholder':'Nom donné au tarif' } }) }} </div>
+        {{ form_errors(form.img)}}
+    </div>
     <div class="row form-group form-group-bordered">
         <label class="col-sm-2 control-label" for="input">{{ form_label(form.typPays) }} </label>
         <div class="col-sm-5">{{ form_widget(form.typPays, {'attr' : {'class':'form-control','placeholder':'1=Fr, 2=DOM, 3=Eur, 4=IntNat' } }) }} </div>
@@ -34,6 +38,9 @@
         <div class="col-sm-5">{{ form_widget(form.maxdim, {'attr' : {'class':'form-control','placeholder':'Dimension maximale cm' } }) }}</div>
         <div class="col-sm-1">cm</div>
         {{ form_errors(form.maxdim)}}
+    </div>
+
+    <div class="row form-group form-group-bordered">
         <label class="col-sm-2 control-label" for="input">{{ form_label(form.maxepais) }} </label>
         <div class="col-sm-5">{{ form_widget(form.maxepais, {'attr' : {'class':'form-control','placeholder':'Epaisseur maximale cm' } }) }}</div>
         <div class="col-sm-1">cm</div>
@@ -146,7 +153,8 @@
         <div class="col-sm-1">€ </div>
     </div>
     {{ form_widget(form.submit)}}
-</form> #}
+    {{ form_widget(form._token)}}
+</form> 
 <div class="row" >
     <div class="col-sm-4">
         <a href="{{ path('adminTarif') }}">

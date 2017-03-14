@@ -2,7 +2,7 @@
 
 {% block body -%}
 
-    <h1>Liste des commandes</h1>
+    <h1>Liste des commandes {{archive}}</h1>
 
     <table class="table table-store records_list">
         <thead>
@@ -18,6 +18,7 @@
                 <th >Voir BL</th>
                 <th >Voir Fact</th>
                 <th>Archiver</th>
+                <th>Annuler</th>
             </tr>
         </thead>
         <tbody>
@@ -37,11 +38,16 @@
 
                 <td {% if entity.valider != 1 %} style="color:red;" {% endif %}><div style="width:20px;border:1px solid #99a;border-radius:4px;margin-left:14px; background:#ccc;">{% if entity.valider != 1 %} 0 {% else %}{{ entity.valider }}{% endif %}</div></td>
 
+            <form action="{{path('adminCommandes_modif', {'id': entity.id })  }}" method="post">
                 <td style="text-align:left; ">{% if entity.valider == 1 %}
-                        {% if entity.payer == 0 %} <input type="checkbox"  name="paye[{{entity.id}}]" value="0" id="paye{{entity.id}}" class="form-store" ><label for="paye{{entity.id}}" style="font-size:0.8em">&nbsp; attente
+                        {% if entity.payer == 0 %} 
+                            <input type="checkbox"  name="paye[{{entity.id}}]" value="false" id="paye{{entity.id}}" class="form-store"  onClick="$(this).attr({'value':'true','checked':'checked'});this.form.submit();" >
+                            <label for="paye{{entity.id}}" style="font-size:0.8em">&nbsp; attente
                             {% if entity.modpmt == 3 %}(virt){% endif %}
                             {% if entity.modpmt == 4 %}(chq){% endif %}</label>
-                        {% else %} <input type="checkbox" name="paye[{{entity.id}}]" value="1" checked disabled id="paye{{entity.id}}" class="form-store"><label for="paye{{entity.id}}" style="font-size:0.8em" >&nbsp; payé
+                        {% else %} 
+                            <input type="checkbox" name="paye[{{entity.id}}]" value="true" checked disabled id="paye{{entity.id}}" class="form-store">
+                            <label for="paye{{entity.id}}" style="font-size:0.8em" >&nbsp; payé
                             {% if entity.modpmt == 1 %}(CB){% endif %}
                             {% if entity.modpmt == 2 %}(Payp){% endif %}</label>
                         {% endif %}
@@ -50,16 +56,25 @@
                 </td>
 
                 <td>{% if entity.valider == 1 %}
-
-                    <input type="checkbox"  name="prepare[{{entity.id}}]" value="0" id="prepare{{entity.id}}" {% if entity.payer == 0 %} disabled {% endif %}class="form-store" >
-                    <label for="prepare{{entity.id}}"  style="font-size:0.8em">&nbsp; préparer</label>
+                        {% if entity.preparer == 0 %}
+                        <input type="checkbox"  name="prepare[{{entity.id}}]" value="false" id="prepare{{entity.id}}" {% if entity.payer == 0 %} disabled {% else %} onClick="$(this).attr({'value':'true','checked':'checked'});this.form.submit();" {% endif %}class="form-store"  >
+                        <label for="prepare{{entity.id}}"  style="font-size:0.8em">&nbsp; préparer</label>
+                        {% else %}  
+                        <input type="checkbox"  name="prepare[{{entity.id}}]" value="true" checked disabled id="prepare{{entity.id}}" class="form-store"  >
+                        <label for="prepare{{entity.id}}"  style="font-size:0.8em">&nbsp; préparé</label>
+                        {% endif %}
                     {% else %}&nbsp;&nbsp;&nbsp; -  
                     {% endif %}
                 </td>
 
                 <td>{% if entity.valider == 1 %}  
-                         <input type="checkbox"  name="livre[{{entity.id}}]" value="0" id="livre{{entity.id}}" {% if entity.preparer == 0 %}disabled {% endif %} class="form-store" >
-                         <label for="livre{{entity.id}}" style="font-size:0.8em">&nbsp; livrer </label>                    
+                        {% if entity.livrer == 0 %}
+                         <input type="checkbox"  name="livre[{{entity.id}}]" value="false" id="livre{{entity.id}}" {% if entity.preparer == 0 %}disabled {% else %} onClick="$(this).attr({'value':'true','checked':'checked'});this.form.submit();" {% endif %} class="form-store" >
+                         <label for="livre{{entity.id}}" style="font-size:0.8em">&nbsp; livrer </label> 
+                        {% else %} 
+                         <input type="checkbox"  name="livre[{{entity.id}}]" value="true" checked disabled id="livre{{entity.id}}"  class="form-store" >
+                         <label for="livre{{entity.id}}" style="font-size:0.8em">&nbsp; livré </label> 
+                        {% endif %}                 
                     {% else %}&nbsp;&nbsp;&nbsp; -  
                     {% endif %}
                 </td>
@@ -76,23 +91,33 @@
                     {% endif %}
                 </td>
 
-                <td>{% if entity.valider == 0 or entity.livrer == 1 %}
-                    <input type="checkbox"  name="archive[{{entity.id}}]" value="0" id="archive{{entity.id}}" class="form-store" >
+                <td>{% if ( entity.valider == 0 or entity.livrer == 1 ) and entity.archiver == 0 %}
+                    <input type="checkbox"  name="archive[{{entity.id}}]" value="false" id="archive{{entity.id}}" class="form-store" onClick="$(this).attr({'value':'true','checked':'checked'});this.form.submit();" >
                     <label for="archive{{entity.id}}"  style="font-size:0.8em">&nbsp; archiver  </label>
                     {% else %}
-                    <input type="checkbox"  name="archive[{{entity.id}}]" value="0" disabled id="archive{{entity.id}}" class="form-store" >
-                    <label for="archive{{entity.id}}"  style="font-size:0.8em">&nbsp; archiver </label>
+                       {% if ( entity.valider == 1 and entity.livrer == 0 ) and entity.archiver == 0 %} 
+                        <input type="checkbox"  name="archive[{{entity.id}}]" value="0" disabled id="archive{{entity.id}}" class="form-store" >
+                        <label for="archive{{entity.id}}"  style="font-size:0.8em">&nbsp; archiver </label>
+                        {% else %}
+                        <input type="checkbox"  name="archive[{{entity.id}}]" value="0" checked disabled id="archive{{entity.id}}" class="form-store" >
+                        <label for="archive{{entity.id}}"  style="font-size:0.8em">&nbsp; archivé </label>
+                        {% endif %} 
                      {% endif %}                
                 </td>
+                <td>
+                    <button type="checkbox"  name="suppr[{{entity.id}}]" value="false" id="suppr{{entity.id}}" onClick="this.form.submit();" class="form-store" style="font-size:0.8em; background:transparent;">
+                    <label for="suppr{{entity.id}}"  >&nbsp; <span class="glyphicon glyphicon-trash"></span>  </button>              
+                </td>
+            </form>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    <div style="position:fixed; top:80px; left:450px"><button type="submit" name="send" class="btn btn-greyish" >Valider l'ensemble des modifications ci-dessous</button> </div>
 
     {% endblock %}
-     {% block javascripts %}
+    {% block javascript3s %}
         <script src="{{ asset('js/plugin/jquery/jquery.min.js')}}"></script>
         <script src="{{ asset('bootstrap/js/bootstrap.js')}}"></script>
         <script src="{{ asset('bundles/pages/ckeditor/ckeditor.js')}}"></script>
+
     {% endblock %}

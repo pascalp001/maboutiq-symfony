@@ -15,7 +15,7 @@ class TarifType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom', 'text', array('label' => 'Nom du tarif'))
+            ->add('nom', 'text', array('label' => 'Nom tarif'))
             ->add('org', 'text', array('label' => 'Organisme'))
             ->add('img', 'text', array('label' => 'Url image'))
             ->add('typPays', 'text', array('label' => 'Classe pays'))

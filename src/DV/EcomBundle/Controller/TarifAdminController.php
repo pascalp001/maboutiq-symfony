@@ -117,7 +117,7 @@ class TarifAdminController extends Controller
     private function createEditForm(Tarif $entity)
     {
         $form = $this->createForm(new TarifType(), $entity);
-        $form->add('submit', 'submit', array('label' => 'Modifier'));
+        $form->add('submit', 'submit', array('label' => 'Modifier', 'attr'=>array('class'=>'btn btn-info')));
 
         return $form;
     }
@@ -187,7 +187,7 @@ class TarifAdminController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('adminTarif_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Supprimer', 'attr'=>array('class'=>'btn btn-warning')))
             ->getForm()
         ;
     }

@@ -2,6 +2,10 @@ adminCommandes:
     path:     /
     defaults: { _controller: "EcomBundle:CommandesAdmin:index" }
 
+adminCommandesArchives:
+    path:     /archives
+    defaults: { _controller: "EcomBundle:CommandesAdmin:archive" }
+
 adminShowFacture:
     path:     /facture/{id}
     defaults:  { _controller: "EcomBundle:CommandesAdmin:facturePDF" }
@@ -36,3 +40,8 @@ adminCommandes_delete:
     path:     /{id}/delete
     defaults: { _controller: "EcomBundle:CommandesAdmin:delete" }
     methods:  [POST, DELETE]
+
+adminCommandes_modif:
+    path:     /{id}/modif
+    defaults: { _controller: "EcomBundle:CommandesAdmin:modif" }
+    methods:  [POST, PUT]    

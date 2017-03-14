@@ -23,11 +23,77 @@ class CommandesAdminController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('EcomBundle:Commandes')->findAll();
+        $entities = $em->getRepository('EcomBundle:Commandes')->findBy(array('archiver' => 0),array('date'=>'asc'));  
+        $archive = "";
 
+        return $this->render('EcomBundle:Administration:Commandes/layout/index.html.twig', array(
+            'entities' => $entities, 'archive' => $archive
+        ));
+    }
+
+    public function archiveAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('EcomBundle:Commandes')->findBy(array('archiver' => 1),array('date'=>'asc'));  
+        $archive = " archivées";
+
+        return $this->render('EcomBundle:Administration:Commandes/layout/index.html.twig', array(
+            'entities' => $entities, 'archive' => $archive
+        ));
+    }
+
+    public function modifAction($id, Request $request)
+    {
+        
+
+        if($request->getMethod() == "POST") 
+        {   
+            $em = $this->getDoctrine()->getManager();
+            $Commande = $em->getRepository('EcomBundle:Commandes')->find($id);
+            //if (!$Commande) {
+             //   throw $this->createNotFoundException('Unable to find Commandes'.$id.' entity.');
+            //}
+
+            $payeId    = $request->request->get('paye')   ; 
+            $prepareId = $request->request->get('prepare');
+            $livreId   = $request->request->get('livre')  ;
+            $archiveId = $request->request->get('archive');
+            $supprId   = $request->request->get('suppr')  ;
+
+            if ($payeId[$id])      $Commande->setPayer ('1')   ;
+            if ($prepareId[$id])   $Commande->setPreparer('1') ;
+            if ($livreId[$id])     $Commande->setLivrer ('1')  ;
+            if ($archiveId[$id])   $Commande->setArchiver('1') ;           
+            $em->persist($Commande);
+            
+            if ($supprId[$id]) $em->remove($Commande);
+
+            $em->flush();  
+// Mail de statut :
+        if($prepareId[$id] || $livreId[$id])
+        {
+            $message = \Swift_Message::newInstance()
+                      ->setSubject('Votre commande en cours')
+                      ->setFrom(array('pascal.p8610@gmail.com'=>"ProG-dev"))
+                      ->setTo($Commande->getUtilisateur()->getEmailCanonical())
+                      ->setCharset('utf-8')
+                      ->setContentType('text/html');
+
+            if($prepareId[$id]) { $message = $message->setBody($this->renderView('EcomBundle:Default:SwiftLayout/prepareCommande.html.twig', 
+                    array('utilisateur'=> $Commande->getUtilisateur()))); }
+            if($livreId[$id]) { $message = $message->setBody($this->renderView('EcomBundle:Default:SwiftLayout/livreCommande.html.twig', 
+                    array('utilisateur'=> $Commande->getUtilisateur()))); }
+
+            $this->get('mailer')->send($message);            
+        }
+
+        $entities = $em->getRepository('EcomBundle:Commandes')->findAll();
         return $this->render('EcomBundle:Administration:Commandes/layout/index.html.twig', array(
             'entities' => $entities,
         ));
+        }
+        return $this->redirect($this->generateUrl('adminCommandes'));
     }
 
     public function facturePDFAction($id)
