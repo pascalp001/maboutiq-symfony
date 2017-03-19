@@ -1,0 +1,62 @@
+{% extends "::layout/layoutAdmin.html.twig" %}
+
+{% block body -%}
+    <h1>Liste des avis reçus</h1>
+
+    <table class="records_list table-store">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>                
+                <th>User</th>
+                <th>Produit</th>
+                <th>Note</th>
+                <th>Titre</th>
+                <th>Commentaire</th>
+                <th>Valider</th>
+                <th>Modifier</th>
+                <th>Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+    {% if aviss|length >0%}
+        {% for avis in aviss %}
+            <tr>
+            <form action="{{path('adminAvis_modif', {'id': avis.id })  }}" method="post">
+                <td>{{ avis.id }}</td>
+                <td>{% if avis.date %}{{ avis.date|date('d-m-Y') }}{% endif %}</td>               
+                <td>{{ avis.user }}</td>
+                <td>{{ avis.produit.nom }}</td>
+                <td>{{ avis.stars }}/5</td>
+                <td>{{ avis.titre }}</td>
+                <td>{{ avis.comment }}</td>
+
+                <td>{% if avis.valid == 0 %}
+                        <input type="checkbox"  name="valid[{{avis.id}}]" value="false" id="valid{{avis.id}}" onClick="$(this).attr({'value':'true','checked':'checked'});this.form.submit();" class="form-store"  >
+                        <label for="valid{{avis.id}}"  style="font-size:0.8em">&nbsp; valider</label>
+                        {% else %}  
+                        <input type="checkbox"  name="valid[{{avis.id}}]" value="true" checked disabled id="valid{{avis.id}}" class="form-store"  >
+                        <label for="valid{{avis.id}}"  style="font-size:0.8em">&nbsp; validé</label>
+                        {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('adminAvis_edit', { 'id': avis.id }) }}" title="modifier l'avis'"><i class="glyphicon glyphicon-edit"></i></a>
+                </td>
+                <td>
+                    <button type="checkbox"  name="suppr[{{avis.id}}]" value="false" id="suppr{{avis.id}}" onClick="this.form.submit();" class="form-store" style="font-size:0.8em; background:transparent;">
+                    <label for="suppr{{avis.id}}"  >&nbsp; <span class="glyphicon glyphicon-trash"></span>  </label> </button>              
+                </td>
+  
+            </form>                 
+            </tr>           
+        {% endfor %}
+    {% else %}<tr><td colspan="10"> Il n'y a pas d'avis nouveau encore non validé. </td></tr>
+    {% endif %}        
+        </tbody>
+    </table>
+
+        <br/>
+            <a href="{{ path('adminProduits') }}">
+                <button type="button" class="btn btn-greyish">Retour</button>
+            </a>
+    {% endblock %}

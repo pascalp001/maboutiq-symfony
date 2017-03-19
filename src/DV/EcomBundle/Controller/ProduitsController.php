@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use DV\EcomBundle\Form\RechercheType ;
 use DV\EcomBundle\Entity\Categories;
+use DV\EcomBundle\Form\AvisType ;
+use DV\EcomBundle\Entity\Avis;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ProduitsController extends Controller
 {
@@ -54,7 +57,7 @@ class ProduitsController extends Controller
         $form = $this->createForm(new RechercheType());
     	if ($request->getMethod() == 'POST')
     	{
-    		$form->bind($request);
+    		$form->handleRequest($request);
     		$em = $this->getDoctrine()->getManager();
     		$produits = $em->getRepository('EcomBundle:Produits')->recherche($form['recherche']->getData());
     	}
@@ -64,4 +67,82 @@ class ProduitsController extends Controller
 		}
    		return $this->render('EcomBundle:Default:produits/layout/produits.html.twig', array('produits'=>$produits) );
     }
+
+    public function indexAvisAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $avis = $em->getRepository('EcomBundle:Avis')->findBy(array('produit'=>$id,'valid'=>1));
+        $stars=0; $addAvis = false;
+        if (!$avis)
+        {
+            $nbavis = 0;
+            $note = -1;
+        }
+        else
+        {
+            $nbavis = count($avis);
+            foreach($avis as $avi)
+            {
+                $stars+=$avi->getStars();
+            }
+            $note = round($stars/$nbavis, 2);
+        }
+
+        return $this->render('EcomBundle:Default:produits/modulesUsed/indexAvis.html.twig', array('avis' => $avis, 'nbAvis' =>$nbavis, 'note'=> $note, 'addAvis'=>$addAvis));
+    }
+
+    public function listeAvisAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $avis = $em->getRepository('EcomBundle:Avis')->findBy(array('produit'=>$id,'valid'=>1));
+         if (!$avis)
+        {
+            $nbavis = 0;
+        }
+        else
+        {
+            $nbavis = count($avis);
+        }
+        return $this->render('EcomBundle:Default:produits/modulesUsed/listeAvis.html.twig', array('avis' => $avis, 'nbAvis' =>$nbavis));
+    }
+
+    public function addAvisAction($id, Request $request)
+    {
+        $utilisateur = $this->container->get('security.token_storage')->getToken()->getUser()->getUsername();   
+        $em = $this->getDoctrine()->getManager();
+        $produit = $em->getRepository('EcomBundle:Produits')->find($id);  
+
+        $avis = new Avis();
+        $form = $this->createForm(new AvisType, $avis);
+        $form->add('submit', SubmitType::class, array('label' => '+', 'attr'=>array('class'=>'btn btn-grosplus ')));
+
+
+        //Cas où on a déjà rentré un avis mémorisé en session :
+        $session = $request->getSession();
+        if (!$session->has('avis')) {$session->set('avis', array()); $aviss = null;}
+        else {$aviss = $session->get('avis');  }
+
+        if ($request->getMethod() == 'POST')
+        {            
+            $form->handleRequest($request);
+
+            if($form->isSubmitted() && $form->isValid())
+            {
+            $avis->setUser($utilisateur);
+            $avis->setProduit($produit);
+            $avis->setDate(new \DateTime());
+            $avis->setValid(0);
+            //var_dump($avis);
+            //die();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($avis);
+            $em->flush();                 
+            return $this->redirect($this->generateUrl('presentation', array('id'=>$id) ));           
+            }
+         return $this->redirect($this->generateUrl('presentation', array('id'=>$id))); 
+        }
+
+        return $this->render('EcomBundle:Default:produits/modulesUsed/avis.html.twig', array('id'=>$id,'avis'=>$avis, 'addAvis'=>true,  'form' => $form->createView() ));
+    }
+
 }

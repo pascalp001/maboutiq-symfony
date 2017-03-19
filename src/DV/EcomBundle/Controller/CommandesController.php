@@ -90,7 +90,7 @@ class CommandesController extends Controller
       else { $commande = new Commandes();}
 
       //On prépare la commande :
-      $commande->setUtilisateur($this->container->get('security.context')->getToken()->getUser());
+      $commande->setUtilisateur($this->container->get('security.token_storage')->getToken()->getUser());
       $commande->setDate(new \DateTime());
       $commande->setPayer(0);
       $commande->setModpmt(0);
@@ -119,17 +119,11 @@ class CommandesController extends Controller
     $showboite = false; $idv=1;
     $em = $this->getDoctrine()->getManager();
     $commande = $em->getRepository('EcomBundle:Commandes')->find($id);    
-    //$comm = $commande->getCommande();
-    //$commdate =  $commande->getDate();
     $vendeur = $em->getRepository('EcomBundle:Vendeur')->findOneById($idv);
-    //  //$form = $this->createForm(new PrePmtType, $commande);
 
     $buildform = $this->createFormBuilder();
-    $buildform //->add('token', HiddenType::class, array( 'attr' => array('value' => $comm['token'])))
-          //->add('totalTTC', HiddenType::class, array( 'attr' => array('value' => $comm['totalTTC'])))
-          //->add('date', HiddenType::class, array( 'attr' => array('value' => $commdate)))
-          ->add('modbq', HiddenType::class, array('label'=>false, 'attr'=> array('class'=>'modbq', 'value'=>'1')))
-          ->add('submit', SubmitType::class, array('label' => 'Payer la commande', 'attr'=>array('class'=>'btn btn-info pull-right', 'style'=>'color:#fff; font-weight:600;')));
+    $buildform->add('modbq', HiddenType::class, array('label'=>false, 'attr'=> array('class'=>'modbq', 'value'=>'1')))
+              ->add('submit', SubmitType::class, array('label' => 'Payer la commande', 'attr'=>array('class'=>'btn btn-info pull-right', 'style'=>'color:#fff; font-weight:600;')));
     $form = $buildform->getForm();
 
     // On récupère le choix du mode de paiement

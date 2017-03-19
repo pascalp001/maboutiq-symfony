@@ -5,6 +5,7 @@ namespace DV\EcomBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class TarifType extends AbstractType
 {
@@ -15,13 +16,13 @@ class TarifType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom', 'text', array('label' => 'Nom tarif'))
-            ->add('org', 'text', array('label' => 'Organisme'))
-            ->add('img', 'text', array('label' => 'Url image'))
-            ->add('typPays', 'text', array('label' => 'Classe pays'))
-            ->add('annee', 'text', array('label' => 'Année'))
-            ->add('maxdim', 'text', array('label' => 'Dimension maxi'))
-            ->add('maxepais', 'text', array('label' => 'Epaisseur maxi'))
+            ->add('nom', TextType::class, array('label' => 'Nom tarif'))
+            ->add('org', TextType::class, array('label' => 'Organisme'))
+            ->add('img', TextType::class, array('label' => 'Url image'))
+            ->add('typPays', TextType::class, array('label' => 'Classe pays'))
+            ->add('annee', TextType::class, array('label' => 'Année'))
+            ->add('maxdim', TextType::class, array('label' => 'Dimension maxi'))
+            ->add('maxepais', TextType::class, array('label' => 'Epaisseur maxi'))
             ->add('t0')
             ->add('p0')
             ->add('t1')

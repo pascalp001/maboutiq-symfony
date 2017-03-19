@@ -3,10 +3,15 @@
 {% block body -%}
     <h1>Liste des utilisateurs</h1>
 
-    <table class="records_list">
+    <table class="records_list table-store">
         <thead>
             <tr>
-                <th>Nom</th>
+                <th>Utilisateur</th>
+                <th>Prenom Nom</th>
+                <th>Num de tel</th>
+                <th>E-mail</th>
+                <th>Cp</th>
+                <th>Connexion</th>
                 <th colspan="2">Actions</th>
             </tr>
         </thead>
@@ -14,6 +19,11 @@
         {% for utilisateur in utilisateurs %}
             <tr>
                 <td>{{ utilisateur.username }}</td>
+                <td> {{ utilisateur.prenom }} {{ utilisateur.nom }}</td>
+                <td> {{ utilisateur.telephone }}</td>
+                <td>{{ utilisateur.email }}</td>
+                <td> {{ utilisateur.cp }}</td>
+                <td> {{ utilisateur.lastLogin|date('d/m/Y') }}</td>
                 {% if utilisateur.adresses|length !=0 %}
                     <td>
                             <a href="{{ path('adminAdressesUtilisateurs', { 'id': utilisateur.id }) }}" title="Consulter les adresses"><i class="glyphicon glyphicon-eye-open"></i></a>

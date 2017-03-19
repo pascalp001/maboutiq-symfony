@@ -58,13 +58,13 @@
 
     </div>
 {% block layout %}
-    <div class="container">
+    <div class="container" style="margin-right:0; padding-right:0; margin-left:0; padding-left:0;">
                 <button type="button" class="btn btn-default navbar-nontoggle" id="toggle2-sidebar" style="margin-left:-80px; margin-top:-10px;" >
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                 </button>
-        <div class="row" id="row-main" style="margin-top:-20px;">
+        <div class="row" id="row-main" style="margin-top:-20px; ">
             <div class="col-md-2 " id="sidebar">  
                 {% include '::modulesBase/navAdmin.html.twig' %}
             </div>
@@ -91,7 +91,27 @@
     <script src="{{ asset('bootstrap/js/bootstrap.js')}}"></script>   
 
 <!-- script pour afficher ou non la sidebar menu -->
-  <script> 
+  <script>
+
+$(document).ready(function() {
+    /* Initialisation Administration/Produits/layout/edit.html.twig */
+    var prixHT =  parseFloat($('#prixHT input').val());
+    var re = /(\d*.?\d+) ?%/;       
+    var tva = parseFloat(re.exec($('#tva input:checked + label').text()));
+    var prixTTC = parseFloat(parseFloat(Math.round(prixHT*(1+tva/100)*100))/100).toFixed(2);
+    $('#prixTTC span').text('=> TTC : '+prixTTC+' €');
+});
+
+    /* Modification du prixHT => recalcul prix TTC -  Administration/Produits/layout/edit.html.twig */
+function prixTTC(){        
+    var prixHT =  parseFloat($('#prixHT input').val());
+    var re = /(\d*.?\d+) ?%/;       
+    var tva = parseFloat(re.exec($('#tva input:checked + label').text()));
+    var prixTTC = parseFloat(parseFloat(Math.round(prixHT*(1+tva/100)*100))/100).toFixed(2);
+    $('#prixTTC span').text('=> TTC : '+prixTTC+' €');
+} 
+
+    /* Apparition/disparition du menu sidebar dans app/.../layoutAdmin.html.twig */
     var toggle2=false;
  $("#toggle2-sidebar").click(function () {
     //alert('ici');

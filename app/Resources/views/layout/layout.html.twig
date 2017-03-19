@@ -61,12 +61,12 @@
     </nav>
 
 <!-- Contenu principal  -->   
-    {% block body %}{% endblock %}
+{% block body %}{% endblock %}
 
 <!--Footer-->
     <div class="wedge50"> &nbsp; </div>
     <hr class="hrb" />
-    {% block footer %}
+{% block footer %}
         <footer id="footer" class="vspace20">
             <div class="container">
                 <div class="row">
@@ -96,18 +96,20 @@
                 </div>
             </div>
         </footer>   
-    {% endblock %}
+{% endblock %}
 
 <!--End page -->
-    {% block javascripts %}
-        <script src="{{ asset('js/plugin/jquery/jquery.min.js')}}"></script>
-        <script src="{{ asset('js/plugin/jquery-ui-1.12.1.custom/jquery-ui.js')}}"></script>
-        <script src="{{ asset('bootstrap/js/bootstrap.js')}}"></script>   
+{% block javascripts %}
+<script src="{{ asset('js/plugin/jquery/jquery.min.js')}}"></script>
+<script src="{{ asset('js/plugin/jquery-ui-1.12.1.custom/jquery-ui.js')}}"></script>
+<script src="{{ asset('bootstrap/js/bootstrap.js')}}"></script>   
 
     <!-- script pour afficher ou non la sidebar menu -->
-      <script>  $(document).ready(function () {
+<script>  
+$(document).ready(function () {
+
         var toggle=false;
-      $(".toggle-sidebar").click(function () {
+    $(".toggle-sidebar").click(function () {
         toggle=!toggle;
         if(toggle)
         {   
@@ -120,10 +122,15 @@
             $("#content").removeClass("col-md-10").addClass("col-md-12");
         }      
         return false;
-      });
     });
-    </script>
+});
+var rate = 0;
+function currentRating(rate){
+        $("#stars").html(rate);
+        $(".rate").val(rate);
+    }
+</script>
 
-    {% endblock %}
+{% endblock %}
 </body>
 </html>

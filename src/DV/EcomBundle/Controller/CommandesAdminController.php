@@ -4,7 +4,7 @@ namespace DV\EcomBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use DV\EcomBundle\Entity\Commandes;
 use DV\EcomBundle\Form\CommandesType;
 
@@ -24,7 +24,7 @@ class CommandesAdminController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('EcomBundle:Commandes')->findBy(array('archiver' => 0),array('date'=>'asc'));  
-        $archive = "";
+        $archive = "en cours";
 
         return $this->render('EcomBundle:Administration:Commandes/layout/index.html.twig', array(
             'entities' => $entities, 'archive' => $archive
@@ -87,10 +87,10 @@ class CommandesAdminController extends Controller
 
             $this->get('mailer')->send($message);            
         }
-
+        $archive = "en cours";
         $entities = $em->getRepository('EcomBundle:Commandes')->findAll();
         return $this->render('EcomBundle:Administration:Commandes/layout/index.html.twig', array(
-            'entities' => $entities,
+            'entities' => $entities, 'archive' => $archive
         ));
         }
         return $this->redirect($this->generateUrl('adminCommandes'));
@@ -161,7 +161,7 @@ class CommandesAdminController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', SubmitType::class, array('label' => 'Create'));
 
         return $form;
     }

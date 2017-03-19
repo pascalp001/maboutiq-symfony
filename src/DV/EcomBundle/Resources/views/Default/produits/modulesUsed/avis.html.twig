@@ -1,0 +1,41 @@
+
+{% if addAvis == true %}
+  <div ><hr class="hrb"/>
+  <form action="{{path('addAvisProduits',{'id': id})  }}" method="post">   
+    <div class="row" >             
+      <div class="h4 col-xs-offset-1 col-xs-3">Note du produit :</div>
+      <div class="h4 col-xs-offset-1 col-xs-7" >Votre avis sur le produit :</div>
+    </div>
+    <div class="row" >
+                 
+      <div  class="col-xs-3">
+        <div class="row"  >
+          <ul style="min-width:300px;" >
+            <li  class="c-rating col-xs-1"  > 
+              <span  onMouseOver="$(this).parent().nextAll().children().removeClass('is-active');currentRating(0)"  class="c-rating__0" ></span>
+            </li>
+            {% for i in 1..5 %}
+            <li class="c-rating col-xs-1 "  > 
+              <span  onMouseOver="$(this).addClass('is-active'); $(this).parent().prevAll().children().addClass('is-active') ;$(this).parent().nextAll().children().removeClass('is-active');currentRating({{i}})"  class="c-rating__item "></span>
+            </li>
+            {% endfor %} 
+            <h4 class="col-xs-3">{#{ form_widget(form.stars) }#}<span id="stars"></span>/5</h4>
+          </ul>
+          
+        </div>
+      </div>  
+      <div  class="col-xs-9">
+        <div class="row" ><br/>
+      <div class="col-xs-10">{#{ form_widget(form.titre) }#}</div>          
+      </div>
+        <div class="row"  >
+        <div class="col-xs-10" >{#{ form_widget(form.comment) }#}
+    </div>
+    <div class="col-xs-1 " >{#{ form_widget(form.submit) }#}{#{ form_widget(form.__token) }#}</div>{{ form(form) }}
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{% endif %}
+

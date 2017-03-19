@@ -57,28 +57,36 @@
         <label class="col-sm-2 control-label" for="input">{{
             form_label(form.poids) }}</label>
         <div class="col-sm-3">{{ form_widget(form.poids, {'attr' :
-            {'class':'form-control'} }) }}</div>
+            {'class':'form-control'} }) }}
+        </div>
+         <div class="col-sm-2">grammes</div>
     </div>
 
     <div class="row form-group form-group-bordered">
         <label class="col-sm-2 control-label" for="input">{{
             form_label(form.taille) }}</label>
         <div class="col-sm-3">{{ form_widget(form.taille, {'attr' :
-            {'class':'form-control'} }) }}mm</div>
+            {'class':'form-control'} }) }}
+        </div>
+         <div class="col-sm-2">mm</div>
     </div>
 
     <div class="row form-group form-group-bordered">
         <label class="col-sm-2 control-label" for="input">{{
             form_label(form.largeur) }}</label>
         <div class="col-sm-3">{{ form_widget(form.largeur, {'attr' :
-            {'class':'form-control'} }) }}mm</div>
+            {'class':'form-control'} }) }}
+        </div>
+         <div class="col-sm-2">mm</div>
     </div>
 
     <div class="row form-group form-group-bordered">
         <label class="col-sm-2 control-label" for="input">{{
             form_label(form.epaiss) }}</label>
         <div class="col-sm-3">{{ form_widget(form.epaiss, {'attr' :
-            {'class':'form-control'} }) }}mm</div>
+            {'class':'form-control'} }) }}
+        </div>
+         <div class="col-sm-2">mm</div>
     </div>
 
     <div class="row form-group form-group-bordered">
@@ -107,62 +115,18 @@
         <div class="col-sm-3">{{ form_widget(form.popularite, {'attr' :
             {'class':'form-control', 'value':'1' } }) }}</div>
     </div> 
+    <div class="row form-group ">
+        <div class="col-sm-4">
+            <a href="{{ path('adminProduits') }}">
+                <button type="button" class="btn btn-greyish">Retour</button>           
+            </a>
+        </div>
+        <div class="col-sm-4">        
+            {{ form_widget(form.submit )}}
+        </div>
+    </div>
     {{form_end(form)}} 
-    <a href="{{ path('adminProduits') }}">
-                    <button type="button" class="btn btn-greyish">Retour</button>           
-    </a>
+
 </div>
 {% endblock %}
-{% block javascripts %}
-{{ parent() }}
-<script>
- //$(document).ready(function() {
-    function prixTTC(){
-        
-        var prixHT =  parseFloat($('#prixHT input').val());
-        var re = /(\d*.?\d+) ?%/;       
-        var tva = parseFloat(re.exec($('#tva input:checked + label').text()));
-        var prixTTC = parseFloat(parseFloat(Math.round(prixHT*(1+tva/100)*100))/100).toFixed(2);
-        $('#prixTTC span').text('=> TTC : '+prixTTC+' €');
-    }
-//});
-/*  $(document).ready(function() {
-    //IMAGES :
-    // On récupère la balise <div> en question qui contient l'attribut " data-prototype " qui nous int�resse.
-    var $container = $('ul#d2innov_rhbundle_candidat_competences');
-    
-    // On ajoute un lien pour ajouter une nouvelle catégorie :
-    var $addLink = $('#add_competences');
-    $addLink.click(function(e) {
-        addCompetences($container);
-        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-        return false;
-     });
 
-     $('#del_competences').click(function(e) {
-          delCompetences($container);  
-      });
-
-     var index = $container.find('li').length;
-     // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un :
-     if (index == 0) { addCompetences($container);} 
-
-     //La fonction qui ajoute un formulaire Competences :
-     function addCompetences($container) {
-     var $prototype = $($container.attr('data-prototype').replace(/__name__/g, index));
-     $container.append($prototype);
-     index++;
-      }
-
-    //La fonction qui supprime un formulaire Competences 
-    function delCompetences($container) {
-          $("form input[type=checkbox]:checked").each(function(){
-              $(this).parent().parent().parent().parent("li.list-group-item").remove();
-             });
-
-    }
-}
-  });   */
-  </script>
-
-{% endblock %}

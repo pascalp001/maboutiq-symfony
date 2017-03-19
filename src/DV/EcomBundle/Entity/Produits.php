@@ -40,6 +40,12 @@ class Produits
      private $categorie ;
 
     /**
+    * @ORM\OneToMany(targetEntity="DV\EcomBundle\Entity\Avis", mappedBy="produit", cascade={"persist","remove"} )
+    * @ORM\JoinColumn(nullable=true)
+    */
+     private $avi ;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=100)
@@ -587,5 +593,46 @@ class Produits
     public function getStockvirtuel()
     {
         return $this->stockvirtuel;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->avi = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add avi
+     *
+     * @param \DV\EcomBundle\Entity\Avis $avi
+     *
+     * @return Produits
+     */
+    public function addAvi(\DV\EcomBundle\Entity\Avis $avi)
+    {
+        $this->avi[] = $avi;
+
+        return $this;
+    }
+
+    /**
+     * Remove avi
+     *
+     * @param \DV\EcomBundle\Entity\Avis $avi
+     */
+    public function removeAvi(\DV\EcomBundle\Entity\Avis $avi)
+    {
+        $this->avi->removeElement($avi);
+    }
+
+    /**
+     * Get avi
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAvi()
+    {
+        return $this->avi;
     }
 }

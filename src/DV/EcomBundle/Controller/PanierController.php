@@ -120,15 +120,15 @@ class PanierController extends Controller
     }
 
     /**
-    **  
-    **  Méthodes concernant les adresses facturation et livraison
-    **
-    **/
+     *  
+     *  Méthodes concernant les adresses facturation et livraison
+     *
+     */
     public function adressesAction(Request $request)
     {
         //Ajoute une adresse de facturation ou de livraison dans UtilisateurAdresses :
         //Initialisations :
-        $utilisateur = $this->container->get('security.context')->getToken()->getUser();        
+        $utilisateur = $this->container->get('security.token_storage')->getToken()->getUser();        
         $entity = new UtilisateursAdresses();
         $entity->setFact(true); $entity->setLivr(true);
         $form = $this->createForm(new UtilisateursAdressesType, $entity);
@@ -160,7 +160,7 @@ class PanierController extends Controller
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('EcomBundle:UtilisateursAdresses')->find($id)  ;    
         //On vérifie que c'est bien l'utilisateur qui supprime son adresse :
-        if ($this->container->get('security.context')->getToken()->getUser() != $entity->getUtilisateur() || !$entity)
+        if ($this->container->get('security.token_storage')->getToken()->getUser() != $entity->getUtilisateur() || !$entity)
         {
             return ($this->redirect($this->generateUrl('adresses')));
         }
@@ -189,7 +189,23 @@ class PanierController extends Controller
              return $this->redirect($this->generateUrl('adresses')); // On reste sur la page 'adresses'
         } 
         //On met $adresse en session :
-        $session->set('adresse', $adresse);  
+        $session->set('adresse', $adresse); 
+
+        //On met à jour prenom, nom et telephone dans la base utilisateurs :
+        $em = $this->getDoctrine()->getManager();
+        $adresseFact = $em->getRepository('EcomBundle:UtilisateursAdresses')->find($adresse['facturation'])  ;        
+        $utilisateurs = $em->getRepository('UtilisateursBundle:Utilisateurs')->findById($adresseFact->getUtilisateur())  ; 
+
+        foreach($utilisateurs as $utilisateur)  
+        {
+        $utilisateur->setPrenom($adresseFact->getPrenom());
+        $utilisateur->setNom($adresseFact->getNom());
+        $utilisateur->setTelephone($adresseFact->getTelephone());
+        $utilisateur->setCp($adresseFact->getCp());
+        $em->persist($utilisateur);
+        $em->flush();            
+        }     
+
         //On revient à la route 'frlivraison' et à validationAdressesAction() :
         return $this->redirect($this->generateUrl('frlivraison')); 
     }

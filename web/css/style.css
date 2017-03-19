@@ -1,5 +1,18 @@
 /*Modifs bootstrap */
 
+body {margin:80px 20px 20px 80px;}
+
+@media (min-width: 1350px) {
+  .container {
+    width: 1300px;
+  }
+}
+@media (min-width: 1500px) {
+  .container {
+    width: 1450px;
+  }
+}
+
 .thumbnail {list-style: none; }
 
 .container {padding-left:0;}
@@ -334,7 +347,7 @@ td, th {text-align:center;}
 
 /*couleurs*/
 .body-color {background-color:#34495e; color:#ecf0f1;}
-.body-admin-color {background-color:#566b7f; color:#34495e;}
+.body-admin-color {background-color:#34495e; color:#dbe0e1;} /* background-color:#566b7f; color:#34495e;*/
 .body-inverse {background-color:#ecf0f1; color:#34495e; opacity:1;}
 .navbar-color {background:#606070;}
 .fondGrisClair {background:#ddddff;}
@@ -465,7 +478,7 @@ a.sidebar.sub {
 
 /*Bouton 3 icon-bars hors navbar-toggle*/
 #sidebar{
-  margin-left:-200px;
+  margin-left:-1000px;
 }
 #sidebar.show{
   margin-left:0px;

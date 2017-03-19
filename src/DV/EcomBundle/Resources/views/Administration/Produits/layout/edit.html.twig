@@ -54,42 +54,50 @@
         <label class="col-sm-2 control-label" for="input">{{
             form_label(edit_form.poids) }}</label>
         <div class="col-sm-3">{{ form_widget(edit_form.poids, {'attr' :
-            {'class':'form-control'} }) }}</div>
+            {'class':'form-control'} }) }}
+        </div>
+         <div class="col-sm-2">grammes</div>
     </div>
 
     <div class="row form-group form-group-bordered">
         <label class="col-sm-2 control-label" for="input">{{
             form_label(edit_form.taille) }}</label>
         <div class="col-sm-3">{{ form_widget(edit_form.taille, {'attr' :
-            {'class':'form-control'} }) }}mm</div>
+            {'class':'form-control'} }) }}
+        </div>
+         <div class="col-sm-2">mm</div>
     </div>
 
     <div class="row form-group form-group-bordered">
         <label class="col-sm-2 control-label" for="input">{{
             form_label(edit_form.largeur) }}</label>
         <div class="col-sm-3">{{ form_widget(edit_form.largeur, {'attr' :
-            {'class':'form-control'} }) }}mm</div>
+            {'class':'form-control'} }) }}
+        </div>
+         <div class="col-sm-2">mm</div>
     </div>
 
     <div class="row form-group form-group-bordered">
         <label class="col-sm-2 control-label" for="input">{{
             form_label(edit_form.epaiss) }}</label>
         <div class="col-sm-3">{{ form_widget(edit_form.epaiss, {'attr' :
-            {'class':'form-control'} }) }}mm</div>
+            {'class':'form-control'} }) }}
+            </div>
+         <div class="col-sm-2">mm</div>
     </div>
 
     <div class="row form-group form-group-bordered">
         <label class="col-sm-2 control-label" for="input">{{
             form_label(edit_form.disponible) }}</label>
         <div class="col-sm-3">{{ form_widget(edit_form.disponible, {'attr' :
-            {'class':'form-control', 'value':'1' } }) }}</div>
+            {'class':'form-control' } }) }}</div>
     </div> 
 
     <div class="row form-group form-group-bordered">
         <label class="col-sm-2 control-label" for="input">{{
             form_label(edit_form.stockreel) }}</label>
         <div class="col-sm-3">{{ form_widget(edit_form.stockreel, {'attr' :
-            {'class':'form-control', 'value':'1' } }) }}</div>
+            {'class':'form-control' } }) }}</div>
     </div> 
 
     <div class="row form-group form-group-bordered">
@@ -102,44 +110,23 @@
         <label class="col-sm-2 control-label" for="input">{{
             form_label(edit_form.popularite) }}</label>
         <div class="col-sm-3">{{ form_widget(edit_form.popularite, {'attr' :
-            {'class':'form-control', 'value':'1' } }) }}</div>
+            {'class':'form-control' } }) }}</div>
     </div> 
 
 </form>
 
 <div class="row" >
-    <div class="col-sm-4">
+    <div class="col-sm-2">
         <a href="{{ path('adminProduits') }}">
             <button type="button" class="btn btn-greyish">Retour</button>           
         </a>
     </div>
-    {#<div class="col-sm-4">        
-        <a href="{{ path('adminProduits_edit', { 'id': entity.id }) }}">
-            <button type="button" class="btn btn-greyish"> Suivant </button> 
-        </a>
-    </div>#}
-    <div class="col-sm-4">  
-           <button type="button" class="btn btn-greyish"> {{ form(delete_form) }} </button>   
+    <div class="col-sm-3">        
+        {{ form_widget(edit_form.submit )}}
+    </div>
+    <div class="col-sm-2">  
+            {{ form(delete_form) }}   
 
     </div>
 </div>
-{% endblock %}
-{% block javascripts %}
-{{ parent() }}
-<script>
-$(document).ready(function() {
-    var prixHT =  parseFloat($('#prixHT input').val());
-    var re = /(\d*.?\d+) ?%/;       
-    var tva = parseFloat(re.exec($('#tva input:checked + label').text()));
-    var prixTTC = parseFloat(parseFloat(Math.round(prixHT*(1+tva/100)*100))/100).toFixed(2);
-    $('#prixTTC span').text('=> TTC : '+prixTTC+' €');
-});
-function prixTTC(){        
-    var prixHT =  parseFloat($('#prixHT input').val());
-    var re = /(\d*.?\d+) ?%/;       
-    var tva = parseFloat(re.exec($('#tva input:checked + label').text()));
-    var prixTTC = parseFloat(parseFloat(Math.round(prixHT*(1+tva/100)*100))/100).toFixed(2);
-    $('#prixTTC span').text('=> TTC : '+prixTTC+' €');
-}
-</script>
 {% endblock %}

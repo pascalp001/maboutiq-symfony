@@ -13,12 +13,24 @@ class CommandesRepository extends EntityRepository
 {
 	public function findByFacture($utilisateur)
 	{
-		$qb = $this->createQueryBuilder('u')
-			->select('u')
-			->where('u.utilisateur = :utilisateur')
-			->andWhere('u.valider = 1')
-			->andWhere('u.reference != 0')
-			->orderBy('u.id')
+		$qb = $this->createQueryBuilder('c')
+			->select('c')
+			->where('c.utilisateur = :utilisateur')
+			->andWhere('c.valider = 1')
+			->andWhere('c.reference != 0')
+			->orderBy('c.id')
+			->setParameter('utilisateur', $utilisateur);
+		return $qb->getQuery()->getResult();		
+	}
+
+	public function findNomPrenom($utilisateur)
+	{
+		//On envoie un tableau contenant nos produits...
+		$qb = $this->createQueryBuilder('c')
+			->join('c.utilisateur','u')
+			->where('u.id = :utilisateur')
+			->orderBy('c.date', 'desc') 
+			->setMaxResults(1)
 			->setParameter('utilisateur', $utilisateur);
 		return $qb->getQuery()->getResult();		
 	}

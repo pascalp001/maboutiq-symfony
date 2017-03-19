@@ -11,21 +11,31 @@
 	    	<form action="{{path('ajoutpanier1',{'id': produit.id})  }}" method="get">
 		        <div class="row ">
 		        	<div class="col-md-6">
+		        		<div class="row ">
 		                <img src="{{ produit.image.AssetPath|imagine_filter('imgProduitFormat2') }}" alt="image {{  produit.image.name }} "  >
+		            	</div>
+		            	<div class="row ">
+		            		{{ render(controller('EcomBundle:Produits:indexAvis',{'id': produit.id} ))}}
+		            	</div>
 		            </div>
+
 		            <div class="col-md-6">   
 		                <div class="caption">
 		                    <h4>{{produit.nom}}</h4>
 		                    <h5>{{produit.categorie.nom}}</h5>
 		                    <p>{{produit.description}}</p>
-		                    <h4>{{produit.prix|tva(produit.tva.multiplicate)  }} € <span class="smallf">TTC</span></h4>	                    
-		                    <div class="wedge40"> &nbsp; </div>
+		                    <h4>{{produit.prix|tva(produit.tva.multiplicate)  }} € <span class="smallf">TTC</span></h4>	
+		                    <div class="wedge30"> &nbsp; </div>
 		                    {% if panier[produit.id] is not defined %}  
 					            <div class="row ">
 					                <div class="col-md-4">Quantité :	                    	
-		                    		</div>	 
+		                    		</div>	
+		                    		 
 		                    		<input type="number" step="1" min="0" max="10" value="1" name="qte" class="col-md-2" />                  		                    
 				                </div>
+
+		                    <div class="wedge10"> &nbsp; </div>
+		                    ( Disponible : {{produit.stockvirtuel}} )
 		                    {% else %}
 					            <div class="row ">
 					                <div class="col-md-4">Déjà dans votre panier </div>	                  
@@ -41,7 +51,8 @@
 		            </div>
 		            {% if panier[produit.id] is not defined %}  
 		                <div class="col-md-5">	            
-			                    <button type="submit" class="btn btn-brownish" >Ajouter au panier</button>                   	                
+			                    <button type="submit" class="btn btn-brownish" >Ajouter au panier</button>                   	
+			                                   
 			            </div>
 			        {% else %}
 		                <div class="col-md-5">	            
@@ -49,8 +60,13 @@
 			            </div>		        	
 		            {% endif %}
 		        </div>
-	        	<div class="wedge50"> &nbsp; </div>
-        	</form>
+		    </form> 
+	        <div class="wedge50"> &nbsp; </div>
+	        <div id="show_addAvis" style="display:none">
+	        {{ render(controller('EcomBundle:Produits:addAvis',{'id': produit.id} ))}}
+	        </div>
+        	{{ render(controller('EcomBundle:Produits:listeAvis',{'id': produit.id} ))}}
+        	
         </div>
     <div class="wedge80"> &nbsp; </div>
     </div>

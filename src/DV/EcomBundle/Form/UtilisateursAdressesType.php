@@ -5,6 +5,8 @@ namespace DV\EcomBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 //use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UtilisateursAdressesType extends AbstractType
@@ -23,9 +25,9 @@ class UtilisateursAdressesType extends AbstractType
             ->add('complement', null, array('required' => false))
             ->add('cp')
             ->add('ville')
-            ->add('pays', 'text', array('empty_data' => 'France')) 
-            ->add('fact', 'checkbox', array('label' => 'facturation', 'required' => false, 'value' => true))  
-            ->add('livr', 'checkbox', array('label' => 'livraison', 'required' => false, 'value' => true))  
+            ->add('pays', TextType::class, array('empty_data' => 'France')) 
+            ->add('fact', CheckboxType::class, array('label' => 'facturation', 'required' => false, 'value' => true))  
+            ->add('livr', CheckboxType::class, array('label' => 'livraison', 'required' => false, 'value' => true))  
             //->add('utilisateur')
         ;
     }

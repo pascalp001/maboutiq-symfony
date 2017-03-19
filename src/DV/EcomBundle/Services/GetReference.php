@@ -6,10 +6,10 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class GetReference 
 {
-	public function __construct($securityContext, $entityManager)
+	public function __construct($securityToken_Storage, $entityManager)
 	{
 
-		$this->securityContext = $securityContext;
+		$this->securityToken_Storage = $securityToken_Storage;
 		$this->em = $entityManager;
 	}
 

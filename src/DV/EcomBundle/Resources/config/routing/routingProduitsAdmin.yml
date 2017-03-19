@@ -28,3 +28,7 @@ adminProduits_delete:
     path:     /{id}/delete
     defaults: { _controller: "EcomBundle:ProduitsAdmin:delete" }
     methods:  [POST, DELETE]
+
+adminAvis_produit:
+    path:     /{id}/avis 
+    defaults: { _controller: "EcomBundle:AvisAdmin:avisproduit" }

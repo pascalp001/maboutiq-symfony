@@ -1,0 +1,40 @@
+{% extends "::layout/layoutAdmin.html.twig" %}
+
+{% block body -%}
+    <h1>Liste des avis validés : </h1>
+
+    <table class="records_list table-store">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>                
+                <th>User</th>
+                <th>Produit</th>
+                <th>Note</th>
+                <th>Titre</th>
+                <th>Commentaire</th>
+            </tr>
+        </thead>
+        <tbody>
+    {% if aviss|length >0%}
+        {% for avis in aviss %}
+            <tr>
+                <td>{{ avis.id }}</td>
+                <td>{% if avis.date %}{{ avis.date|date('d-m-Y') }}{% endif %}</td>               
+                <td>{{ avis.user }}</td>
+                <td>{{ avis.produit.nom }}</td>
+                <td>{{ avis.stars }}/5</td>
+                <td>{{ avis.titre }}</td>
+                <td>{{ avis.comment }}</td>            
+            </tr>           
+        {% endfor %}
+    {% else %}<tr><td colspan="10"> Il n'y a pas d'avis validés. </td></tr>
+    {% endif %}        
+        </tbody>
+    </table>
+
+        <br/>
+            <a href="{{ path('adminProduits') }}">
+                <button type="button" class="btn btn-greyish">Retour</button>
+            </a>
+    {% endblock %}

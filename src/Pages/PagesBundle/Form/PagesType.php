@@ -5,6 +5,7 @@ namespace Pages\PagesBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class PagesType extends AbstractType
 {
@@ -16,7 +17,7 @@ class PagesType extends AbstractType
     {
         $builder
             ->add('titre')
-            ->add('contenu', 'textarea', array('attr'=> array('class'=>'ckeditor')))
+            ->add('contenu', TextareaType::class, array('attr'=> array('class'=>'ckeditor')))
         ;
     }
     

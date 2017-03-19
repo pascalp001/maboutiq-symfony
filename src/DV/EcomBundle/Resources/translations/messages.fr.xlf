@@ -10,6 +10,14 @@
 			      <source>Next</source>    
 			      <target>Suivant</target>
 			</trans-unit>
+			<trans-unit id="3">
+			      <source>Search</source>    
+			      <target>Rechercher</target>
+			</trans-unit>
+			<trans-unit id="4">
+			      <source>Rechercher</source>    
+			      <target>Rechercher</target>
+			</trans-unit>
         </body>
     </file>
 </xliff>

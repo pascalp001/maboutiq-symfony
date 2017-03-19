@@ -13,3 +13,23 @@ categorieProduits:
 rechercheProduits:
     path:     /recherche
     defaults: { _controller: EcomBundle:Produits:rechercheTraitement }
+
+indexAvisProduits:
+    path:     /avis/{id}
+    defaults: { _controller: EcomBundle:Produits:indexAvis }
+
+listeAvisProduits:
+    path:     /avis/liste/{id}
+    defaults: { _controller: EcomBundle:Produits:listeAvis }
+
+addAvisProduits:
+    path:     /avis/ajouter/{id}
+    defaults: { _controller: EcomBundle:Produits:addAvis }
+
+validerAvisProduits:
+    path:     /avis/valider
+    defaults: { _controller: EcomBundle:ProduitsAdmin:validerAvis }
+
+supprimerAvisProduits:
+    path:     /avis/supprimer
+    defaults: { _controller: EcomBundle:ProduitsAdmin:supprimerAvis }

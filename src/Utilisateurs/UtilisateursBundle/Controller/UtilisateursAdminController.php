@@ -4,14 +4,19 @@ namespace Utilisateurs\UtilisateursBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Utilisateurs\UtilisateursBundle\Entity\Client;
 
 class UtilisateursAdminController extends Controller
 {
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $result=array();
+       
+        $id0=1;
         $utilisateurs = $em->getRepository('UtilisateursBundle:Utilisateurs')->findAll()  ; 
-
+        //var_dump($utilisateurs);
+        //die();
         return $this->render('UtilisateursBundle:Administration:Utilisateurs/layout/index.html.twig', array('utilisateurs' => $utilisateurs));
     }
 

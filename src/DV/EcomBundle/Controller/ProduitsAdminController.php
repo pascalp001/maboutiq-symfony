@@ -4,7 +4,7 @@ namespace DV\EcomBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use DV\EcomBundle\Entity\Produits;
 use DV\EcomBundle\Entity\Tva;
 use DV\EcomBundle\Form\ProduitsType;
@@ -72,7 +72,7 @@ class ProduitsAdminController extends Controller
         ));*/
         $form = $this->createForm(new ProduitsType(), $entity );
 
-        $form->add('submit', 'submit', array('label' => 'Créer le nouveau produit', 'attr'=>array('class'=>'btn btn-info')));
+        $form->add('submit', SubmitType::class, array('label' => 'Créer le nouveau produit', 'attr'=>array('class'=>'btn btn-info')));
 
         return $form;
     }
@@ -89,7 +89,6 @@ class ProduitsAdminController extends Controller
         $tva = $em->getRepository('EcomBundle:Tva')->findOneByNom('TVA 20%');
         
         $entity->setTva($tva);
-        //$entity->add($tvaPrefer);
         $form   = $this->createCreateForm($entity);
 
         return $this->render('EcomBundle:Administration:Produits/layout/new.html.twig', array(
@@ -160,7 +159,7 @@ class ProduitsAdminController extends Controller
 
         $form = $this->createForm(new ProduitsType(), $entity);
 
-        $form->add('submit', 'submit', array('label' => 'Modifier ce produit'));
+        $form->add('submit', SubmitType::class, array('label' => 'Modifier ce produit', 'attr'=>array('class'=>'btn btn-info')));
 
         return $form;
     }
@@ -230,7 +229,7 @@ class ProduitsAdminController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('adminProduits_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', SubmitType::class, array('label' => 'Delete', 'attr'=>array('class'=>'btn btn-greyish')))
             ->getForm()
         ;
     }

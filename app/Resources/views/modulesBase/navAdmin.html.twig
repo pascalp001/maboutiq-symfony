@@ -2,26 +2,40 @@
 <div class="well sidebar">
     <ul class="nav nav-list">
     	<!--<div style="height:100px;">&nbsp;</div>-->
+        <li>
+        	<a href="{{path('adminCommandes') }}"  class="sidebar sup">Commandes en cours</a>
+        </li>
         <li class="nav-header">
-        	<a href="{{path('adminProduits') }}" class="sidebar sup" >Produits</a>
+            <a href="{{path('adminAvis') }}" class="sidebar sup" >Nouveaux avis</a>
         </li>
-    </ul>
-</div>
+        <hr class="hrb"/>
+        <li class="nav-header">
+            <a href="{{path('adminUtilisateurs') }}"  class="sidebar sup" >Liste des clients</a>
+        </li>
 
-<div class="well sidebar">
-    <ul class="nav nav-list">
-    	<!--<div style="height:100px;">&nbsp;</div>-->
         <li>
-        	<a href="{{path('adminCommandes') }}"  class="sidebar sup">Commandes</a>
-        </li>
-        <br/>
-        <li>
-            <a href="{{path('adminCommandesArchives') }}"  class="sidebar ">Commandes archivées</a>
+            <a href="{{path('adminCommandesArchives') }}"  class="sidebar sup" style="padding-right:0px">Commandes archivées</a>
         </li>   	    	
+
+    </ul>
+</div>
+
+<div class="well sidebar">
+    <ul class="nav nav-list">
+        <!--<div style="height:100px;">&nbsp;</div>-->
         <li class="nav-header">
-        	<a href="{{path('adminUtilisateurs') }}"  class="sidebar " >Clients</a>
+            <a href="{{path('adminProduits') }}" class="sidebar sup" >Produits</a>
         </li>
 
+        <li>
+            <a href=""  class="sidebar sup">Réassort/cadencier</a>
+        </li> 
+        <li>
+            <a href=""  class="sidebar sup">Démarque</a>
+        </li>  
+        <li >
+            <a href="{{path('adminAvis_valid') }}" class="sidebar sup" >Avis validés</a>
+        </li>         
     </ul>
 </div>
 
@@ -29,13 +43,13 @@
     <ul class="nav nav-list">
     	<!--<div style="height:100px;">&nbsp;</div>-->
         <li>
-            <a href="{{path('adminCategories') }}" class="sidebar ">Catégories produits</a>
+            <a href="{{path('adminCategories') }}" class="sidebar sup ">Catégories produits</a>
         </li>
         <li class="nav-header">
-        	<a href="{{path('adminPages') }}" class="sidebar " >pages</a>
+        	<a href="{{path('adminPages') }}" class="sidebar sup" >Pages du footer</a>
         </li>
         <li class="nav-header">
-        	<a href="{{path('adminTarif') }}" class="sidebar " >tarifs frais de port</a>
+        	<a href="{{path('adminTarif') }}" class="sidebar sup" >Tarifs frais de port</a>
         </li>
     </ul>
 </div>

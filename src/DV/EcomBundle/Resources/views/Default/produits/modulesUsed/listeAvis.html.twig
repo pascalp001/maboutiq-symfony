@@ -1,0 +1,31 @@
+{% if nbAvis!=0 %}
+<hr class="hrb"/><br/>
+<div class="row" style="margin-bottom:5px;">
+  <div class="col-xs-2 bordure h4 wedge30" style="padding-bottom:2px;">L'avis de </div>
+  <div class="col-xs-2 bordure h4 wedge30" style="padding-bottom:2px;">note </div>
+  <div class="col-xs-8 bordure h4 wedge30" style="padding-bottom:2px;">Commentaires </div>
+</div>
+{% for avi in avis %}
+<div class="row" style="margin-bottom:5px;" > 
+  <div class="col-xs-2 bordure h5 wedge50">{{avi.user}} 
+  </div>
+  <div class="col-xs-2 bordure wedge50">
+    <div class="row decal-l">  
+      {% for i in 1..5 %}
+      <li   class="c-rating col-xs-2 "  > 
+        <span   class="c-rating__mitem {% if avi.stars >= i %} is-active {% else %}{% if avi.stars >= i-0.5 %}half-rating{% endif %}{% endif %}"  ></span> 
+      </li>
+      {% endfor %}         
+                      
+      </li> 
+    </div>              
+  </div>
+  <div class="col-xs-8 bordure h5 wedge50">
+    <div class="row" style="margin-bottom:2px;" >{{avi.titre}}</div>
+    <div class="row" style="margin-bottom:2px;" > {{avi.comment}} </div>
+  </div>
+  
+</div>
+{% endfor %}
+
+{% endif %}
