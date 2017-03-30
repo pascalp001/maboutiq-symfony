@@ -68,6 +68,12 @@ class Media
         return null === $this->path ? null : $this->getUploadDir().'/'.$this->path; 
     }
 
+    public function getUploadDir()
+    {
+        // On retourne le chemin relatif vers l'image pour un navigateur
+    return 'uploads';
+    }
+
     public function getAssetPath()
     {
         return 'uploads/'.$this->path; 

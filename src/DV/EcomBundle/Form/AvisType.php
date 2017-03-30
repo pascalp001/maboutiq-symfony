@@ -19,7 +19,7 @@ class AvisType extends AbstractType
 	}
     public function getName()
       {
-          return 'ecom_ecombundle_avis'; // Syntaxe particulière : minuscules et underscores
+          return 'dv_ecombundle_avis'; // Syntaxe particulière : minuscules et underscores
       }
 
 }

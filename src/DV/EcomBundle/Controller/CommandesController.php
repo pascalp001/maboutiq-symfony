@@ -17,6 +17,67 @@ use DV\EcomBundle\Entity\Vendeur;
 
 class CommandesController extends Controller
 {
+  public function validationAction( Request $request)
+  {
+      // On prépare la commande finale (mise en base de données et en session) en vue de la validation :
+      $em = $this->getDoctrine()->getManager(); 
+      $prepareCommande = $this->prepareCommandeAction($request);//forward('EcomBundle:Commandes:prepareCommande', array('request'=> $request));
+      $session = $request->getSession();      
+      $commande = $em->getRepository('EcomBundle:Commandes')->find($prepareCommande->getContent());
+
+      return $this->render('EcomBundle:Default:panier/layout/validation.html.twig',
+          array('commande' => $commande));
+      // La suite des actions se passe dans CommandesController.php via routingCommande.yml :
+      // paiementAction permet le choix du mode de paiement et affiche paiement.html.twig
+      // Choix 1 (CB banque) et 2 (Paypal) : accès à l'API externe correspondant ; envoi id vendeur+id commande+TTC+date ; réception OK ; payer = 1 ;
+      // Choix 3 (virement) et 4 (chèque) : rien (payer reste à 0)
+      // validationCommandeAction valide la commande complète, efface les données de la commande en session, envoie un mail, envoie un message 'succès', redirige vers paiementfaitAction
+      // paiementfaitAction affiche les commandes du client et paiementfait.html.twig (avant retour boutique) ; affiche statut paiement 'en attente' si virement ou chèque
+ }
+
+  public function prepareCommandeAction(Request $request)
+  {
+      // Dans cette étape, un objet commande est créé au début ; 
+      // à la fin, si tout s'est bien passé, l'id de la commande est mis en session
+      $session = $request->getSession();
+      $em = $this->getDoctrine()->getManager();
+
+      //echo '<pre>';var_dump($session);echo '</pre>';
+      //die();
+      //Création de l'objet commande si l'id n'et pas déjà en session :
+      if (!$session->has('commande') || null===$session->get('commande'))  { $commande = new Commandes();}
+      elseif($em->getRepository('EcomBundle:Commandes')->find($session->get('commande'))) 
+      {
+       $commande = $em->getRepository('EcomBundle:Commandes')->find($session->get('commande'));
+      }
+      else { $commande = new Commandes();}
+
+      //On prépare la commande :      
+      $commande->setDate(new \DateTime());
+      $commande->setReference(0); //On initialise la référence à 0, mais un service va déterminer le numéro de commande      
+      //Commande.commande va contenir le panier, les frais de port, le total HT et TTC, de manière non relationnelle :
+      $commande->setCommande($this->facture($request));       
+      $commande->setPayer(0);
+      $commande->setModpmt(0);
+      $commande->setValider(0);
+      $commande->setPreparer(0);
+      $commande->setLivrer(0);
+      $commande->setArchiver(0);
+
+      $commande->setUtilisateur($this->container->get('security.token_storage')->getToken()->getUser());
+
+      // On enregistre commande en base de donnée et l'id est mis en session :
+      if (!$session->has('commande')|| null===$session->get('commande')){
+        $em->persist($commande);       
+      }
+
+       $em->flush();
+       $session->set('commande', $commande->getId());
+
+      //Retour à validationAction
+      return new Response($commande->getId());
+  }
+  
   public function facture(Request $request)
   {
     // 1 - Récupération des différents morceaux : adresses de facturation et livraison, panier, frais de port    
@@ -24,7 +85,7 @@ class CommandesController extends Controller
     $generator = $this->container->get('security.secure_random'); //va cr�er un token al�atoire
     $session = $request->getSession();
     $adresse = $session->get('adresse');
-    $facturation = $em->getRepository('EcomBundle:UtilisateursAdresses')->find($adresse['facturation']);
+    $Facturation = $em->getRepository('EcomBundle:UtilisateursAdresses')->find($adresse['facturation']);
     $livraison = $session->get('livraison');
     $panier = $session->get('panier');
     $produits =  $em->getRepository('EcomBundle:Produits')->findArray(array_keys($session->get('panier')));
@@ -39,7 +100,7 @@ class CommandesController extends Controller
     } 
     else 
     {
-      $choixFrPort = null; $org ="";$nom = ""; $frPort = 0;
+      $choixFrPort = null; $org =""; $nom = ""; $frPort = 0;
     }
 
     $commande = array();
@@ -63,9 +124,14 @@ class CommandesController extends Controller
                                                        'quantite' => $panier[$produit->getId()],
                                                          'prixHT' => round($produit->getPrix(),2),
                                                         'prixTTC' => round($produit->getPrix()*$produit->getTva()->getMultiplicate(),2));
-    }
-      $commande['livraison'] = array('prenom'=> $livraison->getPrenom(), 'nom'=> $livraison->getNom(), 'telephone'=> $livraison->getTelephone(),'adresse'=> $livraison->getAdresse(), 'cp'=> $livraison->getCp(), 'ville'=> $livraison->getVille(), 'pays'=> $livraison->getPays(), 'complement'=> $livraison->getComplement());
-      $commande['facturation'] = array('prenom'=> $facturation->getPrenom(), 'nom'=> $facturation->getNom(), 'telephone'=> $facturation->getTelephone(),'adresse'=> $facturation->getAdresse(), 'cp'=> $facturation->getCp(), 'ville'=> $facturation->getVille(), 'pays'=> $facturation->getPays(), 'complement'=> $facturation->getComplement());
+      $stockvirtuel = $produit->getStockvirtuel() - $panier[$produit->getId()];
+      $produit->setStockvirtuel($stockvirtuel);
+      $em->persist($produit);
+    }    
+    $em->flush();
+    
+    $commande['livraison'] = array('prenom'=> $livraison['prenom'], 'nom'=> $livraison['nom'], 'telephone'=> $livraison['telephone'],'adresse'=> $livraison['adresse'], 'cp'=> $livraison['cp'], 'ville'=> $livraison['ville'], 'pays'=> $livraison['pays'], 'complement'=> $livraison['complement']);
+    $commande['facturation'] = array('prenom'=> $Facturation->getPrenom(), 'nom'=> $Facturation->getNom(), 'telephone'=> $Facturation->getTelephone(),'adresse'=> $Facturation->getAdresse(), 'cp'=> $Facturation->getCp(), 'ville'=> $Facturation->getVille(), 'pays'=> $Facturation->getPays(), 'complement'=> $Facturation->getComplement());
     $commande['totalHT'] = round($totalHT,2);
     $commande['org'] = $org;
     $commande['nom'] = $nom;
@@ -78,45 +144,20 @@ class CommandesController extends Controller
     return $commande;
   }
 
-  public function prepareCommandeAction(Request $request)
-  {
-      $session = $request->getSession();
-      $em = $this->getDoctrine()->getManager();
-      if (!$session->has('commande'))  { $commande = new Commandes();}
-      elseif($em->getRepository('EcomBundle:Commandes')->find($session->get('commande'))) 
-      {
-       $commande = $em->getRepository('EcomBundle:Commandes')->find($session->get('commande'));
-      }
-      else { $commande = new Commandes();}
-
-      //On prépare la commande :
-      $commande->setUtilisateur($this->container->get('security.token_storage')->getToken()->getUser());
-      $commande->setDate(new \DateTime());
-      $commande->setPayer(0);
-      $commande->setModpmt(0);
-      $commande->setValider(0);
-      $commande->setPreparer(0);
-      $commande->setLivrer(0);
-      $commande->setArchiver(0);
-      $commande->setReference(0); //On initialise la référence à 0, mais un service va déterminer le numéro de commande
-      //Commande.commande va contenir le panier, les frais de port, le total HT et TTC, de manière non relationnelle :
-      $commande->setCommande($this->facture($request)); 
-
-       if (!$session->has('commande')){
-          $em->persist($commande);
-          $session->set('commande',$commande);
-       }
-
-       $em->flush();
-
-       return new Response($commande->getId());
-  }
-
-  public function paiementAction($id, Request $request)
+  public function paiementAction(Request $request)
   {
     // Vers le choix du mode de paiement
     $session = $request->getSession();
+      //echo '<pre>';var_dump($session);echo '</pre>';
+      //die();
+    if (!$session->has('commande')|| null===$session->get('commande')){
+      //echo '<pre>';var_dump($session);echo '</pre>';
+      // Retour en arrière avant la validation et la création de l'objet commande - panier, adresses et frais de port sont encore en session
+      return $this->redirect($this->generateUrl('validation'));             
+    }
+    $id = $session->get('commande');
     $showboite = false; $idv=1;
+   
     $em = $this->getDoctrine()->getManager();
     $commande = $em->getRepository('EcomBundle:Commandes')->find($id);    
     $vendeur = $em->getRepository('EcomBundle:Vendeur')->findOneById($idv);
@@ -142,22 +183,32 @@ class CommandesController extends Controller
           // On conserve en base de données le choix du mode de paiement :
           $commande->setModpmt($donnees['modbq']);
 
-          //On actualise la commande "supposée validée" avec un numéro de commande / facturation :         
+          //On actualise la commande "supposée certaine à ce stade (vente réalisée)" avec un numéro de commande / facturation :         
           $commande->setReference($this->container->get('setNewReference')->reference());
           $em->persist($commande);
-          $em->flush();   
+          $em->flush();  
+
+          $montant =  $commande->getCommande()['totalTTC'];
 
           // Si règlement fait par CB ou Paypal, ... :
-          if($donnees['modbq'] == 1 )  {
-           return $this->render('EcomBundle:Default:panier/layout/apiBanque.html.twig', array('commande' => $commande, 'vendeur'=> $vendeur));}
-           //->redirect($this->generateUrl('apiBanque')); 
-          elseif($donnees['modbq'] == 2 )  { 
-            return $this->render('EcomBundle:Default:panier/layout/apiPaypal.html.twig', array('commande' => $commande, 'vendeur'=> $vendeur));}
-            //->redirect($this->generateUrl('apiPaypal')); } 
-          elseif($donnees['modbq'] == 3 || $donnees['modbq'] == 4) {  return $this->redirect($this->generateUrl('validationCommande')); } 
-          else{ return $this->redirect($this->generateUrl('paiement')); } 
+          if($donnees['modbq'] == 1 )  
+          {
+            return $this->render('EcomBundle:Default:panier/layout/apiBanque.html.twig', array('montant' => $montant, 'vendeur'=> $vendeur));
+          }
+          elseif($donnees['modbq'] == 2 )  
+          { 
+            return $this->render('EcomBundle:Default:panier/layout/apiPaypal.html.twig', array('montant' => $montant, 'vendeur'=> $vendeur));
+          }
+          elseif($donnees['modbq'] == 3 || $donnees['modbq'] == 4) 
+          {
+            return $this->redirect($this->generateUrl('validationCommande', array('request'=>$request))); 
+          } 
+          else
+          { 
+            return $this->redirect($this->generateUrl('paiement')); 
+          } 
         }
-         return $this->redirect($this->generateUrl('paiement')); 
+        return $this->redirect($this->generateUrl('paiement')); 
       }
     // Affichage de la page choix du mode de paiement et de son formulaire :
     return $this->render('EcomBundle:Default:panier/layout/paiement.html.twig', array('commande' => $commande, 'showboite'=> $showboite, 'vendeur'=> $vendeur, 'form' => $form->createView() ));
@@ -166,32 +217,46 @@ class CommandesController extends Controller
   /*
    * Cette méthode simule le règlement via l'api banque
    */
-  public function apiBanqueAction($id, Request $request)
+  /*public function apiBanqueAction($id, Request $request)
   {    
     $em = $this->getDoctrine()->getManager();
     $commande = $em->getRepository('EcomBundle:Commandes')->find($id);
     $vendeur = $em->getRepository('EcomBundle:Vendeur')->find(1);
     return $this->render('EcomBundle:Default:panier/layout/apiBanque.html.twig', array('commande' => $commande, 'vendeur'=> $vendeur));     
-  }
+  }*/
   /*
    * Cette méthode simule le règlement via l'api Paypal
    */
-  public function apiPaypalAction($id, Request $request)
+ /* public function apiPaypalAction($id, Request $request)
   {    
     $em = $this->getDoctrine()->getManager();
     $commande = $em->getRepository('EcomBundle:Commandes')->find($id);
     $vendeur = $em->getRepository('EcomBundle:Vendeur')->find(1);
     return $this->render('EcomBundle:Default:panier/layout/apiPaypal.html.twig', array('commande' => $commande, 'vendeur'=> $vendeur));     
-  }
+  }*/
 
     /*
      * Cette méthode se place après le règlement via l'api banque/paypal
      */
-    public function validationCommandeAction($id, Request $request)
+    public function validationCommandeAction( Request $request)
     {
       $em = $this->getDoctrine()->getManager();
       
       // Commande validée :
+      $session = $request->getSession();
+      if (!$session->has('commande')|| null===$session->get('commande')){
+        // Erreur d'exécution : retour en arrière avant la validation et la création de l'objet commande - validation devenue impossible
+      $session->remove('panier');
+      $session->remove('adresse');
+      $session->remove('livraison');
+      $session->remove('tabFrPort');     
+      $session->remove('commande');
+            // Message "erreur" :
+      $this->get('session')->getFlashBag()->add('error', 'Une erreur malencontreuse est survenue. Votre commande n\'a pas pu être enregistrée correctement. Un message vous sera envoyé prochainement pour vous indiquer si la commande a bien pu être enregistrée ou non, et si le paiement a été reçu ou non. ');
+      //echo('ici');die();
+        return $this->redirect($this->generateUrl('paiementfait'));             
+      }
+      $id = $session->get('commande');
       $commande = $em->getRepository('EcomBundle:Commandes')->find($id);
       $commande->setValider(1); 
 
@@ -213,6 +278,9 @@ class CommandesController extends Controller
       $session->set('paiement', $paiement);
 
       // Mail de validation :
+      $Vendeur = $em->getRepository('EcomBundle:Vendeur')->find('1');
+      $logo1 = $Vendeur->getUrllogo1();
+      $vendeur = $Vendeur->getNomcomplet();
       $message = \Swift_Message::newInstance()
               ->setSubject('Validation de votre commande')
               ->setFrom(array('pascal.p8610@gmail.com'=>"ProG-dev"))
@@ -220,12 +288,12 @@ class CommandesController extends Controller
               ->setCharset('utf-8')
               ->setContentType('text/html')
               ->setBody($this->renderView('EcomBundle:Default:SwiftLayout/validCommande.html.twig', 
-                array('utilisateur'=> $commande->getUtilisateur())));
+                array('logo1'=>$logo1, 'vendeur'=>$vendeur,'commande'=> $commande)));
       $this->get('mailer')->send($message);
 
       // Message "succès" :
       $this->get('session')->getFlashBag()->add('success', 'Votre commande est validée avec succès');
-
+      //echo('làla'); die();
       // Redirection vers la liste des commandes du client et le statut, via paiementfaitAction
       return $this->redirect($this->generateUrl('paiementfait'));
     }

@@ -1,0 +1,14 @@
+{% if nbCmdesEnCours == 0 %}
+  <div class="row" > <i style="color:#223;"> 
+      (Pas de cmdes en cours)        
+  </i></div> 
+{% else %}         
+  <div class="row" ><i style="color:#223;">
+    ({{nbCmdesEnCours}}  
+  
+  {% if nbNvellesCmdes == 0 %}
+    )</i></div>
+  {% else %}  
+  , </i><i style="color:#f40;">dont {{nbNvellesCmdes}}  nouvelles</i><i style="color:#223;">)</i></div>
+  {% endif %}
+{% endif %}

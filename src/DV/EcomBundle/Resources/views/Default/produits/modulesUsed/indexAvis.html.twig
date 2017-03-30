@@ -1,50 +1,50 @@
-            {% if nbAvis == 0 %}
-            <div class="row" >  
-              <div class="col-xs-offset-2 col-xs-2" > 
-                0 avis  
-              </div>            
-            </div> 
-            {% else %}         
-            <div class="row" >
-              <div class="col-xs-5"  > 
-                <div class="row" >
-                  <div class="col-xs-6 h5" >
-                    {{nbAvis}} avis 
-                  </div>
-                  <div class="col-xs-6 decal-d h5" > 
-                    Note de :
-                  </div>
-                </div>
-              </div>
-              <div class=" col-xs-5" >            
-                <div class="row decal-B"  >
-                  <ul >
-                    {% for i in 1..5 %}
-                      <li   class="c-rating col-xs-2 "  > 
-                        <span   class="c-rating__item {% if note>=i %} is-active {% else %}{% if note>=i-0.5 %}half-rating{% endif %}{% endif %}"  ></span>
-                      </li>
-                    {% endfor %}
-                  </ul>              
-                </div>
-              </div>
-              <div class=" col-xs-2 decal-B" >
-                <h5 >{{note}}/5</h5>              
-              </div>
-            </div>
-            {% endif %}
-            <br/><br/> 
+{% if nbAvis == 0 %}
+  <div class="row" >  
+    <div class="col-xs-offset-2 col-xs-2" > 
+      0 avis  
+    </div>            
+  </div> 
+{% else %}         
+  <div class="row" >
+    <div class="col-xs-5"  > 
+      <div class="row" >
+        <div class="col-xs-6 h5" >
+          {{nbAvis}} avis 
+        </div>
+        <div class="col-xs-6 decal-d h5" > 
+          Note de :
+        </div>
+      </div>
+    </div>
+    <div class=" col-xs-5" >            
+      <div class="row decal-B"  >
+        <ul >
+          {% for i in 1..5 %}
+            <li   class="c-rating col-xs-2 "  > 
+              <span   class="c-rating__item {% if note>=i %} is-active {% else %}{% if note>=i-0.5 %}half-rating{% endif %}{% endif %}"  ></span>
+            </li>
+          {% endfor %}
+        </ul>              
+      </div>
+    </div>
+    <div class=" col-xs-2 decal-B" >
+      <h5 >{{note}}/5</h5>              
+    </div>
+  </div>
+{% endif %}
+<br/><br/> 
 
-
-            <div class="row" >
-              {% if is_granted('IS_AUTHENTICATED_FULLY') %} 
-              <button type="button" class="col-md-offset-2 col-xs-6"  onClick="$('#show_addAvis').css('display','block');">
-                {% if nbAvis==0 %}
-                  <span ng-show="nbAvis==0" class="h4">Soyez le premier à donner votre avis sur ce produit</span>
-                {% else %}
-                  <span ng-show="nbAvis>0" class="h4">Donnez votre avis sur ce produit</span>
-                {% endif %}
-              </button>
-              {% endif %}
-            </div>
+<div class="row" >
+  {% if is_granted('IS_AUTHENTICATED_FULLY') %} 
+    <button type="button" class="col-md-offset-2 col-xs-6"  onClick="$('#show_show_addAvis').css('display','block');$('#show_addAvis').css('display','block');">
+      {% if nbAvis==0 %}
+        <span  class="h4">Soyez le premier à donner votre avis sur ce produit</span>
+      {% else %}
+        <span  class="h4">Donnez votre avis sur ce produit</span>
+      {% endif %}
+    </button>
+    <img src="{{ asset('img/flèche-vers-le-bas.jpg')}}" id="show_show_addAvis" style="display:none; position:relative; top:150px; left:-36%;" width="100px" height="30px" alt="flèche "  >
+  {% endif %}
+</div>
 
  

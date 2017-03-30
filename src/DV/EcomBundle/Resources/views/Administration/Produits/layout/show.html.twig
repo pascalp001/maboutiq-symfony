@@ -3,7 +3,7 @@
 {% block body -%}
     <h1>Produit '{{ entity.nom }}'</h1>
 
-    <table class="table table-store record_properties">
+    <table class="table table-store record_properties" style="max-width:80%">
         <tbody>
             <tr>
                 <th>Image</th>
@@ -55,11 +55,11 @@
         </div>
         <div class="col-sm-4">        
             <a href="{{ path('adminProduits_edit', { 'id': entity.id }) }}">
-                <button type="button" class="btn btn-greyish"> Modifier </button> 
+                <button type="button" class="btn btn-info"> Modifier </button> 
             </a>
         </div>
         <div class="col-sm-4">  
-               <button type="button" class="btn btn-greyish"> {{ form(delete_form) }} </button>   
+                {{ form(delete_form) }}  
 
         </div>
 {% endblock %}

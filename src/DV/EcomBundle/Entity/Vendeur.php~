@@ -38,21 +38,21 @@ class Vendeur
     /**
      * @var string
      *
-     * @ORM\Column(name="urlLogo", type="string", length=255, nullable=true)
+     * @ORM\Column(name="urlLogo", type="string", length=255)
      */
     private $urllogo0;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="urlLogo1", type="string", length=255, nullable=true)
+     * @ORM\Column(name="urlLogo1", type="string", length=255)
      */
     private $urllogo1;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="urlLogo2", type="string", length=255, nullable=true)
+     * @ORM\Column(name="urlLogo2", type="string", length=255)
      */
     private $urllogo2;
 
@@ -66,7 +66,7 @@ class Vendeur
     /**
      * @var string
      *
-     * @ORM\Column(name="adresse2", type="string", length=255, nullable=true)
+     * @ORM\Column(name="adresse2", type="string", length=255)
      */
     private $adresse2;
 
@@ -108,91 +108,91 @@ class Vendeur
     /**
      * @var string
      *
-     * @ORM\Column(name="Banque", type="string", length=255, nullable=true)
+     * @ORM\Column(name="Banque", type="string", length=255)
      */
     private $banque;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="comptebanc", type="string", length=255, nullable=true)
+     * @ORM\Column(name="comptebanc", type="string", length=255)
      */
     private $comptebanc;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="iban", type="string", length=255, nullable=true)
+     * @ORM\Column(name="iban", type="string", length=255)
      */
     private $iban;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="bic", type="string", length=255, nullable=true)
+     * @ORM\Column(name="bic", type="string", length=255)
      */
     private $bic;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="syssecur", type="string", length=255, nullable=true)
+     * @ORM\Column(name="syssecur", type="string", length=255)
      */
     private $syssecur;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nombqsecur", type="string", length=255, nullable=true)
+     * @ORM\Column(name="nombqsecur", type="string", length=255)
      */
     private $nombqsecur;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="urlbq", type="string", length=255, nullable=true)
+     * @ORM\Column(name="urlbq", type="string", length=255)
      */
     private $urlbq;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="numerocnil", type="string", length=255, nullable=true)
+     * @ORM\Column(name="numerocnil", type="string", length=255)
      */
     private $numerocnil;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="numsiret", type="string", length=255, nullable=true)
+     * @ORM\Column(name="numsiret", type="string", length=255)
      */
     private $numsiret;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="greffe", type="string", length=255, nullable=true)
+     * @ORM\Column(name="greffe", type="string", length=255)
      */
     private $greffe;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="divers", type="string", length=255, nullable=true)
+     * @ORM\Column(name="divers", type="string", length=255)
      */
     private $divers;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="concepteur", type="string", length=255, nullable=true)
+     * @ORM\Column(name="concepteur", type="string", length=255)
      */
     private $concepteur;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="editeur", type="string", length=255, nullable=true)
+     * @ORM\Column(name="editeur", type="string", length=255)
      */
     private $editeur;
 
@@ -756,53 +756,5 @@ class Vendeur
     public function getUrllogo2()
     {
         return $this->urllogo2;
-    }
-
-    /**
-     * Set concepteur
-     *
-     * @param string $concepteur
-     *
-     * @return Vendeur
-     */
-    public function setConcepteur($concepteur)
-    {
-        $this->concepteur = $concepteur;
-
-        return $this;
-    }
-
-    /**
-     * Get concepteur
-     *
-     * @return string
-     */
-    public function getConcepteur()
-    {
-        return $this->concepteur;
-    }
-
-    /**
-     * Set editeur
-     *
-     * @param string $editeur
-     *
-     * @return Vendeur
-     */
-    public function setEditeur($editeur)
-    {
-        $this->editeur = $editeur;
-
-        return $this;
-    }
-
-    /**
-     * Get editeur
-     *
-     * @return string
-     */
-    public function getEditeur()
-    {
-        return $this->editeur;
     }
 }

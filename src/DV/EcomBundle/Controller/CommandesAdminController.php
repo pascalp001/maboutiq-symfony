@@ -30,6 +30,20 @@ class CommandesAdminController extends Controller
             'entities' => $entities, 'archive' => $archive
         ));
     }
+    
+    public function nbCmdesAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $commandes = $em->getRepository('EcomBundle:Commandes')->findBy(array('archiver' => 0));  
+        $nbCmdesEnCours = count($commandes);
+        $commandes = $em->getRepository('EcomBundle:Commandes')->findBy(array('archiver' => 0, 'payer' => 1, 'preparer'=>0));  
+        $nbNvellesCmdes = count($commandes);
+
+        return $this->render('EcomBundle:Administration:Commandes/modulesUsed/nbCmdes.html.twig', array(
+            'nbCmdesEnCours' => $nbCmdesEnCours, 'nbNvellesCmdes'=> $nbNvellesCmdes
+        ));
+    }
+
 
     public function archiveAction()
     {
@@ -45,55 +59,96 @@ class CommandesAdminController extends Controller
 
     public function modifAction($id, Request $request)
     {
-        
 
         if($request->getMethod() == "POST") 
         {   
-            $em = $this->getDoctrine()->getManager();
-            $Commande = $em->getRepository('EcomBundle:Commandes')->find($id);
-            //if (!$Commande) {
-             //   throw $this->createNotFoundException('Unable to find Commandes'.$id.' entity.');
-            //}
+                $em = $this->getDoctrine()->getManager();
+                $Commande = $em->getRepository('EcomBundle:Commandes')->find($id);
+                //if (!$Commande) {
+                 //   throw $this->createNotFoundException('Unable to find Commandes'.$id.' entity.');
+                //}
+                $avoir = array();
+                $payeId    = $request->request->get('paye')   ; 
+                $prepareId = $request->request->get('prepare');
+                $livreId   = $request->request->get('livre')  ;
+                $archiveId = $request->request->get('archive');
+                $supprId   = $request->request->get('suppr')  ;
 
-            $payeId    = $request->request->get('paye')   ; 
-            $prepareId = $request->request->get('prepare');
-            $livreId   = $request->request->get('livre')  ;
-            $archiveId = $request->request->get('archive');
-            $supprId   = $request->request->get('suppr')  ;
+                if ($payeId[$id])      $Commande->setPayer ('1')   ;
+                if ($prepareId[$id])  {
+                    $Commande->setPreparer('1') ;
+                    $avoir[$id] = $this->stockreel($Commande);
+                }
+                if ($livreId[$id])     $Commande->setLivrer ('1')  ;
+                if ($archiveId[$id])   $Commande->setArchiver('1') ;           
+                $em->persist($Commande);
+                
+                if ($supprId[$id]) $em->remove($Commande);
 
-            if ($payeId[$id])      $Commande->setPayer ('1')   ;
-            if ($prepareId[$id])   $Commande->setPreparer('1') ;
-            if ($livreId[$id])     $Commande->setLivrer ('1')  ;
-            if ($archiveId[$id])   $Commande->setArchiver('1') ;           
-            $em->persist($Commande);
+                $em->flush();  
+    // Mail de statut :
+            if($prepareId[$id] || $livreId[$id])
+            {
+                $message = \Swift_Message::newInstance()
+                          ->setSubject('Votre commande en cours')
+                          ->setFrom(array('pascal.p8610@gmail.com'=>"ProG-dev"))
+                          ->setTo($Commande->getUtilisateur()->getEmailCanonical())
+                          ->setCharset('utf-8')
+                          ->setContentType('text/html');
+
+                if($prepareId[$id])
+                {
+                    if($avoir[$id] && array_key_exists('produit', $avoir) ) 
+                    { 
+                        //Problème : stock insuffisant - avoir ou envoi plus tard ?
+                        //Il va manquer $avoir[$id]['produit'][$id => $qte]
+                        $message = $message->setBody($this->renderView('EcomBundle:Default:SwiftLayout/prepareCommande.html.twig', 
+                        array('utilisateur'=> $Commande->getUtilisateur()))); 
+                    }
+                    else
+                    {
+                       $message = $message->setBody($this->renderView('EcomBundle:Default:SwiftLayout/prepareCommande.html.twig', 
+                        array('utilisateur'=> $Commande->getUtilisateur())));  
+                    }
+                }
             
-            if ($supprId[$id]) $em->remove($Commande);
 
-            $em->flush();  
-// Mail de statut :
-        if($prepareId[$id] || $livreId[$id])
-        {
-            $message = \Swift_Message::newInstance()
-                      ->setSubject('Votre commande en cours')
-                      ->setFrom(array('pascal.p8610@gmail.com'=>"ProG-dev"))
-                      ->setTo($Commande->getUtilisateur()->getEmailCanonical())
-                      ->setCharset('utf-8')
-                      ->setContentType('text/html');
+                if($livreId[$id]) { $message = $message->setBody($this->renderView('EcomBundle:Default:SwiftLayout/livreCommande.html.twig', 
+                        array('utilisateur'=> $Commande->getUtilisateur()))); }
 
-            if($prepareId[$id]) { $message = $message->setBody($this->renderView('EcomBundle:Default:SwiftLayout/prepareCommande.html.twig', 
-                    array('utilisateur'=> $Commande->getUtilisateur()))); }
-            if($livreId[$id]) { $message = $message->setBody($this->renderView('EcomBundle:Default:SwiftLayout/livreCommande.html.twig', 
-                    array('utilisateur'=> $Commande->getUtilisateur()))); }
+                $this->get('mailer')->send($message);            
+            }
 
-            $this->get('mailer')->send($message);            
-        }
-        $archive = "en cours";
-        $entities = $em->getRepository('EcomBundle:Commandes')->findAll();
-        return $this->render('EcomBundle:Administration:Commandes/layout/index.html.twig', array(
-            'entities' => $entities, 'archive' => $archive
-        ));
+            $archive = "en cours";
+            $entities = $em->getRepository('EcomBundle:Commandes')->findAll();
+            return $this->render('EcomBundle:Administration:Commandes/layout/index.html.twig', array(
+                'entities' => $entities, 'archive' => $archive
+            ));
         }
         return $this->redirect($this->generateUrl('adminCommandes'));
+    }
+
+    private function stockreel($Commande)
+    {
+        $avoir=array();
+        $em = $this->getDoctrine()->getManager();
+        $commande = $Commande->getCommande();
+        $produits = $commande['produit'];
+        foreach($produits as $id => $produit)
+        {
+            $Produit = $em->getRepository('EcomBundle:Produits')->find($id);
+            $qtePanier = $produit['quantite'];
+            $stockreel = $Produit->getStockreel() - $qtePanier;
+            if($stockreel<0)
+            {
+                $avoir = array('produit'=>array($id => -$stockreel));
+                $stockreel = 0;
+            }
+            $Produit->setStockreel($stockreel);
+            $em->persist($Produit);
+        }
+        $em->flush();
+        return $avoir;
     }
 
     public function facturePDFAction($id)

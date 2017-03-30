@@ -6,43 +6,45 @@ namespace DV\EcomBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use DV\EcomBundle\Entity\Categories;
+use DV\EcomBundle\Entity\Tarif;
 
-class CategoriesData extends AbstractFixture implements OrderedFixtureInterface
+class TarifData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $categorie1 = new Categories(); //Font suite les setters des champs à définir
-        $categorie1->setNom('Coquillage'); 
-        $categorie1->setImage($this->getReference('media2'));
-        $manager->persist($categorie1);
+        $tarif1 = new Tarif(); //Font suite les setters des champs à définir
+        $tarif1->setNom('DivGastropod'); 
+        $tarif3->setImage($this->getReference('media1'));
+        $manager->persist($tarif1);
 
-        $categorie2 = new Categories(); //Font suite les setters des champs à définir
-        $categorie2->setNom('Murex'); 
-        $categorie2->setImage($this->getReference('media3'));
-        $manager->persist($categorie2);
+        $tarif2 = new Tarif(); //Font suite les setters des champs à définir
+        $tarif2->setNom('Murex'); 
+        $tarif2->setImage($this->getReference('media3'));
+        $manager->persist($tarif2);
 
-        $categorie3 = new Categories(); //Font suite les setters des champs à définir
-        $categorie3->setNom('Porcelaines'); 
-        $categorie3->setImage($this->getReference('media4'));
-        $manager->persist($categorie3);
+        $tarif3 = new Tarif(); //Font suite les setters des champs à définir
+        $tarif3->setNom('Porcelaines'); 
+        $tarif3->setImage($this->getReference('media4'));
+        $manager->persist($tarif3);
 
-        $categorie4 = new Categories(); //Font suite les setters des champs à définir
-        $categorie4->setNom('DivGasterop'); 
-        $categorie4->setImage($this->getReference('media5'));
-        $manager->persist($categorie4);
+        $tarif4 = new Tarif(); //Font suite les setters des champs à définir
+        $tarif4->setNom('DivGasterop'); 
+        $tarif4->setImage($this->getReference('media1'));
+        $manager->persist($tarif4);
 
-        $categorie5 = new Categories(); //Font suite les setters des champs à définir
-        $categorie5->setNom('DivBivalve'); 
-        $categorie5->setImage($this->getReference('media6'));
-        $manager->persist($categorie5);
+        $tarif5 = new Tarif(); //Font suite les setters des champs à définir
+        $tarif5->setNom('DivBivalve'); 
+        $tarif5->setImage($this->getReference('media6'));
+        $manager->persist($tarif5);
         $manager->flush();
 
-        $this->addReference('categorie1', $categorie1);
-        $this->addReference('categorie2', $categorie2); 
-        $this->addReference('categorie3', $categorie3); 
-        $this->addReference('categorie4', $categorie4);
-        $this->addReference('categorie5', $categorie5);
+        $tarif6 = new tarif(); //Font suite les setters des champs à définir
+        $tarif6->setNom('Boulons'); 
+        $tarif6->setImage($this->getReference('media7'));
+        $manager->persist($tarif6);
+        $manager->flush();
+
+
     }
 
      public function getOrder()

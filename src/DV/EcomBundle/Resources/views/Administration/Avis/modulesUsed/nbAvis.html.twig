@@ -1,0 +1,9 @@
+{% if nbAvis == 0 %}
+  <div class="row" > <i style="color:#223;"> 
+      (Pas de nouvel avis)        
+  </i></div> 
+{% else %}         
+  <div class="row" ><i style="color:#223;"> (</i><i style="color:#f40;">
+    {{nbAvis}} nouveau{% if nbAvis > 1 %}x{% endif %} </i><i style="color:#223;"> )
+  </i></div>
+  {% endif %}

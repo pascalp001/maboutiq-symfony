@@ -4,6 +4,7 @@ namespace DV\EcomBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use DV\EcomBundle\Entity\Avis;
 use DV\EcomBundle\Form\AvisCompletType;
@@ -41,6 +42,16 @@ class AvisAdminController extends Controller
 
         return $this->render('EcomBundle:Administration:Avis/layout/avisvalid.html.twig', array(
             'aviss' => $aviss
+        ));
+    }
+
+   public function nbAvisAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $avis = $em->getRepository('EcomBundle:Avis')->findByValid('0');  
+        $nbAvis = count($avis);
+        return $this->render('EcomBundle:Administration:Avis/modulesUsed/nbAvis.html.twig', array(
+            'nbAvis' => $nbAvis
         ));
     }
 
@@ -144,7 +155,7 @@ class AvisAdminController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Modifier', 'attr'=>array('class'=>'btn btn-info')));
+        $form->add('submit', SubmitType::class, array('label' => 'Modifier', 'attr'=>array('class'=>'btn btn-info')));
 
         return $form;
     }
@@ -215,7 +226,7 @@ class AvisAdminController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('adminAvis_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Supprimer', 'attr'=>array('class'=>'btn btn-warning')))
+            ->add('submit',SubmitType::class, array('label' => 'Supprimer', 'attr'=>array('class'=>'btn btn-warning')))
             ->getForm()
         ;
     }

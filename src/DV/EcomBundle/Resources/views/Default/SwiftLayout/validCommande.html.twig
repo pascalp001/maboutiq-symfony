@@ -1,8 +1,77 @@
-<p>Bonjour {{ utilisateur.username }} </p>
+<img src="{{ asset( 'img/LogoProG8.PNG' )}}" alt="Notre Logo" style="margin-top:-5px" >
+<p>Bonjour {{ commande.utilisateur.username }} </p>
 
-<p>Votre commande est validée.<br/>
+<p>Nous avons le plaisir de vous confirmer l'enregistrement de votre commande n°{{ commande.reference }} du {{ commande.date|date("d/m/Y") }} dont voici le détail:</p><br/>
+<p style="color:#d24; font-size:20px;">VOTRE ADRESSE DE LIVRAISON</p>
+<hr/>
+Mode de livraison : {{ commande.commande['org'] }} ( {{ commande.commande['nom'] }})<br/>
+
+ {{ commande.commande['livraison']['prenom'] }}&nbsp; {{ commande.commande['livraison']['nom'] }}<br/>
+ {{ commande.commande['livraison']['adresse'] }}<br/>
+ {% if commande.commande['livraison']['complement']|length > 1  %}{{ commande.commande['livraison']['complement'] }}<br/>{% endif %}
+ {{ commande.commande['livraison']['cp'] }}&nbsp; {{ commande.commande['livraison']['ville'] }}
+ {% if commande.commande['livraison']['pays'] !='France' %}{{ commande.commande['livraison']['pays'] }}{% endif %}
+ <br/><br/>
+ Tél : {{ commande.commande['livraison']['telephone'] }}
+<br/><br/>
+<p style="color:#d24; font-size:20px;">VOTRE ADRESSE DE FACTURATION</p>
+<hr/>
+
+ {{ commande.commande['facturation']['prenom'] }}&nbsp; {{ commande.commande['facturation']['nom'] }}<br/>
+ {{ commande.commande['facturation']['adresse'] }}<br/>
+ {% if commande.commande['facturation']['complement']|length > 1  %}{{ commande.commande['facturation']['complement'] }}<br/>{% endif %}
+ {{ commande.commande['facturation']['cp'] }}&nbsp; {{ commande.commande['facturation']['ville'] }}
+ {% if commande.commande['facturation']['pays'] !='France' %}{{ commande.commande['facturation']['pays'] }}{% endif %}
+ <br/><br/>
+ Tél : {{ commande.commande['facturation']['telephone'] }}
+<br/><br/>
+<table>
+	<tr style="background:#ccc; font-weight:600">
+		<th style="width:250px;"> Désignation du produit</th>
+		<th style="width:100px;"> Quantité</th>
+		<th style="width:100px;"> Prix unitaire</th>
+		<th style="width:100px;"> Total TTC</th>
+	</tr>
+	<tr>
+	{% if commande.commande['produit']|length != 0 %}
+		{% for produit in commande.commande['produit'] %}
+			<td style="border-bottom 1px solid #333;">{{ produit['reference'] }}</td>
+			<td style="border-bottom 1px solid #333;">{{ produit['quantite'] }}</td>
+			<td style="border-bottom 1px solid #333;">{{ produit['prixTTC'] }}</td>
+			<td style="border-bottom 1px solid #333;">{{ produit['quantite'] * produit['prixTTC']  | number_format(2) }}</td>
+		{% endfor %}
+	{% endif %}	
+	</tr>
+	<tr>
+		<td >&nbsp; </td>
+		<td colspan="3">Sous-total(hors frais de port): {{ commande.commande['totalTTC'] - commande.commande['frPort']  }}</td>
+	</tr>
+	<tr>
+		<td >&nbsp; </td>
+		<td colspan="3">Frais de livraison : {{ commande.commande['frPort'] }}</td>
+	</tr>
+	<tr>
+		<td >&nbsp; </td>
+		<td colspan="3">Total TTC : {{ commande.commande['totalTTC'] }}<br/></td>
+</table>
+
+	Livraison prévue à partir du : {{ commande.date|date_modify("+4 day")|date('d/m/Y')}} 
+	<br/><br/>
+<p style="color:#d24; font-size:20px;">VOTRE MODE DE PAIEMENT/p>
+<hr/>
+{% if commande.modpmt == 1 %} Carte bancaire <br/>{% endif %}
+{% if commande.modpmt == 2 %} Virement Paypal <br/>{% endif %}
+{% if commande.modpmt == 1 or commande.modpmt == 2 %}
+	Vous recevrez prochainement un message de confirmation de la préparation et de l'expédition.<br/>
+{% endif %}
+{% if commande.modpmt == 3 %} Virement en attente {% endif %}
+{% if commande.modpmt == 4 %} Chèque en attente {% endif %}	
+{% if commande.modpmt == 3 or commande.modpmt == 4 %}
+	Les marchandises vous seront envoyées dès réception du règlement.<br/>
+{% endif %}
+<br/>
 Vous pouvez accèder à votre facture sur votre espace client.<br/><br/>
 
-L'équipe ProG-developpement IT vous remercie pour votre commande.<br/>
-
+L'équipe {{ vendeur}} vous remercie pour votre commande.<br/>
+<br/>
 Cordialement.</p>

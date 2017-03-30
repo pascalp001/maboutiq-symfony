@@ -15,17 +15,16 @@ class GetReference
 
 	public function reference()
 	{
-		$reference = $this->em->getRepository('EcomBundle:Commandes')->findOneBy(array('valider'=>1), array('id'=> 'DESC') ,1 ,1); //1 seul élément
-		if (!$reference) return 1; //si pas encore de facture, la référence est 1
-		else {
-			//var_dump($reference->getReference());
-			//die();
+		$reference = $this->em->getRepository('EcomBundle:Commandes')->findOneBy(array('valider'=>1), array('id'=> 'DESC') ,1 ,1); //1 seul élément	
+		if (!$reference || $reference->getReference()==0) return (int)("1".date('y').date('m')."001"); //si pas encore de facture
+		else {			
 			$ref = $reference->getReference();
 			for($i=0;$i<8;$i++)
 			{
 				//Codage de la référence : [type client]:1 [année]:17 [mois]:03 [n° à 3 chiffres]: 004
 				switch (strlen($ref))
 				{
+					case 0: $ref = "1";
 					case 1: $ref = "0".$ref;
 					case 2: $ref = "0".$ref;
 					case 3: $ref = date('m').$ref;

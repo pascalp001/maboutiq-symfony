@@ -23,7 +23,9 @@
                             <li class="col-md-4 col-sm-6 col-xs-12  thumbnail"  >
                                 <div class="row ">
                                     <div class="col-md-5">
+                                        <a  href="{{ path('presentation', {'id': produit.id  })  }}">
                                         <img src="{{ produit.image.AssetPath|imagine_filter('imgProduitFormat1') }}" alt="image {{ produit.image.name }}" title="{{produit.image.name}}"  >
+                                        </a>
                                     </div>
                                     <div class="col-md-7">   
                                         <div class="caption">

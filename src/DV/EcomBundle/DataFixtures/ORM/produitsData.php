@@ -11,11 +11,11 @@ class ProduitsData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $produits1 = new Produits(); //Font suite les setters des champs à définir
-        $produits1->setCategorie($this->getReference('categorie1')); 
+        $produits1->setCategorie($this->getReference('categorie4')); 
         $produits1->setDescription('Ceci est un coquillage extraordinaire'); 
         $produits1->setDescripcourt('Ceci est un coquillage');
         $produits1->setDisponible('1');
-        $produits1->setImage($this->getReference('media2'));
+        $produits1->setImage($this->getReference('media1'));
         $produits1->setNom('coquillage');    
         $produits1->setPrix('15.42');   
         $produits1->setPoids('50'); 
@@ -69,6 +69,27 @@ class ProduitsData extends AbstractFixture implements OrderedFixtureInterface
 
         $manager->flush();
 
+
+        $produits4 = new Produits(); //Font suite les setters des champs à définir
+        $produits4->setCategorie($this->getReference('categorie6')); 
+        $produits4->setDescription('Ceci est un très joli boulon'); 
+        $produits4->setDescripcourt('Vous serez surpris par l\'eclat et les formes extraordinaires de ce boulon' );
+        $produits4->setDisponible('1');
+        $produits4->setImage($this->getReference('media7'));  
+        $produits4->setNom('Boulon gris-métalisé');  
+        $produits4->setPrix('1');   
+        $produits4->setPoids('10'); 
+        $produits4->setTaille('20'); 
+        $produits4->setLargeur('20'); 
+        $produits4->setEpaiss('8'); 
+        $produits4->setPopularite('1'); 
+        $produits4->setDisponible('1'); 
+        $produits4->setStockreel('28'); 
+        $produits4->setStockvirtuel('28'); 
+        $produits4->setTva($this->getReference('tva2'));    
+        $manager->persist($produits4);
+
+        $manager->flush();
         //$this->addReference('produits1', $produits1);
         //$this->addReference('produits2', $produits2);
         //$this->addReference('produits3', $produits3);

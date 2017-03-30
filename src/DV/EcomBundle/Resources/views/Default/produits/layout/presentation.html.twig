@@ -1,13 +1,19 @@
 {% extends "::layout/layout.html.twig" %}
- {% block titre %} {{produit.nom}} {% endblock %}
+{% block titre %} Pascalp Version Développement > {{produit.nom}} {% endblock %}
 {% block body %}
-<div class="container">	
+<div class="container ">	
 	<div class="pull-right panier" >{% render(controller('EcomBundle:Panier:menu')) %}</div>    
     <div class="row" >
-	   	<div class="col-md-2">
-	        {% include '::modulesBase/nav.html.twig' %}   
-	    </div>   
-	    <div class="col-sm-10 thumbnail">
+	   	<div class="col-xs-2 sidebar">  
+	   		{% include '::modulesBase/nav.html.twig' %}  
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %}  
+        {% else %}
+            {% include 'UtilisateursBundle:Default:modulesUsed/utilisateurs.html.twig' %}  
+        {% endif %}
+	   	</div>   
+
+	    <div class="col-xs-10 thumbnail">
 	    	<form action="{{path('ajoutpanier1',{'id': produit.id})  }}" method="get">
 		        <div class="row ">
 		        	<div class="col-md-6">
@@ -24,18 +30,24 @@
 		                    <h4>{{produit.nom}}</h4>
 		                    <h5>{{produit.categorie.nom}}</h5>
 		                    <p>{{produit.description}}</p>
-		                    <h4>{{produit.prix|tva(produit.tva.multiplicate)  }} € <span class="smallf">TTC</span></h4>	
+		                    <h4>{{produit.prix|tva(produit.tva.multiplicate) |number_format(2) }} € <span class="smallf">TTC</span></h4>	
 		                    <div class="wedge30"> &nbsp; </div>
-		                    {% if panier[produit.id] is not defined %}  
-					            <div class="row ">
-					                <div class="col-md-4">Quantité :	                    	
-		                    		</div>	
-		                    		 
-		                    		<input type="number" step="1" min="0" max="10" value="1" name="qte" class="col-md-2" />                  		                    
-				                </div>
-
-		                    <div class="wedge10"> &nbsp; </div>
-		                    ( Disponible : {{produit.stockvirtuel}} )
+		                    {% if panier[produit.id] is not defined %} 
+		                     	{% if produit.stockvirtuel < 1 %} 
+			                     	<div class="row ">
+			                     		Actuellement non disponible. Désolé !<br/>Cet article devrait être prochainement <br/>à nouveau disponible.
+			                     	</div>
+			                    {% else %} 
+						            <div class="row ">
+						                <div class="col-md-4">Quantité :	                    	
+			                    		</div>	
+			                    		 
+			                    		<input type="number" step="1" min="0" max="{{ max(0,produit.stockvirtuel) }}" 
+			                    		{% if produit.stockvirtuel <= 1 %} value="0" {% else %} value="1" {% endif %} name="qte" class="col-md-2" />                  		                    
+					                </div>
+				                    <div class="wedge10"> &nbsp; </div>
+				                    ( Disponible : {{ max(0,produit.stockvirtuel) }} )
+			                    {% endif %}
 		                    {% else %}
 					            <div class="row ">
 					                <div class="col-md-4">Déjà dans votre panier </div>	                  
@@ -49,26 +61,28 @@
 	                <div class="col-md-offset-2 col-md-4">
 		                    <a  href="{{ path('produits') }}" class="btn btn-greyish">Retour</a>
 		            </div>
-		            {% if panier[produit.id] is not defined %}  
+		            {% if panier[produit.id] is not defined and produit.stockvirtuel > 0 %}  
 		                <div class="col-md-5">	            
 			                    <button type="submit" class="btn btn-brownish" >Ajouter au panier</button>                   	
 			                                   
 			            </div>
 			        {% else %}
+			        	{% if produit.stockvirtuel > 0 %} 
 		                <div class="col-md-5">	            
-			                    <a href="{{path('panier') }}" class="btn btn-brownish" >Voir votre panier</a>                   	                
-			            </div>		        	
+			                <a href="{{path('panier') }}" class="btn btn-brownish" >Voir votre panier</a>                   	                
+			            </div>	
+			            {% endif %}	        	
 		            {% endif %}
 		        </div>
 		    </form> 
 	        <div class="wedge50"> &nbsp; </div>
 	        <div id="show_addAvis" style="display:none">
-	        {{ render(controller('EcomBundle:Produits:addAvis',{'id': produit.id} ))}}
+	        	{{ render(controller('EcomBundle:Produits:addAvis',{'id': produit.id} ))}}
 	        </div>
         	{{ render(controller('EcomBundle:Produits:listeAvis',{'id': produit.id} ))}}
         	
         </div>
-    <div class="wedge80"> &nbsp; </div>
+    	<div class="wedge80"> &nbsp; </div>
     </div>
 </div>
 {% endblock %}

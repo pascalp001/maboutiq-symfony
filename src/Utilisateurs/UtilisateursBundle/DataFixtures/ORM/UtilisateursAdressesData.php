@@ -19,6 +19,8 @@ class UtilisateursAdressesData extends AbstractFixture implements OrderedFixture
         $adresse1->setCp('76600');
         $adresse1->setVille('Le Havre');
         $adresse1->setPays('France');
+        $adresse1->setFact('1');
+        $adresse1->setLivr('1');
         $manager->persist($adresse1);
 
         $adresse2 = new UtilisateursAdresses(); //Font suite les setters des champs à définir
@@ -30,6 +32,8 @@ class UtilisateursAdressesData extends AbstractFixture implements OrderedFixture
         $adresse2->setCp('86100');
         $adresse2->setVille('Châtellerault');
         $adresse2->setPays('France');
+        $adresse2->setFact('1');
+        $adresse2->setLivr('1');
         $manager->persist($adresse2);
 
 

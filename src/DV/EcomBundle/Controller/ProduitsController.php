@@ -9,6 +9,7 @@ use DV\EcomBundle\Entity\Categories;
 use DV\EcomBundle\Form\AvisType ;
 use DV\EcomBundle\Entity\Avis;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Security\Core\Security;
 
 class ProduitsController extends Controller
 {
@@ -108,41 +109,40 @@ class ProduitsController extends Controller
 
     public function addAvisAction($id, Request $request)
     {
-        $utilisateur = $this->container->get('security.token_storage')->getToken()->getUser()->getUsername();   
+        $utilisateur = $this->container->get('security.token_storage')->getToken()->getUser();  
         $em = $this->getDoctrine()->getManager();
         $produit = $em->getRepository('EcomBundle:Produits')->find($id);  
 
         $avis = new Avis();
-        $form = $this->createForm(new AvisType, $avis);
-        $form->add('submit', SubmitType::class, array('label' => '+', 'attr'=>array('class'=>'btn btn-grosplus ')));
-
+        $form1 = $this->createForm(new AvisType, $avis);
+        $form1->add('submit', SubmitType::class, array('label' => '+', 'attr'=>array('class'=>'btn btn-grosplus pull-right')));
 
         //Cas où on a déjà rentré un avis mémorisé en session :
-        $session = $request->getSession();
-        if (!$session->has('avis')) {$session->set('avis', array()); $aviss = null;}
-        else {$aviss = $session->get('avis');  }
+        //$session = $request->getSession();
+        //if (!$session->has('avis')) {$session->set('avis', array()); $aviss = null;}
+        //else {$aviss = $session->get('avis');  }
 
         if ($request->getMethod() == 'POST')
         {            
-            $form->handleRequest($request);
+            $form1->handleRequest($request);
 
-            if($form->isSubmitted() && $form->isValid())
+            if($form1->isSubmitted() && $form1->isValid())
             {
-            $avis->setUser($utilisateur);
-            $avis->setProduit($produit);
-            $avis->setDate(new \DateTime());
-            $avis->setValid(0);
-            //var_dump($avis);
-            //die();
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($avis);
-            $em->flush();                 
-            return $this->redirect($this->generateUrl('presentation', array('id'=>$id) ));           
+                $avis->setUser($utilisateur);
+                $avis->setProduit($produit);
+                $avis->setDate(new \DateTime());
+                $avis->setValid(0);
+                //var_dump($avis);
+                //die();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($avis);
+                $em->flush();                 
+                return $this->redirect($this->generateUrl('presentation', array('id'=>$id) ));           
             }
-         return $this->redirect($this->generateUrl('presentation', array('id'=>$id))); 
+            return $this->redirect($this->generateUrl('presentation', array('id'=>$id))); 
         }
 
-        return $this->render('EcomBundle:Default:produits/modulesUsed/avis.html.twig', array('id'=>$id,'avis'=>$avis, 'addAvis'=>true,  'form' => $form->createView() ));
+        return $this->render('EcomBundle:Default:produits/modulesUsed/avis.html.twig', array('id'=>$id,  'form1' => $form1->createView() ));
     }
 
 }

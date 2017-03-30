@@ -26,7 +26,7 @@
         </div> 
         <div class="col-md-12" id="content"> 
             <div class="wedge15;"> &nbsp; </div> 
-            <h2>Valider mon panier</h2>
+            <h2>Valider ma commande</h2>
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
@@ -122,7 +122,7 @@
                         <label>J'ai lu les conditions générales de vente et j'y adhère sans réserve (<a href="{{path('cgv')}}" target="_blank">Lire les Conditions générales de vente</a>)</label>
                     </div>
                 </div>     
-                <a   href="{{path('paiement', {'id' : commande.id}) }}" style="color:#fff; font-weight:600;" ><button type="button" class="btn btn-info pull-right" id="valider" disabled>Valider la commande et passer au choix du paiement</button></a>
+                <a   href="{{path('paiement') }}" style="color:#fff; font-weight:600;" ><button type="button" class="btn btn-info pull-right" id="valider" disabled>Valider la commande et passer au choix du paiement</button></a>
 
                 <a href="{{path ('frlivraison')}}" class="btn btn-greyish ">Retour choix du mode de livraison</a>
             

@@ -1,0 +1,124 @@
+{% extends '::layout/layoutAdmin.html.twig' %}
+
+{% block body -%}
+    <h1>Cadencier et réassort</h1>
+<!--
+    <table class="table table-store records_list">
+        <thead>
+            <tr>
+                <th colspan="2">&nbsp;</th>
+                <th colspan="12" class="bordVGD">Mois : ventes +commandes</th>
+                <th >&nbsp;</th>
+                <th colspan="2" class="bordVGD">Stock réel</th>                
+                <th colspan="3" class="bordVGD">Stock virtuel</th>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <th class="bordVD">Nom</th>
+                {% for i in cad %}
+                <th>{{ cad[i]}}</th>
+                {% endfor %}
+                <th class="bordVGD">Popularité</th>
+                <th class="bordVG">Restant</th>
+                <th class="bordVD">Réassort</th>                
+                <th class="bordVG">Calculé</th>
+                <th>Constaté</th>
+                <th>Correc</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for produit in Produits %}
+            <tr>
+                <td>{{produit.id}}</td>
+                <td class="bordVD">{{ produit.nom }}</td>
+                {% for i in cad %}
+                    <td>{{ cadencierP[produit.id][i] }}{% if cadencierV[produit.id][i] > 0 %} +<span style="color:green">{{ cadencierV[produit.id][i] }}</span> {% endif  %}</td>
+                {% endfor %}
+                <td class="bordVGD">{{ produit.popularite }}</td>                    
+                <td class="bordVG">{{ produit.stockreel }}</td>
+                <td class="bordVD"><input type="text" name="" style="width:50px"></td>                
+                <td class="bordVG">{{ produit.stockreel - cmdesV[produit.id] }}</td>
+                <td>{{ produit.stockvirtuel }}</td>
+                <td><input type="text" name="" value="{{ produit.stockreel - cmdesV[produit.id] - produit.stockvirtuel}}" style="width:50px"></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> -->
+        {{ form_start(form) }}
+        <table class="table table-store records_list">
+        <thead>
+            <tr>
+                <th colspan="2">&nbsp;</th>
+                <th colspan="12" class="bordVGD">Mois : ventes +commandes</th>
+                <th >&nbsp;</th>
+                <th colspan="2" class="bordVGD">Stock réel</th>                
+                <th colspan="3" class="bordVGD">Stock virtuel</th>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <th class="bordVD">Nom</th>
+                {% for i in cad %}
+                <th>{{ cad[i]}}</th>
+                {% endfor %}
+                <th class="bordVGD">Popularité</th>
+                <th class="bordVG">Restant</th>
+                <th class="bordVD">Réassort</th>                
+                <th class="bordVG">Calculé</th>
+                <th style="font-size:0.9em">Constaté</th>
+                <th style="font-size:0.9em">Ajust</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for form in form.prdReassort %}
+            <tr>
+                <td class="middle">{{form.id.vars.value}}</td>
+                <td class="bordVD middle">{{ form.nom.vars.value }}</td>
+
+                <td class="middle">{{ form.cmdeP1.vars.value}} 
+                    {% if form.cmdeV1.vars.value > 0 %} +<span style="color:green">{{ form.cmdeV1.vars.value}}</span> {% endif  %}</td>
+                <td class="middle">{{ form.cmdeP2.vars.value}} 
+                    {% if form.cmdeV2.vars.value > 0 %} +<span style="color:green">{{ form.cmdeV2.vars.value}}</span> {% endif  %}</td>    
+                <td class="middle">{{ form.cmdeP3.vars.value}} 
+                    {% if form.cmdeV3.vars.value > 0 %} +<span style="color:green">{{ form.cmdeV3.vars.value}}</span> {% endif  %}</td>               
+                <td class="middle">{{ form.cmdeP4.vars.value}} 
+                    {% if form.cmdeV4.vars.value > 0 %} +<span style="color:green">{{ form.cmdeV4.vars.value}}</span> {% endif  %}</td>
+                <td class="middle">{{ form.cmdeP5.vars.value}} 
+                    {% if form.cmdeV5.vars.value > 0 %} +<span style="color:green">{{ form.cmdeV5.vars.value}}</span> {% endif  %}</td>
+                <td class="middle">{{ form.cmdeP6.vars.value}} 
+                    {% if form.cmdeV6.vars.value > 0 %} +<span style="color:green">{{ form.cmdeV6.vars.value}}</span> {% endif  %}</td>
+                <td class="middle">{{ form.cmdeP7.vars.value}} 
+                    {% if form.cmdeV7.vars.value > 0 %} +<span style="color:green">{{ form.cmdeV7.vars.value}}</span> {% endif  %}</td>
+                <td class="middle">{{ form.cmdeP8.vars.value}} 
+                    {% if form.cmdeV8.vars.value > 0 %} +<span style="color:green">{{ form.cmdeV8.vars.value}}</span> {% endif  %}</td>
+                <td class="middle">{{ form.cmdeP9.vars.value}} 
+                    {% if form.cmdeV9.vars.value > 0 %} +<span style="color:green">{{ form.cmdeV9.vars.value}}</span> {% endif  %}</td>
+                <td class="middle">{{ form.cmdeP10.vars.value}} 
+                    {% if form.cmdeV10.vars.value > 0 %} +<span style="color:green">{{ form.cmdeV10.vars.value}}</span> {% endif  %}</td>
+                <td class="middle">{{ form.cmdeP11.vars.value}} 
+                    {% if form.cmdeV11.vars.value > 0 %} +<span style="color:green">{{ form.cmdeV11.vars.value}}</span> {% endif  %}</td>
+                <td class="middle">{{ form.cmdeP12.vars.value}} 
+                    {% if form.cmdeV12.vars.value > 0 %} +<span style="color:green">{{ form.cmdeV12.vars.value}}</span> {% endif  %}</td>
+                <td class="bordVGD middle">{{ form.popularite.vars.value }}</td>                    
+                <td class="bordVG middle">{{ form.stockreel.vars.value }}</td>
+                <td class="bordVD middle">{{form_widget(form.reassort)}}</td>                
+                <td class="bordVG middle">{{form.stockreel.vars.value - form.cmdeV.vars.value }}</td>
+                <td style="font-size:0.8em; vertical-align:middle">{{ form.stockvirtuel.vars.value }}</td>
+                <td>{{form_widget(form.ajust, {'value': form.stockreel.vars.value - form.cmdeV.vars.value - form.stockvirtuel.vars.value ,'attr':{'style':'width:40px; color:#132; line-height: 12px; font-size: 0.8em; cursor:default; background:#aaa;'}})}}</td> </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    <div class='row' >
+        <div class="col-xs-offset-5 col-xs-4">
+        {{ form_widget(form.submit)}}
+        </div>
+    </div>
+    <div style="visibility: hidden;">
+        {{ form_end(form) }}
+    </div>
+        <br/>
+
+{% endblock %}

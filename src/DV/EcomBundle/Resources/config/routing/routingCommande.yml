@@ -1,9 +1,14 @@
+
+validation:
+    path:     /validation
+    defaults: { _controller: EcomBundle:Commandes:validation }
+
 validationCommande:
-    path:     /api/banque/{id}
+    path:     /api/banque
     defaults: { _controller: EcomBundle:Commandes:validationCommande }
 
 paiement:
-    path:     /Commandes/paiement/{id}
+    path:     /Commandes/paiement
     defaults: { _controller: EcomBundle:Commandes:paiement } 
 
 apiBanque:

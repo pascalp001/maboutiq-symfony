@@ -22,10 +22,6 @@ frlivraison:
     path:     /livraison
     defaults: { _controller: EcomBundle:Panier:validationAdresses }
 
-validation:
-    path:     /validation
-    defaults: { _controller: EcomBundle:Panier:validation }
-
 livraisonAdresseSuppr:
     path:     /livraison/adresse/suppression/{id}
     defaults: { _controller: EcomBundle:Panier:adresseSuppression }

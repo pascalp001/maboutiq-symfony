@@ -14,7 +14,7 @@
           <h4>Choisissez votre option de livraison pour cette adresse :</h4>
         </div>
         <div class=" col-sm-6">
-          <h5>{{livraison.prenom}} {{livraison.nom}} : {{livraison.adresse}} {{livraison.complement}} {{livraison.cp}} {{livraison.ville}} {% if livraison.pays != 'France' %} {{livraison.pays}} {% endif %}</h5>
+          <h5>{{livraison['prenom']}} {{livraison['nom']}} : {{livraison['adresse']}} {{livraison['complement']}} {{livraison['cp']}} {{livraison['ville']}} {% if livraison['pays'] != 'France' %} {{livraison['pays']}} {% endif %}</h5>
         </div>
       </div>
       <div class="wedge10">&nbsp;</div> 

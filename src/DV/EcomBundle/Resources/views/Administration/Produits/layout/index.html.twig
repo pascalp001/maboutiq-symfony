@@ -7,6 +7,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>&nbsp;</th>
                 <th>Nom</th>
                 <th>Prix HT</th>
                 <th>Prix TTC</th>
@@ -22,6 +23,7 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('adminProduits_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><img src="{{ entity.image.AssetPath|imagine_filter('imgProduitFormat0') }}" alt="image {{ entity.image.name }}" title="{{entity.image.name}}"  ></td>
                 <td>{{ entity.nom }}</td>
                 <td>{{ entity.prix }}</td>
                 <td>{{ entity.prix|tva(entity.tva.multiplicate) |number_format(2)}}</td>
