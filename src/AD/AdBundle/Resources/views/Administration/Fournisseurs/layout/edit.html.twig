@@ -1,0 +1,54 @@
+{% extends '::layout/layoutAdmin.html.twig' %}
+
+{% block body -%}
+    <h1>Modification d'un fournisseur </h1>
+    {{ form_start(edit_form) }}
+	<div class="row">
+    {{ form_row(edit_form.nom) }}
+	</div>
+	<div class="row">
+    {{ form_row(edit_form.adresse) }}
+	</div>
+	<div class="row">
+    {{ form_row(edit_form.cp) }}
+	</div>
+	<div class="row">
+    {{ form_row(edit_form.ville)}}
+	</div>
+	<div class="row">
+    {{ form_row(edit_form.pays) }}
+	</div>
+	<div class="row">
+    {{ form_row(edit_form.telephone) }}
+	</div>
+	<div class="row">
+    {{ form_row(edit_form.fax) }}
+	</div>
+	<div class="row">
+    {{ form_row(edit_form.email) }}
+	</div>
+	Contact :
+	<div class="row">
+    {{ form_row(edit_form.commercial) }}
+	</div>
+	<div class="row">
+    {{ form_row(edit_form.tel_commerc) }}
+	</div>
+	<br/>
+    
+        <div class=" col-xs-2"  >
+        <a href="{{ path('adminFournisseurs') }}">
+            <button type="button" class="btn btn-greyish" >RETOUR LISTE FOURNISSEURS</button>
+        </a>
+        </div>
+        <div class="col-xs-offset-1 col-xs-2"  >
+				{{ form_widget(edit_form.submit) }}
+        </div> 
+              {{ form_end(edit_form) }}
+        <div class="col-xs-offset-1 col-xs-2" >
+			     
+            {{ form(delete_form) }}   
+        </div>
+    </div>
+    
+{% endblock %}

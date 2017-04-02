@@ -111,7 +111,53 @@ function prixTTC(){
     $('#prixTTC span').text('=> TTC : '+prixTTC+' €');
 } 
 
-    /* Apparition/disparition du menu sidebar dans app/.../layoutAdmin.html.twig */
+function sumStockInventr(){        
+    var sumStock1=0, nbStock1=0;
+    $('center.stockInv input').each(function(){
+       sumStock1+=parseInt($(this).val());
+       if(parseInt($(this).val())>0) {nbStock1++;}      
+    });
+    //alert('ici'+sumStock);
+    $('span#nbStock1').text(nbStock1);
+    $('span#sommeStocks1').text(sumStock1);
+    nbStock0 = $('span#nbStock0').text();
+    sumStock0 = $('span#sommeStocks0').text();
+
+    $('#showboite0').css('display','block');
+    if(nbStock0==0 || sumStock0==0 || nbStock1/nbStock0 < 0.9 || sumStock1/sumStock0 <0.6)
+    { 
+        $('.showboite1').each(function(){$('.showboite1').css('display','block');});
+        $('.showboite2').each(function(){$('.showboite2').css('display','none');});
+        $('.showboite3').each(function(){$('.showboite3').css('display','none');});  
+        $('#enableInventr').attr('disabled','true');  
+    }
+    else
+    {
+        $('.showboite2').each(function(){$('.showboite2').css('display','block');});
+        $('.showboite1').each(function(){$('.showboite1').css('display','none');}); 
+        $('.showboite3').each(function(){$('.showboite3').css('display','none');});              
+    }
+
+} 
+
+function confirmeInventr(){
+    $('#showboite0').css('display','none');
+    $('#validprov input').val('1');
+    $('button#enableInventr').css('color','lime');  
+    $('button#enableInventr').attr('disabled','false');  
+    $('form[name="ad_adbundle_inventr"]').submit();
+}
+
+function StockDefInventr(){
+    $('#showboite0').css('display','block');
+    $('#validprov input').val('1');
+    $('.showboite1').each(function(){$('.showboite1').css('display','none');});
+    $('.showboite2').each(function(){$('.showboite2').css('display','none');}); 
+    $('.showboite3').each(function(){$('.showboite3').css('display','block');});  
+}
+
+
+/* Apparition/disparition du menu sidebar dans app/.../layoutAdmin.html.twig */
     var toggle2=false;
  $("#toggle2-sidebar").click(function () {
     //alert('ici');

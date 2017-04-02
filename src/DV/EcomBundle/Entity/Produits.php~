@@ -40,6 +40,18 @@ class Produits
      private $categorie ;
 
     /**
+    * @ORM\ManyToOne(targetEntity="AD\AdBundle\Entity\Fournisseurs", cascade={"persist"} )
+    * @ORM\JoinColumn(nullable=true)
+    */
+     private $fournisseur ;
+
+    /**
+    * @ORM\OneToMany(targetEntity="DV\EcomBundle\Entity\Avis", mappedBy="produit", cascade={"persist","remove"} )
+    * @ORM\JoinColumn(nullable=true)
+    */
+     private $avi ;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=100)
@@ -129,6 +141,13 @@ class Produits
      * @ORM\Column(name="stockvirtuel", type="integer")
      */
     private $stockvirtuel;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="stockinventaire", type="integer", nullable=true)
+     */
+    private $stockinventaire;
 
     /**
      * Get id
@@ -326,37 +345,13 @@ class Produits
     }
 
     /**
-     * Set categories
+     * Set categorie
      *
      * @param \DV\EcomBundle\Entity\Categories $categories
      *
      * @return Produits
      */
-    public function setCategories(\DV\EcomBundle\Entity\Categories $categories)
-    {
-        $this->categories = $categories;
-
-        return $this;
-    }
-
-    /**
-     * Get categories
-     *
-     * @return \DV\EcomBundle\Entity\Categories
-     */
-    public function getCategories()
-    {
-        return $this->categories;
-    }
-
-    /**
-     * Set categorie
-     *
-     * @param \DV\EcomBundle\Entity\Categories $categorie
-     *
-     * @return Produits
-     */
-    public function setCategorie(\DV\EcomBundle\Entity\Categories $categorie)
+    public function setCategorie(\DV\EcomBundle\Entity\Categories $categories)
     {
         $this->categorie = $categorie;
 
@@ -372,4 +367,316 @@ class Produits
     {
         return $this->categorie;
     }
+
+    /**
+     * Set fournisseur
+     *
+     * @param \DV\EcomBundle\Entity\Fournisseurs $fournisseur
+     *
+     * @return Produits
+     */
+    public function setFournisseur(\AD\AdBundle\Entity\Fournisseurs $fournisseur)
+    {
+        $this->fournisseur = $fournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Get fournisseur
+     *
+     * @return \DV\EcomBundle\Entity\Fournisseurs
+     */
+    public function getFournisseur()
+    {
+        return $this->fournisseur;
+    }
+
+    /**
+     * Set descripcourt
+     *
+     * @param string $descripcourt
+     *
+     * @return Produits
+     */
+    public function setDescripcourt($descripcourt)
+    {
+        $this->descripcourt = $descripcourt;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcourt
+     *
+     * @return string
+     */
+    public function getDescripcourt()
+    {
+        return $this->descripcourt;
+    }
+
+    /**
+     * Set donneestech
+     *
+     * @param string $donneestech
+     *
+     * @return Produits
+     */
+    public function setDonneestech($donneestech)
+    {
+        $this->donneestech = $donneestech;
+
+        return $this;
+    }
+
+    /**
+     * Get donneestech
+     *
+     * @return string
+     */
+    public function getDonneestech()
+    {
+        return $this->donneestech;
+    }
+
+    /**
+     * Set poids
+     *
+     * @param integer $poids
+     *
+     * @return Produits
+     */
+    public function setPoids($poids)
+    {
+        $this->poids = $poids;
+
+        return $this;
+    }
+
+    /**
+     * Get poids
+     *
+     * @return integer
+     */
+    public function getPoids()
+    {
+        return $this->poids;
+    }
+
+    /**
+     * Set taille
+     *
+     * @param float $taille
+     *
+     * @return Produits
+     */
+    public function setTaille($taille)
+    {
+        $this->taille = $taille;
+
+        return $this;
+    }
+
+    /**
+     * Get taille
+     *
+     * @return float
+     */
+    public function getTaille()
+    {
+        return $this->taille;
+    }
+
+    /**
+     * Set largeur
+     *
+     * @param float $largeur
+     *
+     * @return Produits
+     */
+    public function setLargeur($largeur)
+    {
+        $this->largeur = $largeur;
+
+        return $this;
+    }
+
+    /**
+     * Get largeur
+     *
+     * @return float
+     */
+    public function getLargeur()
+    {
+        return $this->largeur;
+    }
+
+    /**
+     * Set epaiss
+     *
+     * @param float $epaiss
+     *
+     * @return Produits
+     */
+    public function setEpaiss($epaiss)
+    {
+        $this->epaiss = $epaiss;
+
+        return $this;
+    }
+
+    /**
+     * Get epaiss
+     *
+     * @return float
+     */
+    public function getEpaiss()
+    {
+        return $this->epaiss;
+    }
+
+    /**
+     * Set popularite
+     *
+     * @param integer $popularite
+     *
+     * @return Produits
+     */
+    public function setPopularite($popularite)
+    {
+        $this->popularite = $popularite;
+
+        return $this;
+    }
+
+    /**
+     * Get popularite
+     *
+     * @return integer
+     */
+    public function getPopularite()
+    {
+        return $this->popularite;
+    }
+
+    /**
+     * Set stockreel
+     *
+     * @param integer $stockreel
+     *
+     * @return Produits
+     */
+    public function setStockreel($stockreel)
+    {
+        $this->stockreel = $stockreel;
+
+        return $this;
+    }
+
+    /**
+     * Get stockreel
+     *
+     * @return integer
+     */
+    public function getStockreel()
+    {
+        return $this->stockreel;
+    }
+
+    /**
+     * Set stockvirtuel
+     *
+     * @param integer $stockvirtuel
+     *
+     * @return Produits
+     */
+    public function setStockvirtuel($stockvirtuel)
+    {
+        $this->stockvirtuel = $stockvirtuel;
+
+        return $this;
+    }
+
+    /**
+     * Get stockvirtuel
+     *
+     * @return integer
+     */
+    public function getStockvirtuel()
+    {
+        return $this->stockvirtuel;
+    }
+
+    /**
+     * Set stockinventaire
+     *
+     * @param integer $stockinventaire
+     *
+     * @return Produits
+     */
+    public function setStockinventaire($stockinventaire)
+    {
+        $this->stockinventaire = $stockinventaire;
+
+        return $this;
+    }
+
+    /**
+     * Get stockinventaire
+     *
+     * @return integer
+     */
+    public function getStockinventaire()
+    {
+        return $this->stockinventaire;
+    }
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->avi = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add avi
+     *
+     * @param \DV\EcomBundle\Entity\Avis $avi
+     *
+     * @return Produits
+     */
+    public function addAvi(\DV\EcomBundle\Entity\Avis $avi)
+    {
+        $this->avi[] = $avi;
+
+        return $this;
+    }
+
+    /**
+     * Remove avi
+     *
+     * @param \DV\EcomBundle\Entity\Avis $avi
+     */
+    public function removeAvi(\DV\EcomBundle\Entity\Avis $avi)
+    {
+        $this->avi->removeElement($avi);
+    }
+
+    /**
+     * Get avi
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAvi()
+    {
+        return $this->avi;
+    }
+
+    public function __toString()
+    {
+        return $this->getNom();
+    }
+
 }

@@ -13,7 +13,7 @@ use DV\EcomBundle\Form\UtilisateursAdressesType;
 use DV\EcomBundle\Entity\UtilisateursAdresses;
 use DV\EcomBundle\Entity\Commandes;
 use DV\EcomBundle\Entity\Produits;
-use DV\EcomBundle\Entity\Vendeur;
+use AD\AdBundle\Entity\Vendeur;
 
 class CommandesController extends Controller
 {

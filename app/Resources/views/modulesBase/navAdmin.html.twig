@@ -4,11 +4,11 @@
     	<!--<div style="height:100px;">&nbsp;</div>-->
         <li>
         	<a href="{{path('adminCommandes') }}"  class="sidebar sup">Commandes en cours</a>
-            {% render(controller('EcomBundle:CommandesAdmin:nbCmdes')) %}
+            {% render(controller('AdBundle:CommandesAdmin:nbCmdes')) %}
         </li>
         <li class="nav-header">
             <a href="{{path('adminAvis') }}" class="sidebar sup" >Nouveaux avis à valider</a>
-            {% render(controller('EcomBundle:AvisAdmin:nbAvis')) %}
+            {% render(controller('AdBundle:AvisAdmin:nbAvis')) %}
         </li>
         <hr class="hrb"/>
         <li class="nav-header">
@@ -30,11 +30,14 @@
         </li>
 
         <li>
-            <a href="{{path('adminProduits_reassort') }}"  class="sidebar sup">Réassort/cadencier</a>
+            <a href="{{path('adminStocks_reassort') }}"  class="sidebar sup">Réassort/cadencier</a>
         </li> 
         <li>
-            <a href="{{path('adminProduits') }}"  class="sidebar sup">Démarque</a>
+            <a href="{{path('adminStocks_demarque') }}"  class="sidebar sup">Démarque</a>
         </li>  
+        <li>
+            <a href="{{path('adminStocks_inventr') }}"  class="sidebar sup">Inventaire</a>
+        </li> 
         <li >
             <a href="{{path('adminAvis_valid') }}" class="sidebar sup" >Avis validés</a>
         </li>         
@@ -46,6 +49,9 @@
     	<!--<div style="height:100px;">&nbsp;</div>-->
         <li>
             <a href="{{path('adminCategories') }}" class="sidebar sup ">Catégories de produits</a>
+        </li>
+        <li>
+            <a href="{{path('adminFournisseurs') }}" class="sidebar sup ">Fournisseurs</a>
         </li>
         <li class="nav-header">
         	<a href="{{path('adminPages') }}" class="sidebar sup" >Pages du footer</a>

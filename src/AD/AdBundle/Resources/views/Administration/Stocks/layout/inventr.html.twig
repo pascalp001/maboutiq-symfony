@@ -1,0 +1,201 @@
+{% extends '::layout/layoutAdmin.html.twig' %}
+
+{% block body -%}
+    <h1>Inventaire </h1>
+
+        {{ form_start(form) }}
+        <table class="table table-store records_list"  style="width:70%">
+        <thead>
+            <tr>
+                <th rowspan="3" class="bordVD">Id</th>
+                <th colspan="2" rowspan="3" class="bordVD" style="border-bottom: 0px solid #333">Nom</th>     
+                <th colspan="4" class="bordVGD">Inventaire</th>
+            </tr>
+            <tr >
+
+                <th class="bordVGD" rowspan="2">Stock restant<br/>dans la base</th>
+                <th colspan="2" class="bordVG">Stock constaté inventaire
+                </th>
+                <th class="bordVGD" rowspan="2">Ecart</th>
+            </tr >
+                <th  class="bordVG">Nouvelle saisie 
+                </th>
+                <th  class="bordVG">Déjà enregistré
+                </th>
+
+        </thead>
+        <tbody>
+        {% for form in form.prdInventr %}    
+        {#% for categorie in form.categorie %#}
+            <tr>{#{categorie.vars.value}#}</tr>
+
+            
+            {#% if form.categorie.vars.value == categorie.vars.value %#}    
+                <tr>
+                    <td class="middle bordVD">{{form.id.vars.value}}</td>
+                    <td colspan="2" class="bordVD middle">{{ form.nom.vars.value }}</td>               
+                    <td class="bordVGD middle" >{{ form.stockreel.vars.value }}</td>                
+                    <td class="bordVG middle"  >
+                        <center class="stockInv" >
+                            {{form_widget(form.stockinventaire, {'attr':{'style':'width:130px; color:#132; line-height: 12px;  cursor:pointer; '}})}}
+                        </center>
+                    </td> 
+                    <td class="bordVG " style="font-size:0.7em; vertical-align:middle">
+                        {{ form.stockinventaire.vars.value }}
+                    </td>
+                    <td class="bordVG " style="font-size:0.7em; vertical-align:middle">
+                        {{ form.stockreel.vars.value - form.stockinventaire.vars.value }}
+                    </td>
+                </tr>
+            {#% endif %#}
+            {#% endfor %#}
+        {% endfor %}
+        
+        </tbody>
+    </table>
+    <span class="sumStockInv"></span>
+    <div class='row' >
+        <div class=" col-xs-2" style="font-size:1.2em" >Inventaire en cours : </div>
+        <div id="validprov">{{form_widget(form.validprov)}} </div>
+        <div class="col-xs-offset-1 col-xs-4">
+         {{ form_widget(form.submit)}}
+        </div>
+    </div>
+
+    <div class='row' >
+        <div class="col-xs-offset-3 col-xs-4" style="font-size: 35px; width: 400px; "><center>&#9660; </center></div>
+    </div>  
+    <div class='row' >
+        <div class=" col-xs-2" style="font-size:1.2em" >Fin d'nventaire : </div>
+        <div class="col-xs-offset-1 col-xs-4">
+            <button type="button" 
+                    style="color:#132; line-height: 25px; font-size: 20px; width: 400px; min-height:40px;"  
+                    onClick="sumStockInventr(); ">
+                    Validation provisoire totale de l'inventaire
+            </button>
+        </div>
+    </div>
+    <div style="visibility: hidden; max-height:1px;">
+        {{ form_end(form) }}
+    </div>    
+    <div class='row' >
+        <div class="col-xs-offset-3 col-xs-3" style="font-size: 35px; width: 400px;"><center>&#9660; </center></div>
+    </div>  
+    <div class='row' >
+        <div class=" col-xs-2" style="font-size:1.2em" >Validation de l'inventaire : </div>
+        <div class="col-xs-offset-1 col-xs-4">
+            <button type="button" id="enableInventr"
+                    style="color:#132; line-height: 25px; font-size: 20px; width: 400px; min-height:40px;" 
+                    {% if validprov == 0 %} disabled {% endif %} 
+                    onClick="StockDefInventr(); ">
+                    Validation définitive de l'inventaire
+            </button>
+        </div>
+    </div>
+<div  id="showboite0" style="display:none;"
+  <div ng-show="showAlerte==true">
+    <div class="layer_cart_overlay" ></div>
+    <div class="layer_cart" >
+      <div class="layer_cart_product" style="background:#EEE;" ng-show="toggleVue==1">
+        <div  class="showboite1" style="display:none;">
+            <div class="row warning-light">
+                <div class="col-xs-12  " >
+                  <h4 class="connexion">DÉSOLÉ, CETTE OPÉRATION N'EST PAS AUTORISÉE</h4>
+                </div>
+            </div> 
+        </div> 
+        <div  class="showboite2" style="display:none;">
+            <div class="row success-light">
+                <div class="col-xs-12  " >
+                  <h4 class="connexion">VEUILLEZ CONFIRMER CETTE OPÉRATION</h4>
+                </div>
+            </div>  
+        </div>
+        <div  class="showboite3" style="display:none;">
+            <div class="row success-light">
+                <div class="col-xs-12  " >
+                  <h4 class="connexion">VEUILLEZ CONFIRMER CETTE OPÉRATION</h4>
+                  <h5> ATTENTION ! CETTE OPÉRATION REMPLACERA DÉFINITIVEMENT LES STOCKS DE LA BASE <br/>PAR CEUX DE L'INVENTAIRE</h5>
+                  <h6> Les écarts entre stocks virtuels et stocks réels seront conservés.</h6>
+                </div>
+            </div>  
+        </div>
+    </div>
+    <div class="layer_cart_product" style="background:#EEE;" ng-show="toggleVue==2">    
+        <div class="row">
+          <div class="col-xs-12 " >
+            <div class="wedge20">&nbsp;</div>            
+                <p>Nombre de produits en stock dans la base : <span id="nbStock0">{{nbStocks}}</span>
+                <br/>Nombre d'articles en stock dans la base : <span id="sommeStocks0"> {{sommeStocks}}</span></p><br/>
+
+                <p>Nombre de produits saisis dans l'inventaire : <span id="nbStock1">{{nbStocks}}</span>
+                <br/>Nombre d'articles saisis dans l'inventaire : <span id="sommeStocks1"> {{sommeStocks}}</span></p><br/>
+          </div>
+        </div>
+        <div class="wedge20">&nbsp;</div> 
+    <div class="layer_cart_product" style="background:#EEE;" ng-show="toggleVue==1">
+        <div  class="showboite1  warning-light" style="display:none;">
+            <div class="row">
+                <div class="col-xs-12  " >
+                    <center><h4 class="connexion">LES STOCKS INDIQUÉS DANS L'INVENTAIRE N'APPARAISSENT <br/>
+                        PAS COHÉRENTS AVEC LES STOCKS ACTUELS DE LA BASE</h4></center>                    
+                </div>
+            </div>
+            <div class="row">    
+              <div class="col-xs-offset-4 col-xs-4 ">
+                <center>               
+                    <button type="button" class="btn btn-greyish"  title="Inventaire incohérent" onClick="$('#showboite0').css('display','none');" >RETOUR</button>             
+                </center>
+              </div>
+            </div>  
+            <div style="height:40px">&nbsp;</div>
+        </div> 
+        <div  class="showboite2 success-light" style="display:none;"> 
+            <div class="row">    
+              <div class="col-xs-offset-1 col-xs-4 ">
+                <center>               
+                    <button type="button" class="btn btn-greyish"  title="Inventaire non validé" 
+                        onClick="$('#showboite0').css('display','none');"  >
+                        RETOUR
+                    </button>              
+                </center>
+              </div>
+              <div class="col-xs-offset-1 col-xs-4 ">
+                <center>               
+                    <button type="button" class="btn btn-success"  title="Inventaire validé provisoirement en totalité" 
+                        onClick="confirmeInventr();" >
+                        CONFIRMER
+                    </button>               
+                </center>
+              </div>
+            </div>  
+            <div style="height:40px">&nbsp;</div>            
+        </div>
+        <div  class="showboite3 success-light" style="display:none;"> 
+            <div class="row">    
+              <div class="col-xs-offset-1 col-xs-4 ">
+                <center>               
+                    <button type="button" class="btn btn-greyish"  title="Inventaire non validé" 
+                        onClick="$('#showboite0').css('display','none');"  >
+                        RETOUR
+                    </button>              
+                </center>
+              </div>
+              <div class="col-xs-offset-1 col-xs-4 ">
+                <center>               
+                    <a href=" {{ path('adminStocks_inventrdef') }} ">
+                        <button type="button" class="btn btn-success"  title="L'nventaire sera validé définitivement ">                       
+                        CONFIRMER                        
+                    </button> </a>              
+                </center>
+              </div>
+            </div>  
+            <div style="height:40px">&nbsp;</div>            
+        </div>
+    </div>
+</div>
+      </div>
+    </div >
+  </div>
+</div>
+{% endblock %}

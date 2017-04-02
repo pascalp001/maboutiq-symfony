@@ -1,0 +1,32 @@
+
+routingAdmin:
+    resource:  "@AdBundle/Resources/config/routing/routingAdmin.yml"
+    prefix: /admin
+
+routingCommandesAdmin:
+    resource: "@AdBundle/Resources/config/routing/routingCommandesAdmin.yml"
+    prefix:   /admin/commandes
+
+routingCategoriesAdmin:
+    resource: "@AdBundle/Resources/config/routing/routingCategoriesAdmin.yml"
+    prefix:   /admin/categories
+
+routingProduitsAdmin: 
+    resource: "@AdBundle/Resources/config/routing/routingProduitsAdmin.yml"
+    prefix:   /admin/produits
+
+routingFournisseursAdmin:
+    resource: "@AdBundle/Resources/config/routing/routingFournisseursAdmin.yml"
+    prefix:   /admin/Fournisseurs
+
+routingAvisAdmin:
+    resource: "@AdBundle/Resources/config/routing/routingAvisAdmin.yml"
+    prefix:   /admin/avis
+
+routingTarifAdmin:
+    resource: "@AdBundle/Resources/config/routing/routingTarifAdmin.yml"
+    prefix:   /admin/Tarif
+
+routingStocksAdmin: 
+    resource: "@AdBundle/Resources/config/routing/routingStocksAdmin.yml"
+    prefix:   /admin/stocks

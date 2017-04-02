@@ -1,0 +1,26 @@
+adminAvis:
+    path:     /
+    defaults: { _controller: "AdBundle:AvisAdmin:index" }
+
+adminAvis_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AdBundle:AvisAdmin:edit" }
+
+adminAvis_update:
+    path:     /{id}/update
+    defaults: { _controller: "AdBundle:AvisAdmin:update" }
+    methods:  [POST, PUT]
+
+adminAvis_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AdBundle:AvisAdmin:delete" }
+    methods:  [POST, DELETE]
+
+adminAvis_modif:
+    path:     /{id}/modif
+    defaults: { _controller: "AdBundle:AvisAdmin:modif" }
+    methods:  [POST, PUT]  
+
+adminAvis_valid:
+    path:     /validés
+    defaults: { _controller: "AdBundle:AvisAdmin:avisvalid" }

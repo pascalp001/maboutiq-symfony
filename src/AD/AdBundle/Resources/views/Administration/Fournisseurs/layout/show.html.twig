@@ -1,0 +1,68 @@
+{% extends '::layout/layoutAdmin.html.twig' %}
+
+{% block body -%}
+    <h1>Fournisseur {{ entity.nom }}</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ entity.nom }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ entity.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Cp</th>
+                <td>{{ entity.cp }}</td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ entity.ville }}</td>
+            </tr>
+            <tr>
+                <th>Pays</th>
+                <td>{{ entity.pays }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ entity.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Fax</th>
+                <td>{{ entity.fax }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ entity.email }}</td>
+            </tr>
+            <tr>
+                <th>Commercial</th>
+                <td>{{ entity.commercial }}</td>
+            </tr>
+            <tr>
+                <th>Tel_commerc</th>
+                <td>{{ entity.telcommerc }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('adminFournisseurs') }}">
+            Retour à la liste
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('adminFournisseurs_edit', { 'id': entity.id }) }}">
+            Modifier
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

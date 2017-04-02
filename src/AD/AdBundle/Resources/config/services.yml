@@ -1,0 +1,11 @@
+parameters:
+#    ecom.example.class: DV\EcomBundle\Example
+
+services:
+    setNewFacture:
+        class:  AD\AdBundle\Services\GetFacture
+        arguments: ['@service_container']
+
+    setNewBL:
+        class:  AD\AdBundle\Services\GetBL
+        arguments: ['@service_container']

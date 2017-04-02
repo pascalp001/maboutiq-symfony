@@ -1,0 +1,30 @@
+adminFournisseurs:
+    path:     /
+    defaults: { _controller: "AdBundle:FournisseursAdmin:index" }
+
+adminFournisseurs_show:
+    path:     /{id}/show
+    defaults: { _controller: "AdBundle:FournisseursAdmin:show" }
+
+adminFournisseurs_new:
+    path:     /new
+    defaults: { _controller: "AdBundle:FournisseursAdmin:new" }
+
+adminFournisseurs_create:
+    path:     /create
+    defaults: { _controller: "AdBundle:FournisseursAdmin:create" }
+    methods:  POST
+
+adminFournisseurs_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AdBundle:FournisseursAdmin:edit" }
+
+adminFournisseurs_update:
+    path:     /{id}/update
+    defaults: { _controller: "AdBundle:FournisseursAdmin:update" }
+    methods:  [POST, PUT]
+
+adminFournisseurs_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AdBundle:FournisseursAdmin:delete" }
+    methods:  [POST, DELETE]

@@ -361,6 +361,8 @@ td, th {text-align:center;}
 .rouge {color:red; font-weight:600;}
 .colorenable {color:#444;}
 .colordisable {color:#aaa;}
+.warning-light {background-color: #ffb366;}
+.success-light {background-color: #bfff80;}
 .thumbnail {background:#bbb;}
 .table-striped > tbody > tr:nth-child(odd) > td,
 .table-striped > tbody > tr:nth-child(odd) > th {

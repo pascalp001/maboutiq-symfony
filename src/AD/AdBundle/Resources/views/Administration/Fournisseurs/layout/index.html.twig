@@ -1,0 +1,53 @@
+{% extends '::layout/layoutAdmin.html.twig' %}
+
+{% block body -%}
+    <h1>Liste des fournisseurs </h1>
+
+    <table class="records_list table-store">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th style="min-width:200px;">Adresse</th>
+                <th style="min-width:130px;">Telephone / Fax</th>
+                <th style="min-width:130px;">Email</th>
+                <th style="min-width:130px;">Commercial</th>
+                
+                <th colspan="2" style="min-width:130px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('adminFournisseurs_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.nom }}</td>
+                <td style="min-width:200px;">&nbsp;{{ entity.adresse }}<br/>
+                {{ entity.cp }}&nbsp;{{ entity.ville }}&nbsp;{% if entity.pays != "France" %}{{ entity.pays }}{% endif %}</td>
+                <td style="min-width:130px;">Tel :&nbsp; {{ entity.telephone }}<br/>
+                Fax : &nbsp;{{ entity.fax }}</td>
+                <td style="min-width:130px;">&nbsp;{{ entity.email }}</td>
+                <td style="min-width:130px;">Contact :&nbsp; {{ entity.commercial }}<br/>
+                Tel : &nbsp;{{ entity.telcommerc }}</td>
+                <td>
+                    <a href="{{ path('adminFournisseurs_show', { 'id': entity.id }) }}"><i class="glyphicon glyphicon-eye-open"></i></a>
+                </td>
+                <td>
+                    <a href="{{ path('adminFournisseurs_edit', { 'id': entity.id }) }}"><i class="glyphicon glyphicon-edit"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table><br/>
+    <div class="row">
+        <div class="col-xs-offset-2 col-xs-2"  >
+        <a href="{{ path('adminProduits') }}">
+            <button type="button" class="btn btn-greyish" >RETOUR LISTE DES PRODUITS</button>
+        </a>
+        </div>
+        <div class="col-xs-offset-2 col-xs-2"  >
+        <a href="{{ path('adminFournisseurs_new') }}">
+            <button type="button" class="btn btn-success" >AJOUTER UN NOUVEAU FOURNISSEUR</button>
+        </a>
+        </div>
+    </div>
+{% endblock %}

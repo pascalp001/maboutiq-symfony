@@ -1,0 +1,73 @@
+{% extends '::layout/layoutAdmin.html.twig' %}
+
+{% block body -%}
+    <h1>Produit '{{ entity.nom }}'</h1>
+
+    <table class="table table-store record_properties" style="max-width:80%">
+        <tbody>
+            <tr>
+                <th>Image</th>
+                <td><img src="{{ entity.image.AssetPath|imagine_filter('imgProduitFormat1') }}" alt="image {{ entity.image.name }}" title="{{entity.image.name}}"  ></td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ entity.nom }}</td>
+            </tr>
+            <tr>
+                <th>Catégorie</th>
+                <td>{{ entity.categorie }}</td>
+            </tr>
+            <tr>
+                <th>Fournisseur</th>
+                <td>{{ entity.fournisseur }}</td>
+            </tr>
+            <tr>
+                <th>Description résumée</th>
+                <td>{{ entity.descripcourt }}</td>
+            </tr>
+            <tr>
+                <th>Description détaillée</th>
+                <td>{{ entity.description }}</td>
+            </tr>
+            <tr>
+                <th>Données techniques</th>
+                <td>{{ entity.donneestech}}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ entity.prix }} € HT ({{ entity.prix|tva(entity.tva.multiplicate) |number_format(2)}} € TTC)</td>
+            </tr>
+            <tr>
+                <th>Stock disponible</th>
+                <td>{{ entity.stockreel }}</td>
+            </tr>
+            <tr>
+                <th>Popularité</th>
+                <td>{{ entity.popularite }}</td>
+            </tr>
+            <tr>
+                <th>Poids</th>
+                <td>{{ entity.poids }} g</td>
+            </tr>
+            <tr>
+                <th>Dimensions</th>
+                <td>{{ entity.taille }} x {{ entity.largeur }} x {{ entity.epaiss }} mm</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row" >
+        <div class="col-sm-4">
+            <a href="{{ path('adminProduits') }}">
+                <button type="button" class="btn btn-greyish">Retour</button>           
+            </a>
+        </div>
+        <div class="col-sm-4">        
+            <a href="{{ path('adminProduits_edit', { 'id': entity.id }) }}">
+                <button type="button" class="btn btn-info"> Modifier </button> 
+            </a>
+        </div>
+        <div class="col-sm-4">  
+                {{ form(delete_form) }}  
+
+        </div>
+{% endblock %}

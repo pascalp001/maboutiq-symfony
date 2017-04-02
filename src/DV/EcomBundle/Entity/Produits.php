@@ -40,6 +40,12 @@ class Produits
      private $categorie ;
 
     /**
+    * @ORM\ManyToOne(targetEntity="AD\AdBundle\Entity\Fournisseurs", cascade={"persist"} )
+    * @ORM\JoinColumn(nullable=true)
+    */
+     private $fournisseur ;
+
+    /**
     * @ORM\OneToMany(targetEntity="DV\EcomBundle\Entity\Avis", mappedBy="produit", cascade={"persist","remove"} )
     * @ORM\JoinColumn(nullable=true)
     */
@@ -135,6 +141,13 @@ class Produits
      * @ORM\Column(name="stockvirtuel", type="integer")
      */
     private $stockvirtuel;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="stockinventaire", type="integer", nullable=true)
+     */
+    private $stockinventaire;
 
     /**
      * Get id
@@ -332,37 +345,13 @@ class Produits
     }
 
     /**
-     * Set categories
+     * Set categorie
      *
      * @param \DV\EcomBundle\Entity\Categories $categories
      *
      * @return Produits
      */
-    public function setCategories(\DV\EcomBundle\Entity\Categories $categories)
-    {
-        $this->categories = $categories;
-
-        return $this;
-    }
-
-    /**
-     * Get categories
-     *
-     * @return \DV\EcomBundle\Entity\Categories
-     */
-    public function getCategories()
-    {
-        return $this->categories;
-    }
-
-    /**
-     * Set categorie
-     *
-     * @param \DV\EcomBundle\Entity\Categories $categorie
-     *
-     * @return Produits
-     */
-    public function setCategorie(\DV\EcomBundle\Entity\Categories $categorie)
+    public function setCategorie(\DV\EcomBundle\Entity\Categories $categories)
     {
         $this->categorie = $categorie;
 
@@ -377,6 +366,30 @@ class Produits
     public function getCategorie()
     {
         return $this->categorie;
+    }
+
+    /**
+     * Set fournisseur
+     *
+     * @param \DV\EcomBundle\Entity\Fournisseurs $fournisseur
+     *
+     * @return Produits
+     */
+    public function setFournisseur(\AD\AdBundle\Entity\Fournisseurs $fournisseur)
+    {
+        $this->fournisseur = $fournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Get fournisseur
+     *
+     * @return \DV\EcomBundle\Entity\Fournisseurs
+     */
+    public function getFournisseur()
+    {
+        return $this->fournisseur;
     }
 
     /**
@@ -594,6 +607,31 @@ class Produits
     {
         return $this->stockvirtuel;
     }
+
+    /**
+     * Set stockinventaire
+     *
+     * @param integer $stockinventaire
+     *
+     * @return Produits
+     */
+    public function setStockinventaire($stockinventaire)
+    {
+        $this->stockinventaire = $stockinventaire;
+
+        return $this;
+    }
+
+    /**
+     * Get stockinventaire
+     *
+     * @return integer
+     */
+    public function getStockinventaire()
+    {
+        return $this->stockinventaire;
+    }
+    
     /**
      * Constructor
      */
@@ -635,4 +673,6 @@ class Produits
     {
         return $this->avi;
     }
+
+
 }

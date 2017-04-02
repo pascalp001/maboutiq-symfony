@@ -1,5 +1,5 @@
 <?php
-namespace AD\AdBundle\Services;
+namespace DV\EcomBundle\Services;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;

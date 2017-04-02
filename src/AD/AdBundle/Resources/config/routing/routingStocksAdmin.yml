@@ -1,0 +1,16 @@
+
+adminStocks_reassort:
+    path:     /reassort
+    defaults: { _controller: "AdBundle:StocksAdmin:reassort" }
+
+adminStocks_demarque:
+    path:     /demarque
+    defaults: { _controller: "AdBundle:StocksAdmin:demq" }
+
+adminStocks_inventr:
+    path:     /inventaire
+    defaults: { _controller: "AdBundle:StocksAdmin:inventr" }
+
+adminStocks_inventrdef:
+    path:     /validation_inventaire
+    defaults: { _controller: "AdBundle:StocksAdmin:validInventr" }

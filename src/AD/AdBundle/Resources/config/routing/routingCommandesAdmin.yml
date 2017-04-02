@@ -1,0 +1,47 @@
+adminCommandes:
+    path:     /
+    defaults: { _controller: "AdBundle:CommandesAdmin:index" }
+
+adminCommandesArchives:
+    path:     /archives
+    defaults: { _controller: "AdBundle:CommandesAdmin:archive" }
+
+adminShowFacture:
+    path:     /facture/{id}
+    defaults:  { _controller: "AdBundle:CommandesAdmin:facturePDF" }
+
+adminShowBL:
+    path:     /bon_de_livraison/{id}
+    defaults:  { _controller: "AdBundle:CommandesAdmin:bonlivraisonPDF" }
+
+adminCommandes_show:
+    path:     /{id}/show
+    defaults: { _controller: "AdBundle:CommandesAdmin:show" }
+
+adminCommandes_new:
+    path:     /new
+    defaults: { _controller: "AdBundle:CommandesAdmin:new" }
+
+adminCommandes_create:
+    path:     /create
+    defaults: { _controller: "AdBundle:CommandesAdmin:create" }
+    methods:  POST
+
+adminCommandes_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AdBundle:CommandesAdmin:edit" }
+
+adminCommandes_update:
+    path:     /{id}/update
+    defaults: { _controller: "AdBundle:CommandesAdmin:update" }
+    methods:  [POST, PUT]
+
+adminCommandes_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AdBundle:CommandesAdmin:delete" }
+    methods:  [POST, DELETE]
+
+adminCommandes_modif:
+    path:     /{id}/modif
+    defaults: { _controller: "AdBundle:CommandesAdmin:modif" }
+    methods:  [POST, PUT]    
