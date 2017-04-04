@@ -13,11 +13,37 @@ use Symfony\Component\Security\Core\Security;
 
 class ProduitsController extends Controller
 {
-    public function produitsAction(Request $request, Categories $categorie = null )
+    public function produitsAction(Request $request, Categories $categorie = null , $tri = null )
     {       
     	$em = $this->getDoctrine()->getManager();
         if($categorie != null)
-            $findProduits = $em->getRepository('EcomBundle:Produits')->byCategorie($categorie);
+        {   
+        	$findProduits = $em->getRepository('EcomBundle:Produits')->byCategorie($categorie);
+        }
+        elseif($tri == 'nom_asc')
+        {
+           $findProduits = $em->getRepository('EcomBundle:Produits')->findBy(array('disponible' => 1), array('nom'=>'ASC'));  
+        }
+        elseif($tri == 'nom_desc')
+        {
+           $findProduits = $em->getRepository('EcomBundle:Produits')->findBy(array('disponible' => 1), array('nom'=>'desc'));  
+        }
+        elseif($tri == 'pop_asc')
+        {
+           $findProduits = $em->getRepository('EcomBundle:Produits')->findBy(array('disponible' => 1), array('popularite'=>'asc'));  
+        }
+        elseif($tri == 'pop_desc')
+        {
+           $findProduits = $em->getRepository('EcomBundle:Produits')->findBy(array('disponible' => 1), array('popularite'=>'desc'));  
+        }
+        elseif($tri == 'prix_asc')
+        {
+           $findProduits = $em->getRepository('EcomBundle:Produits')->findBy(array('disponible' => 1), array('prix'=>'asc'));  
+        }
+        elseif($tri == 'prix_desc')
+        {
+           $findProduits = $em->getRepository('EcomBundle:Produits')->findBy(array('disponible' => 1), array('prix'=>'desc'));  
+        }
         else
     	   $findProduits = $em->getRepository('EcomBundle:Produits')->findBy(array('disponible' => 1));  
         //page par défaut et nombre de produits par page :

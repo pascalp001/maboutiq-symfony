@@ -1,11 +1,23 @@
 
     
 <div class="well sidebar">
+	
     <ul class="nav nav-list">
-    	<div style="height:100px;">&nbsp;</div>
-        <li class="nav-header"><a href="{{path('produits') }}" class="sidebar sup"> Nos produits</a></li>
+    	<li class="sidebar " ><a class="sidebar sup" style="font-size:22px;">Produits</a></li>
+    	<li class="sidebar "><a href="{{path('produits') }}" class="sidebar sup"> Trier par</a></li>
+		<li><a href="{{path('produits_tripar_nomAsc', {'tri' : 'nom_asc'}) }}" class="sidebar ">Par nom de A à Z</a></li>
+		<li><a href="{{path('produits_tripar_nom_desc', {'tri' : 'nom_desc'}) }}" class="sidebar ">Par nom de Z à A</a></li>
+		<li><a href="{{path('produits_tripar_pop_asc', {'tri' : 'pop_asc'}) }}" class="sidebar ">Par popularité croissante</a></li>
+		<li><a href="{{path('produits_tripar_pop_desc', {'tri' : 'pop_desc'}) }}" class="sidebar ">Par popularité décroissante</a></li>
+		<li><a href="{{path('produits_tripar_prix_asc', {'tri' : 'prix_asc'}) }}" class="sidebar ">Par prix croissant</a></li>
+		<li><a href="{{path('produits_tripar_prix_desc', {'tri' : 'prix_desc'}) }}" class="sidebar ">Par prix décroissant</a></li>
+	</ul>	
+    <ul class="nav nav-list">
+    	<div style="height:20px;">&nbsp;</div>
+        <li class="nav-header"><a href="{{path('produits') }}" class="sidebar sup"> Nos produits par catégorie</a></li>
          {% render(controller('EcomBundle:Categories:menu')) %}
          {% if is_granted('ROLE_ADMIN') %} <li class="nav-header"><a href="{{path('adminCommandes') }}" class="sidebar sup" >Administration</a></li> {% endif %}
-    </ul>
+    </ul>	
+	
 </div>
 
