@@ -1,0 +1,30 @@
+adminPromoCmdes:
+    path:     /
+    defaults: { _controller: "AdBundle:PromoCmdes:index" }
+
+adminPromoCmdes_show:
+    path:     /{id}/show
+    defaults: { _controller: "AdBundle:PromoCmdes:show" }
+
+adminPromoCmdes_new:
+    path:     /new
+    defaults: { _controller: "AdBundle:PromoCmdes:new" }
+
+adminPromoCmdes_create:
+    path:     /create
+    defaults: { _controller: "AdBundle:PromoCmdes:create" }
+    methods:  POST
+
+adminPromoCmdes_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AdBundle:PromoCmdes:edit" }
+
+adminPromoCmdes_update:
+    path:     /{id}/update
+    defaults: { _controller: "AdBundle:PromoCmdes:update" }
+    methods:  [POST, PUT]
+
+adminPromoCmdes_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AdBundle:PromoCmdes:delete" }
+    methods:  [POST, DELETE]

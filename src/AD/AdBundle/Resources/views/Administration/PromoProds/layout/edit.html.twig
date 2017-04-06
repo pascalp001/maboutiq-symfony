@@ -1,0 +1,63 @@
+{% extends "::layout/layoutAdmin.html.twig" %}
+
+{% block body -%}
+    <h1>Modification d'une promotion</h1>
+
+    {{ form_start(edit_form)}}
+    <div class="row">
+    {{ form_row(edit_form.nom) }}
+	</div>
+    <div class="row">
+    {{ form_row(edit_form.produit) }}
+	</div>
+    <div class="row">
+    {{ form_row(edit_form.datedeb) }}
+    </div>
+    <div class="row">
+    {{ form_row(edit_form.datefin) }}
+    </div>
+    <div class="row">
+    {{ form_row(edit_form.remisePourcent) }}%
+    </div>
+    <div class="row">
+    {{ form_row(edit_form.remiseEuro) }}€
+    </div>
+    <div class="row">
+    {{ form_row(edit_form.apartirdeqte) }}
+    </div>
+    <div class="row">
+    {{ form_row(edit_form.codepromo) }}
+    </div>
+    <div class="row">{{ form_label(edit_form.affichePub)}}
+    	{% for choix in edit_form.affichePub %}
+    		<div style='min-width:30px; display:inline-block;'>{{ form_widget(choix) }}</div>
+    		<div style='min-width:70px; display:inline-block;'>{{ form_label(choix) }}</div>
+		{% endfor %}
+	</div>
+    <div class="row">
+    {{ form_row(edit_form.articlePub) }}
+	</div>
+    <div class="row">
+    {{ form_row(edit_form.imagePub) }}
+	</div>
+    <div class="row">
+    {{ form_row(edit_form.bandeauPub) }}
+	</div>
+    
+<div class="row" >
+    <div class="col-sm-2">
+        <a href="{{ path('adminPromoProds') }}">
+            <button type="button" class="btn btn-greyish">Retour</button>           
+        </a>
+    </div>{{ form_widget(edit_form._token)}}
+    <div class="col-sm-3">        
+        {{ form_widget(edit_form.submit )}}
+        {{ form_end(edit_form)}} 
+    </div>
+
+    <div class="col-sm-2">  
+            {{ form(delete_form) }}   
+    </div>
+</div>
+
+{% endblock %}

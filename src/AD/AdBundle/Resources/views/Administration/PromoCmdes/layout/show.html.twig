@@ -1,0 +1,72 @@
+{% extends "::layout/layoutAdmin.html.twig" %}
+
+{% block body -%}
+    <h1>PromoCmdes</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ entity.nom }}</td>
+            </tr>
+            <tr>
+                <th>Datedeb</th>
+                <td>{{ entity.datedeb|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Datefin</th>
+                <td>{{ entity.datefin|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Remisepourcent</th>
+                <td>{{ entity.remisePourcent }}</td>
+            </tr>
+            <tr>
+                <th>Remiseeuro</th>
+                <td>{{ entity.remiseEuro }}</td>
+            </tr>
+            <tr>
+                <th>Frlivrgratuit</th>
+                <td>{{ entity.frlivrgratuit }}</td>
+            </tr>
+            <tr>
+                <th>Apartirdemontant</th>
+                <td>{{ entity.apartirdemontant }}</td>
+            </tr>
+            <tr>
+                <th>Codepromo</th>
+                <td>{{ entity.codepromo }}</td>
+            </tr>
+            <tr>
+                <th>Affichepub</th>
+                <td>{{ entity.affichePub }}</td>
+            </tr>
+            <tr>
+                <th>Articlepub</th>
+                <td>{{ entity.articlePub }}</td>
+            </tr>
+            <tr>
+                <th>Imagepub</th>
+                <td>{{ entity.imagePub }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('adminPromoCmdes') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('adminPromoCmdes_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

@@ -386,7 +386,15 @@ a.sidebar {
 a.sidebar.sup {
     margin-left:0;
     padding-left:0;
-    font-weight:400px;
+    font-weight:500;
+    font-size:1.2em;
+}
+a.sidebar.super {
+    margin-left:0;
+    padding-left:0;
+    font-weight:600;
+    font-size:1.5em;
+    color:#034;
 }
 a.sidebar.sub {
     font-size:0.9em; padding: 5px 15px;
@@ -437,6 +445,7 @@ td.middle {padding-bottom:0; padding-top:0; vertical-align: middle;}
 .center {text-align: center; margin:50%;}
 .cursorp {cursor: pointer;}
 .cursord {cursor: default;}
+.narrow {margin-right:5px; padding-right:5px; margin-left:5px; padding-left:5px;}
 
 /* ******** FENETRES ET BOITES DE DIALOGUE : ********************** */
 /*type alert*/

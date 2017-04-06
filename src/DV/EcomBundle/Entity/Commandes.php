@@ -90,6 +90,11 @@ class Commandes
      */
     private $commande;
 
+    /**
+    * @ORM\OneToMany(targetEntity="DV\EcomBundle\Entity\PromoCmdes", mappedBy="comande", cascade={"persist"} )
+    * @ORM\JoinColumn(nullable=true)
+    */
+     private $promoCmde ;
 
     /**
      * Get id
@@ -344,5 +349,47 @@ class Commandes
     public function __toString()
     {
         return $this->getNom();
+    }
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->promoCmde = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add promoCmde
+     *
+     * @param \DV\EcomBundle\Entity\PromoCmdes $promoCmde
+     *
+     * @return Commandes
+     */
+    public function addPromoCmde(\DV\EcomBundle\Entity\PromoCmdes $promoCmde)
+    {
+        $this->promoCmde[] = $promoCmde;
+
+        return $this;
+    }
+
+    /**
+     * Remove promoCmde
+     *
+     * @param \DV\EcomBundle\Entity\PromoCmdes $promoCmde
+     */
+    public function removePromoCmde(\DV\EcomBundle\Entity\PromoCmdes $promoCmde)
+    {
+        $this->promoCmde->removeElement($promoCmde);
+    }
+
+    /**
+     * Get promoCmde
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPromoCmde()
+    {
+        return $this->promoCmde;
     }
 }

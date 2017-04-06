@@ -16,42 +16,24 @@ class ProduitsController extends Controller
     public function produitsAction(Request $request, Categories $categorie = null , $tri = null )
     {       
     	$em = $this->getDoctrine()->getManager();
-        if($categorie != null)
-        {   
-        	$findProduits = $em->getRepository('EcomBundle:Produits')->byCategorie($categorie);
+        $session = $this->getRequest()->getSession(); 
+
+        if(null == $categorie && null == $tri ) {
+            $session->set('categorie', null);
+            $session->set('tri', null);
         }
-        elseif($tri == 'nom_asc')
-        {
-           $findProduits = $em->getRepository('EcomBundle:Produits')->findBy(array('disponible' => 1), array('nom'=>'ASC'));  
-        }
-        elseif($tri == 'nom_desc')
-        {
-           $findProduits = $em->getRepository('EcomBundle:Produits')->findBy(array('disponible' => 1), array('nom'=>'desc'));  
-        }
-        elseif($tri == 'pop_asc')
-        {
-           $findProduits = $em->getRepository('EcomBundle:Produits')->findBy(array('disponible' => 1), array('popularite'=>'asc'));  
-        }
-        elseif($tri == 'pop_desc')
-        {
-           $findProduits = $em->getRepository('EcomBundle:Produits')->findBy(array('disponible' => 1), array('popularite'=>'desc'));  
-        }
-        elseif($tri == 'prix_asc')
-        {
-           $findProduits = $em->getRepository('EcomBundle:Produits')->findBy(array('disponible' => 1), array('prix'=>'asc'));  
-        }
-        elseif($tri == 'prix_desc')
-        {
-           $findProduits = $em->getRepository('EcomBundle:Produits')->findBy(array('disponible' => 1), array('prix'=>'desc'));  
-        }
-        else
-    	   $findProduits = $em->getRepository('EcomBundle:Produits')->findBy(array('disponible' => 1));  
+        if( $categorie != null){ $session->set('categorie', $categorie);}
+        if( $tri != null){ $session->set('tri', $tri);}
+        if($session->has('categorie') && $session->get('categorie') != null && null == $categorie) $categorie = $session->get('categorie');
+        if($session->has('tri') && $session->get('tri') != null && null == $tri) $tri = $session->get('tri');
+        
+        $findProduits = $em->getRepository('EcomBundle:Produits')->findAllProdPromoProdSelec($categorie, $tri);
+        //var_dump( $findProduits); die();
         //page par défaut et nombre de produits par page :
-        $produits  = $this->get('knp_paginator') ->paginate( $findProduits,  $request->query->get('page', 1), 5 );
+        $produits  = $this->get('knp_paginator') ->paginate( $findProduits,  $request->query->get('page', 1), 6 );
 
         $session = $request->getSession();      
-        if($session->has('panier')) 
-            {$panier = $session->get('panier');}
+        if($session->has('panier')){$panier = $session->get('panier'); }
         else{$panier=false;}
 
         return $this->render('EcomBundle:Default:produits/layout/produits.html.twig', array('produits' => $produits, 'panier'=>$panier) );
@@ -62,6 +44,13 @@ class ProduitsController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$produit = $em->getRepository('EcomBundle:Produits')->find($id);
     	if (!$produit) throw  $this->createNotFoundException('La page n\'existe pas'); 
+        $produitId = $produit->getId();
+        $promo = $em->getRepository('EcomBundle:PromoProds')->findPromoProd($id);
+        $promoProd = null;
+        if($promo)
+        {
+            $promoProd = $promo[0];
+        }
         $popularite = $produit->getPopularite();
         $produit->setPopularite($popularite+1);
         $em->persist($produit);
@@ -70,7 +59,7 @@ class ProduitsController extends Controller
         if($session->has('panier')) 
             {$panier = $session->get('panier');}
         else{$panier=false;}
-        return $this->render('EcomBundle:Default:produits/layout/presentation.html.twig', array('produit'=>$produit, 'panier'=>$panier) );
+        return $this->render('EcomBundle:Default:produits/layout/presentation.html.twig', array('produit'=>$produit, 'panier'=>$panier, 'promoProd'=>$promoProd) );
     }
 
      public function rechercheAction()

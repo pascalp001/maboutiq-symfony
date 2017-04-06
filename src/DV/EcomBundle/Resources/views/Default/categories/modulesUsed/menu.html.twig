@@ -1,6 +1,10 @@
 {% for categorie in categories %}
 	<li>
-		<a href="{{path('categorieProduits', {'categorie' : categorie.id}) }}" class="sidebar sub">{{categorie.nom}}</a>
+		{% if tri is defined and tri != null %}
+			<a href="{{path('categorieProduitstri', {'categorie' : categorie.id, 'tri' : tri }) }}" class="sidebar sub">{{categorie.nom}}</a>
+		{% else %}
+			<a href="{{path('categorieProduits', {'categorie' : categorie.id }) }}" class="sidebar sub">{{categorie.nom}}</a>
+		{% endif %}	
 	</li>
 	
 {% endfor %}

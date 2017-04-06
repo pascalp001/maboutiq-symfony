@@ -30,8 +30,20 @@
 		                    <h4>{{produit.nom}}</h4>
 		                    <h5>{{produit.categorie.nom}}</h5>
 		                    <p>{{produit.description}}</p>
-		                    <h4>{{produit.prix|tva(produit.tva.multiplicate) |number_format(2) }} € <span class="smallf">TTC</span></h4>	
-		                    <div class="wedge30"> &nbsp; </div>
+		                    <h4>{{produit.prix|tva(produit.tva.multiplicate) |number_format(2) }} € <span class="smallf">TTC</span></h4>
+		                    {% if promoProd is defined and promoProd != null %} 
+		                    	<h4 style="background:red;color:#eee;width:40%; padding:5px 10px;">{{promoProd.codepromo}}	</h4>
+		                    	{% if promoProd.apartirdeqte > 1 %} <h5> à partir de {{promoProd.apartirdeqte}} achetés !</h5> {% endif %}
+		                    	{% if promoProd.remisepourcent > 0 %} 
+		                    		<h5> Prix promo : <span style="text-decoration:line-through">{{produit.prix|tva(produit.tva.multiplicate) |number_format(2) }}</span> &#10157;
+		                    		{{(produit.prix * (100 - promoProd.remisepourcent)/100)|tva(produit.tva.multiplicate) |number_format(2) }} € <span class="smallf">TTC</span>
+		                    	</h5> 
+		                    	{% endif %}
+		                    	<div class="wedge5"> &nbsp; </div>	
+		                    {% else %}
+		                    	<div class="wedge30"> &nbsp; </div>	
+		                    {% endif %}
+		                    
 		                    {% if panier[produit.id] is not defined %} 
 		                     	{% if produit.stockvirtuel < 1 %} 
 			                     	<div class="row ">

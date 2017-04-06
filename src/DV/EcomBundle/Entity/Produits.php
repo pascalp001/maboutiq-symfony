@@ -52,6 +52,12 @@ class Produits
      private $avi ;
 
     /**
+    * @ORM\OneToMany(targetEntity="DV\EcomBundle\Entity\PromoProds", mappedBy="produit", cascade={"persist","remove"} )
+    * @ORM\JoinColumn(nullable=true)
+    */
+     private $promoProd ;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=100)
@@ -674,5 +680,43 @@ class Produits
         return $this->avi;
     }
 
+    /**
+     * Add promoProd
+     *
+     * @param \DV\EcomBundle\Entity\PromoProds $promoProd
+     *
+     * @return Produits
+     */
+    public function addPromoProd(\DV\EcomBundle\Entity\PromoProds $promoProd)
+    {
+        $this->promoProd[] = $promoProd;
 
+        return $this;
+    }
+
+    /**
+     * Remove promoProd
+     *
+     * @param \DV\EcomBundle\Entity\PromoProds $promoProd
+     */
+    public function removePromoProd(\DV\EcomBundle\Entity\PromoProds $promoProd)
+    {
+        $this->promoProd->removeElement($promoProd);
+    }
+
+    /**
+     * Get promoProd
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPromoProd()
+    {
+        return $this->promoProd;
+    }
+
+    public function __toString()
+    {
+        return $this->getNom();
+    }
 }
+

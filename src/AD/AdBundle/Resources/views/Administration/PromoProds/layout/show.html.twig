@@ -1,0 +1,78 @@
+{% extends "::layout/layoutAdmin.html.twig" %}
+
+{% block body -%}
+    <h1>Promotion sur le Produit {{ entity.produit }}</h1>
+
+    <table class="record_properties table-store">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom de la promotion</th>
+                <td>{{ entity.nom }}</td>
+            </tr>
+            <tr>
+                <th>Produit concerné</th>
+                <td>{{ entity.produit }}</td>
+            </tr>
+            <tr>
+                <th>Date début</th>
+                <td>{{ entity.datedeb|date('d-m-Y') }}</td>
+            </tr>
+            <tr>
+                <th>Date fin</th>
+                <td>{{ entity.datefin|date('d-m-Y') }}</td>
+            </tr>
+            <tr>
+                <th>Remise en pourcentage</th>
+                <td>{{ entity.remisePourcent }} %</td>
+            </tr>
+            <tr>
+                <th>Remise en euro</th>
+                <td>{{ entity.remiseEuro }} €</td>
+            </tr>
+            <tr>
+                <th>Apartir de la quantité</th>
+                <td>{{ entity.apartirdeqte }}</td>
+            </tr>
+            <tr>
+                <th>Codepromo</th>
+                <td>{{ entity.codepromo }}</td>
+            </tr>
+            <tr>
+                <th>Affichage de la pub en page d'accueil</th>
+                <td>{{ entity.affichePub }}</td>
+            </tr>
+            <tr>
+                <th>Article pub</th>
+                <td>{{ entity.articlePub }}</td>
+            </tr>
+            <tr>
+                <th>Image dans la pub</th>
+                <td>{{ entity.imagePub }}</td>
+            </tr>
+            <tr>
+                <th>Bandeau pub sur image produit</th>
+                <td>{{ entity.bandeauPub }}</td>
+            </tr>
+        </tbody>
+    </table><br/><br/>
+    <div class="row" >
+        <div class="col-sm-4">
+            <a href="{{ path('adminPromoProds') }}">
+                <button type="button" class="btn btn-info">Retour à la liste</button>           
+            </a>
+        </div>
+        <div class="col-sm-4">        
+            <a href="{{ path('adminPromoProds_edit', { 'id': entity.id }) }}">
+                <button type="button" class="btn btn-greyish"> Modifier la promotion </button> 
+            </a>
+        </div>
+        <div class="col-sm-4">  
+                {{ form(delete_form) }}  
+
+        </div>
+
+{% endblock %}

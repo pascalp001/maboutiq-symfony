@@ -160,7 +160,7 @@ class CommandesController extends Controller
    
     $em = $this->getDoctrine()->getManager();
     $commande = $em->getRepository('EcomBundle:Commandes')->find($id);    
-    $vendeur = $em->getRepository('EcomBundle:Vendeur')->findOneById($idv);
+    $vendeur = $em->getRepository('AdBundle:Vendeur')->findOneById($idv);
 
     $buildform = $this->createFormBuilder();
     $buildform->add('modbq', HiddenType::class, array('label'=>false, 'attr'=> array('class'=>'modbq', 'value'=>'1')))
@@ -214,26 +214,7 @@ class CommandesController extends Controller
     return $this->render('EcomBundle:Default:panier/layout/paiement.html.twig', array('commande' => $commande, 'showboite'=> $showboite, 'vendeur'=> $vendeur, 'form' => $form->createView() ));
   }
 
-  /*
-   * Cette méthode simule le règlement via l'api banque
-   */
-  /*public function apiBanqueAction($id, Request $request)
-  {    
-    $em = $this->getDoctrine()->getManager();
-    $commande = $em->getRepository('EcomBundle:Commandes')->find($id);
-    $vendeur = $em->getRepository('EcomBundle:Vendeur')->find(1);
-    return $this->render('EcomBundle:Default:panier/layout/apiBanque.html.twig', array('commande' => $commande, 'vendeur'=> $vendeur));     
-  }*/
-  /*
-   * Cette méthode simule le règlement via l'api Paypal
-   */
- /* public function apiPaypalAction($id, Request $request)
-  {    
-    $em = $this->getDoctrine()->getManager();
-    $commande = $em->getRepository('EcomBundle:Commandes')->find($id);
-    $vendeur = $em->getRepository('EcomBundle:Vendeur')->find(1);
-    return $this->render('EcomBundle:Default:panier/layout/apiPaypal.html.twig', array('commande' => $commande, 'vendeur'=> $vendeur));     
-  }*/
+
 
     /*
      * Cette méthode se place après le règlement via l'api banque/paypal
@@ -278,7 +259,7 @@ class CommandesController extends Controller
       $session->set('paiement', $paiement);
 
       // Mail de validation :
-      $Vendeur = $em->getRepository('EcomBundle:Vendeur')->find('1');
+      $Vendeur = $em->getRepository('AdBundle:Vendeur')->find('1');
       $logo1 = $Vendeur->getUrllogo1();
       $vendeur = $Vendeur->getNomcomplet();
       $message = \Swift_Message::newInstance()

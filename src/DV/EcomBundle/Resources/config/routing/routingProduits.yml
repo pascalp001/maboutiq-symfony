@@ -30,6 +30,10 @@ presentation:
     path:     /produit/{id}
     defaults: { _controller: EcomBundle:Produits:presentation }
 
+categorieProduitstri:
+    path:     /categorie/{categorie}/{tri}
+    defaults: { _controller: EcomBundle:Produits:produits }
+
 categorieProduits:
     path:     /categorie/{categorie}
     defaults: { _controller: EcomBundle:Produits:produits }

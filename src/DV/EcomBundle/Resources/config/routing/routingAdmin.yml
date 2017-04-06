@@ -1,3 +1,0 @@
-admin:
-    path:     /
-    defaults: { _controller: EcomBundle:CommandesAdmin:index }

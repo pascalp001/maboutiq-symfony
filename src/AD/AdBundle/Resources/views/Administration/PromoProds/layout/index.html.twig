@@ -1,0 +1,50 @@
+{% extends "::layout/layoutAdmin.html.twig" %}
+
+{% block body -%}
+    <h1>Liste des Promotions sur les produits</h1>
+
+    <table class="records_list table-store">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Produits</th>
+                <th>Nom</th>
+                <th>Date début</th>
+                <th>Date fin</th>
+                <th>Remise </th>
+                <th>A partir de</th>
+                <th style="max-width:250px">Article pub</th>
+                <th colspan="2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('adminPromoProds_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.produit.nom }}</td>
+                <td>{{ entity.nom }}</td>
+                <td>{% if entity.datedeb %}{{ entity.datedeb|date('d-m-Y') }}{% endif %}</td>
+                <td>{% if entity.datefin %}{{ entity.datefin|date('d-m-Y') }}{% endif %}</td>
+                <td>{% if entity.remisePourcent > 0 %}{{ entity.remisePourcent }} % {% endif %}
+                    {% if entity.remiseEuro > 0 %}    {{ entity.remiseEuro     }} € {% endif %}
+                </td>
+                <td>{{ entity.apartirdeqte }}</td>
+                {% if entity.affichePub %}
+                <td style="max-width:250px">{{ entity.articlePub }}</td>
+                {% endif %}
+                <td>
+                        <a href="{{ path('adminPromoProds_show', { 'id': entity.id }) }}"><i class="glyphicon glyphicon-eye-open"></i></a>
+                </td>
+                <td>
+                        <a href="{{ path('adminPromoProds_edit', { 'id': entity.id }) }}"><i class="glyphicon glyphicon-edit"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br/><br/>      
+    <a href="{{ path('adminPromoProds_new') }}">
+        <button class="btn btn-info">Créer une nouvelle promotion sur un produit</button>
+    </a>
+        
+    {% endblock %}

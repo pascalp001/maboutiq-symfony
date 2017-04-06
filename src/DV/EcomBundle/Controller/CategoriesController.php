@@ -10,7 +10,10 @@ class CategoriesController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
     	$categories = $em->getRepository('EcomBundle:Categories')->findAll();
-        return $this->render('EcomBundle:Default:categories/modulesUsed/menu.html.twig', array('categories'=>$categories));
+    	$tri = null;
+    	$session = $this->getRequest()->getSession(); 
+    	if($session->has('tri')) $tri = $session->get('tri');
+        return $this->render('EcomBundle:Default:categories/modulesUsed/menu.html.twig', array('categories'=>$categories, 'tri'=>$tri));
     }
 
 }

@@ -30,3 +30,11 @@ routingTarifAdmin:
 routingStocksAdmin: 
     resource: "@AdBundle/Resources/config/routing/routingStocksAdmin.yml"
     prefix:   /admin/stocks
+
+routingPromoProdsAdmin:
+    resource: "@AdBundle/Resources/config/routing/routingPromoprods.yml"
+    prefix:   /admin/PromoProds
+
+routingPromoCmdesAdmin:
+    resource: "@AdBundle/Resources/config/routing/routingPromocmdes.yml"
+    prefix:   /admin/PromoCmdes
