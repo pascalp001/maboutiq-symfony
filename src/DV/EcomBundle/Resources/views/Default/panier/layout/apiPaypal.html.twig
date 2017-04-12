@@ -1,16 +1,17 @@
 {% extends "::layout/layout.html.twig" %}
 {% block titre %} https:// Paypal > Paiement sécurisé... si, si ! {% endblock %}
 {% block body %}
-<div style="position:fixed;top:200px; left:25%; font-size:80px;color:#d55; font-weight:bold; transform: rotate(-45deg)">FACTICE</div>
-<div class="container" style="background:#F33; ">
-    <div class="row" style="background:#FFF;color:#113;">
+<div style="position:fixed;top:0px; left:0px; width:100%; height:2000px;; background:#222; z-index:1200;"></div>
+<div style="position:fixed; z-index:1400; top:200px; left:20%; font-size:80px;color:#d55; font-weight:bold; transform: rotate(-45deg)">FACTICE</div>
+<div class="container" style="position:absolute; top: 30px; left: 30px; height: 700px; border-radius:4px; background-color:#3053ff;  z-index:1300;  ">
+    <div class="row" style="background:#FFF;color: #80b3ff; font-weight:600; margin-left:2%; margin-top:5px;border-radius: 4px;">
         <div class="col-xs-12" >
         	<h1>api PAYPAL</h1>
 
     	</div >
     </div>
-    <div class="row" style="background:#FFF; color:#113;">
-        <div class="col-xs-12" >
+    <div class="row" style="background:#FFF; color:#113; margin-left:2%;border-radius: 4px;">
+        <div class="col-xs-offset-1 col-xs-10" >
         	<h2>Opération :</h2>
     	</div >
         <div class="col-xs-4" >
@@ -20,20 +21,26 @@
         	<h5>Montant TTC : {{montant}} €</h5>
     	</div >
   	</div>
-    <div class="row form-group" style="background:#FFF; color:#113;">Vous avez déjà un compte Paypal : identifiez-vous
-    	<label for="mail">Votre adresse e-mail</label><input type="text" name="mail" id="mail">
-    	<label for="pwd">Mot de passe</label><input type="text" name="pwd" id="pwd">
+    <div class="row form-group" style="background:#FFF; color:#113;margin-left:2%; height: 130px; padding: 15px;border-radius: 4px;">Vous avez déjà un compte Paypal : identifiez-vous<br/>
+         <div class="row">
+        <div class="col-xs-offset-2 col-xs-2" ><label for="mail" >Votre adresse e-mail</label></div>
+    	<div class=" col-xs-3" ><input type="text" name="mail" id="mail"></div><br/>
+        </div>
+         <div class="row">
+        <div class="col-xs-offset-2 col-xs-2" ><label for="pwd" style="margin-left: 15%; " >Mot de passe</label></div>
+        <div class=" col-xs-3" ><input type="text" name="pwd" id="pwd"></div>
+        </div>
     </div>
         <div class="wedge50">&nbsp;</div> 
-    <div class="row form-group" style="background:#FFF; color:#113;">Vous n'avez pas encore de compte Paypal : 
-        <a href=""><button type="button"> Créer un compte Paypal </button></a>
+    <div class="row form-group" style="background:#FFF; color:#113;margin-left:2%; height: 70px; padding: 15px;border-radius: 4px;">Vous n'avez pas encore de compte Paypal : &nbsp;
+        <a href=""><button type="button" style="box-shadow:  1px 1px 10px 10px blue;"> Créer un compte Paypal </button></a>
     </div>
         <div class="wedge50">&nbsp;</div> 
           
     <div class="row" >    
       <div class="col-xs-offset-4 col-xs-4 ">
         <center>               
-         <a  href="{{ path('validationCommande' )}}"><button type="submit" class="col-xs-offset-1 col-xs-10 btn btn-success" style="font-size:30px; padding:15px;"  title="Validation" >Validation</button>  </a>             
+         <a  href="{{ path('validationCommande' )}}"><button type="submit" class="col-xs-offset-1 col-xs-10 btn btn-greyish" style="font-size:40px; padding:15px;"  title="Validation" >Validation</button>  </a>             
         </center>
       </div>
     </div>  

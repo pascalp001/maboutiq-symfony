@@ -2,7 +2,8 @@
 {% block titre %} Pascalp Version Développement > {{produit.nom}} {% endblock %}
 {% block body %}
 <div class="container ">	
-	<div class="pull-right panier" >{% render(controller('EcomBundle:Panier:menu')) %}</div>    
+	<div class="pull-right panier" >{% render(controller('EcomBundle:Panier:menu')) %}</div>  
+	<div class="pull-center-top">{% render(controller('EcomBundle:Produits:recherche')) %}</div>      
     <div class="row" >
 	   	<div class="col-xs-2 sidebar">  
 	   		{% include '::modulesBase/nav.html.twig' %}  
@@ -14,30 +15,37 @@
 	   	</div>   
 
 	    <div class="col-xs-10 thumbnail">
-	    	<form action="{{path('ajoutpanier1',{'id': produit.id})  }}" method="get">
+	    	<form action="{{path('ajoutpanier2',{'id': produit.id})  }}" method="get">
 		        <div class="row ">
 		        	<div class="col-md-6">
 		        		<div class="row ">
-		                <img src="{{ produit.image.AssetPath|imagine_filter('imgProduitFormat2') }}" alt="image {{  produit.image.name }} "  >
+		                <img src="{{ produit.image.AssetPath|imagine_filter('imgProduitFormat2') }}" class="magniflier image" alt="image {{  produit.image.name }} "  >
 		            	</div>
 		            	<div class="row ">
 		            		{{ render(controller('EcomBundle:Produits:indexAvis',{'id': produit.id} ))}}
 		            	</div>
 		            </div>
-
+		            {% set prix = produit.prix  %}
 		            <div class="col-md-6">   
 		                <div class="caption">
 		                    <h4>{{produit.nom}}</h4>
 		                    <h5>{{produit.categorie.nom}}</h5>
 		                    <p>{{produit.description}}</p>
-		                    <h4>{{produit.prix|tva(produit.tva.multiplicate) |number_format(2) }} € <span class="smallf">TTC</span></h4>
+		                    <h4>{{prix|tva(produit.tva.multiplicate) |number_format(2) }} € <span class="smallf">TTC</span></h4>
 		                    {% if promoProd is defined and promoProd != null %} 
 		                    	<h4 style="background:red;color:#eee;width:40%; padding:5px 10px;">{{promoProd.codepromo}}	</h4>
 		                    	{% if promoProd.apartirdeqte > 1 %} <h5> à partir de {{promoProd.apartirdeqte}} achetés !</h5> {% endif %}
 		                    	{% if promoProd.remisepourcent > 0 %} 
 		                    		<h5> Prix promo : <span style="text-decoration:line-through">{{produit.prix|tva(produit.tva.multiplicate) |number_format(2) }}</span> &#10157;
-		                    		{{(produit.prix * (100 - promoProd.remisepourcent)/100)|tva(produit.tva.multiplicate) |number_format(2) }} € <span class="smallf">TTC</span>
+		                    			{% set prix = (produit.prix * (100 - promo.remisepourcent)/100)|number_format(2)  %}
+		                    		{{prix|tva(produit.tva.multiplicate) |number_format(2) }} € <span class="smallf">TTC</span>
 		                    	</h5> 
+		                    	{%  else  %}
+			                    	{% if promoProd.remiseEuro > 0 %} 
+			                    		<h5> Prix promo : <span style="text-decoration:line-through">{{produit.prix|tva(produit.tva.multiplicate) |number_format(2) }}</span> &#10157;
+			                    		{% set prix = (produit.prix - promo.remiseEuro)|tva(produit.tva.multiplicate)|number_format(2)  %} 
+			                    		{{prix |number_format(2) }} € <span class="smallf">TTC</span>		                    	
+			                    	{% endif %}
 		                    	{% endif %}
 		                    	<div class="wedge5"> &nbsp; </div>	
 		                    {% else %}
@@ -55,7 +63,8 @@
 			                    		</div>	
 			                    		 
 			                    		<input type="number" step="1" min="0" max="{{ max(0,produit.stockvirtuel) }}" 
-			                    		{% if produit.stockvirtuel <= 1 %} value="0" {% else %} value="1" {% endif %} name="qte" class="col-md-2" />                  		                    
+			                    		{% if produit.stockvirtuel <= 1 %} value="0" {% else %} value="1" {% endif %} name="qte" class="col-md-2" />  
+			                    		<input type="hidden"   name="prix" value="{{prix }} "      > 		                    
 					                </div>
 				                    <div class="wedge10"> &nbsp; </div>
 				                    ( Disponible : {{ max(0,produit.stockvirtuel) }} )

@@ -88,6 +88,7 @@ class CommandesController extends Controller
     $Facturation = $em->getRepository('EcomBundle:UtilisateursAdresses')->find($adresse['facturation']);
     $livraison = $session->get('livraison');
     $panier = $session->get('panier');
+
     $produits =  $em->getRepository('EcomBundle:Produits')->findArray(array_keys($session->get('panier')));
     $tabFrPort = $session->get('tabFrPort');
     
@@ -109,7 +110,7 @@ class CommandesController extends Controller
 
     foreach($produits as $produit)
     {
-      $prixHT = ($produit->getPrix() * $panier[$produit->getId()]);
+      $prixHT = ( $panier[$produit->getId()]['prix'] * $panier[$produit->getId()]['qte']);
       $prixTTC = $prixHT * $produit->getTva()->getMultiplicate();
       $totalHT += $prixHT;
 
@@ -121,14 +122,10 @@ class CommandesController extends Controller
       $totalTVA += round($prixTTC - $prixHT,2);  
         
       $commande['produit'][$produit->getId()] = array('reference' => $produit->getNom(),
-                                                       'quantite' => $panier[$produit->getId()],
-                                                         'prixHT' => round($produit->getPrix(),2),
-                                                        'prixTTC' => round($produit->getPrix()*$produit->getTva()->getMultiplicate(),2));
-      $stockvirtuel = $produit->getStockvirtuel() - $panier[$produit->getId()];
-      $produit->setStockvirtuel($stockvirtuel);
-      $em->persist($produit);
-    }    
-    $em->flush();
+                                                       'quantite' => $panier[$produit->getId()]['qte'],
+                                                         'prixHT' => round( $panier[$produit->getId()]['prix'],2),
+                                                        'prixTTC' => round( $panier[$produit->getId()]['prix']*$produit->getTva()->getMultiplicate(),2));
+    }
     
     $commande['livraison'] = array('prenom'=> $livraison['prenom'], 'nom'=> $livraison['nom'], 'telephone'=> $livraison['telephone'],'adresse'=> $livraison['adresse'], 'cp'=> $livraison['cp'], 'ville'=> $livraison['ville'], 'pays'=> $livraison['pays'], 'complement'=> $livraison['complement']);
     $commande['facturation'] = array('prenom'=> $Facturation->getPrenom(), 'nom'=> $Facturation->getNom(), 'telephone'=> $Facturation->getTelephone(),'adresse'=> $Facturation->getAdresse(), 'cp'=> $Facturation->getCp(), 'ville'=> $Facturation->getVille(), 'pays'=> $Facturation->getPays(), 'complement'=> $Facturation->getComplement());
@@ -157,6 +154,18 @@ class CommandesController extends Controller
     }
     $id = $session->get('commande');
     $showboite = false; $idv=1;
+
+    // Mise à jour du stock virtuel :
+    $panier = $session->get('panier');
+    $em = $this->getDoctrine()->getManager();  
+    $produits =  $em->getRepository('EcomBundle:Produits')->findArray(array_keys($session->get('panier')));
+    foreach($produits as $produit)
+    {   
+      $stockvirtuel = $produit->getStockvirtuel() - $panier[$produit->getId()]['qte'];
+      $produit->setStockvirtuel($stockvirtuel);
+      $em->persist($produit);
+    }    
+    $em->flush();
    
     $em = $this->getDoctrine()->getManager();
     $commande = $em->getRepository('EcomBundle:Commandes')->find($id);    

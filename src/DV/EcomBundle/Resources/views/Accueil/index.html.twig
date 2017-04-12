@@ -1,50 +1,62 @@
 {% extends "::layout/layout.html.twig" %}
 {% block body %}
 <div class="container">
-    <div class="row">
+        <div class="pull-center-top">{% render(controller('EcomBundle:Produits:recherche')) %}</div>    
+    <div class="row" >
+        <div><img src="{{ asset(vendeur.urlLogo2)}}"  style="min-width:100%; max-height: 400px;"  title="Accueil" alt="Image d'accueil" style="margin-top:-5px" ><div style="position:relative; top:-140px;left:0px;"><img src="{{ asset(vendeur.urlLogo1)}}"  style="max-height: 140px;"  title="Logo" alt="Logo"  ></div></div>
 
-        {% include '::modulesBase/nav.html.twig' %}
-        <div class="span9">
-
-            <ul class="thumbnails">
-                <li class="span3">
-                    <div class="thumbnail">
-                        <img src="../img/holder.png" alt="image produit 1" width="300" height="300">
-                        <div class="caption">
-                            <h4>produit 1</h4>
-                            <p>100,00 €</p>
-                            <a class="btn btn-primary" href="produit.php">Plus d'infos</a>
-                            <a class="btn btn-success" href="panier.php">Ajouter au panier</a>
-                        </div>
+    <div class="row" style="position:relative; top:-90px" >
+          {% for promoProd in promoProds %}
+            
+            <li class="col-md-4 col-sm-6 col-xs-12 " style="list-style:none" >
+                <div class=" thumbnail"  
+                    {% if loop.index == 1 %} style="background:#F44; margin:4px; "
+                    {% else %}
+                        {% if loop.index == 2 %} 
+                        style="background:#99c; margin:4px; "
+                        {% else %}
+                        style="background:#6d6; margin:4px; " 
+                       {% endif %} 
+                    {% endif %} >
+                <div class="row caption">
+                    <div class="col-md-5">
+                        <a  href="{{ path('presentation', {'id': promoProd[0].produit.id  })  }}">
+                        <img src="{{ promoProd[0].produit.image.AssetPath|imagine_filter('imgProduitFormat1') }}" alt="image {{ promoProd[0].produit.image.name }}" title="{{promoProd[0].produit.image.name}}"  >
+                        </a>
                     </div>
-                </li>
-                <li class="span3">
-                    <div class="thumbnail">
-                        <img src="../img/holder.png" alt="image produit 2" width="300" height="300">
-                        <div class="caption">
-                            <h4>produit 2</h4>
-                            <p>100,00 €</p>
-                            <a class="btn btn-primary" href="produit.php">Plus d'infos</a>
-                            <a class="btn btn-success" href="panier.php">Ajouter au panier</a>
-                        </div>
+                    <div class="col-md-7">   
+                            <h4 style="min-height:35px">{{promoProd[0].produit.nom}}<span class="smallf"> <br/>(Cat: {{promoProd[0].produit.categorie.nom}}) {% if promoProd[0].produit.taille != null %}taille {{promoProd[0].produit.taille}} mm {% endif %}</span></h4>
+                        
                     </div>
-                </li>
+                </div>
+                <div class="row" style="min-height:225px;">
+                    <h2 style=" color:#02d; font-weight:600" >{{promoProd[0].articlePub}}</h2>
+                </div>
+                <div class="row caption" style="min-height:45px;">
+                    
+                        <h3> Prix promo :<br/>{% if promoProd[0].apartirdeqte > 1 %} {{promoProd[0].apartirdeqte}}x {% endif %}<span style="text-decoration:line-through">{{promoProd[0].produit.prix|tva(promoProd[0].produit.tva.multiplicate) |number_format(2) }}</span><span style="font-size:1.5em; font-weight:600;"> &#10157;</span>
+                            {% if promoProd[0].apartirdeqte > 1 %} {{promoProd[0].apartirdeqte}}x {% endif %}
+                        <span style="font-size:1.5em; font-weight:600;">
+                             {% if promoProd[0].remisepourcent > 0 %} 
+                               {{ ( promoProd[0].produit.prix * (100 - promoProd[0].remisepourcent) /100 ) 
+                               | tva(promoProd[0].produit.tva.multiplicate) | number_format(2) }} € 
+                            {% else %}
+                                {% if promoProd[0].remiseEuro > 0 %} 
+                                   {{ ( promoProd[0].produit.prix - promoProd[0].remiseEuro )
+                                   | tva(promoProd[0].produit.tva.multiplicate) | number_format(2) }} € 
+                                {% endif %}
+                            {% endif %}
+                            
+                        </span>
+                        <span class="h4">TTC</span>
+                    </h3> 
+                    
 
-            </ul>
-
-            <div class="pagination">
-                <ul>
-                    <li class="disabled"><span>Précédent</span></li>
-                    <li class="disabled"><span>1</span></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">Suivant</a></li>
-                </ul>
-            </div>
-
-        </div>
+                </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
     </div>
 </div>
 {% endblock %}

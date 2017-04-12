@@ -1,4 +1,8 @@
 
+routingAccueil:
+    resource:  "@EcomBundle/Resources/config/routing/routingAccueil.yml"
+    prefix: /
+
 routingProduits:
     resource:  "@EcomBundle/Resources/config/routing/routingProduits.yml"
     prefix: /

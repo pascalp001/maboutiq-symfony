@@ -105,3 +105,7 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail: { size: [300, 210], mode: inset }
+        imgProduitFormat3:  
+            quality: 75
+            filters:
+                thumbnail: { size: [600, 420], mode: inset }

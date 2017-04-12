@@ -17,29 +17,39 @@ class ProduitsController extends Controller
     {       
     	$em = $this->getDoctrine()->getManager();
         $session = $this->getRequest()->getSession(); 
-
-        if(null == $categorie && null == $tri ) {
+        //On récupère la page éventuelle laissée précédemment
+        if($session->has('page')) 
+            {$page = $session->get('page');}
+        else{ $page=1; }
+        //Si tri et categorie = null, on annule la catégorie et/ou le tri éventuellement laissés précédemment en session :
+        if(null === $categorie && null === $tri ) {
             $session->set('categorie', null);
             $session->set('tri', null);
         }
+        //Sinon, on mémorise en session le choix de la catégorie ou du tri :
         if( $categorie != null){ $session->set('categorie', $categorie);}
         if( $tri != null){ $session->set('tri', $tri);}
+        //Et on récupère l'autre critère en session :
         if($session->has('categorie') && $session->get('categorie') != null && null == $categorie) $categorie = $session->get('categorie');
         if($session->has('tri') && $session->get('tri') != null && null == $tri) $tri = $session->get('tri');
-        
+
+        //On récupère l'ensemble des produits correspondants et les promos éventuelles :
         $findProduits = $em->getRepository('EcomBundle:Produits')->findAllProdPromoProdSelec($categorie, $tri);
         //var_dump( $findProduits); die();
+
         //page par défaut et nombre de produits par page :
-        $produits  = $this->get('knp_paginator') ->paginate( $findProduits,  $request->query->get('page', 1), 6 );
+        $produits  = $this->get('knp_paginator') ->paginate( $findProduits,  $request->query->get('page', $page), 6 );
 
         $session = $request->getSession();      
         if($session->has('panier')){$panier = $session->get('panier'); }
         else{$panier=false;}
 
-        return $this->render('EcomBundle:Default:produits/layout/produits.html.twig', array('produits' => $produits, 'panier'=>$panier) );
+        $now =  new \DateTime();
+
+        return $this->render('EcomBundle:Default:produits/layout/produits.html.twig', array('produits' => $produits, 'panier'=>$panier, 'now'=>$now) );
     }
 
-     public function presentationAction($id)
+     public function presentationAction($id, $page=null)
     {
     	$em = $this->getDoctrine()->getManager();
     	$produit = $em->getRepository('EcomBundle:Produits')->find($id);
@@ -51,11 +61,14 @@ class ProduitsController extends Controller
         {
             $promoProd = $promo[0];
         }
+        // On incrémente la popularité :
         $popularite = $produit->getPopularite();
         $produit->setPopularite($popularite+1);
         $em->persist($produit);
         $em->flush();
-        $session = $this->getRequest()->getSession();      
+
+        $session = $this->getRequest()->getSession();  
+        if($page != null) {$session->set('page', $page); var_dump($session); die();}
         if($session->has('panier')) 
             {$panier = $session->get('panier');}
         else{$panier=false;}
@@ -75,12 +88,16 @@ class ProduitsController extends Controller
     	{
     		$form->handleRequest($request);
     		$em = $this->getDoctrine()->getManager();
-    		$produits = $em->getRepository('EcomBundle:Produits')->recherche($form['recherche']->getData());
+    		$findProduits = $em->getRepository('EcomBundle:Produits')->recherche($form['recherche']->getData());
+            $produits  = $this->get('knp_paginator') ->paginate( $findProduits,  $request->query->get('page', 1), 6 );
     	}
     	else 
 		{ 
 			throw  $this->createNotFoundException('La page n\'existe pas'); 
 		}
+        $session = $request->getSession();      
+        if($session->has('panier')){$panier = $session->get('panier'); }
+        else{$panier=false;}
    		return $this->render('EcomBundle:Default:produits/layout/produits.html.twig', array('produits'=>$produits) );
     }
 

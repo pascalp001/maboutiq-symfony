@@ -1,5 +1,5 @@
 produits:
-    path:     /
+    path:     /produits
     defaults: { _controller: EcomBundle:Produits:produits }
 
 produits_tripar_nomAsc:
@@ -28,6 +28,10 @@ produits_tripar_prix_desc:
 
 presentation:
     path:     /produit/{id}
+    defaults: { _controller: EcomBundle:Produits:presentation }
+
+presentationpage:
+    path:     /produit/{id}/{page}
     defaults: { _controller: EcomBundle:Produits:presentation }
 
 categorieProduitstri:

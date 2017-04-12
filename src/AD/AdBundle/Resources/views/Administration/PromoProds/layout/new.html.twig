@@ -29,8 +29,8 @@
     </div>
     <div class="row">{{ form_label(form.affichePub)}}
     	{% for choix in form.affichePub %}
-    		<div style='min-width:30px; display:inline-block;'>{{ widget(choix) }}</div>
-    		<div style='min-width:70px; display:inline-block;'>{{ label(choix) }}</div>
+    		<div style='min-width:30px; display:inline-block;'>{{ form_widget(choix) }}</div>
+    		<div style='min-width:70px; display:inline-block;'>{{ form_label(choix) }}</div>
 		{% endfor %}
 	</div>
     <div class="row">

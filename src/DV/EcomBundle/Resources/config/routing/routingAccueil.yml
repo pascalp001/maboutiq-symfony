@@ -1,0 +1,7 @@
+accueil:
+    path:     /
+    defaults: { _controller: EcomBundle:Accueil:index }
+
+site:
+    path:     /construction du site
+    defaults: { _controller: EcomBundle:Accueil:site }

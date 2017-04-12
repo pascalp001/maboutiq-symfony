@@ -8,7 +8,15 @@ class AccueilController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('EcomBundle:Accueil:index.html.twig');
+    	$em = $this->getDoctrine()->getManager();
+    	$vendeur = $em->getRepository('AdBundle:Vendeur')->find(1);
+    	$promoProds = $em->getRepository('EcomBundle:PromoProds')->findAllPromoProdProd();
+    	 
+        return $this->render('EcomBundle:Accueil:index.html.twig', array('vendeur'=>$vendeur, 'promoProds'=>$promoProds));
     }
-    
+
+    public function siteAction()
+    {
+        return $this->render('EcomBundle:Accueil:site.html.twig');
+    }   
 }

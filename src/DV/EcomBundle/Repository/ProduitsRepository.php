@@ -15,11 +15,50 @@ class ProduitsRepository extends EntityRepository
 	public function findArray($array)
 	{
 		//On envoie un tableau contenant nos produits...
-		$qb = $this->createQueryBuilder('u')
-			->select('u')
-			->where('u.id IN (:array)')
+
+		$qb = $this->createQueryBuilder('pd')
+			->select('pd')
+			->where('pd.id IN (:array)')	
+			//->join('pd.promoProd','pm')
+			//->andWhere('pm.datedeb = MAX(pm.datedeb)')
+			//->groupBy('pm.produit')
+			//->having('pm.datedeb <= :now')
+			//->andHaving('pm.datefin >= :now')
+			//->andHaving('')
+			//->setParameter('now', new \DateTime(), \Doctrine\DBAL\Types\Type::DATETIME)					
 			->setParameter('array', $array);
-		return $qb->getQuery()->getResult();		
+
+		/* Départ ProduitsRepository */
+		/*$subqb = $this->createQueryBuilder('prd1')	
+			->select('p','max(p.datedeb)')
+			->from('DV\EcomBundle\Entity\PromoProds','p')
+			->where( ':now BETWEEN p.datedeb AND p.datefin')
+			->setParameter('now', new \DateTime(), \Doctrine\DBAL\Types\Type::DATETIME)
+			->groupBy('p.produit');
+
+		$qb = $this->createQueryBuilder('prd')
+			->leftjoin('prd.promoProd','prm')
+			->addSelect('prm');
+
+		$qb = $qb
+			->andWhere($qb->expr()->in('prd.promoProd', $subqb->getDQL()));
+		
+		$qb = $qb
+			->andWhere('prd.disponible = 1')
+			->andWhere('prd.id IN (:array)')	
+			->setParameter('array', $array)
+			->orderBy('prd.id');*/
+		/*$subqb = $this->createQueryBuilder('p1')
+			->select('p2')
+			->from('EcomBundle:PromoProds','p2')
+			->where('p1.promoProd = p2')
+			->andWhere( ':now BETWEEN p2.datedeb AND p2.datefin')
+			->setParameter('now', new \DateTime(), \Doctrine\DBAL\Types\Type::DATETIME)
+			->orderBy('p2.datedeb', 'ASC')
+			->setMaxResults(1);
+		$qb->andWhere($qb->expr()->in('prm', $subqb->getDQL()));*/
+
+		return $qb->getQuery()->getResult();	
 	}
 
 	public function findSelec($categorie, $tri)
@@ -44,12 +83,12 @@ class ProduitsRepository extends EntityRepository
 
 	public function recherche($chaine)
 	{
+		//$lchaine = strtolower($chaine);
 		$qb = $this->createQueryBuilder('u')
-			->select('u')
-			->where('u.nom like :chaine')
+			->where('LOWER(u.nom) like :chaine')
 			->andWhere('u.disponible = 1') 
 			->orderBy('u.id')
-			->setParameter('chaine', $chaine);
+			->setParameter('chaine', '%'.strtolower($chaine).'%' );
 		return $qb->getQuery()->getResult();
 	}
 
@@ -91,7 +130,7 @@ class ProduitsRepository extends EntityRepository
 			->setMaxResults(1);
 
 		$qb = $this->createQueryBuilder('prd')
-			->leftjoin('prd.promoProd','prm', 'WITH')
+			->leftjoin('prd.promoProd','prm')
 			->addSelect('prm');
 
 		$qb = $qb

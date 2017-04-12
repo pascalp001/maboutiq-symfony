@@ -3,7 +3,7 @@ panier:
     defaults: { _controller: EcomBundle:Panier:panier }
 
 ajoutpanier1:
-    path:     /ajouter/{id}
+    path:     /ajouter/{id}/{prix}
     defaults: { _controller: EcomBundle:Panier:ajouter }
 
 ajoutpanier2:

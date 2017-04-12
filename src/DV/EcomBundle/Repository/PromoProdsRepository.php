@@ -54,15 +54,15 @@ class PromoProdsRepository extends \Doctrine\ORM\EntityRepository
 		return $qb->getQuery()->getResult();
 	}*/
 
-	public function findAllProdPromoProd()
+	public function findAllPromoProdProd()
 	{   
-		/* Querybuilder recherche produits et leur promo en cours */
+		/* Querybuilder recherche promos en cours et leur produit */
 		/* Départ PromoProdsRepository */
 		$qb = $this->createQueryBuilder('prm');
-		$qb ->where('prm.datefin >= :now')
+		$qb ->select('prm', 'max(prm.datedeb)')
+		 	->where('prm.datefin >= :now')
 			->andWhere('prm.datedeb <= :now')
-			->orderBy('prm.datedeb', 'ASC')
-			->setMaxResults(1)
+			->groupBy('prm.produit')
 			->setParameter('now', new \DateTime(), \Doctrine\DBAL\Types\Type::DATETIME);
 		$qb = $qb
 			->join('prm.produit','prd')

@@ -70,7 +70,12 @@
         </tbody>
     </table>
     <div class='row' >
-        <div class="col-xs-offset-5 col-xs-4">
+        <div class="col-sm-4">
+            <a href="{{ path('adminProduits') }}">
+                <button type="button" class="btn btn-greyish">Retour liste produits</button>           
+            </a>
+        </div>
+        <div class="col-xs-offset-1 col-xs-4">
         {{ form_widget(form.submit)}}
         </div>
     </div>

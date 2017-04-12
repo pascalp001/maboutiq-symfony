@@ -1,0 +1,99 @@
+{% extends "::layout/layout.html.twig" %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>LE SITE ET SES FONCTIONNALITÉS</h1>
+        <div class="col-xs-12 thumbnail">
+        	<div class="caption">
+        	<h1 class="h1b">PARTIE CLIENT</h1>
+        	<h3 class="h3b">Le bandeau du haut : <span class="h4"> Menu général client</span></h3>
+        	<p>Il comprend un logo (accès à la page d'accueil), les "pages" : l'accès à la boutique, au panier, et autres pages<br/>
+        		Sur la droite, il y a un menu 'Se connecter S'inscrire' (précisions plus loin) </p>
+
+        	<h3 class="h3b">La page d'accueil : <span class="h4"> La page d'accueil comprend une image d'accueil et une liste des actualités et promos en cours</span></h3>
+        	
+        	
+        	<h3 class="h3b">La boutique : <span class="h4"> La page boutique présente la liste des produits.</span></h3>
+        	
+        	<ul>
+        		<li>Dans le bandeau du haut : Possibilité de rechercher un nom de produit</li>
+        		<li>A gauche : menu vertical &#10157; tri des produits par nom, par popularité et par prix ; filtre par catégorie ; dans le bas, possibilité de se connecter ou de s'inscrire</li>
+
+        		<li>En haut à droite sous le bandeau : nombre d'articles dans le panier ; accès possible au panier</li>
+        		<li>Grille bootstrap des produits disponibles triés par id par défaut, filtrés ou triés selon le choix du menu latéral</li>
+        		<li>Pagination</li>
+        		<li>Informations résumées du produit, image moyenne, promotions en cours</li>
+        		<li>Est indiqué les produits déjà dans le panier et les ruptures temporaires</li>
+        		<li>Ajout et accès au panier, ou accès 'plus d'infos' à présentation plus détaillée</li>
+        	</ul>
+        	<h3 class="h3b">Détail d'un produit : <span class="h4">Présentation plus détaillée d'un produit </span></h3>
+        	<ul>
+        		<li>Description plus détaillée du produit ; image plus grande ; effet loupe</li>   
+        		<li>On peut introduire une quantité.</li>     
+        		<li>Promotion avec prix barré et prix effectif.</li>  
+        		<li>Stock disponible</li> 	
+        		<li>Indication note 'étoilée' de 0 à 5 ; affichage de la liste des avis en dessous</li>
+        		<li>Pour les personnes connectées, possibilité de rajouter un avis</li>
+        		<li>Incrémentation de la popularité à chaque accès à ces présentations détaillées</li>
+        	</ul>
+            <h3 class="h3b">Panier > Connexion > Adresses > Livraison > Paiement : <span class="h4">Création progressive de la commande </span></h3>
+            <ul>
+                <li>Un bouton en haut à gauche ouvre le menu latéral (produits, tri, filtre, connexion/déconnexion)</li>
+                <li>Un bandeau Panier > Connexion > Adresses > Livraison > Paiement permet de visualiser la progression en se colorant progressivement. Un accès direct est possible pour les parties accessibles au fur et à mesure de la progression.</li>
+                <li>Le panier : possibilité de modifier les quantités sur n'importe quel produit du panier </li> 
+                <li>Possibilité de retour à la boutique pour rajouter un produit (retour à la page quittée avec conservation des choix de tri ou de filtre) ou aller plus loin vers la commande </li> 
+                <li>La connexion : en validant le panier pour aller plus loin, si la connexion n'est pas encore établie, on est redirigé vers le module de connexion/inscription</li> 
+                <li>La connexion/inscription peut aussi se faire depuis le menu du haut à droite, ou dans le menu latéral, en bas.</li>	
+                <li>Le menu connexion/inscription utilise fosUserBundle. Il permet la connexion avec username et mot de passe, l'inscription avec username, adresse e-mail et mot de passe, le mot de passe oublié avec envoi d'un mail.</li>
+                <li>Adresses (accès direct ou après connexion) : récupération des adresses de facturation et livraison ; possibilité de rentrer une nouvelle adresse ; possibilité de limiter la nouvelle adresse à la simple livraison ou simple facturation</li>
+                <li>Possibilité de retour au panier ou aller plus loin dans la commande</li>
+                <li>Livraison : un calcul est effectué des frais de port selon quelques tarifs, et les dimensions et poids probables du colis. On peut ainsi choisir entre 2 ou 3 modes de livraison possibles.</li>
+                <li>Une option est proposée pour Mondial Relay, avec intégration de l'API Mondial Relay (recherche du lieu de livraison)</li>
+                <li>Retour encore possible en arrière, mais il faudra revalider le nouveau calcul éventuel des frais de port</li>
+                <li>Validation de la commande : l'étape suivante reprend le panier et les frais de port ; pour aller plus loin, il faut accepter les CGV et valider</li>
+                <li>Mode de paiement : on choisira entre règlement immédiat par CB ou par Paypal, ou différé par virement ou par chèque ; à ce niveau, les stocks 'virtuels' sont diminués à hauteur des quantités commandées.</li>
+                <li>En cas de règlement immédiat, un factice de la banque ou de Paypal est proposé. La validation envoie vers un récapitulatif des commandes passées par le client. En cas de règlement différé, accès direct au récapitulatif, avec mention du règlement en attente.</li>
+                <li>Un message est affiché annonçant le succès de l'enregistrement de la commande. Un mail est envoyé reprenant les éléments de la commande.</li>
+                <li>Il n'y a bien sûr plus la possibilité de retour en arrière ('précédent' retourne un message indiquant l'erreur)</li>
+
+        	</div>
+        </div>
+        <div class="col-xs-12 thumbnail">
+        	<div class="caption">
+			<h1 class="h1b">PARTIE ADMINISTRATION</h1>
+            <h3 class="h3b">Accès : <span class="h4">Un code username / mot de passe permet de rajouter 'Administration' dans le menu latéral. Clic dessus pour accéder à la partie administration. </span></h3>
+            <p>Ce site ayant un rôle de démonstration, les codes d'accès à la partie administration peuvent vous être fourni en adressant un mail avec vos coordonnées. Une partie restera cependant protégée et non libre d'accès.</p>
+            <h3 class="h3b">Menu du haut : <span class="h4">Il est peu différent du menu client, mais comporte un accès 'Retour vers client' </span></h3>
+            <h3 class="h3b">Menu latéral : <span class="h4">Il permet l'accès aux commandes et avis reçus, aux produits, réassort, fournisseurs, catégories, ...etc. Il indique par ailleurs le nombre de commandes nouvelles et en cours, le nombre de nouveaux avis reçus, les ruptures éventuelles ou proches</span></h3>
+            <h3 class="h3b">Commandes en cours : <span class="h4">Affiche un tableau récapitulatif des commandes en cours, leur statut et leur progression</span></h3><br/>
+            <div><img src="{{ asset('img/admin_cmdes.jpg')}}" width="90%"></div>
+            <p>Pour une commande donnée, on va ainsi disposer des informations et actions suivantes :
+                <ul>
+                    <li>Date et référence de la commande, client (username + nom et prénom)</li>
+                    <li>Validé : 1 ; 0 en cas d'erreur du traitement final au momment du paiement</li>
+                    <li>Payé : payé (CB ou Paypal) ou attente règlement (virt ou chq) et clic=>payé à réception</li>
+                    <li>Préparé : (à) préparer, ou clic=>préparé et envoi d'un mail 'préparation en cours' ; le stock réel est diminué des quantités </li>
+                    <li>Livré : (à) livrer, ou clic=>livré et envoi d'un mail 'livraison en cours'</li>
+                    <li>Voir BL : accès à un pdf Bon de Livraison =>imprimer </li>
+                    <li>Voir Fact : accès à un pdf Facture =>imprimer </li>
+                    <li>Archivé : (à) archiver, ou clic=>la commande sort de cette liste ; elle reste accessible dans 'commandes archivées'</li>
+                    <li>Annuler : en cas de rétractation du client ou autres situations particulières</li>
+                    </ul>
+            </p>
+            <h3 class="h3b">Validation des avis reçus : <span class="h4">Affiche un tableau des avis reçus : produits, note, titre et commentaire ; on peut valider, modifier ou supprimer chaque avis.</span></h3><br/>
+            <div><img src="{{ asset('img/admin_avis.jpg')}}" width="90%"></div>
+            <h3 class="h3b">Liste des produits : <span class="h4">Tableau listant les produits avec quelques informations importantes</span></h3><br/>
+            <div><img src="{{ asset('img/admin_produits.jpg')}}" width="90%"></div>
+            <p>On peut 'voir' chaque produit en détail, 'modifier' un produit, visualiser l'ensemble des 'avis'.<br/> On peut créer un nouveau produit.</p>
+            <h3 class="h3b">Promo sur produits : <span class="h4">Permet de lister les promotions, supprimer les promos passées, créer de nouvelles.</span></h3><br/>
+            <h3 class="h3b">Réassort : <span class="h4">Tableau comprenant un cadencier des ventes, et d'autres indices permettant de juger de la nécessité du réassort : popularité, stocks réels (physiquement présents = commandes non préparées non déduites) et stocks virtuels (commandes non encore préparées déduites)</span></h3><br/>
+            <div><img src="{{ asset('img/admin_reassort.jpg')}}" width="90%"></div>
+            <h3 class="h3b">Démarque : <span class="h4">Permet de retirer des stocks les articles abîmés ou impropres à la vente.</span></h3><br/>
+            <h3 class="h3b">Inventaire : <span class="h4">Permet de rentrer l'inventaire des stocks, d'abord provisoire (avant corrections éventuelles des erreurs de comptage), puis définitif.</span></h3><br/>
+            <h3 class="h3b">Avis validés : <span class="h4">Liste des avis reçus</span></h3><br/>
+            <h3 class="h3b">Catégorie de produits : <span class="h4">Permet de rentrer une nouvelle catégorie</span></h3><br/>
+            <h3 class="h3b">Fournisseurs : <span class="h4">Permet de rentrer un nouveau fournisseur, de modifier les coordonnées ou supprimer un fournisseur</span></h3><br/>
+
+    </div>
+</div>
+{% endblock %}

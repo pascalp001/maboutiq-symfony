@@ -89,26 +89,27 @@ class PanierController extends Controller
     public function panierAction(Request $request)
     {
         //Retourne un tableau contenant la liste des idProduit + quantité :
-        $session = $request->getSession(); //$this->getRequest()->getSession();//getRequest() est obsol?e=>Request $request inject?  
+        $session = $request->getSession(); 
    
         if (!$session->has('panier')) $session->set('panier', array()); 
         $em = $this->getDoctrine()->getManager();
-        $produits = $em->getRepository('EcomBundle:Produits')->findArray(array_keys($session->get('panier')));  
-        foreach ($produits as $produit)
-        {
-            //$proProds
-        }
+        $promoProds = $em->getRepository('EcomBundle:PromoProds')->findAllPromoProdProd(); 
+        $panier =  $session->get('panier');
+        $array = array_keys($panier);
+        $now =  new \DateTime();
+
+        $produits = $em->getRepository('EcomBundle:Produits')->findArray($array);  
+        //var_dump($produits); die();
         
-        return $this->render('EcomBundle:Default:panier/layout/panier.html.twig', array('produits' => $produits, 'panier' => $session->get('panier')));
+        return $this->render('EcomBundle:Default:panier/layout/panier.html.twig', array('produits' => $produits, 'panier' => $session->get('panier'), 'now'=>$now));
     }
 
-    public function ajouterAction($id, Request $request)
+    public function ajouterAction($id, $prix=null, Request $request)
     {
         //Rajoute s'il n'existe pas déjà, ou met à jour, un couple idProduit + quantité dans le panier 
-        // => $panier[$id] contient, ainsi, la quantité du produit :
-        $session =  $request->getSession(); 
-        if (!$session->has('panier')) $session->set('panier', array()); //equivaut à if(!isset($_SESSION['panier']))... on initialise à un tableau vide
-        $panier = $session->get('panier');
+        // => $panier[$id]['qte'] contient, ainsi, la quantité du produit :
+        //Rajoute également prix pour gérer les promotions
+
         //Incrémentation de la popularité :
         $em = $this->getDoctrine()->getManager();
         $produit = $em->getRepository('EcomBundle:Produits')->find($id);        
@@ -117,20 +118,39 @@ class PanierController extends Controller
         $em->persist($produit);
         $em->flush();
         
-        //Rajout du produit dans le panier avec la quantité indiquée :
+        //Rajout du produit dans le panier avec la quantité indiquée et le prix effectif :
+        $session =  $request->getSession(); 
+        if (!$session->has('panier')) $session->set('panier', array());
+        $panier = $session->get('panier');
+
         if (array_key_exists($id, $panier))
         {
             // ce produit existe déjà dans le panier...            
-            if ($request->query->get('qte') != null) $panier[$id] = $request->query->get('qte');
+            if ($request->query->get('qte') != null) 
+            {
+                $panier[$id]['qte'] = $request->query->get('qte');
+                $panier[$id]['prix'] = $request->query->get('prix');
+            }
         }
         else
         {
             // ce produit n'existe pas encore dans le panier...           
-            if ($request->query->get('qte') != null) {    $panier[$id] = $request->query->get('qte'); }
-            else{ $panier[$id] = 1; }
-        }
- 
+            if ($request->query->get('qte') != null) 
+            { 
+                $panier[$id]['qte'] = $request->query->get('qte');
+                $panier[$id]['prix'] = $request->query->get('prix');
+            }
+            else
+            { 
+                $panier[$id]['qte'] = 1;
+            // On récupère le prix qui sinon reste à zéro jq'à la commande si la qté n'est pas modifiée :
+                if($prix!=null) $panier[$id]['prix'] = $prix;
+                else $panier[$id]['prix'] = 0;    
+            }
+        } 
         $session->set('panier', $panier);
+
+        // La modification du panier annule les calcul des frais de port et la commande :
         if($session->get('tabFrPort')) $session->remove('tabFrPort');
         if($session->get('commande'))  $session->remove('commande');
         
@@ -391,12 +411,13 @@ class PanierController extends Controller
         /* calcul des dimensions et poids maximals*/
             foreach($produits as $produit)
             {
-              $poids = $panier[$produit->getId()] * ($produit->getPoids() + ($produit->getEpaiss() * 2 + $produit->getLargeur() *2 + $produit->getTaille() *2) * $poidsInt);
+
+              $poids = $panier[$produit->getId()]['qte'] * ($produit->getPoids() + ($produit->getEpaiss() * 2 + $produit->getLargeur() *2 + $produit->getTaille() *2) * $poidsInt);
               $epaissMax = max( $epaissMax, $produit -> getEpaiss() + $epaissInt * 2);
               $largMax = max( $largMax, $produit -> getLargeur() + $epaissInt * 2);
               $tailleMax = max( $tailleMax, $produit -> getTaille() + $epaissInt * 2);
-              $volmax +=  $panier[$produit -> getId()] * (($produit -> getEpaiss() + 2*$epaissInt) * ($produit -> getLargeur() + 2*$epaissInt) * ($produit -> getTaille() + 2*$epaissInt));
-              $sommeLarg += $sommeLarg + $panier[$produit->getId()] * ($produit->getLargeur()+2*$epaissInt);
+              $volmax +=  $panier[$produit -> getId()]['qte'] * (($produit -> getEpaiss() + 2*$epaissInt) * ($produit -> getLargeur() + 2*$epaissInt) * ($produit -> getTaille() + 2*$epaissInt));
+              $sommeLarg += $sommeLarg + $panier[$produit->getId()]['qte'] * ($produit->getLargeur()+2*$epaissInt);
               $totalPoids += $poids;
             }
 
@@ -482,7 +503,7 @@ class PanierController extends Controller
         // Affiche les CGV de l'entreprise vendeur dans un nouvel onglet
         $em = $this->getDoctrine()->getManager();  
         $id=1;
-        $vendeur = $em->getRepository('EcomBundle:Vendeur')->findOneById($id);
+        $vendeur = $em->getRepository('AdBundle:Vendeur')->findOneById($id);
         return $this->render('PagesBundle:Default:pages/layout/cgv.html.twig', array( 'vendeur'=> $vendeur));   
    }
 }

@@ -357,7 +357,7 @@ class Produits
      *
      * @return Produits
      */
-    public function setCategorie(\DV\EcomBundle\Entity\Categories $categories)
+    public function setCategorie(\DV\EcomBundle\Entity\Categories $categorie)
     {
         $this->categorie = $categorie;
 

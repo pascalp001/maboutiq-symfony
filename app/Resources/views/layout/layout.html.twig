@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>{% block titre %}Pascalp e-commerce Version Développement{% endblock %}</title>
+    <title>{% block titre %}Pascalp boutique e-commerce Version Développement{% endblock %}</title>
     <meta name="keywords" content="{% block motsCles %}{% endblock %}"/>
     <meta name="description" content="{% block description %}{% endblock %}"/>
     {% block stylesheets %}
@@ -21,29 +21,30 @@
             <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#example-navbar-collapse">
               <span class="sr-only ">Toggle navigation</span>
-              <span class="icon-bar"></span>
+              <span class="icon-bar" ></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>               
-                <a class="navbar-brand" href="{{path('produits')}}"><img src="{{ asset('img/LogoProG8.PNG')}}" width="70px" title="LOGO!!!" alt="LOGO!!!" style="margin-top:-5px" ></a>
+                <a class="navbar-brand" href="{{path('accueil')}}"><img src="{{ asset('img/LogoProG8.PNG')}}" width="70px" title="LOGO!!!" alt="LOGO!!!" style="margin-top:-5px" ></a>
             </div>
             <div class="collapse navbar-collapse" id="example-navbar-collapse">
 		      	<ul class="nav navbar-nav">
-			        <li class="active"><a href="#">Accueil <span class="sr-only">(current)</span></a></li>
-			        <li><a href="#">Page1</a></li>
+			        <li class="active"><a href="{{path('produits')}}">Boutique <span class="sr-only">(current)</span></a></li>
+			        <li><a href="{{path('panier')}}">Panier</a></li>
+                    <li><a href="{{path('site')}}">Construction du site</a></li>
 			        <li class="dropdown">
 			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Autres <span class="caret"></span></a>
 			          <ul class="dropdown-menu">
-			            <li><a href="#">Action 1</a></li>
-			            <li><a href="#">Action 2</a></li>
-			            <li><a href="#">Action 3</a></li>
+			            <li><a href="#">Actualités</a></li>
+			            <li><a href="#">FAQ</a></li>
+			            <li><a href="#">Documentation</a></li>
 			            <li role="separator" class="divider"></li>
-			            <li><a href="#">Action 4</a></li>
+			            <li><a href="#">Nous contacter</a></li>
 			            <li role="separator" class="divider"></li>
-			            <li><a href="#">Action 5</a></li>
+			            <li><a href="#">CGV</a></li>
 			          </ul>
 			        </li>
-                    <li>{% render(controller('EcomBundle:Produits:recherche')) %}</li>
+                    
 
 		      	</ul>
                 
@@ -103,9 +104,9 @@
 <script src="{{ asset('js/plugin/jquery/jquery.min.js')}}"></script>
 <script src="{{ asset('js/plugin/jquery-ui-1.12.1.custom/jquery-ui.js')}}"></script>
 <script src="{{ asset('bootstrap/js/bootstrap.js')}}"></script>   
-
+<script> 
     <!-- script pour afficher ou non la sidebar menu -->
-<script>  
+ 
 $(document).ready(function () {
 
         var toggle=false;
@@ -124,11 +125,131 @@ $(document).ready(function () {
         return false;
     });
 });
+
+/* Script note avis */
 var rate = 0;
 function currentRating(rate){
         $("#stars").html(rate);
         $(".rate").val(rate);
     }
+
+function testpromo(mavar){
+alert('ici'+mavar);
+}
+
+/* Script pour l'effet loupe */
+$(function() {
+    //alert('ici');
+  var native_width = 0;
+  var native_height = 0;
+  var mouse = {x: 0, y: 0};
+  var magnify;
+  var cur_img;
+  var ui = {
+    magniflier: $('.image')
+  };
+  // On crée un div autour de l'image à grossir avec la loupe
+  if (ui.magniflier.length) {
+    var div = document.createElement('div');
+    div.setAttribute('class', 'loupe');
+    ui.loupe = $(div);
+    $('body').append(div);
+  }
+
+  var mouseMove = function(e) {
+    var $el = $(this);
+
+    var magnify_offset = cur_img.offset();
+
+    mouse.x = e.pageX - magnify_offset.left;
+    mouse.y = e.pageY - magnify_offset.top;
+   
+    if (
+      mouse.x < cur_img.width() &&
+      mouse.y < cur_img.height() &&
+      mouse.x > 0 &&
+      mouse.y > 0
+      ) {
+      magnify(e);
+    }
+    else {
+      ui.loupe.fadeOut(100);
+    }
+    return;
+  };
+  var magnify = function(e) {
+
+    // Le background position de la loupe sera modifié en fonction de la position de la souris sur l'image '.magnifier'
+    var rx = Math.round(mouse.x/cur_img.width()*native_width - ui.loupe.width()/2)*-1;
+    var ry = Math.round(mouse.y/cur_img.height()*native_height - ui.loupe.height()/2)*-1;
+    var bg_pos = rx + "px " + ry + "px";
+   
+    // Calcul de la position de la loupe
+    // var loupe_left = mouse.x - ui.loupe.width() / 2;
+    // var loupe_top  = mouse.y - ui.loupe.height() / 2;
+    var loupe_left = e.pageX - ui.loupe.width() / 2;
+    var loupe_top  = e.pageY - ui.loupe.height() / 2;
+    //console.log(loupe_left, loupe_top, bg_pos)
+    //Maintenant en survolant, la loupe apparait
+    
+    ui.loupe.css({
+      left: loupe_left,
+      top: loupe_top,
+      backgroundPosition: bg_pos
+    });
+    return;
+  };
+  
+  $('.image').on('mousemove', function() {
+    ui.loupe.fadeIn(100);
+   
+    cur_img = $(this);
+    var large_img_loaded = cur_img.data('large-img-loaded');
+    var src = cur_img.data('large') || cur_img.attr('src');
+    // Set large-img-loaded to true
+    // cur_img.data('large-img-loaded', true)
+    if (src) {
+      ui.loupe.css({
+        'background-image': 'url(' + src + ')',
+        'background-repeat': 'no-repeat'
+      });
+    }
+    // When the user hovers on the image, the script will first calculate the native dimensions if they don't exist. 
+    // Only after the native dimensions are available, the script will show the zoomed version.
+    //if(!native_width && !native_height) {
+      if (!cur_img.data('native_width')) {
+        // This will create a new image object with the same image as that in .small We cannot directly get the dimensions 
+        // from .small because of the width specified to 200px in the html. To get the actual dimensions we have
+        // created this image object.
+        var image_object = new Image();
+        image_object.onload = function() {
+ 
+          native_width = image_object.width;
+          native_height = image_object.height;
+          cur_img.data('native_width', native_width);
+          cur_img.data('native_height', native_height);
+          //console.log(native_width, native_height);
+          
+          mouseMove.apply(this, arguments);
+          ui.loupe.on('mousemove', mouseMove);
+        };
+
+        image_object.src = src;
+       
+        return;
+      } else {
+        native_width = cur_img.data('native_width');
+        native_height = cur_img.data('native_height');
+      }
+    //}
+    //console.log(native_width, native_height);
+    mouseMove.apply(this, arguments);
+    ui.loupe.on('mousemove', mouseMove);
+  });
+  ui.loupe.on('mouseout', function() {
+    ui.loupe.off('mousemove', mouseMove);
+  });
+});
 </script>
 
 {% endblock %}

@@ -2,7 +2,9 @@
  {% block titre %} Pascalp Version Développement > Liste des produits disponibles {% endblock %}
 {% block body %}
 <div class="container ">
-    <div class="pull-right panier" >{% render(controller('EcomBundle:Panier:menu')) %}</div>      
+
+    <div class="pull-right panier h5b" >{% render(controller('EcomBundle:Panier:menu')) %}</div>  
+    <div class="pull-center-top">{% render(controller('EcomBundle:Produits:recherche')) %}</div>        
     <div class="row">
     	<div class="col-xs-2 sidebar">
         {% include '::modulesBase/nav.html.twig' %}   
@@ -20,45 +22,67 @@
                     {% if produits|length != 0 %}
                     <ul class=""  >
                         {% for produit in produits %}
-                            <li class="col-md-4 col-sm-6 col-xs-12  thumbnail"  >
-                                <div class="row ">
-                                    <div class="col-md-5">
-                                        <a  href="{{ path('presentation', {'id': produit.id  })  }}">
-                                        <img src="{{ produit.image.AssetPath|imagine_filter('imgProduitFormat1') }}" alt="image {{ produit.image.name }}" title="{{produit.image.name}}"  >
-                                        </a>
-                                        {% if produit.promoProd is defined and produit.promoProd != null and produit.promoProd[0].codepromo is defined %}<div style="background:red;color:#eee;min-width:110px; margin-top:10px;padding:2px 2px;"> {{produit.promoProd[0].codepromo}} </div>{% endif %} 
-                                    </div>
-                                    <div class="col-md-7">   
-                                        <div class="caption">
-                                            <h4 style="min-height:40px">{{produit.nom}}<span class="h6"> <br/>(Cat: {{produit.categorie.nom}})</span></h4> {% if produit.taille != null %}<span class="smallf">taille {{produit.taille}} mm </span>{% endif %}
-                                            <br/> {{produit.prix|tva(produit.tva.multiplicate) |number_format(2) }} € <span class="smallf">TTC</span>
-                                        </div>
-                                        {#% if produit.promoProd is defined and produit.promoProd != null and produit.promoProd.codepromo is defined %} {{produit.promoProd.codepromo}} {% endif %#} 
-                                    </div>
-                                </div>
-                                <div class="row " style=" min-height:36px;">
-                                    <div class="col-md-12 caption" style="margin-top:-20px; ">    
-                                        {{produit.descripcourt}}
-                                    </div>
-                                </div>                             
-                                <div class="row ">
-                                    <div class="col-md-5">                       
-                                            <a class="btn btn-primary" href="{{ path('presentation', {'id': produit.id  })  }}">Plus d'infos</a>
-                                    </div>
-                                    <div class="col-md-7">   
-                                        {% if (panier[produit.id] is not defined and produit.stockvirtuel > 0) %}                          
-                                            <a class="btn btn-success" href="{{ path('ajoutpanier1',{'id':produit.id })  }}">Ajouter au panier</a>
-                                        {% else %}
-                                            {% if panier[produit.id] is defined  %}                          
-                                                <span class="fontxs">Déjà dans le panier</span><a href="{{path('panier') }}" class="glyphicon glyphicon-eye-open btn-eye" title="voir le panier" ></a> 
-                                            {% else %}
-                                                <span class="fontxs">Article non disponible</span>
-                                            {% endif %}                                            
+                            {% set prix = produit.prix  %}
+                            {% if produit.promoProd != null %} 
+                                {% for promo in produit.promoProd %}
+                                    {% if promo.datedeb is defined and promo.datedeb <= now and promo.datefin >= now and promo.codepromo is defined and  promo.apartirdeqte == 1 %}
+                                        {% if promo.remisePourcent > 0 %} 
+                                            {% set prix = (produit.prix * (100 - promo.remisepourcent)/100)|number_format(2)  %}
+                                        {%  else  %}
+                                            {% if promoProd.remiseEuro > 0 %} 
+                                              {% set prix = (produit.prix - promo.remiseEuro)|tva(produit.tva.multiplicate)|number_format(2)  %}  
+                                            {% endif %}
                                         {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                   
+                            {% endif %} 
+                            <li class="col-md-4 col-sm-6 col-xs-12 list-unstyled" style="margin-left:-10px;" >
+                                <div class="thumbnail"style="margin-left:-6px;">
+                                    <div class="row " style="min-height:130px;">
+                                        <div class="col-md-5">
+                                            {% if produit.page is defined %}
+                                                <a  href="{{ path('presentationpage', {'id': produit.id  , 'page': produit.page })  }}">
+                                                <img src="{{ produit.image.AssetPath|imagine_filter('imgProduitFormat1') }}" alt="image {{ produit.image.name }}" title="{{produit.image.name}}"  >
+                                                </a>
+                                            {% else %}
+                                                <a  href="{{ path('presentation', {'id': produit.id   })  }}">
+                                                <img src="{{ produit.image.AssetPath|imagine_filter('imgProduitFormat1') }}" alt="image {{ produit.image.name }}" title="{{produit.image.name}}"  >
+                                                </a>
+                                            {% endif %}
+                                            {% if produit.promoProd is defined and produit.promoProd != null and produit.promoProd[0].codepromo is defined %}<div style="background:red;color:#eee;min-width:110px; margin-top:10px;padding:2px 2px;"> {{produit.promoProd[0].codepromo}} </div>{% endif %} 
+                                        </div>
+                                        <div class="col-md-7">   
+                                            <div class="caption">
+                                                <h4 style="min-height:40px">{{produit.nom}}<span class="h6"> <br/>(Cat: {{produit.categorie.nom}})</span></h4> {% if produit.taille != null %}<span class="smallf">taille {{produit.taille}} mm </span>{% endif %}
+                                                <br/> {{produit.prix|tva(produit.tva.multiplicate) |number_format(2) }} € <span class="smallf">TTC</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                 
-                                </div>
+                                    <div class="row " style=" min-height:36px;">
+                                        <div class="col-md-12 caption" style="margin-top:-20px; ">    
+                                            {{produit.descripcourt}}
+                                        </div>
+                                    </div>                             
+                                    <div class="row ">
+                                        <div class="col-md-5" style="padding-left:2%; margin-left:0">                       
+                                                <a class="btn btn-primary" href="{{ path('presentation', {'id': produit.id})  }}">Plus d'infos</a>
+                                        </div>
+                                        <div class="col-md-7">   
+                                            {% if (panier[produit.id] is not defined and produit.stockvirtuel > 0) %}                          
+                                                <a class="btn btn-success" href="{{ path('ajoutpanier1',{'id':produit.id, 'prix':prix })  }}">Ajouter au panier</a>
+                                            {% else %}
+                                                {% if panier[produit.id] is defined  %}                          
+                                                    <span class="fontxs">Déjà dans le panier</span><a href="{{path('panier' ) }}" class="glyphicon glyphicon-eye-open btn-eye" title="voir le panier" ></a> 
+                                                {% else %}
+                                                    <span class="fontxs">Article non disponible</span>
+                                                {% endif %}                                            
+                                            {% endif %}
+                                        </div>
+                                     
+                                    </div>
                             </li>
+
                        {% endfor %} 
                     </ul>
                     {% else %}
