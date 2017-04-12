@@ -1,7 +1,7 @@
 {% extends '::layout/layoutAdmin.html.twig' %}
 
 {% block body -%}
-    <h1>Categories list</h1>
+    <h1>Liste des categories</h1>
 
     <table class="records_list">
         <thead>
@@ -26,12 +26,17 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="row">
+        <div class="col-xs-offset-2 col-xs-2"  >
+        <a href="{{ path('adminProduits') }}">
+            <button type="button" class="btn btn-greyish" >RETOUR LISTE DES PRODUITS</button>
+        </a>
+        </div>
+        <div class="col-xs-offset-2 col-xs-2"  >
+        <a href="{{ path('adminCategories_new') }}">
+            <button type="button" class="btn btn-success" >AJOUTER UN NOUVELLE CATÉGORIE</button>
+        </a>
+        </div>
+    </div>
 
-        <ul>
-        <li>
-            <a href="{{ path('adminCategories_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
     {% endblock %}

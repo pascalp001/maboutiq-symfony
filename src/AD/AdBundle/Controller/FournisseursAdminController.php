@@ -67,7 +67,7 @@ class FournisseursAdminController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Enregistrer le nouveau fournisseur', 'attr'=>array('class'=>'btn btn-info', 'style'=>"min-width:200px;")));
 
         return $form;
     }

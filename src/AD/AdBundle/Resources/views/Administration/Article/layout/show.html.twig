@@ -1,0 +1,54 @@
+{% extends '::layout/layoutAdmin.html.twig' %}
+{% block body -%}
+    <h1>Article</h1>
+
+    <table class="record_properties table-store">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ entity.titre }}</td>
+            </tr>
+            <tr>
+                <th>Comment</th>
+                <td>{{ entity.comment }}</td>
+            </tr>
+            <tr>
+                <th>Datedeb</th>
+                <td>{{ entity.datedeb|date('d-m-Y ') }}</td>
+            </tr>
+            <tr>
+                <th>Datefin</th>
+                <td>{{ entity.datefin|date('d-m-Y  ') }}</td>
+            </tr>
+            <tr>
+                <th>Prop1</th>
+                <td><img src="{{ asset(  entity.prop1 ) }}"><br/>{{ entity.prop1 }}</td>
+            </tr>
+            <tr>
+                <th>Prop2</th>
+                <td>{{ entity.prop2 }}</td>
+            </tr>
+        </tbody>
+    </table><br/><br/>
+    <div class="row" >
+        <div class="col-sm-4">
+            <a href="{{ path('adminArticle') }}">
+                <button type="button" class="btn btn-info">Retour à la liste</button>           
+            </a>
+        </div>
+        <div class="col-sm-4">        
+            <a href="{{ path('adminArticle_edit', { 'id': entity.id }) }}">
+                <button type="button" class="btn btn-greyish"> Modifier l'article </button> 
+            </a>
+        </div>
+        <div class="col-sm-4">  
+                {{ form(delete_form) }}  
+
+        </div>
+    </div>
+
+{% endblock %}

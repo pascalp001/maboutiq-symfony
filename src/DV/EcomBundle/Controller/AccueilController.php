@@ -11,8 +11,9 @@ class AccueilController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$vendeur = $em->getRepository('AdBundle:Vendeur')->find(1);
     	$promoProds = $em->getRepository('EcomBundle:PromoProds')->findAllPromoProdProd();
+        $articles = $em->getRepository('EcomBundle:Article')->findAll();
     	 
-        return $this->render('EcomBundle:Accueil:index.html.twig', array('vendeur'=>$vendeur, 'promoProds'=>$promoProds));
+        return $this->render('EcomBundle:Accueil:index.html.twig', array('vendeur'=>$vendeur, 'promoProds'=>$promoProds, 'articles'=> $articles));
     }
 
     public function siteAction()

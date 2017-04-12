@@ -38,3 +38,7 @@ routingPromoProdsAdmin:
 routingPromoCmdesAdmin:
     resource: "@AdBundle/Resources/config/routing/routingPromocmdes.yml"
     prefix:   /admin/PromoCmdes
+
+routingArticleAdmin:
+    resource: "@AdBundle/Resources/config/routing/routingArticleAdmin.yml"
+    prefix:   /admin/Article

@@ -1,0 +1,45 @@
+{% extends '::layout/layoutAdmin.html.twig' %}
+
+{% block body -%}
+    <h1>Modifier cet article</h1>
+    {{form_start(edit_form)}} 
+    <div class="row form-group form-group-bordered">
+            {{ form_row(edit_form.titre) }} 
+    </div>
+    <div class="row form-group form-group-bordered">
+            {{ form_row(edit_form.comment) }} 
+    </div>
+    <div class="row form-group form-group-bordered">
+            {{ form_row(edit_form.datedeb) }} 
+    </div>
+    <div class="row form-group form-group-bordered">
+            {{ form_row(edit_form.datefin) }} 
+    </div>
+    <div class="row form-group form-group-bordered">
+    	<div class="col-xs-12">
+            {{ form_row(edit_form.prop1) }} 
+        </div>
+        <div class="col-xs-offset-1 col-xs-2">
+            <img src="{{ asset(edit_form.prop1.vars.value) }} " width="100px">
+        </div>
+    </div>
+    <div class="row form-group form-group-bordered">
+            {{ form_row(edit_form.prop2) }} 
+    </div>
+<div class="row" >
+    <div class="col-sm-2">
+        <a href="{{ path('adminArticle') }}">
+            <button type="button" class="btn btn-greyish">Retour</button>           
+        </a>
+    </div>{{ form_widget(edit_form._token)}}
+    <div class="col-sm-3">        
+        {{ form_widget(edit_form.submit )}}
+        {{ form_end(edit_form)}} 
+    </div>
+
+    <div class="col-sm-2">  
+            {{ form(delete_form) }}   
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+adminArticle:
+    path:     /
+    defaults: { _controller: "AdBundle:Article:index" }
+
+adminArticle_show:
+    path:     /{id}/show
+    defaults: { _controller: "AdBundle:Article:show" }
+
+adminArticle_new:
+    path:     /new
+    defaults: { _controller: "AdBundle:Article:new" }
+
+adminArticle_create:
+    path:     /create
+    defaults: { _controller: "AdBundle:Article:create" }
+    methods:  POST
+
+adminArticle_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AdBundle:Article:edit" }
+
+adminArticle_update:
+    path:     /{id}/update
+    defaults: { _controller: "AdBundle:Article:update" }
+    methods:  [POST, PUT]
+
+adminArticle_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AdBundle:Article:delete" }
+    methods:  [POST, DELETE]

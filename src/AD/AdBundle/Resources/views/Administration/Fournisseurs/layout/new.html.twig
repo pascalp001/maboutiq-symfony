@@ -4,12 +4,15 @@
     <h1>Nouveau fournisseur</h1>
 
     {{ form(form) }}
+    <div class="row form-group ">
+        <div class="col-sm-4">
+            <a href="{{ path('adminFournisseurs') }}">
+                <button type="button" class="btn btn-greyish">Retour</button>           
+            </a>
+        </div>
+        <div class="col-sm-4">        
+            {{ form_widget(form.submit )}}
+        </div>
+    </div>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('adminFournisseurs') }}">
-            Retour à la liste
-        </a>
-    </li>
-</ul>
 {% endblock %}

@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class FournisseursType extends AbstractType
 {
@@ -16,16 +17,16 @@ class FournisseursType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom', TextType::class, array( 'label'=>'Nom de la société','label_attr'=>array('class' =>'col-xs-2'), 'attr'=>array('class' =>'col-xs-4 form-control' ,'style'=>"max-width:400px")))
-            ->add('adresse', TextType::class, array('required' => false, 'label_attr'=>array('class' =>'col-xs-2 '), 'attr'=>array('class' =>'col-xs-4 form-control' ,'style'=>"max-width:400px")))
-            ->add('cp', TextType::class, array('required' => false, 'label_attr'=>array('class' =>'col-xs-2'), 'attr'=>array('class' =>'col-xs-4 form-control' ,'style'=>"max-width:400px")))
-            ->add('ville', TextType::class, array('required' => false, 'label_attr'=>array('class' =>'col-xs-2'), 'attr'=>array('class' =>'col-xs-4 form-control' ,'style'=>"max-width:400px")))
-            ->add('pays', TextType::class, array('empty_data' => 'France', 'required' => false, 'label_attr'=>array('class' =>'col-xs-2'), 'attr'=>array('class' =>'col-xs-4 form-control' ,'style'=>"max-width:400px")))            
-            ->add('telephone', TextType::class, array('required' => false, 'label_attr'=>array('class' =>'col-xs-2'), 'attr'=>array('class' =>'col-xs-4 form-control' ,'style'=>"max-width:400px")))
-            ->add('fax', TextType::class, array('required' => false, 'label_attr'=>array('class' =>'col-xs-2'), 'attr'=>array('class' =>'col-xs-4 form-control' ,'style'=>"max-width:400px")))
-            ->add('email', TextType::class, array('required' => false, 'label_attr'=>array('class' =>'col-xs-2'), 'attr'=>array('class' =>'col-xs-4 form-control' ,'style'=>"max-width:400px")))
-            ->add('commercial', TextType::class, array('required' => false, 'label'=>'Nom du commercial', 'label_attr'=>array('class' =>'col-xs-2'), 'attr'=>array('class' =>'col-xs-4 form-control' ,'style'=>"max-width:400px")))
-            ->add('tel_commerc', TextType::class, array('required' => false, 'label'=>'Tel du commercial','label_attr'=>array('class' =>'col-xs-2'), 'attr'=>array('class' =>'col-xs-4 form-control' ,'style'=>"max-width:400px")))
+            ->add('nom', TextType::class, array( 'label'=>'Nom de la société','label_attr'=>array('class' =>'col-xs-2'), 'attr'=>array('class' =>'col-xs-2 form-control' ,'style'=>"max-width:400px")))
+            ->add('adresse', TextType::class, array('required' => false, 'label_attr'=>array('class' =>'col-xs-2 '), 'attr'=>array('class' =>'col-xs-2 form-control' ,'style'=>"max-width:400px")))
+            ->add('cp', TextType::class, array('required' => false, 'label_attr'=>array('class' =>'col-xs-2'), 'attr'=>array('class' =>'col-xs-2 form-control' ,'style'=>"max-width:400px")))
+            ->add('ville', TextType::class, array('required' => false, 'label_attr'=>array('class' =>'col-xs-2'), 'attr'=>array('class' =>'col-xs-2 form-control' ,'style'=>"max-width:400px")))
+            ->add('pays', TextType::class, array('empty_data' => 'France', 'required' => false, 'label_attr'=>array('class' =>'col-xs-2'), 'attr'=>array('class' =>'col-xs-2 form-control' ,'style'=>"max-width:400px")))            
+            ->add('telephone', TextType::class, array('required' => false, 'label_attr'=>array('class' =>'col-xs-2'), 'attr'=>array('class' =>'col-xs-2 form-control' ,'style'=>"max-width:400px")))
+            ->add('fax', TextType::class, array('required' => false, 'label_attr'=>array('class' =>'col-xs-2'), 'attr'=>array('class' =>'col-xs-2 form-control' ,'style'=>"max-width:400px")))
+            ->add('email', TextType::class, array('required' => false, 'label_attr'=>array('class' =>'col-xs-2'), 'attr'=>array('class' =>'col-xs-2 form-control' ,'style'=>"max-width:400px")))
+            ->add('commercial', TextType::class, array('required' => false, 'label'=>'Nom du commercial', 'label_attr'=>array('class' =>'col-xs-2'), 'attr'=>array('class' =>'col-xs-2 form-control' ,'style'=>"max-width:400px")))
+            ->add('tel_commerc', TextType::class, array('required' => false, 'label'=>'Tel du commercial','label_attr'=>array('class' =>'col-xs-2'), 'attr'=>array('class' =>'col-xs-2 form-control' ,'style'=>"max-width:400px")))
         ;
     }
     

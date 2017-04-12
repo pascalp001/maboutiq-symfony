@@ -1,0 +1,52 @@
+{% extends '::layout/layoutAdmin.html.twig' %}
+
+{% block body -%}
+    <h1>Liste des articles</h1>
+
+    <table class="records_list table-store">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Texte de l'article</th>
+                <th>Datedeb</th>
+                <th>Datefin</th>
+                <th>Image</th>
+                <th>DIvers</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('adminArticle_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.titre }}</td>
+                <td style="max-width:260px;">{{ entity.comment }}</td>
+                <td>{% if entity.datedeb %}{{ entity.datedeb|date('d-m-Y') }}{% endif %}</td>
+                <td>{% if entity.datefin %}{{ entity.datefin|date('d-m-Y') }}{% endif %}</td>
+                <td>{{ entity.prop1 }}<br/><img src="{{ asset( entity.prop1) }} " width="100px"></td>
+                <td>{{ entity.prop2 }}</td>
+                <td>
+                        <a href="{{ path('adminArticle_show', { 'id': entity.id }) }}"><i class="glyphicon glyphicon-eye-open"></i></a>
+                </td>
+                <td>
+                        <a href="{{ path('adminArticle_edit', { 'id': entity.id }) }}"><i class="glyphicon glyphicon-edit"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table><br/><br/>
+    <div class="row">
+        <div class="col-xs-offset-2 col-xs-2"  >
+        <a href="{{ path('adminProduits') }}">
+            <button type="button" class="btn btn-greyish" >RETOUR LISTE DES PRODUITS</button>
+        </a>
+        </div>
+        <div class="col-xs-offset-2 col-xs-2"  >
+        <a href="{{ path('adminArticle_new') }}">
+            <button type="button" class="btn btn-success" >AJOUTER UN NOUVEL ARTICLE</button>
+        </a>
+        </div>
+    </div>
+
+    {% endblock %}
