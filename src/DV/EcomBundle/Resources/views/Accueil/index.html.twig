@@ -6,73 +6,44 @@
         <div><img src="{{ asset(vendeur.urlLogo2)}}"  style="min-width:100%; max-height: 400px;"  title="Accueil" alt="Image d'accueil" style="margin-top:-5px" ><div style="position:relative; top:-140px;left:0px;"><img src="{{ asset(vendeur.urlLogo1)}}"  style="max-height: 140px;"  title="Logo" alt="Logo"  ></div></div>
 
     <div class="row" style="position:relative; top:-90px" >
-        {% for article in articles %}
-
-            <li class="col-md-4 col-sm-6 col-xs-12 " style="list-style:none; " >
-                <div class=" thumbnail"  
-                    {% if loop.index == 1 %} style="background:#cce; margin:4px;min-height: 475px; "
-                    {% else %}
-                        {% if loop.index == 2 %} 
-                        style="background:#ecc; margin:4px; min-height: 400px;"
-                        {% else %}
-                        style="background:#cec; margin:4px; min-height: 400px;" 
-                       {% endif %} 
-                    {% endif %} >
-
-                <div class="row caption">
-                    <h3 style="min-height:35px; font-weight:bold">{{article.titre}}<span class="smallf"> </h3><br/>
-                    <div>
-                        <div style="float:right; margin-leftt:5px;">
-                            <img src="{{ asset(article.prop1) }}" width="300px" alt="image {{ article.titre }}" title="{{article.titre}}"  >
-                            
-                        </div>
-                    </div>
-                    <div style="min-height:35px;">   
-                            
-                            <h4 >{{article.comment}}<span class="smallf"> </h4>
-                        
-                    </div>
-                </div>                    
-            </li>
-        {% endfor %}
-          {% for promoProd in promoProds %}
-            
-            <li class="col-md-4 col-sm-6 col-xs-12 " style="list-style:none" >
-                <div class=" thumbnail"  
-                    {% if loop.index == 1 %} style="background:#F44; margin:4px; "
-                    {% else %}
-                        {% if loop.index == 2 %} 
-                        style="background:#99c; margin:4px; "
-                        {% else %}
-                        style="background:#6d6; margin:4px; " 
-                       {% endif %} 
-                    {% endif %} >
+    <ul>
+    {% for ind in inds|sort() %}
+        {% set i = table[ind] %}  
+        {% if i[0].nom is defined and i[0].nom != null  %}
+            {# promo #}
+            <li class="col-md-4 col-sm-6 col-xs-12 " style="list-style:none;float:left; " >
+              <div class=" thumbnail"  
+                    {% if loop.index%4 == 0 %} style="background:#cc4; margin:4px; " {% endif %}
+                    {% if loop.index%4 == 1 %} style="background:#F44; margin:4px; " {% endif %}
+                    {% if loop.index%4 == 2 %} style="background:#99c; margin:4px; " {% endif %}
+                    {% if loop.index%4 == 3 %} style="background:#6d6; margin:4px; " {% endif %}
+                 >
                 <div class="row caption">
                     <div class="col-md-5">
-                        <a  href="{{ path('presentation', {'id': promoProd[0].produit.id  })  }}">
-                        <img src="{{ promoProd[0].produit.image.AssetPath|imagine_filter('imgProduitFormat1') }}" alt="image {{ promoProd[0].produit.image.name }}" title="{{promoProd[0].produit.image.name}}"  >
+                        <a  href="{{ path('presentation', {'id': i[0].produit.id  })  }}">
+                        <img src="{{ i[0].produit.image.AssetPath|imagine_filter('imgProduitFormat1') }}" alt="image {{ i[0].produit.image.name }}" title="{{i[0].produit.image.name}}"  >
                         </a>
                     </div>
                     <div class="col-md-7">   
-                            <h4 style="min-height:35px">{{promoProd[0].produit.nom}}<span class="smallf"> <br/>(Cat: {{promoProd[0].produit.categorie.nom}}) {% if promoProd[0].produit.taille != null %}taille {{promoProd[0].produit.taille}} mm {% endif %}</span></h4>
+                            <h4 style="min-height:35px">{{i[0].produit.nom}}<span class="smallf"> <br/>(Cat: {{i[0].produit.categorie.nom}}) {% if i[0].produit.taille != null %}taille {{i[0].produit.taille}} mm {% endif %}</span></h4>
                         
                     </div>
                 </div>
                 <div class="row" style="min-height:225px;">
-                    <h2 style=" color:#02d; font-weight:600" >{{promoProd[0].articlePub}}</h2>
+                    <h2 style=" color:#02d; font-weight:600" >{{i[0].articlePub}}</h2>
                 </div>
                 <div class="row caption" style="min-height:45px;">
                     
-                        <h3> Prix promo :<br/>{% if promoProd[0].apartirdeqte > 1 %} {{promoProd[0].apartirdeqte}}x {% endif %}<span style="text-decoration:line-through">{{promoProd[0].produit.prix|tva(promoProd[0].produit.tva.multiplicate) |number_format(2) }}</span><span style="font-size:1.5em; font-weight:600;"> &#10157;</span>
-                            {% if promoProd[0].apartirdeqte > 1 %} {{promoProd[0].apartirdeqte}}x {% endif %}
+                        <h3> Prix promo :<br/>{% if i[0].apartirdeqte > 1 %} {{i[0].apartirdeqte}}x {% endif %}<span style="text-decoration:line-through">{{i[0].produit.prix|tva(i[0].produit.tva.multiplicate) |number_format(2) }}</span><span style="font-size:1.5em; font-weight:600;"> &#10157;</span>
+                            {% if i[0].apartirdeqte > 1 %} {{i[0].apartirdeqte}}x {% endif %}
                         <span style="font-size:1.5em; font-weight:600;">
-                             {% if promoProd[0].remisepourcent > 0 %} 
-                               {{ ( promoProd[0].produit.prix * (100 - promoProd[0].remisepourcent) /100 ) 
-                               | tva(promoProd[0].produit.tva.multiplicate) | number_format(2) }} € 
+                             {% if i[0].remisepourcent > 0 %} 
+                               {{ ( i[0].produit.prix * (100 - i[0].remisepourcent) /100 ) 
+                               | tva(i[0].produit.tva.multiplicate) | number_format(2) }} € 
                             {% else %}
-                                {% if promoProd[0].remiseEuro > 0 %} 
-                                   {{ ( promoProd[0].produit.prix - promoProd[0].remiseEuro )
-                                   | tva(promoProd[0].produit.tva.multiplicate) | number_format(2) }} € 
+                                {% if i[0].remiseEuro > 0 %} 
+                                   {{ ( i[0].produit.prix - i[0].remiseEuro )
+                                   | tva(i[0].produit.tva.multiplicate) | number_format(2) }} € 
                                 {% endif %}
                             {% endif %}
                             
@@ -84,7 +55,36 @@
                 </div>
                 </div>
             </li>
-        {% endfor %}
+        {% endif %} 
+        {% if i.titre is defined and i.titre != null  %}
+            {# article #}
+            <li class="col-md-4 col-sm-6 col-xs-12 " style="list-style:none; float:left; " >
+                <div class=" thumbnail"  
+                {% if loop.index%4 == 0 %} style="background:#cce; margin:4px; min-height: 475px;" {% endif %}
+                {% if loop.index%4 == 1 %} style="background:#ecc; margin:4px; min-height: 475px;" {% endif %}
+                {% if loop.index%4 == 2 %} style="background:#cec; margin:4px; min-height: 475px;" {% endif %}
+                {% if loop.index%4 == 3 %} style="background:#eec; margin:4px; min-height: 475px;" {% endif %}
+                >
+
+                <div class="row caption">
+                    <h3 style="min-height:35px; font-weight:bold">{{i.titre}}<span class="smallf"> </h3><br/>
+                    <div>
+                        <div style="float:right; margin-leftt:5px;">
+                            <img src="{{ asset(i.prop1) }}" width="300px" alt="image {{ i.titre }}" title="{{i.titre}}"  >
+                            
+                        </div>
+                    </div>
+                    <div style="min-height:35px;">   
+                            
+                            <h4 >{{i.comment}}<span class="smallf"> </h4>
+                        
+                    </div>
+                </div>                    
+            </li>
+                
+        {% endif %} 
+     {% endfor %}
+ 
     </ul>
     </div>
 </div>

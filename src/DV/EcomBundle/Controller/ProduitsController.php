@@ -16,7 +16,7 @@ class ProduitsController extends Controller
     public function produitsAction(Request $request, Categories $categorie = null , $tri = null )
     {       
     	$em = $this->getDoctrine()->getManager();
-        $session = $this->getRequest()->getSession(); 
+        $session = $request->getSession();; 
         //On récupère la page éventuelle laissée précédemment
         if($session->has('page')) 
             {$page = $session->get('page');}
@@ -38,18 +38,17 @@ class ProduitsController extends Controller
         //var_dump( $findProduits); die();
 
         //page par défaut et nombre de produits par page :
-        $produits  = $this->get('knp_paginator') ->paginate( $findProduits,  $request->query->get('page', $page), 6 );
-
-        $session = $request->getSession();      
+        $produits  = $this->get('knp_paginator')->paginate( $findProduits,  $request->query->get('page', $page), 6 );
+   
         if($session->has('panier')){$panier = $session->get('panier'); }
         else{$panier=false;}
 
         $now =  new \DateTime();
 
-        return $this->render('EcomBundle:Default:produits/layout/produits.html.twig', array('produits' => $produits, 'panier'=>$panier, 'now'=>$now) );
+        return $this->render('EcomBundle:Default:produits/layout/produits.html.twig', array('produits' => $produits, 'panier'=>$panier, 'now'=>$now, 'pageset1'=>$page) );
     }
-
-     public function presentationAction($id, $page=null)
+ 
+     public function presentationAction($id, $page = null, Request $request)
     {
     	$em = $this->getDoctrine()->getManager();
     	$produit = $em->getRepository('EcomBundle:Produits')->find($id);
@@ -67,8 +66,10 @@ class ProduitsController extends Controller
         $em->persist($produit);
         $em->flush();
 
-        $session = $this->getRequest()->getSession();  
-        if($page != null) {$session->set('page', $page); var_dump($session); die();}
+        $session = $request->getSession();  
+        if($page != null){ $session->set('page', $page);}
+        elseif($request->query->get('page')) { $session->set('page', $request->query->get('page'));}
+
         if($session->has('panier')) 
             {$panier = $session->get('panier');}
         else{$panier=false;}
@@ -148,11 +149,6 @@ class ProduitsController extends Controller
         $avis = new Avis();
         $form1 = $this->createForm(new AvisType, $avis);
         $form1->add('submit', SubmitType::class, array('label' => '+', 'attr'=>array('class'=>'btn btn-grosplus pull-right')));
-
-        //Cas où on a déjà rentré un avis mémorisé en session :
-        //$session = $request->getSession();
-        //if (!$session->has('avis')) {$session->set('avis', array()); $aviss = null;}
-        //else {$aviss = $session->get('avis');  }
 
         if ($request->getMethod() == 'POST')
         {            

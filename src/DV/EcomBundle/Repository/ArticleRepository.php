@@ -10,4 +10,14 @@ namespace DV\EcomBundle\Repository;
  */
 class ArticleRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findArticles()
+	{
+		$qb = $this->createQueryBuilder('a')
+			->where('a.datedeb <= :now')
+			->andWhere('a.datefin IS NULL')
+			->orWhere('a.datefin >= :now')
+			->setParameter('now', new \DateTime(), \Doctrine\DBAL\Types\Type::DATETIME)
+			;
+		return $qb->getQuery()->getResult();
+	}
 }

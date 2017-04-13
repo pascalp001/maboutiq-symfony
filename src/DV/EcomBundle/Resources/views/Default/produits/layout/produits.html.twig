@@ -20,8 +20,18 @@
             <div class="row">
                 <div class="col-md-12">
                     {% if produits|length != 0 %}
+                        {% if produits.pagecount is defined and produits.pagecount > 1 and produits.page and produits.page>1 %}
+                            {% set pageSet0 = produits.page %}
+                        {% else %} 
+                            {% if page is defined and page > 1 %}
+                                {% set pageSet0 = page %}
+                            {% else %}
+                                {% set pageSet0 = '1' %}
+                            {% endif %}
+                        {% endif %}
                     <ul class=""  >
                         {% for produit in produits %}
+
                             {% set prix = produit.prix  %}
                             {% if produit.promoProd != null %} 
                                 {% for promo in produit.promoProd %}
@@ -34,19 +44,19 @@
                                             {% endif %}
                                         {% endif %}
                                     {% endif %}
-                                {% endfor %}
-                                   
+                                {% endfor %}                                   
                             {% endif %} 
+
                             <li class="col-md-4 col-sm-6 col-xs-12 list-unstyled" style="margin-left:-10px;" >
                                 <div class="thumbnail"style="margin-left:-6px;">
                                     <div class="row " style="min-height:130px;">
                                         <div class="col-md-5">
-                                            {% if produit.page is defined %}
+                                            {% if produit.page is defined and produit.page > 1 %}
                                                 <a  href="{{ path('presentationpage', {'id': produit.id  , 'page': produit.page })  }}">
                                                 <img src="{{ produit.image.AssetPath|imagine_filter('imgProduitFormat1') }}" alt="image {{ produit.image.name }}" title="{{produit.image.name}}"  >
                                                 </a>
                                             {% else %}
-                                                <a  href="{{ path('presentation', {'id': produit.id   })  }}">
+                                                <a  href="{{ path('presentation', {'id': produit.id  , 'page': pageSet0 })  }}">
                                                 <img src="{{ produit.image.AssetPath|imagine_filter('imgProduitFormat1') }}" alt="image {{ produit.image.name }}" title="{{produit.image.name}}"  >
                                                 </a>
                                             {% endif %}
@@ -66,7 +76,7 @@
                                     </div>                             
                                     <div class="row ">
                                         <div class="col-md-5" style="padding-left:2%; margin-left:0">                       
-                                                <a class="btn btn-primary" href="{{ path('presentation', {'id': produit.id})  }}">Plus d'infos</a>
+                                                <a class="btn btn-primary" href="{{ path('presentation', {'id': produit.id, 'page': pageSet0})  }}">Plus d'infos</a>
                                         </div>
                                         <div class="col-md-7">   
                                             {% if (panier[produit.id] is not defined and produit.stockvirtuel > 0) %}                          
