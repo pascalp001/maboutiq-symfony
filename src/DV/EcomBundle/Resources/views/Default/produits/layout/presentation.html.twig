@@ -33,7 +33,7 @@
 		                    <p>{{produit.description}}</p>
 		                    <h4>{{prix|tva(produit.tva.multiplicate) |number_format(2) }} € <span class="smallf">TTC</span></h4>
 		                    {% if promoProd is defined and promoProd != null %} 
-		                    	<h4 style="background:red;color:#eee;width:40%; padding:5px 10px;">{{promoProd.codepromo}}	</h4>
+		                    	<h4 style="background:red;color:#eee;width:40%; padding:5px 10px;">{{promoProd.nom}}	</h4>
 		                    	{% if promoProd.apartirdeqte > 1 %} <h5> à partir de {{promoProd.apartirdeqte}} achetés !</h5> {% endif %}
 		                    	{% if promoProd.remisepourcent > 0 %} 
 		                    		<h5> Prix promo : <span style="text-decoration:line-through">{{produit.prix|tva(produit.tva.multiplicate) |number_format(2) }}</span> &#10157;

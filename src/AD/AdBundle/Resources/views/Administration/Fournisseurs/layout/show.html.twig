@@ -3,7 +3,7 @@
 {% block body -%}
     <h1>Fournisseur {{ entity.nom }}</h1>
 
-    <table class="record_properties">
+    <table class="record_properties table-store">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -51,18 +51,22 @@
             </tr>
         </tbody>
     </table>
+    <br/><br/>
+    <div class="row" >
+        <div class="col-sm-4">
+            <a href="{{ path('adminFournisseurs') }}">
+                <button type="button" class="btn btn-info">Retour à la liste</button>           
+            </a>
+        </div>
+        <div class="col-sm-4">        
+            <a href="{{ path('adminFournisseurs_edit', { 'id': entity.id }) }}">
+                <button type="button" class="btn btn-greyish"> Modifier la catégorie </button> 
+            </a>
+        </div>
+        <div class="col-sm-4">  
+                {{ form(delete_form) }}  
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('adminFournisseurs') }}">
-            Retour à la liste
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('adminFournisseurs_edit', { 'id': entity.id }) }}">
-            Modifier
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+        </div>
+    </div>
+
 {% endblock %}

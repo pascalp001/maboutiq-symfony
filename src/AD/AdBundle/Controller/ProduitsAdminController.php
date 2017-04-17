@@ -26,9 +26,9 @@ class ProduitsAdminController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('EcomBundle:Produits')->findAll();
-
+        $now =  new \DateTime();
         return $this->render('AdBundle:Administration:Produits/layout/index.html.twig', array(
-            'entities' => $entities,
+            'entities' => $entities, 'now'=>$now
         ));
     }
     /**
@@ -67,7 +67,7 @@ class ProduitsAdminController extends Controller
      */
     private function createCreateForm(Produits $entity)
     {
-        $form = $this->createForm(new ProduitsType(), $entity );
+        $form = $this->createForm(ProduitsType::class, $entity );
 
         $form->add('submit', SubmitType::class, array('label' => 'Créer le nouveau produit', 'attr'=>array('class'=>'btn btn-info')));
 
@@ -149,12 +149,12 @@ class ProduitsAdminController extends Controller
     */
     private function createEditForm(Produits $entity)
     {
-        /*$form = $this->createForm(new ProduitsType(), $entity, array(
+        /*$form = $this->createForm(ProduitsType::class, $entity, array(
             'action' => $this->generateUrl('adminProduits_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));*/
 
-        $form = $this->createForm(new ProduitsType(), $entity);
+        $form = $this->createForm(ProduitsType::class, $entity);
 
         $form->add('submit', SubmitType::class, array('label' => 'Modifier ce produit', 'attr'=>array('class'=>'btn btn-info')));
 
@@ -169,6 +169,8 @@ class ProduitsAdminController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('EcomBundle:Produits')->find($id);
+        $stockvirtuel = $entity->getStockvirtuel();
+        $ecartStock = $entity->getStockreel() - $stockvirtuel;
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Produits entity.');
@@ -179,6 +181,8 @@ class ProduitsAdminController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            $entity->setStockvirtuel($entity->getStockreel()-$ecartStock);
+            $em->persist($entity);
             $em->flush();
 
             return $this->redirect($this->generateUrl('adminProduits_edit', array('id' => $id)));

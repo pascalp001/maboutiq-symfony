@@ -21,7 +21,7 @@ class PrdInventrType extends AbstractType
 				->add('stockinventaire', TextType::class, array('label'=>false, 'attr'=> array('placeholder'=>'0', 'class'=>'form-control', 'style'=>'width:100px; cursor:pointer')))
             	;
 	}
-    public function getName()
+    public function getBlockPrefix()
       {
           return 'ad_adbundle_prdinventr'; 
       }

@@ -24,10 +24,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{path('admin')}}"><img src="{{ asset('img/LogoProG8.PNG')}}" width="70px" title="LOGO!!!" alt="LOGO!!!" style="margin-top:-5px" >&#10159; ADMINISTRATION</a>
+                <a class="navbar-brand" href="{{path('admin')}}"><img src="{{ asset('img/LogoProG8.PNG')}}" width="70px" title="LOGO!!!" alt="LOGO!!!" style="margin-top:-5px" ><span class="h5" >&#10159; ADMINISTRATION</span></a>
             </div>
         </div>
-        <div class="collapse navbar-collapse" id="example-navbar-collapse">
+        <div class="collapse navbar-collapse" id="example-navbar-collapse" >
             <ul class="nav navbar-nav">
                 <li class="active"><a href="{{path('produits')}}">Retour vers client <span class="sr-only">(current)</span></a></li>
                 <li><a href="#">Page1</a></li>
@@ -45,7 +45,7 @@
                 </li>
 
             </ul>
-            
+        </div>    
             <div class="pull-right modulelogin-conteneur"  >
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %} 
                     {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnectedH.html.twig' %} 
@@ -54,21 +54,23 @@
                 {% endif %} 
             </div> 
             
-        </div>
+        
 
     </div>
 {% block layout %}
-    <div class="container" style="margin-right:0; padding-right:0; margin-left:0; padding-left:0;">
-                <button type="button" class="btn btn-default navbar-nontoggle" id="toggle2-sidebar" style="margin-left:-80px; margin-top:-10px;" >
+    <div class="container" >
+        <div class="adm">
+                <button type="button" class="btn btn-default navbar-nontoggle" id="toggle2-sidebar"  >
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                 </button>
-        <div class="row" id="row-main" style="margin-top:-20px; ">
-            <div class="col-md-2 " id="sidebar">  
+            </div>
+        <div class="row" id="row-main" style="margin-top:-8px; ">
+            <div class="col-xs-2 " id="sidebar">  
                 {% include '::modulesBase/navAdmin.html.twig' %}
             </div>
-            <div class="col-md-12" id="content">
+            <div class="col-xs-12" id="content">
                 {% block body %} {% endblock %}
             </div>
         </div>
@@ -165,12 +167,12 @@ function StockDefInventr(){
     if(toggle2)
     {   
         $("#sidebar").toggleClass("show", 1000, "swing" );
-        $("#content").removeClass("col-md-12").addClass("col-md-10"); 
+        $("#content").removeClass("col-xs-12").addClass("col-xs-10"); 
     } 
     else
     {          
         $("#sidebar").toggleClass("show", 1000, "swing");
-        $("#content").removeClass("col-md-10").addClass("col-md-12");
+        $("#content").removeClass("col-xs-10").addClass("col-xs-12");
     }      
     return false;
   });

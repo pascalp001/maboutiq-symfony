@@ -20,13 +20,13 @@ class InventrType extends AbstractType
         ->add('validprov', HiddenType::class, array('attr'=> array('value'=>'0')))	
         ;
 	}
-    public function getName()
-      {
-          return 'ad_adbundle_inventr'; 
-      }
-    public function configureOptions(OptionsResolver $resolver)
+  public function getBlockPrefix()
     {
-        $resolver->setDefaults(array('data_class' => Inventr::class,));
+        return 'ad_adbundle_inventr'; 
     }
+  public function configureOptions(OptionsResolver $resolver)
+  {
+      $resolver->setDefaults(array('data_class' => Inventr::class,));
+  }
 }
 ?>

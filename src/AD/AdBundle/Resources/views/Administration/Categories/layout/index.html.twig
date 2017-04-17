@@ -3,7 +3,7 @@
 {% block body -%}
     <h1>Liste des categories</h1>
 
-    <table class="records_list">
+    <table class="records_list table-store">
         <thead>
             <tr>
                 <th>Id</th>
@@ -25,7 +25,7 @@
             </tr>
         {% endfor %}
         </tbody>
-    </table>
+    </table><br/><br/>
     <div class="row">
         <div class="col-xs-offset-2 col-xs-2"  >
         <a href="{{ path('adminProduits') }}">

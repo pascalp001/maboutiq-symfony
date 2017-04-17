@@ -128,9 +128,9 @@ class Produits
     private $popularite;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="disponible", type="boolean")
+     * @ORM\Column(name="disponible", type="integer")
      */
     private $disponible;
 

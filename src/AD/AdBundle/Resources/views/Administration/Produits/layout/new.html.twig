@@ -3,7 +3,7 @@
 {% block body -%}
 {# % form_theme form.image 'EcomBundle:Default:produits/modulesUsed/imagesProduit.html.twig' % #}
 <div >
-    <h1>Creation d'un nouveau produit</h1>
+    <h1>Creation d'un nouveau produit</h1><br/>
     <form action="{{path('adminProduits_create') }}" method="POST" {{form_enctype(form) }}  class="form-group" >
         
         <div class="row form-group form-group-bordered">
@@ -58,7 +58,7 @@
                 form_label(form.prix) }}</label>
             <div class="col-sm-3" id="prixHT" onChange="prixTTC()">{{ form_widget(form.prix, {'attr' :
                 {'class':'form-control','placeholder':'Prix' } }) }}</div>
-            <div class="col-sm-4" id="prixTTC" > <span></span></div>
+            <div class="col-sm-4" id="prixTTC" style="padding-top:10px;" > <span></span></div>
         </div>
 
     <div class="row form-group form-group-bordered">
@@ -67,7 +67,7 @@
         <div class="col-sm-3">{{ form_widget(form.poids, {'attr' :
             {'class':'form-control'} }) }}
         </div>
-         <div class="col-sm-2">grammes</div>
+         <div class="col-sm-2" style="padding-top:10px;" >grammes</div>
     </div>
 
     <div class="row form-group form-group-bordered">
@@ -76,7 +76,7 @@
         <div class="col-sm-3">{{ form_widget(form.taille, {'attr' :
             {'class':'form-control'} }) }}
         </div>
-         <div class="col-sm-2">mm</div>
+         <div class="col-sm-2" style="padding-top:10px;" >mm</div>
     </div>
 
     <div class="row form-group form-group-bordered">
@@ -85,7 +85,7 @@
         <div class="col-sm-3">{{ form_widget(form.largeur, {'attr' :
             {'class':'form-control'} }) }}
         </div>
-         <div class="col-sm-2">mm</div>
+         <div class="col-sm-2" style="padding-top:10px;" >mm</div>
     </div>
 
     <div class="row form-group form-group-bordered">
@@ -94,7 +94,7 @@
         <div class="col-sm-3">{{ form_widget(form.epaiss, {'attr' :
             {'class':'form-control'} }) }}
         </div>
-         <div class="col-sm-2">mm</div>
+         <div class="col-sm-2" style="padding-top:10px;" >mm</div>
     </div>
 
     <div class="row form-group form-group-bordered">

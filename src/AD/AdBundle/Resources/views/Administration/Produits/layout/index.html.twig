@@ -11,9 +11,10 @@
                 <th>Nom</th>
                 <th>Prix HT</th>
                 <th>Prix TTC</th>
-                <th>Disponible</th>
+                <th>Dispo</th>
                 <th>Stock réel</th>
                 <th>Popularité</th>
+                <th>Promo en cours</th>
                 <th >Voir</th>
                 <th >Modifier</th>
                 <th >Avis</th>
@@ -30,6 +31,15 @@
                 <td>{{ entity.disponible }}</td>
                 <td>{{ entity.stockreel }}</td>
                 <td>{{ entity.popularite }}</td>
+                <td>
+                    {% if entity.promoProd != null %} 
+                        {% for promo in entity.promoProd %}
+                            {% if promo.datedeb is defined and promo.datedeb <= now and promo.datefin >= now and promo.nom is defined  %}
+                                <span class="promomini">{{ promo.nom }}  </span>                               
+                            {% endif %}
+                        {% endfor %}                                   
+                    {% endif %} 
+                </td>
                 <td>
                         <a href="{{ path('adminProduits_show', { 'id': entity.id }) }}" title="voir le produit"><i class="glyphicon glyphicon-eye-open"></i></a>
                 </td>

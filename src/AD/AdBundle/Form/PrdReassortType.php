@@ -49,7 +49,7 @@ class PrdReassortType extends AbstractType
 				->add('ajust', TextType::class, array('label'=>false, 'attr'=> array('class'=>'form-control')))
             	;
 	}
-    public function getName()
+    public function getBlockPrefix()
       {
           return 'ad_adbundle_prdreassort'; // Syntaxe particulière : minuscules et underscores
       }

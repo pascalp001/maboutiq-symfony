@@ -4,7 +4,7 @@ namespace AD\AdBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class TarifType extends AbstractType
@@ -50,7 +50,7 @@ class TarifType extends AbstractType
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'DV\EcomBundle\Entity\Tarif'
@@ -60,7 +60,7 @@ class TarifType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function  getBlockPrefix()
     {
         return 'ad_adbundle_tarif';
     }

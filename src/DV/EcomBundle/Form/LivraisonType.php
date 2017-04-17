@@ -21,7 +21,7 @@ class LivraisonType extends AbstractType
             ;
 
 	}
-    public function getName()
+    public function getBlockPrefix()
       {
           return 'ecom_ecombundle_livraison'; // Syntaxe particulière : minuscules et underscores
       }

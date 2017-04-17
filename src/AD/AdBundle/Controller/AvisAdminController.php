@@ -150,7 +150,7 @@ class AvisAdminController extends Controller
     */
     private function createEditForm(Avis $avis)
     {
-        $form = $this->createForm(new AvisCompletType(), $avis, array(
+        $form = $this->createForm(AvisCompletType::class, $avis, array(
             'action' => $this->generateUrl('adminAvis_update', array('id' => $avis->getId())),
             'method' => 'PUT',
         ));

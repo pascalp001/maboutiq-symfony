@@ -62,7 +62,7 @@ class FournisseursAdminController extends Controller
      */
     private function createCreateForm(Fournisseurs $entity)
     {
-        $form = $this->createForm(new FournisseursType(), $entity, array(
+        $form = $this->createForm(FournisseursType::class, $entity, array(
             'action' => $this->generateUrl('adminFournisseurs_create'),
             'method' => 'POST',
         ));
@@ -142,7 +142,7 @@ class FournisseursAdminController extends Controller
     */
     private function createEditForm(Fournisseurs $entity)
     {
-        $form = $this->createForm(new FournisseursType(), $entity, array(
+        $form = $this->createForm(FournisseursType::class, $entity, array(
             'action' => $this->generateUrl('adminFournisseurs_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));

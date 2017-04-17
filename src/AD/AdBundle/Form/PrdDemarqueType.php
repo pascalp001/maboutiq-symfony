@@ -23,7 +23,7 @@ class PrdDemarqueType extends AbstractType
 				->add('inventaire', TextType::class, array('label'=>false, 'attr'=> array('class'=>'form-control', 'style'=>'width:70px; cursor:pointer')))
             	;
 	}
-    public function getName()
+    public function getBlockPrefix()
       {
           return 'ad_adbundle_prddemarque'; // Syntaxe particulière : minuscules et underscores
       }

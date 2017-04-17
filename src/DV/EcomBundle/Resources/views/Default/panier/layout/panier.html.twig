@@ -9,7 +9,7 @@
 {% endfor %}
 {% block body %}
 <div class="container">
-    <div class="row">
+    <div class="row barremenupanier">
         <div class="col-xs-1">
             <button type="button" class="btn btn-default navbar-nontoggle toggle-sidebar">
 
@@ -23,7 +23,7 @@
     </div>
     <div class="wedge5"> &nbsp; </div>   
     <div class="row" id="row-main">
-        <div class="col-md-2 " id="sidebar">  
+        <div class="col-xs-2 " id="sidebar">  
             {% include '::modulesBase/nav.html.twig' %}
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %}  
@@ -31,7 +31,7 @@
                 {% include 'UtilisateursBundle:Default:modulesUsed/utilisateurs.html.twig' %}  
             {% endif %}
         </div> 
-        <div class="col-md-12" id="content"> 
+        <div class="col-xs-12" id="content"> 
             {% for flashMessage in app.session.flashbag.get('success') %}
                 <div class="alert alert-success">{{flashMessage}}</div>
             {% endfor %}
@@ -86,11 +86,11 @@
                                 <div style="visibility:hidden; width:1px; height:1px;line-height: 1px;">{{panier[produit.id]['qte']}}</div><div id="prixn{{i}}" style="visibility:hidden; width:1px; height:1px;line-height: 1px;">{{produit.prix}}</div>
                             {% if produit.promoProd != null %} 
                                 {% for promo in produit.promoProd %}
-                                    {% if promo.datedeb is defined and promo.datedeb <= now and promo.datefin >= now and promo.codepromo is defined %}
+                                    {% if promo.datedeb is defined and promo.datedeb <= now and promo.datefin >= now and promo.nom is defined %}
                                         <div id="apartirde{{i}}" style="visibility:hidden; width:1px; height:1px;line-height: 1px;">{{promo.apartirdeqte}}</div>
                                         
                                        {% if  panier[produit.id]['qte'] >= promo.apartirdeqte %}
-                                            <span class="h6">{{promo.codepromo}} :</span>
+                                            <span class="h6">{{promo.nom}} :</span>
                                             {% if promo.remisePourcent > 0 %} 
                                                 {% set prix = (produit.prix * (100 - promo.remisepourcent)/100)|number_format(2)  %}
                                                 {{ prix|tva(produit.tva.multiplicate) |number_format(2) }}
@@ -152,7 +152,7 @@
         	<a href="{{path ('adresses')}}" class="btn btn-success pull-right">Valider mon panier</a>
             {% endif %}
         	<a href="{{path ('produits')}}" class="btn btn-primary ">Continuer mes achats</a>
-            {{  dump(panier) }}
+           
         </div>
     </div>
 </div>

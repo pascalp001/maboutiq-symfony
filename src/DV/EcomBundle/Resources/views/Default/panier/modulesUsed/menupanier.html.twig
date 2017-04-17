@@ -3,13 +3,13 @@
       <ul id="order_step" class="step clearfix">
 
         <!-- 01: Récapitulatif-->
-        <li class="step_current first"> <span><em>01.</em>Récapitulatif</span> </li>
+        <li class="step_current first"> <span class="h6b"><em>01.</em>Récapitulatif</span> </li>
 
         <!-- 02: Connexion-->
         {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
         <a  title="Se connecter"  href="{{ path('fos_user_security_login') }}" ><li class="step_todo second"  > <span><em>02.</em>Connexion</span> </li></a>
         {% else %}
-        <li class="step_current second decal-G" > <span><em>02.</em>Connexion</span> </li>
+        <li class="step_current second decal-G" > <span class="h6b"><em>02.</em>Connexion</span> </li>
         {% endif %}
 
         <!-- 03: Adresse-->

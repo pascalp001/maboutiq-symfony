@@ -1,37 +1,37 @@
 {% extends '::layout/layoutAdmin.html.twig' %}
 
 {% block body -%}
-    <h1>Modification d'un fournisseur </h1>
+    <h1>Modification d'un fournisseur </h1><br/>
     {{ form_start(edit_form) }}
-	<div class="row">
+	<div class="row form-group form-group-bordered">
     {{ form_row(edit_form.nom) }}
 	</div>
-	<div class="row">
+	<div class="row form-group form-group-bordered">
     {{ form_row(edit_form.adresse) }}
 	</div>
-	<div class="row">
+	<div class="row form-group form-group-bordered">
     {{ form_row(edit_form.cp) }}
 	</div>
-	<div class="row">
+	<div class="row form-group form-group-bordered">
     {{ form_row(edit_form.ville)}}
 	</div>
-	<div class="row">
+	<div class="row form-group form-group-bordered">
     {{ form_row(edit_form.pays) }}
 	</div>
-	<div class="row">
+	<div class="row form-group form-group-bordered">
     {{ form_row(edit_form.telephone) }}
 	</div>
-	<div class="row">
+	<div class="row form-group form-group-bordered">
     {{ form_row(edit_form.fax) }}
 	</div>
-	<div class="row">
+	<div class="row form-group form-group-bordered">
     {{ form_row(edit_form.email) }}
 	</div>
 	Contact :
-	<div class="row">
+	<div class="row form-group form-group-bordered">
     {{ form_row(edit_form.commercial) }}
 	</div>
-	<div class="row">
+	<div class="row form-group form-group-bordered">
     {{ form_row(edit_form.tel_commerc) }}
 	</div>
 	<br/>

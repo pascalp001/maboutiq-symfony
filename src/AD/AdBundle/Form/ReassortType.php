@@ -18,7 +18,7 @@ class ReassortType extends AbstractType
 		$builder->add('prdReassort', CollectionType::class, array('entry_type' => PrdReassortType ::class))
 				->add('submit', SubmitType::class, array('label'=>'Valider', 'attr'=> array('class'=>'form-control btn btn-info', 'style'=>'color:#132; line-height: 25px; font-size: 20px; width: 250px; min-height:40px;')))	;
 	}
-    public function getName()
+    public function  getBlockPrefix()
       {
           return 'ad_adbundle_reassort'; 
       }

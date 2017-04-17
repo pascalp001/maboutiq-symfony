@@ -61,7 +61,7 @@ class TarifAdminController extends Controller
      */
     private function createCreateForm(Tarif $entity)
     {
-        $form = $this->createForm(new TarifType(), $entity);
+        $form = $this->createForm(TarifType::class, $entity);
         $form->add('submit', 'submit', array('label' => 'Enregistrer ce nouveau tarif', 'attr'=>array('class'=>'btn btn-info')));
         
         return $form;
@@ -116,7 +116,7 @@ class TarifAdminController extends Controller
     */
     private function createEditForm(Tarif $entity)
     {
-        $form = $this->createForm(new TarifType(), $entity);
+        $form = $this->createForm(TarifType::class, $entity);
         $form->add('submit', 'submit', array('label' => 'Modifier', 'attr'=>array('class'=>'btn btn-info')));
 
         return $form;

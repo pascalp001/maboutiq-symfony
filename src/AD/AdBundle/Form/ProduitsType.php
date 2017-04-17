@@ -4,13 +4,15 @@ namespace AD\AdBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+//use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use AD\AdBundle\Form\MediaType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class ProduitsType extends AbstractType
 {
@@ -27,7 +29,7 @@ class ProduitsType extends AbstractType
             ->add('categorie',EntityType::class,array( 'label'=>'Catégorie' ,'class'=> 'DV\EcomBundle\Entity\Categories', 'attr'=>array('style' =>'margin-top:5px; margin-bottom: 3px;'), 
                  'query_builder' => function (\DV\EcomBundle\Repository\CategoriesRepository $rep) {
                         return $rep->createQueryBuilder('ac')->orderBy('ac.nom', 'DESC'); },       
-                     'expanded' => false, 'multiple' => false, 'empty_value'=>'-Choisissez-' ))
+                     'expanded' => false, 'multiple' => false, 'placeholder'=>'-Choisissez-' ))
             //->add('image', 'collection', array('type'=> new MediaType(), 'allow_add'=>false, 'allow_delete'=>true))
             ->add('fournisseur',EntityType::class,array( 'label'=>'Fournisseur' ,'class'=> 'AD\AdBundle\Entity\Fournisseurs', 'attr'=>array('style' =>'margin-top:5px; margin-bottom: 3px;'), 
                 'query_builder' => function (\AD\AdBundle\Repository\FournisseursRepository $rep) {
@@ -42,8 +44,8 @@ class ProduitsType extends AbstractType
             ->add('taille', null, array('required' => false, 'attr'=>array('style' =>'margin-top:5px; margin-bottom: 3px;')))
             ->add('largeur', null, array('required' => false, 'attr'=>array('style' =>'margin-top:5px; margin-bottom: 3px;')))
             ->add('epaiss', null, array('label'=>'Epaisseur' ,'required' => false, 'attr'=>array('style' =>'margin-top:5px; margin-bottom: 3px;')))
-            ->add('disponible', TextType::class, array('empty_data' => '1', 'attr'=>array('style' =>'margin-top:5px; margin-bottom: 3px;')))
-            ->add('stockreel', NumberType::class, array('label'=>'Stock réel' ,'empty_data' => '1', 'attr'=>array('style' =>'margin-top:5px; margin-bottom: 3px;')))            
+            ->add('disponible', IntegerType::class, array('empty_data' => 1, 'attr'=>array('style' =>'margin-top:5px; margin-bottom: 3px;', 'max'=>1)))
+            ->add('stockreel', IntegerType::class, array('label'=>'Stock réel' ,'empty_data' => '1', 'attr'=>array('style' =>'margin-top:5px; margin-bottom: 3px;', 'min'=> 0)))            
             ->add('tva',EntityType::class, array( 'label'=>'Taux de TVA' ,'attr'=>array('style' =>'margin-top:5px; margin-bottom: 3px; '),
                 'class'=> 'DV\EcomBundle\Entity\Tva', 
                 'query_builder' => function (\DV\EcomBundle\Repository\TvaRepository $rep) {
@@ -59,7 +61,8 @@ class ProduitsType extends AbstractType
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    //public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'DV\EcomBundle\Entity\Produits'
@@ -69,7 +72,7 @@ class ProduitsType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'ad_adbundle_produits';
     }

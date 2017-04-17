@@ -1,11 +1,17 @@
 {% extends "::layout/layout.html.twig" %}
 {% block body %}
 <div class="container">
-        <div class="pull-center-top">{% render(controller('EcomBundle:Produits:recherche')) %}</div>    
-    <div class="row" >
-        <div><img src="{{ asset(vendeur.urlLogo2)}}"  style="min-width:100%; max-height: 400px;"  title="Accueil" alt="Image d'accueil" style="margin-top:-5px" ><div style="position:relative; top:-140px;left:0px;"><img src="{{ asset(vendeur.urlLogo1)}}"  style="max-height: 140px;"  title="Logo" alt="Logo"  ></div></div>
-
-    <div class="row" style="position:relative; top:-90px" >
+        <div class="pull-center-top">{% render(controller('EcomBundle:Produits:recherche')) %}</div>  
+    <div class="row imgCollapsed"> &nbsp;</div>  
+    <div class="row imgAccueil" >
+        <div  style="width:100%;">
+            <img src="{{ asset(vendeur.urlLogo2)}}"  style="width:100%; max-height: 400px;"  title="Accueil" alt="Image d'accueil" style="margin-top:-5px" >
+            <div style="position:relative; top:-140px;left:0px; width:20%">
+            <img src="{{ asset(vendeur.urlLogo1)}}"  style="width:100%; max-height: 140px;"  title="Logo" alt="Logo"  >
+            </div>
+        </div>
+    </div>
+    <div class="row listeActual"  >
     <ul>
     {% for ind in inds|sort() %}
         {% set i = table[ind] %}  
@@ -70,7 +76,7 @@
                     <h3 style="min-height:35px; font-weight:bold">{{i.titre}}<span class="smallf"> </h3><br/>
                     <div>
                         <div style="float:right; margin-leftt:5px;">
-                            <img src="{{ asset(i.prop1) }}" width="300px" alt="image {{ i.titre }}" title="{{i.titre}}"  >
+                            <img src="{{ asset(i.prop1) }}" class="imgArticle" width="300px" alt="image {{ i.titre }}" title="{{i.titre}}"  >
                             
                         </div>
                     </div>

@@ -3,7 +3,8 @@
 {% block body -%}
 
 <h1>Modification du tarif</h1>
-<form action="{{path('adminTarif_update', { 'id': entity.id} ) }}"method="POST" {{form_enctype(edit_form) }}  >
+{{ form_start(edit_form) }}
+<!--<form action="{{path('adminTarif_update', { 'id': entity.id} ) }}"method="POST" {{form_enctype(edit_form) }}  >-->
 
     <div class="row form-group form-group-bordered">
         <label class="col-sm-2 control-label" for="input">{{ form_label(edit_form.org) }} </label>
@@ -18,7 +19,7 @@
     </div>
     <div class="row form-group form-group-bordered">
         <label class="col-sm-2 control-label" for="input">{{ form_label(edit_form.img) }} </label>
-        <div class="col-sm-5">{{ form_widget(edit_form.img, {'attr' : {'class':'form-control','placeholder':'Nom donné au tarif' } }) }} </div>
+        <div class="col-sm-5">{{ form_widget(edit_form.img, {'attr' : {'class':'form-control','placeholder':'url vers image : img/****.jpg' } }) }} </div>
         {{ form_errors(edit_form.img)}}
     </div>
     <div class="row form-group form-group-bordered">
@@ -29,7 +30,7 @@
 
     <div class="row form-group form-group-bordered">
         <label class="col-sm-2 control-label" for="input">{{ form_label(edit_form.annee) }} </label>
-        <div class="col-sm-5">{{ form_widget(edit_form.annee, {'attr' : {'class':'form-control','placeholder':'2017' } }) }} </div>
+        <div class="col-sm-5">{{ form_widget(edit_form.annee, {'attr' : {'class':'form-control','placeholder':'exemple : 2017' } }) }} </div>
         {{ form_errors(edit_form.annee)}}
     </div>
 
@@ -164,7 +165,7 @@
     <div class="col-sm-4">
             {{ form_widget(edit_form.submit)}}                 
     </div>
-</form>    
+{{ form_end(edit_form)}}   
     <div class="col-sm-4">  
            {{ form(delete_form) }}   
 

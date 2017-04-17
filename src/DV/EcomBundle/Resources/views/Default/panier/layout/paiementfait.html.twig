@@ -18,11 +18,11 @@
         </div>    
     </div>
 	<div class="row" id="row-main">
-        <div class="col-md-2 "  id="sidebar">
+        <div class="col-xs-2 "  id="sidebar">
         {% include '::modulesBase/nav.html.twig' %}   
         {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %} 
         </div> 
-		<div class="col-md-12" id="content">
+		<div class="col-xs-12" id="content">
             {% for flashMessage in app.session.flashbag.get('success') %}
                 <div class="alert alert-success">
                     {{ flashMessage }}

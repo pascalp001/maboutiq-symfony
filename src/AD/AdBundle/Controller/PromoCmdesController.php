@@ -62,7 +62,7 @@ class PromoCmdesController extends Controller
      */
     private function createCreateForm(PromoCmdes $entity)
     {
-        $form = $this->createForm(new PromoCmdesType(), $entity, array(
+        $form = $this->createForm(PromoCmdesType::class, $entity, array(
             'action' => $this->generateUrl('adminPromoCmdes_create'),
             'method' => 'POST',
         ));
@@ -142,7 +142,7 @@ class PromoCmdesController extends Controller
     */
     private function createEditForm(PromoCmdes $entity)
     {
-        $form = $this->createForm(new PromoCmdesType(), $entity, array(
+        $form = $this->createForm(PromoCmdesType::class, $entity, array(
             'action' => $this->generateUrl('adminPromoCmdes_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));

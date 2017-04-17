@@ -1,48 +1,49 @@
 {% extends "::layout/layoutAdmin.html.twig" %}
 
 {% block body -%}
-    <h1>Création d'une nouvelle Promo sur un produit</h1>
+    <h1>Création d'une nouvelle Promo sur un produit</h1><br/>
     {{ form_start(form)}}
-    <div class="row">
+    <div class="row form-group form-group-bordered">
     {{ form_row(form.nom) }}
 	</div>
-    <div class="row">
+    <div class="row form-group form-group-bordered">
     {{ form_row(form.produit) }}
 	</div>
-    <div class="row">
+    <div class="row form-group form-group-bordered">
     {{ form_row(form.datedeb) }}
     </div>
-    <div class="row">
+    <div class="row form-group form-group-bordered">
     {{ form_row(form.datefin) }}
     </div>
-    <div class="row">
+    <div class="row form-group form-group-bordered">
     {{ form_row(form.remisePourcent) }}%
     </div>
-    <div class="row">
+    <div class="row form-group form-group-bordered">
     {{ form_row(form.remiseEuro) }}€
     </div>
-    <div class="row">
+    <div class="row form-group form-group-bordered">
     {{ form_row(form.apartirdeqte) }}
     </div>
-    <div class="row">
+    <div class="row form-group form-group-bordered">
     {{ form_row(form.codepromo) }}
     </div>
-    <div class="row">{{ form_label(form.affichePub)}}
+    <div class="row form-group form-group-bordered">
+        {{ form_label(form.affichePub)}}
     	{% for choix in form.affichePub %}
-    		<div style='min-width:30px; display:inline-block;'>{{ form_widget(choix) }}</div>
+    		<div style='min-width:30px; display:inline-block;'>{% if loop.index == 2 %} {{ form_widget(choix, {'attr':{'checked':true}}) }}{% else %}{{ form_widget(choix) }} {% endif %}</div>
     		<div style='min-width:70px; display:inline-block;'>{{ form_label(choix) }}</div>
 		{% endfor %}
 	</div>
-    <div class="row">
+    <div class="row form-group form-group-bordered">
     {{ form_row(form.articlePub) }}
 	</div>
-    <div class="row">
+    <div class="row form-group form-group-bordered">
     {{ form_row(form.imagePub) }}
 	</div>
-    <div class="row">
+    <div class="row form-group form-group-bordered">
     {{ form_row(form.bandeauPub) }}
 	</div>
-    <div class="row">   
+    <div class="row form-group ">  
         <div class="col-xs-offset-1 col-xs-2">
 	    	<a href="{{ path('adminPromoProds') }}">
 	           <button class="btn btn-greyish"> Retour</button>

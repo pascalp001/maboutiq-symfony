@@ -18,13 +18,14 @@ class DemarqueType extends AbstractType
 		$builder->add('prdDemarque', CollectionType::class, array('entry_type' => PrdDemarqueType ::class))
 				->add('submit', SubmitType::class, array('label'=>'Valider', 'attr'=> array('class'=>'form-control btn btn-info', 'style'=>'color:#132; line-height: 25px; font-size: 20px; width: 250px; min-height:40px;')))	;
 	}
-    public function getName()
-      {
-          return 'ad_adbundle_demarque'; 
-      }
-    public function configureOptions(OptionsResolver $resolver)
+  public function getBlockPrefix()
     {
-        $resolver->setDefaults(array('data_class' => Demarque::class,));
+        return 'ad_adbundle_demarque'; 
     }
+    
+  public function configureOptions(OptionsResolver $resolver)
+  {
+      $resolver->setDefaults(array('data_class' => Demarque::class,));
+  }
 }
 ?>

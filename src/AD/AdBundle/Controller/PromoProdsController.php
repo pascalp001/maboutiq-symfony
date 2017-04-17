@@ -38,7 +38,7 @@ class PromoProdsController extends Controller
     {
         $entity = new PromoProds();
         $entity->setDatedeb(new \Datetime())
-                ->setArticlePub('1');
+                ->setAffichePub('1');
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -65,7 +65,7 @@ class PromoProdsController extends Controller
      */
     private function createCreateForm(PromoProds $entity)
     {
-        $form = $this->createForm(new PromoProdsType(), $entity, array(
+        $form = $this->createForm(PromoProdsType::class, $entity, array(
             'action' => $this->generateUrl('adminPromoProds_create'),
             'method' => 'POST',
         ));
@@ -145,7 +145,7 @@ class PromoProdsController extends Controller
     */
     private function createEditForm(PromoProds $entity)
     {
-        $form = $this->createForm(new PromoProdsType(), $entity, array(
+        $form = $this->createForm( PromoProdsType::class, $entity, array(
             'action' => $this->generateUrl('adminPromoProds_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));

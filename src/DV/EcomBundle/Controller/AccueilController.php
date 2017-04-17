@@ -24,16 +24,13 @@ class AccueilController extends Controller
         while($i < $a+$p)
         {
             for( $pi=0; $pi<$p; $pi++)
-            //foreach($promoProds as $promoProd)
             {
                $table[$ind[$i] ] = $promoProds[$pi];
-               // $promoProd['ind']=$ind[$i];
                $i++;
             }
-            foreach($articles as $article)
+
             for( $ai=0; $ai<$a; $ai++)
             {
-                //$id = $article->getId()+$p;
                 $table[$ind[$i] ] = $articles[$ai];
                 $i++;
             }

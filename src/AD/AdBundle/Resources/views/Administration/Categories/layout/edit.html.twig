@@ -1,16 +1,33 @@
 {% extends '::layout/layoutAdmin.html.twig' %}
 
 {% block body -%}
-    <h1>Categories edit</h1>
+    <h1>Modification d'une categorie</h1><br/>
+     {{ form_start(edit_form)}}
+    <div class="row form-group form-group-bordered">
+    {{ form_row(edit_form.nom) }}
+	</div>
+    <div class="row form-group form-group-bordered">
+        <label class="col-sm-2 control-label" for="input">{{
+            form_label(edit_form.image) }}</label>
+        <div class="col-sm-8">{{ form_widget(edit_form.image, {'attr' :
+            {'class':'form-group' }}) }}</div>
+    </div>
+	<br/>
 
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
-    <li>
+<div class="row" >
+    <div class="col-sm-2">
         <a href="{{ path('adminCategories') }}">
-            Back to the list
+            <button type="button" class="btn btn-greyish">Retour</button>           
         </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    </div>{{ form_widget(edit_form._token)}}
+    <div class="col-sm-3">        
+        {{ form_widget(edit_form.submit )}}
+        {{ form_end(edit_form)}} 
+    </div>
+
+    <div class="col-sm-2">  
+            {{ form(delete_form) }}   
+    </div>
+</div>
+
 {% endblock %}

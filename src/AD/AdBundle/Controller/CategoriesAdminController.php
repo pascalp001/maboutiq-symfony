@@ -62,12 +62,12 @@ class CategoriesAdminController extends Controller
      */
     private function createCreateForm(Categories $entity)
     {
-        $form = $this->createForm(new CategoriesType(), $entity, array(
+        $form = $this->createForm(CategoriesType::class, $entity, array(
             'action' => $this->generateUrl('adminCategories_create'),
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Enregistrer cette catégorie', 'attr'=>array('class'=>'btn btn-info')));
 
         return $form;
     }
@@ -142,12 +142,12 @@ class CategoriesAdminController extends Controller
     */
     private function createEditForm(Categories $entity)
     {
-        $form = $this->createForm(new CategoriesType(), $entity, array(
+        $form = $this->createForm(CategoriesType::class, $entity, array(
             'action' => $this->generateUrl('adminCategories_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Modifier la catégorie', 'attr'=>array('class'=>'btn btn-info')));
 
         return $form;
     }
@@ -217,7 +217,7 @@ class CategoriesAdminController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('adminCategories_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Supprimer'))
+            ->add('submit', 'submit', array('label' => 'Supprimer', 'attr'=>array('class'=>'btn btn-warning')))
             ->getForm()
         ;
     }

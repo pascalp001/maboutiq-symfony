@@ -1,6 +1,7 @@
-<ul class="nav navbar-nav" >
-        <li class=" glyphicon glyphicon-shopping-cart"> PANIER:&nbsp;</li>
-        <li class="">
+<div class="row menuPanier" >
+        <div class=" col-xs-1 glyphicon glyphicon-shopping-cart" > </div>
+        <div class=" col-xs-3">PANIER:&nbsp;</div>
+        <div class="col-xs-7">
             {% if articles == 0 %} 
                 Aucun article 
             {% elseif articles == 1 %} 
@@ -8,9 +9,9 @@
             {% else %}
              {{articles}} articles  &nbsp;
             {% endif %}
-        </li>
+        </div>
 
-        <li class="panier-eye-cont" ><a href="{{path('panier') }}" class="glyphicon glyphicon-eye-open btn-eye panier-eye" title="voir le panier" ></a> </li>
+        <div class="col-xs-1 panier-eye-cont" ><a href="{{path('panier') }}" class="glyphicon glyphicon-eye-open btn-eye panier-eye" title="voir le panier" ></a> </div>
 
     
-</ul>
+</div>

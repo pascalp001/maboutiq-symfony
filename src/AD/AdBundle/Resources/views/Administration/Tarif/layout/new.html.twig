@@ -2,8 +2,9 @@
 
 {% block body -%}
 
-<h1>Création d'un nouveau tarif</h1>
-<form action="{{path('adminTarif_create', { 'id': entity.id} ) }}" method="POST" {{form_enctype(form) }}  >
+<h1>Création d'un nouveau tarif</h1><br/>
+   {{ form_start(form) }}
+<!--<form action="{{path('adminTarif_create', { 'id': entity.id} ) }}" method="POST" {{form_enctype(form) }}  >-->
 	
 	<div class="row form-group form-group-bordered">
         <label class="col-sm-2 control-label" for="input">{{ form_label(form.org) }} </label>
@@ -18,7 +19,7 @@
     </div>
     <div class="row form-group form-group-bordered">
         <label class="col-sm-2 control-label" for="input">{{ form_label(form.img) }} </label>
-        <div class="col-sm-5">{{ form_widget(form.img, {'attr' : {'class':'form-control','placeholder':'Nom donné au tarif' } }) }} </div>
+        <div class="col-sm-5">{{ form_widget(form.img, {'attr' : {'class':'form-control','placeholder':'url vers image : img/****.jpg' } }) }} </div>
         {{ form_errors(form.img)}}
     </div>
     <div class="row form-group form-group-bordered">
@@ -29,7 +30,7 @@
 
 	<div class="row form-group form-group-bordered">
         <label class="col-sm-2 control-label" for="input">{{ form_label(form.annee) }} </label>
-        <div class="col-sm-5">{{ form_widget(form.annee, {'attr' : {'class':'form-control','placeholder':'2017' } }) }} </div>
+        <div class="col-sm-5">{{ form_widget(form.annee, {'attr' : {'class':'form-control','placeholder':'exemple : 2017' } }) }} </div>
         {{ form_errors(form.annee)}}
     </div>
 
@@ -152,20 +153,20 @@
         <div class="col-sm-3">{{ form_widget(form.t10, {'attr' : {'class':'form-control','placeholder':'Prix en €', 'value':'888888.88' } }) }} </div>
         <div class="col-sm-1">€ </div>
     </div>
-    {{ form_widget(form.submit)}}
-    {{ form_widget(form._token)}}
-</form> 
-<div class="row" >
-    <div class="col-sm-4">
-        <a href="{{ path('adminTarif') }}">
-            <button type="button" class="btn btn-greyish">Retour</button>           
-        </a>
-    </div>
-    <!--div class="col-sm-4">
-            <button type="submit" class="btn btn-info">Enregistrer ce nouveau tarif</button>                   
-    </div-->
-   
 
-</div>
+    <br/>
+    <div class="row form-group ">  
+        <div class="col-xs-offset-1 col-xs-2">
+            <a href="{{ path('adminTarif') }}">
+               <button class="btn btn-greyish"> Retour</button>
+            </a>
+        </div>
+        <div class="col-xs-offset-1 col-xs-2">
+            {{ form_widget(form.submit) }}
+        </div>
+    </div>  {{ form_widget(form._token)}}
+    
+    {{ form_end(form)}} 
+
 
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends '::layout/layoutAdmin.html.twig' %}
 
-{% block body -%}
+{% block body %}
     <h1>Cadencier et réassort</h1>
 
         {{ form_start(form) }}
@@ -79,7 +79,7 @@
         {{ form_widget(form.submit)}}
         </div>
     </div>
-    <div style="visibility: hidden;">
+    <div style="visibility: hidden; max-height:1px;line-height:1%;">
         {{ form_end(form) }}
     </div>
         <br/>

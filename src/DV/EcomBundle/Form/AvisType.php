@@ -17,7 +17,7 @@ class AvisType extends AbstractType
             	->getForm();
             	;
 	}
-    public function getName()
+    public function getBlockPrefix()
       {
           return 'dv_ecombundle_avis'; // Syntaxe particulière : minuscules et underscores
       }

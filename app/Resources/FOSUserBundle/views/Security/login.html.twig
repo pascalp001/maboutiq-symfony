@@ -38,6 +38,7 @@
 						    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
 						    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
 							-->
+                            <input type="hidden" name="_target_path" value="{{ app.session.get("_security.main.target_path") }}">
 						</div>
 					    <div class="row">
 						    <input type="submit" class="btn btn-primary col-sm-offset-3 col-sm-6" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />

@@ -19,7 +19,7 @@ class AvisCompletType extends AbstractType
             	->getForm();
             	;
 	}
-    public function getName()
+    public function getBlockPrefix()
       {
           return 'ad_adbundle_aviscomplet'; // Syntaxe particulière : minuscules et underscores
       }

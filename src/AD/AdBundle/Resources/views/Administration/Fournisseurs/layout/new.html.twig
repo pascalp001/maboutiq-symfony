@@ -1,18 +1,52 @@
 {% extends '::layout/layoutAdmin.html.twig' %}
 
 {% block body -%}
-    <h1>Nouveau fournisseur</h1>
-
-    {{ form(form) }}
-    <div class="row form-group ">
-        <div class="col-sm-4">
+    <h1>Nouveau fournisseur</h1><br/>
+    {{ form_start(form) }}
+    <div class="row form-group form-group-bordered">
+    {{ form_row(form.nom) }}
+    </div>
+    <div class="row form-group form-group-bordered">
+    {{ form_row(form.adresse) }}
+    </div>
+    <div class="row form-group form-group-bordered">
+    {{ form_row(form.cp) }}
+    </div>
+    <div class="row form-group form-group-bordered">
+    {{ form_row(form.ville)}}
+    </div>
+    <div class="row form-group form-group-bordered">
+    {{ form_row(form.pays) }}
+    </div>
+    <div class="row form-group form-group-bordered">
+    {{ form_row(form.telephone) }}
+    </div>
+    <div class="row form-group form-group-bordered">
+    {{ form_row(form.fax) }}
+    </div>
+    <div class="row form-group form-group-bordered">
+    {{ form_row(form.email) }}
+    </div>
+    Contact :
+    <div class="row form-group form-group-bordered">
+    {{ form_row(form.commercial) }}
+    </div>
+    <div class="row form-group form-group-bordered">
+    {{ form_row(form.tel_commerc) }}
+    </div>
+    <br/>
+    <div class="row form-group ">  
+        <div class="col-xs-offset-1 col-xs-2">
             <a href="{{ path('adminFournisseurs') }}">
-                <button type="button" class="btn btn-greyish">Retour</button>           
+               <button class="btn btn-greyish"> Retour</button>
             </a>
         </div>
-        <div class="col-sm-4">        
-            {{ form_widget(form.submit )}}
+        <div class="col-xs-offset-1 col-xs-2">
+            {{ form_widget(form.submit) }}
         </div>
-    </div>
+    </div>  {{ form_widget(form._token)}}
+    
+    {{ form_end(form)}} 
+
 
 {% endblock %}

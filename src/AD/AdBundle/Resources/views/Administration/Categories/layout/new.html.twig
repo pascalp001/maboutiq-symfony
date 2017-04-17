@@ -1,15 +1,29 @@
 {% extends '::layout/layoutAdmin.html.twig' %}
 
 {% block body -%}
-    <h1>Categories creation</h1>
+    <h1>Création d'une nouvelle categorie</h1><br/>
+     {{ form_start(form)}}
+    <div class="row form-group form-group-bordered">
+    {{ form_row(form.nom) }}
+	</div>
+    <div class="row form-group form-group-bordered">
+        <label class="col-sm-2 control-label" for="input">{{
+            form_label(form.image) }}</label>
+        <div class="col-sm-8">{{ form_widget(form.image, {'attr' :
+            {'class':'form-group' }}) }}</div>
+    </div>
+	<br/>
+    <div class="row form-group ">  
+        <div class="col-xs-offset-1 col-xs-2">
+	    	<a href="{{ path('adminCategories') }}">
+	           <button class="btn btn-greyish"> Retour</button>
+	        </a>
+	    </div>
+    	<div class="col-xs-offset-1 col-xs-2">
+    		{{ form_widget(form.submit) }}
+    	</div>
+	</div>	{{ form_widget(form._token)}}
+    
+    {{ form_end(form)}} 
 
-    {{ form(form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('adminCategories') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
 {% endblock %}

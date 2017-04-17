@@ -211,7 +211,7 @@ class CommandesAdminController extends Controller
      */
     private function createCreateForm(Commandes $entity)
     {
-        $form = $this->createForm(new CommandesType(), $entity, array(
+        $form = $this->createForm(CommandesType::class, $entity, array(
             'action' => $this->generateUrl('adminCommandes_create'),
             'method' => 'POST',
         ));
@@ -291,7 +291,7 @@ class CommandesAdminController extends Controller
     */
     private function createEditForm(Commandes $entity)
     {
-        $form = $this->createForm(new CommandesType(), $entity, array(
+        $form = $this->createForm(CommandesType::class, $entity, array(
             'action' => $this->generateUrl('adminCommandes_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
