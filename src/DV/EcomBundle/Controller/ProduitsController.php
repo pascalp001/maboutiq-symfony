@@ -73,6 +73,7 @@ class ProduitsController extends Controller
         if($session->has('panier')) 
             {$panier = $session->get('panier');}
         else{$panier=false;}
+        
         return $this->render('EcomBundle:Default:produits/layout/presentation.html.twig', array('produit'=>$produit, 'panier'=>$panier, 'promoProd'=>$promoProd) );
     }
 

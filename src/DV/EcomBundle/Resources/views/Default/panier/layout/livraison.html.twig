@@ -136,8 +136,7 @@
       <a href="{{path ('panier')}}" class="btn btn-greyish ">Retour vers le panier</a>
         </div>
         <div class=" col-sm-offset-3 col-sm-3 ">
-          <form action="{{path('frlivraison')}}" method="post">
-            
+          {{ form_start(form, {'action': path('frlivraison')}) }}
             <input type="hidden" id="cb_ID" name="" value="" >
             {{ form(form) }}
             {# { form_widget(form.modport) }}
@@ -149,7 +148,7 @@
             {{ form_widget(form.ville) }}<!--input type="hidden" id="cb_Ville" name="" value="" -->  
             {{ form_widget(form.submit) #} 
             
-          </form>
+          {{ form_end(form) }}
         </div>
       <br/>
       </div> 

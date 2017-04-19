@@ -13,12 +13,16 @@
                     <div class="col-sm-4"><h2>Adresses</h2>
                         {% if utilisateur.adresses|length != 0 %}
                             <form action="{{path('frlivraison')}}" method="POST" >
-
+                            {#{ form_start(formA, {'action':path('frlivraison')})}#}
                                 <h4>Adresse de facturation</h4>
                                 {% for adresse in utilisateur.adresses %}
                                     {% if adresse.fact %}
                                     <label class="radio">
-                                        <input type="radio" name="facturation" value="{{adresse.id}}" {% if loop.index0 == 0 %}checked="checked" {% endif %} >
+                                        {#% if loop.index0 == 0 %}{{ form_widget(formA.facturation, {'attr':{'value': adresse.id ,'checked':true  } } ) }}
+                                        {% else %}
+                                        {{ form_widget(formA.facturation, {'attr':{'value': adresse.id } } ) }}
+                                        {% endif %#}
+                                        <input type="radio" name="facturation" value="{{adresse.id}}" {% if loop.index0 == 0 %}checked="checked" {% endif %}>
                                         {{adresse.adresse}}{{' '~adresse.cp}}{{' '~adresse.ville}}<a href="{{path('livraisonAdresseSuppr', {'id': adresse.id}) }}"><i class="glyphicon glyphicon-trash"></i></a>
                                         </br> {{adresse.prenom}} {{' '~adresse.nom}}
                                     </label>
@@ -31,6 +35,11 @@
                                 {% for adresse in utilisateur.adresses %}
                                     {% if adresse.livr %}
                                     <label class="radio">
+                                        {#% if loop.index0 == 0 %}
+                                        {{ form_widget(formA.livraison, {'attr':{'value': adresse.id ,'checked':true  } } ) }}
+                                        {% else %} 
+                                        {{ form_widget(formA.livraison, {'attr':{'value': adresse.id  } } ) }}  
+                                        {% endif %#}                                    
                                         <input type="radio" name="livraison" value="{{adresse.id}}" {% if loop.index0 == 0 %}checked="checked" {% endif %} >
                                         {{adresse.adresse}}{{' '~adresse.cp}}{{' '~adresse.ville}}<a href="{{path('livraisonAdresseSuppr', {'id': adresse.id}) }}"><i class="glyphicon glyphicon-trash"></i></a>
                                         </br> {{adresse.prenom}} {{' '~adresse.nom}}
@@ -39,8 +48,10 @@
                                 {% endfor %}
 
                                 </br></br>
+                                {#{ form_widget(formA.submit) }#}
                                 <button class="btn btn-primary" type="submit">Valider mes adresses <br/>de facturation et de livraison</button>
-                            </form>
+                            {#{form_end(formA)}#}
+                                </form>
                         {% else %} Pas d'adresse connue actuellement...
                         {% endif %}
                         <br/><br/>

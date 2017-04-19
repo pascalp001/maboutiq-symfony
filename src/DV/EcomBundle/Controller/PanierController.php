@@ -206,6 +206,9 @@ class PanierController extends Controller
                 return $this->redirect($this->generateUrl('adresses'));
             }
         }  
+        // Préparation du formulaire choix des adresses facturation et livraison :
+        
+
         //Envoi du formulaire 'ajouter une nouvelle adresse' à la vue :   
         return $this->render('EcomBundle:Default:panier/layout/adresses.html.twig', array('utilisateur'=>$utilisateur, 'form'=>$form->createView(), 'adresse', $adresse));
     }
