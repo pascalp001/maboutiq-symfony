@@ -1,8 +1,7 @@
 {% extends '::layout/layoutAdmin.html.twig' %}
 
 {% block body %}
-    <h1>Cadencier et réassort</h1>
-
+    <h1>Cadencier (jusqu'à {{moistxt}}) et réassort</h1>
         {{ form_start(form) }}
         <table class="table table-store records_list">
         <thead>
@@ -16,7 +15,7 @@
             <tr>
                 <th>Id</th>
                 <th class="bordVD">Nom</th>
-                {% for i in cad %}
+                {% for i in cad|sort() %}
                 <th>{{ cad[i]}}</th>
                 {% endfor %}
                 <th class="bordVGD">Popularité</th>
@@ -28,8 +27,11 @@
             </tr>
         </thead>
         <tbody>
-
+    {% for fournisseur in Fournisseurs %}
+        <tr ><td colspan="20">{{ fournisseur }}</td></tr>
         {% for form in form.prdReassort %}
+            {% if form.fournisseur.vars.value == fournisseur %} 
+
             <tr>
                 <td class="middle">{{form.id.vars.value}}</td>
                 <td class="bordVD middle">{{ form.nom.vars.value }}</td>
@@ -58,15 +60,34 @@
                     {% if form.cmdeV11.vars.value > 0 %} +<span style="color:green">{{ form.cmdeV11.vars.value}}</span> {% endif  %}</td>
                 <td class="middle">{{ form.cmdeP12.vars.value}} 
                     {% if form.cmdeV12.vars.value > 0 %} +<span style="color:green">{{ form.cmdeV12.vars.value}}</span> {% endif  %}</td>
-                <td class="bordVGD middle">{{ form.popularite.vars.value }}</td>                    
-                <td class="bordVG middle">{{ form.stockreel.vars.value }}</td>
+                <td class="bordVGD middle">{{ form.popularite.vars.value }}</td>    
+                               
+                <td class="bordVG middle" 
+                    {% if form.stockreel.vars.value == 0 %} style="background-color: red; color:yellow; font-weight:800; font-style: italic; "
+                    {% else %}   
+                        {% if form.stockreel.vars.value <= moyVtes[ form.id.vars.value ] %} style="color: #F40; font-weight:800; font-style: oblique;"
+                        {% endif %}
+                    {% endif %}>
+                    {{ form.stockreel.vars.value }}
+                </td>
+                
                 <td class="bordVD middle">{{form_widget(form.reassort)}}</td>                
-                <td class="bordVG middle">{{form.stockreel.vars.value - form.cmdeV.vars.value }}</td>
-                <td style="font-size:0.7em; vertical-align:middle">{{ form.stockvirtuel.vars.value }}</td>
+                <td class="bordVG middle"
+                    {% if form.stockreel.vars.value - form.cmdeV.vars.value  == 0 %} style="background-color: red; color:yellow; font-weight:800; font-style: italic; "
+                    {% else %}   
+                        {% if form.stockreel.vars.value - form.cmdeV.vars.value <= moyVtes[ form.id.vars.value ] %} style="color: #F40; font-weight:800; font-style: oblique;"
+                        {% endif %}
+                    {% endif %}>
+                    {{form.stockreel.vars.value - form.cmdeV.vars.value }}
+                </td>
+                <td style="font-size:0.7em; vertical-align:middle">
+                    {{ form.stockvirtuel.vars.value }}
+                </td>
                 <td>{{form_widget(form.ajust, {'value': form.stockreel.vars.value - form.cmdeV.vars.value - form.stockvirtuel.vars.value ,'attr':{'style':'width:40px; color:#132; line-height: 12px; font-size: 0.8em; cursor:default; background:#aaa;'}})}}</td> </td>
             </tr>
+            {% endif %}
         {% endfor %}
-
+    {% endfor %}
         </tbody>
     </table>
     <div class='row' >

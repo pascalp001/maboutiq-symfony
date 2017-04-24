@@ -22,74 +22,110 @@ use AD\AdBundle\Form\InventrType;
  */
 class StocksAdminController extends Controller
 {
-    public function reassortAction(Request $request)
+    private function cadencierMaker($v, $Produits)
     {
         $em = $this->getDoctrine()->getManager();
         // Extraction des commandes préparées et non préparées 
         // Crée les objets $CommandesV et $CommandesP :
-        $CommandesV = $em->getRepository('EcomBundle:Commandes')->findByPreparer('0');
-        $CommandesP = $em->getRepository('EcomBundle:Commandes')->findByPreparer('1');
-        $mois0 = (int)date('m');
-        $Reassort = new Reassort();
-       
+        $Commandes = $em->getRepository('EcomBundle:Commandes')->findByPreparer($v);
+
+        $cadencier = array(); //Tableau des commandes 
+
+        // Initialisation du tableau $cadencier[produit][mois] :
+        foreach($Produits as $Produit)
+        {   
+            $id=$Produit->getId();
+            $cmdes[$id] = 0;
+            for($i=1; $i<13; $i++ )
+            {
+                $cadencier[$id][$i] = 0;
+            }
+        }
+
+        // Création du tableau du cadencier pour les commandes passées:
+        foreach ($Commandes as $Commande) 
+        {   
+            // Extraction du mois de la commande :
+            $date = $Commande->getDate();  
+            $mois = (int)$date->format('m');
+
+            // Extraction des produits et quantités de la commande, cumul des quantités :            
+            $commande = $Commande->getCommande();
+            $produits = $commande['produit'];
+            foreach($produits as $id => $produit)
+            {
+                $qtePanier = $produit['quantite'];
+                $cadencier[$id][$mois] += $qtePanier;
+            }
+        }
+
+        return $cadencier;
+    }
+
+    private function moyVtes($mois0, $cadencierV, $cadencierP, $id)
+    {
+        // Détermination du flux moyen par produit :
+
+            $moy=0;$nm=0;
+            for($m = $mois0+1 ; $m<13 ; $m++)
+            {
+                if($moy==0){
+                    $moy=$cadencierP[$id][$m] +$cadencierV[$id][$m]; 
+                    if($moy!=0){$nm=1;}
+                }
+                else{
+                    $moy=$moy+$cadencierP[$id][$m] +$cadencierV[$id][$m];
+                    $nm++;
+                }                
+            }
+            for($m = 1 ; $m<$mois0 ; $m++)
+            {
+                if($moy==0){
+                    $moy=$cadencierP[$id][$m] +$cadencierV[$id][$m]; 
+                    if($moy!=0){$nm=1;}
+                }
+                else{
+                    $moy=$moy+$cadencierP[$id][$m] +$cadencierV[$id][$m];
+                    $nm++;
+                } 
+            }
+            $m=$mois0; $jours=max(12,(int)date('j')); $nbjours = cal_days_in_month(CAL_GREGORIAN, $mois0, (int)date('Y'));
+                $moy=$moy + ( $nbjours / $jours)*($cadencierP[$id][$m] + $cadencierV[$id][$m]) ;
+                $nm++;
+            //Calcul final :
+                $moy=round( $moy / $nm );
+          
+        return $moy;
+    }
+
+    public function reassortAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $mois0 = (int)date('m'); // = mois en cours
+        $tabMois = array('janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre');
+        $moistxt = $tabMois[$mois0-1];
+
+        $moy=array(); $nm=array();$cmdesV = array();
+
         // Extraction des produits :
         $Produits = $em->getRepository('EcomBundle:Produits')->findAll();
 
-        $cadencierV = array(); //Tableau des commandes simplement validées
-        $cadencierP = array(); //Tableau des commandes préparées (et livrées ou non)
-        $cmdesV = array();
+        $Reassort = new Reassort(); 
 
-        // Création du buildform global :
-        //$buildform = $this->createFormBuilder();
-        //$buildform->add(new ReassortType);
-        //$form = $buildform->getForm();
-
-
-        // Initialisation des tableau $cadencierV[produit][mois] et $cadencierP[produit][mois]:
+        $cadencierV = $this->cadencierMaker('0', $Produits);
+        $cadencierP = $this->cadencierMaker('1', $Produits);
         foreach($Produits as $Produit)
         {   
             $id=$Produit->getId();
             $cmdesV[$id] = 0;
+            $moyVtes[$id] = 0;
             for($i=1; $i<13; $i++ )
             {
-                $cadencierV[$id][$i] = 0;
-                $cadencierP[$id][$i] = 0;
-                $cmdesV[$id] = 0;
+                $cmdesV[$id] += $cadencierV[$id][$i];
             }
+            $moyVtes[$id] =  $this->moyVtes($mois0, $cadencierV, $cadencierP, $id);
         }
 
-        // Création du tableau du cadencier pour les commandes simplement validées :
-        foreach ($CommandesV as $CommandeV) 
-        {   
-            // Extraction du mois de la commande :
-            $date = $CommandeV->getDate();  
-            $mois = (int)$date->format('m');
-
-            // Extraction des produits et quantités de la commande, cumul des quantités :            
-            $commande = $CommandeV->getCommande();
-            $produits = $commande['produit'];
-            foreach($produits as $id => $produit)
-            {
-                $qtePanier = $produit['quantite'];
-                $cadencierV[$id][$mois] += $qtePanier;
-                //Cumul des produits validés non préparés pour le calcul des stocks virtuels théoriques : 
-                $cmdesV[$id] += $qtePanier; 
-            }
-        }
-        // Création du tableau du cadencier pour les commandes préparées :
-        foreach ($CommandesP as $CommandeP) 
-        {   
-            $date = $CommandeP->getDate();  
-            $mois = (int)$date->format('m');
-            
-            $commande = $CommandeP->getCommande();
-            $produits = $commande['produit'];
-            foreach($produits as $id => $produit)
-            {
-                $qtePanier = $produit['quantite'];
-                $cadencierP[$id][$mois] += $qtePanier; 
-            }
-        }
         //Création du tableau des 12 derniers mois :
         $cad = array();
         for($i=1; $i<13; $i++ )
@@ -101,13 +137,18 @@ class StocksAdminController extends Controller
         // - d'un tableau $cadencierV[$id] sur 12 mois
         // - d'un tableau $cmdesV[$id] sur 12 mois
 
-         $Produits = $em->getRepository('EcomBundle:Produits')->findAll();
+        $Fournisseurs = $em->getRepository('AdBundle:Fournisseurs')->findAll();
+        $Produits = $em->getRepository('EcomBundle:Produits')->findAllByFournisseur();
+
+        // On transfère ces données dans l'objet $PrdReassort :
         foreach($Produits as $produit)
         {          
             $id = $produit->getId();
             $PrdReassort = new PrdReassort();
             $PrdReassort->setId($id);
-            $PrdReassort->setNom($produit->getNom()); 
+            $PrdReassort->setNom($produit->getNom());
+            $PrdReassort->setFournisseur($produit->getFournisseur()); 
+            $PrdReassort->setCategorie($produit->getCategorie()); 
             $PrdReassort->setPopularite($produit->getPopularite());
             $PrdReassort->setDisponible($produit->getDisponible()); 
             $PrdReassort->setStockreel($produit->getStockreel());
@@ -159,12 +200,35 @@ class StocksAdminController extends Controller
              return $this->redirect($this->generateUrl('adminStocks_reassort'));
         }
 
-        //var_dump($cadencier);
-//die();
         return $this->render('AdBundle:Administration:Stocks/layout/reassort.html.twig', array(
-            'Produits' => $Produits, 'cad' => $cad, 'cadencierP' => $cadencierP,'cadencierV' => $cadencierV, 'cmdesV'=> $cmdesV, 'form'=>$form->createView()
+            'Produits' => $Produits,'Fournisseurs'=>$Fournisseurs,'moistxt'=>$moistxt, 'cad' => $cad, 'cadencierP' => $cadencierP,'cadencierV' => $cadencierV, 'cmdesV'=> $cmdesV, 'moyVtes'=>$moyVtes, 'form'=>$form->createView()
         ));
     }
+
+
+   public function nbRupturesAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $mois0 = (int)date('m'); // = mois en cours
+        $moy=array(); $nm=array();$cmdesV = array();
+        $Produits = $em->getRepository('EcomBundle:Produits')->findAll();
+        $nbRupt = 0 ; $nbSensb = 0 ;
+
+        $cadencierV = $this->cadencierMaker('0', $Produits);
+        $cadencierP = $this->cadencierMaker('1', $Produits);
+        foreach($Produits as $Produit)
+        {   
+            $id=$Produit->getId();
+            $moyVtes[$id] = 0;
+            $moyVtes[$id] =  $this->moyVtes($mois0, $cadencierV, $cadencierP, $id);
+            if($Produit->getStockvirtuel() == 0) {$nbRupt ++; }
+            elseif ($Produit->getStockvirtuel()<= $moyVtes[$id]) { $nbSensb++;}         
+        }
+        return $this->render('AdBundle:Administration:Stocks/modulesUsed/nbRuptures.html.twig', array(
+            'nbRupt' => $nbRupt, 'nbSensb' => $nbSensb, 'moyVtes'=>$moyVtes
+        ));
+    }
+
 
     public function demqAction(Request $request)
     {
@@ -205,8 +269,6 @@ class StocksAdminController extends Controller
              return $this->redirect($this->generateUrl('adminStocks_demarque'));
         }
 
-        //var_dump($cadencier);
-//die();
         return $this->render('AdBundle:Administration:Stocks/layout/demq.html.twig', array('form'=>$form->createView()
         ));
     }

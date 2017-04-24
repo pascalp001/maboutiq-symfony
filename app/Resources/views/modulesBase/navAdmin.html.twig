@@ -3,11 +3,11 @@
     <ul class="nav nav-list">
     	<!--<div style="height:100px;">&nbsp;</div>-->
         <li>
-        	<a href="{{path('adminCommandes') }}"  class="sidebar sup">Commandes en cours</a>
+        	<a href="{{path('adminCommandes') }}"  class="sidebar sup" style="padding-bottom:0; margin-bottom:0;">Commandes en cours</a>
             {% render(controller('AdBundle:CommandesAdmin:nbCmdes')) %}
         </li>
         <li class="nav-header">
-            <a href="{{path('adminAvis') }}" class="sidebar sup" >Nouveaux avis à valider</a>
+            <a href="{{path('adminAvis') }}" class="sidebar sup"  style="padding-bottom:0; margin-bottom:0;">Nouveaux avis à valider</a>
             {% render(controller('AdBundle:AvisAdmin:nbAvis')) %}
         </li>
         <hr class="hrb"/>
@@ -32,7 +32,8 @@
             <a href="{{path('adminPromoProds') }}" class="sidebar sup" >Promo sur produits</a>
         </li>
         <li>
-            <a href="{{path('adminStocks_reassort') }}"  class="sidebar sup">Réassort/cadencier</a>
+            <a href="{{path('adminStocks_reassort') }}"  class="sidebar sup"  style="padding-bottom:0; margin-bottom:0;">Réassort/cadencier</a>
+            {% render(controller('AdBundle:StocksAdmin:nbRuptures')) %}
         </li> 
         <li>
             <a href="{{path('adminStocks_demarque') }}"  class="sidebar sup">Démarque</a>

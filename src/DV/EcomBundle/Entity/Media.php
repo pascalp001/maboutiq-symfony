@@ -27,8 +27,7 @@ class Media
     //et un attribut $file utilisé pour le champ de saisie 'file' du formulaire qui transmet ensuite au path :
 
     /**
-    * @ORM\Column(name="name", type="string", length=255)
-    * @Assert\NotBlank
+    * @ORM\Column(name="name", type="string", length=255, nullable=true)
     */
     private $name;
 
@@ -82,8 +81,8 @@ class Media
     //On place ici les callbacks : un pour agir après avoir persisté, l'autre pour agir avant update
 
     /**
-    * @ORM\Prepersist()
-    * @ORM\Preupdate()
+    * @ORM\PrePersist()
+    * @ORM\PreUpdate()
     */
     public function preUpload()
     {

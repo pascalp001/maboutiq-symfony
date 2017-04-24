@@ -21,7 +21,7 @@ class AvisCompletType extends AbstractType
 	}
     public function getBlockPrefix()
       {
-          return 'ad_adbundle_aviscomplet'; // Syntaxe particulière : minuscules et underscores
+          return 'ad_adbundle_aviscomplet'; 
       }
 
 }

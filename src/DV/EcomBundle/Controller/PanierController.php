@@ -83,7 +83,7 @@ class PanierController extends Controller
             }
         }
 
-        return $this->render('EcomBundle:Default:panier/modulesUsed/menuPanier.html.twig', array('adr' => $adr, 'livr' => $livr, 'pmt'=>$pmt));
+        return $this->render('EcomBundle:Default:panier/modulesUsed/menupanier.html.twig', array('adr' => $adr, 'livr' => $livr, 'pmt'=>$pmt));
     }
 
     public function panierAction(Request $request)

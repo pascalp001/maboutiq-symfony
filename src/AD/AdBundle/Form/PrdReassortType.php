@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -16,6 +17,8 @@ class PrdReassortType extends AbstractType
 	{
 		$builder->add('id', HiddenType::class)
 				->add('nom', HiddenType::class)
+				->add('fournisseur', HiddenType::class)
+				->add('categorie', HiddenType::class)
 				->add('cmdeP1', HiddenType::class)
 				->add('cmdeP2', HiddenType::class)
 				->add('cmdeP3', HiddenType::class)
@@ -43,7 +46,7 @@ class PrdReassortType extends AbstractType
 				->add('cmdeV', HiddenType::class)
 				->add('popularite', HiddenType::class)
 				->add('stockreel', HiddenType::class)
-				->add('reassort', NumberType::class, array('label'=>false,  'attr'=> array('value'=>'0','class'=>'form-control', 'style'=>'width:70px; cursor:pointer')))
+				->add('reassort', IntegerType::class, array('label'=>false,  'attr'=> array('value'=>'0','min'=>'0','class'=>'form-control', 'style'=>'width:70px; cursor:pointer')))
 				->add('stockvirtuel', HiddenType::class)
 				->add('stockvirtheo', HiddenType::class)
 				->add('ajust', TextType::class, array('label'=>false, 'attr'=> array('class'=>'form-control')))

@@ -18,45 +18,8 @@ class ProduitsRepository extends EntityRepository
 
 		$qb = $this->createQueryBuilder('pd')
 			->select('pd')
-			->where('pd.id IN (:array)')	
-			//->join('pd.promoProd','pm')
-			//->andWhere('pm.datedeb = MAX(pm.datedeb)')
-			//->groupBy('pm.produit')
-			//->having('pm.datedeb <= :now')
-			//->andHaving('pm.datefin >= :now')
-			//->andHaving('')
-			//->setParameter('now', new \DateTime(), \Doctrine\DBAL\Types\Type::DATETIME)					
+			->where('pd.id IN (:array)')					
 			->setParameter('array', $array);
-
-		/* Départ ProduitsRepository */
-		/*$subqb = $this->createQueryBuilder('prd1')	
-			->select('p','max(p.datedeb)')
-			->from('DV\EcomBundle\Entity\PromoProds','p')
-			->where( ':now BETWEEN p.datedeb AND p.datefin')
-			->setParameter('now', new \DateTime(), \Doctrine\DBAL\Types\Type::DATETIME)
-			->groupBy('p.produit');
-
-		$qb = $this->createQueryBuilder('prd')
-			->leftjoin('prd.promoProd','prm')
-			->addSelect('prm');
-
-		$qb = $qb
-			->andWhere($qb->expr()->in('prd.promoProd', $subqb->getDQL()));
-		
-		$qb = $qb
-			->andWhere('prd.disponible = 1')
-			->andWhere('prd.id IN (:array)')	
-			->setParameter('array', $array)
-			->orderBy('prd.id');*/
-		/*$subqb = $this->createQueryBuilder('p1')
-			->select('p2')
-			->from('EcomBundle:PromoProds','p2')
-			->where('p1.promoProd = p2')
-			->andWhere( ':now BETWEEN p2.datedeb AND p2.datefin')
-			->setParameter('now', new \DateTime(), \Doctrine\DBAL\Types\Type::DATETIME)
-			->orderBy('p2.datedeb', 'ASC')
-			->setMaxResults(1);
-		$qb->andWhere($qb->expr()->in('prm', $subqb->getDQL()));*/
 
 		return $qb->getQuery()->getResult();	
 	}
@@ -152,4 +115,14 @@ class ProduitsRepository extends EntityRepository
 		if($tri == 'prix_desc')	$qb = $qb->orderBy('prd.prix', 'DESC');
 		return $qb->getQuery()->getResult();
 	}	
+
+	public function findAllByFournisseur()
+	{  
+		$qb = $this->createQueryBuilder('prd') 	
+			->orderBy('prd.fournisseur')
+			//->addOrderBy('prd.categorie')
+			->addOrderBy('prd.nom')
+			;
+		return $qb->getQuery()->getResult();
+	}
 }

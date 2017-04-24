@@ -520,7 +520,7 @@ a.sidebar.sub {
     font-size:0.9em; padding: 5px 15px;
 }
 
-@media screen and (min-width:900px){ 
+@media screen and (min-width:900px) and (max-width:1299px){ 
   a.sidebar.sup {
       font-size:1.2em;
   }
@@ -1063,13 +1063,13 @@ ul.step li.last span {
   min-width:300px; margin-top:10px; margin-right:10px;
 }
 .modulelogin-interne {
-  margin-top:0px; background:#4a6; padding-top: 5px; padding-bottom: 0px; min-height:35px;
+  margin-top:0px; background:#4a6; padding-top: 4px; padding-bottom: 0px; min-height:35px;
 }
 .modulelogin-login {
-  padding-bottom: 6px; text-align:center; font-weight: 600; text-decoration: none; color:#254;background:#4a6;
+  padding-bottom: 5px; text-align:center; font-weight: 500; text-decoration: none; color:#254;background:#4a6;
 }
 .modulelogin-login:hover {
-   font-weight: 800; margin-left:-9px;
+   font-weight: 600; margin-left:-9px;
 }
 a:hover .modulelogin-login {
   text-decoration:none;color:#8c9; 

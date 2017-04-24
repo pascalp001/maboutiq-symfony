@@ -22,6 +22,18 @@ class PrdReassort
     private $nom;
 
     /**
+     * @var string
+     *
+     */
+    private $fournisseur;
+
+    /**
+     * @var string
+     *
+     */
+    private $categorie;
+
+    /**
      * @var integer
      *
      */
@@ -259,6 +271,54 @@ class PrdReassort
     public function getNom()
     {
         return $this->nom;
+    }
+
+    /**
+     * Set fournisseur
+     *
+     * @param string $fournisseur
+     *
+     * @return PrdReassort
+     */
+    public function setFournisseur($fournisseur)
+    {
+        $this->fournisseur = $fournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Get fournisseur
+     *
+     * @return string
+     */
+    public function getFournisseur()
+    {
+        return $this->fournisseur;
+    }
+
+    /**
+     * Set categorie
+     *
+     * @param string $categorie
+     *
+     * @return PrdReassort
+     */
+    public function setCategorie($categorie)
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * Get categorie
+     *
+     * @return string
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
     }
 
     /**

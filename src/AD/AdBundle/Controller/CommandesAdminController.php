@@ -30,6 +30,44 @@ class CommandesAdminController extends Controller
             'entities' => $entities, 'archive' => $archive
         ));
     }
+
+    public function error404Action(Request $request)
+    {
+       if($request->getMethod() == "GET") 
+        {
+            $message="tagada";
+        }
+        // Mail d'alerte':
+      $Vendeur = $em->getRepository('AdBundle:Vendeur')->find('1');
+      $message = \Swift_Message::newInstance()
+              ->setSubject('erreur 404 dans le site ecom01')
+              ->setFrom(array('pascal.p8610@gmail.com'=>"ProG-dev"))
+              ->setTo($Vendeur[0]->getEmail())
+              ->setCharset('utf-8')
+              ->setContentType('text/html')
+              ->setBody('Une erreur 404 est survenue sur le site ecom01. Message envoyé :'.$message);
+      $this->get('mailer')->send($message);
+            return $this->redirect($this->generateUrl($_SERVER["HTTP_REFERER"]));
+    }
+
+    public function error500Action($page = null)
+    {
+        if($request->getMethod() == "GET") 
+        {
+            $message="tagada";
+        }
+        // Mail d'alerte':
+      $Vendeur = $em->getRepository('AdBundle:Vendeur')->find('1');
+      $message = \Swift_Message::newInstance()
+              ->setSubject('erreur 500 dans le site ecom01')
+              ->setFrom(array('pascal.p8610@gmail.com'=>"ProG-dev"))
+              ->setTo($Vendeur[0]->getEmail())
+              ->setCharset('utf-8')
+              ->setContentType('text/html')
+              ->setBody('Une erreur 500 est survenue sur le site ecom01. Message envoyé :'.$message);
+      $this->get('mailer')->send($message);
+      return $this->redirect($this->generateUrl($_SERVER["HTTP_REFERER"]));
+    }
     
     public function nbCmdesAction()
     {

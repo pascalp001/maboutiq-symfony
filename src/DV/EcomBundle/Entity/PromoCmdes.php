@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * PromoCmde
  *
- * @ORM\Table()
+ * @ORM\Table("promocmdes")
  * @ORM\Entity(repositoryClass="DV\EcomBundle\Repository\PromoCmdesRepository")
  */
 class PromoCmdes

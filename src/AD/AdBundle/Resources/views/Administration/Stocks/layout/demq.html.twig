@@ -9,8 +9,7 @@
             <tr>
                 <th colspan="2">&nbsp;</th>
                 <th >&nbsp;</th>
-                <th colspan="3" class="bordVGD">Démarque</th>                
-                <th colspan="3" class="bordVGD">Inventaire</th>
+                <th colspan="3" class="bordVGD">Démarque</th>  
             </tr>
             <tr>
                 <th>Id</th>
@@ -19,9 +18,6 @@
                 <th class="bordVD">Casse</th>   
                 <th class="bordVD">Défectueux</th>              
                 <th class="bordVG">Autre</th>
-                <th class="bordVG">Stock restant</th>
-                <th >Constaté</th>
-                <th class="bordVD">Ecart</th>
             </tr>
         </thead>
         <tbody>
@@ -34,9 +30,6 @@
                 <td class="bordVD middle">{{form_widget(form.casse)}}</td> 
                 <td class="bordVD middle">{{form_widget(form.defect)}}</td>                 
                 <td class="bordVG middle">{{form_widget(form.autre) }}</td>
-                <td class="bordVG middle">{{ form.stockreel.vars.value }}</td>                
-                <td class="bordVG middle">{{form_widget(form.inventaire, {'value': form.stockreel.vars.value  ,'attr':{'style':'width:40px; color:#132; line-height: 12px;  cursor:pointer; '}})}}</td> 
-                <td style="font-size:0.7em; vertical-align:middle">{{ form.stockreel.vars.value - form.inventaire.vars.value }}</td>
             </tr>
         {% endfor %}
 

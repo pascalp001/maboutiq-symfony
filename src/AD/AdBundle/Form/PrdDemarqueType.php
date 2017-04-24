@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -17,10 +18,9 @@ class PrdDemarqueType extends AbstractType
 		$builder->add('id', HiddenType::class)
 				->add('nom', HiddenType::class)
 				->add('stockreel', HiddenType::class)
-				->add('casse', NumberType::class, array('label'=>false,  'attr'=> array('value'=>'0','class'=>'form-control', 'style'=>'width:70px; cursor:pointer')))
-				->add('defect', NumberType::class, array('label'=>false,  'attr'=> array('value'=>'0','class'=>'form-control', 'style'=>'width:70px; cursor:pointer')))
-				->add('autre', NumberType::class, array('label'=>false,  'attr'=> array('value'=>'0','class'=>'form-control', 'style'=>'width:70px; cursor:pointer')))
-				->add('inventaire', TextType::class, array('label'=>false, 'attr'=> array('class'=>'form-control', 'style'=>'width:70px; cursor:pointer')))
+				->add('casse', IntegerType::class, array('label'=>false,  'attr'=> array('value'=>'0','min'=>'0','class'=>'form-control', 'style'=>'width:100px; cursor:pointer')))
+				->add('defect', IntegerType::class, array('label'=>false,  'attr'=> array('value'=>'0','min'=>'0','class'=>'form-control', 'style'=>'width:100px; cursor:pointer')))
+				->add('autre', IntegerType::class, array('label'=>false,  'attr'=> array('value'=>'0','min'=>'0','class'=>'form-control', 'style'=>'width:100px; cursor:pointer')))
             	;
 	}
     public function getBlockPrefix()

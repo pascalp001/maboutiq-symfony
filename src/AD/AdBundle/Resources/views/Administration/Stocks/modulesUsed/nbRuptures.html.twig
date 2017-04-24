@@ -1,0 +1,15 @@
+{% if nbRupt != 0 or nbSensb != 0 %}
+  <div class="row h6b" style="line-height:50%;" > <i style="color:#f40;"> 
+      (
+
+  {% if nbRupt != 0 %}
+    {{nbRupt}} rupture{% if nbRupt > 1 %}s {% endif %}  
+    {% if nbSensb != 0 %} + {{nbSensb}} presque    
+    {% endif %} 
+  {% else %}      
+    {% if nbSensb != 0 %}
+      {{nbSensb}} proche{% if nbSensb > 1 %}s {% endif %} rupture  
+    {% endif %} 
+  {% endif %}
+  )</i></div>
+{% endif %}

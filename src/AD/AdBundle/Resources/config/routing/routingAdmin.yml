@@ -1,3 +1,11 @@
 admin:
     path:     /
     defaults: { _controller: AdBundle:CommandesAdmin:index }
+
+alerte404:
+    path:    /404/
+    defaults: { _controller: AdBundle:CommandesAdmin:error404 } 
+
+alerte500:
+    path:    /500/
+    defaults: { _controller: AdBundle:CommandesAdmin:error500 }       

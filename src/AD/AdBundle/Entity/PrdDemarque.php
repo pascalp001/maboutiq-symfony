@@ -46,12 +46,6 @@ class PrdDemarque
     private $autre;
 
     /**
-     * @var integer
-     *
-     */
-    private $inventaire;
-
-    /**
      * Set id
      *
      * @param integer $id
@@ -193,30 +187,6 @@ class PrdDemarque
     public function getAutre()
     {
         return $this->autre;
-    }
-
-    /**
-     * Set inventaire
-     *
-     * @param integer $inventaire
-     *
-     * @return PrdDemarque
-     */
-    public function setInventaire($inventaire)
-    {
-        $this->inventaire = $inventaire;
-
-        return $this;
-    }
-
-    /**
-     * Get inventaire
-     *
-     * @return integer
-     */
-    public function getInventaire()
-    {
-        return $this->inventaire;
     }
 
 }
