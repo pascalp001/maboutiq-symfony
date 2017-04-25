@@ -82,7 +82,7 @@
                     <div class="col-md-2">
                         <h4>Nous contacter</h4>
                         <p><i class="icon-phone"></i>&nbsp;Tel: {{telephone}}</p>
-                        <p><i class="icon-print"></i>&nbsp;Fax: 01 02 03 04 05</p>
+                        <p><i class="icon-print"></i>&nbsp;Fax: - </p>
                     </div>
                 </div>
 
@@ -104,8 +104,9 @@
     <!-- script pour afficher ou non la sidebar menu -->
  
 $(document).ready(function () {
-
-        var toggle=false;
+    var largeurFenetre = document.body.clientWidth;
+    $(".largeurF").html(largeurFenetre);
+        var toggle=false; var togglestars = true;
     $(".toggle-sidebar").click(function () {
         toggle=!toggle;
         if(toggle)
@@ -246,6 +247,16 @@ $(function() {
     ui.loupe.off('mousemove', mouseMove);
   });
 });
+var i = 0; var togglestars = true;
+function showStars(i){
+  if(togglestars){
+    //alert('ici'+i+';');
+    $('#star-'+i+':hover').addClass('is-active'); 
+    $('#star-'+i+':hover').parent().prevAll().children().addClass('is-active') ;
+    $('#star-'+i+':hover').parent().nextAll().children().removeClass('is-active');
+    currentRating(i);
+  }
+}
 </script>
 
 {% endblock %}

@@ -165,7 +165,8 @@ class ProduitsController extends Controller
                 //die();
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($avis);
-                $em->flush();                 
+                $em->flush();  
+                $this->get('session')->getFlashBag()->add('success', 'Votre avis a été envoyé avec succès');               
                 return $this->redirect($this->generateUrl('presentation', array('id'=>$id) ));           
             }
             return $this->redirect($this->generateUrl('presentation', array('id'=>$id))); 

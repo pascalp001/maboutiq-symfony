@@ -25,7 +25,7 @@ class PagesAdminController extends Controller
 
         $entities = $em->getRepository('PagesBundle:Pages')->findAll();
 
-        return $this->render('PagesBundle:Administration:pages/layout/index.html.twig', array(
+        return $this->render('PagesBundle:Administration:Pages/layout/index.html.twig', array(
             'entities' => $entities,
         ));
     }
@@ -47,7 +47,7 @@ class PagesAdminController extends Controller
             return $this->redirect($this->generateUrl('adminPages_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('PagesBundle:Administration:pages/layout/new.html.twig', array(
+        return $this->render('PagesBundle:Administration:Pages/layout/new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -81,7 +81,7 @@ class PagesAdminController extends Controller
         $entity = new Pages();
         $form   = $this->createCreateForm($entity);
 
-        return $this->render('PagesBundle:Administration:pages/layout/new.html.twig', array(
+        return $this->render('PagesBundle:Administration:Pages/layout/new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -103,7 +103,7 @@ class PagesAdminController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('PagesBundle:Administration:pages/layout/show.html.twig', array(
+        return $this->render('PagesBundle:Administration:Pages/layout/show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -126,7 +126,7 @@ class PagesAdminController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('PagesBundle:Administration:pages/layout/edit.html.twig', array(
+        return $this->render('PagesBundle:Administration:Pages/layout/edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -175,7 +175,7 @@ class PagesAdminController extends Controller
             return $this->redirect($this->generateUrl('adminPages_edit', array('id' => $id)));
         }
 
-        return $this->render('PagesBundle:Administration:pages/layout/edit.html.twig', array(
+        return $this->render('PagesBundle:Administration:Pages/layout/edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

@@ -3,7 +3,7 @@
     <div class="container">
         <div style="height:100px;"> &nbsp; </div> 
         <!-- Vérification du statut conecté ou non :   sera vu ultérieurement -->  
-         <!--   {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+         <!--   {#% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
                 <a href="{{ path('fos_user_security_logout') }}">
                     {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
@@ -11,7 +11,7 @@
             {% else %}
                 <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
             {% endif %}
-          {% if app.request.hasPreviousSession %}   
+          {% if app.request.hasPreviousSession %#}   
         -->
         <!-- Affichage des messages d'erreur : -->
        
@@ -22,7 +22,7 @@
                     </div>
                 {% endfor %}
             {% endfor %}
-        <!--{% endif %}-->
+        <!--{#% endif %#}-->
 
         
             {% block fos_user_content %}

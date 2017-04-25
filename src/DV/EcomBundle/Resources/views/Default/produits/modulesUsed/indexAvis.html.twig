@@ -36,6 +36,9 @@
 
 <div class="row" >
   {% if is_granted('IS_AUTHENTICATED_FULLY') %} 
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">{{flashMessage}}</div>
+            {% endfor %}
     <button type="button" class="col-md-offset-2 col-xs-6"  onClick="$('#show_show_addAvis').css('display','block');$('#show_addAvis').css('display','block');">
       {% if nbAvis==0 %}
         <span  class="h4">Soyez le premier à donner votre avis sur ce produit</span>

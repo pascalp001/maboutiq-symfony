@@ -12,11 +12,11 @@
         <div class="row"  >
           <ul style="min-width:300px;" >
             <li  class="c-rating col-xs-1"  > 
-              <span  onMouseOver="$(this).parent().nextAll().children().removeClass('is-active');currentRating(0)"  class="c-rating__0" ></span>
+              <span  onMouseOver="if(togglestars){$(this).parent().nextAll().children().removeClass('is-active');currentRating(0);}"  class="c-rating__0" ></span>
             </li>
             {% for i in 1..5 %}
-              <li class="c-rating col-xs-1 "  > 
-                <span  onMouseOver="$(this).addClass('is-active'); $(this).parent().prevAll().children().addClass('is-active') ;$(this).parent().nextAll().children().removeClass('is-active');currentRating({{i}})"  class="c-rating__item ">
+              <li class="c-rating col-xs-1 " onClick="togglestars=!togglestars;" > 
+                <span  id="star-{{loop.index}}" onMouseOver="showStars({{loop.index}});"  class="c-rating__item ">
                 </span>
               </li>
             {% endfor %} 
