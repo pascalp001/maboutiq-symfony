@@ -113,7 +113,13 @@
         {% endfor %}
         </tbody>
     </table>
-
+    <div class="row">
+        <br/>
+    <h2>Nombre de visites :</h2><br/>
+        <div class=" col-sm-8">
+            {% render(controller('AdBundle:CommandesAdmin:nbreVisites')) %}
+        </div>
+    </div>
     {% endblock %}
     {% block javascript3s %}
         <script src="{{ asset('js/plugin/jquery/jquery.min.js')}}"></script>

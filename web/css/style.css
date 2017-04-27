@@ -335,6 +335,17 @@ td, th {text-align:center;}
 .table-store tr{padding-bottom:3px; padding-top:3px;}
 .table-hover > tbody > tr:hover > td, 
 .table-hover > tbody > tr:hover > th {  }
+.table.table-spot > thead > tr > th, 
+.table.table-spot > tbody > tr > th, 
+.table.table-spot > tfoot > tr > th, 
+.table.table-spot > thead > tr > td, 
+.table.table-spot > tbody > tr > td, 
+.table.table-spot > tfoot > tr > td, 
+.table.table-spot tr {border:0px solid #ddd ;}
+.table.table-spot > tbody > tr > td.bordVD-spot, 
+.table.table-spot > thead > tr >th.bordVD-spot {border-right:1px solid #ddd ;}
+.table.table-spot thead {border-bottom:2px solid #ddd ;}
+.table.table-spot {box-shadow: 1px 1px 20px 10px #627a9c; border-radius:10%;}
 
 /*couleurs*/
 .body-color {background-color:#34495e; color:#ecf0f1;}

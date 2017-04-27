@@ -25,7 +25,7 @@ class ArticleController extends Controller
 
         $entities = $em->getRepository('EcomBundle:Article')->findAll();
 
-        return $this->render('AdBundle:administration:Article/layout/index.html.twig', array(
+        return $this->render('AdBundle:Administration:Article/layout/index.html.twig', array(
             'entities' => $entities,
         ));
     }
@@ -47,7 +47,7 @@ class ArticleController extends Controller
             return $this->redirect($this->generateUrl('adminArticle_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('AdBundle:administration:Article/layout/new.html.twig', array(
+        return $this->render('AdBundle:Administration:Article/layout/new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -81,7 +81,7 @@ class ArticleController extends Controller
         $entity = new Article();
         $form   = $this->createCreateForm($entity);
 
-        return $this->render('AdBundle:administration:Article/layout/new.html.twig', array(
+        return $this->render('AdBundle:Administration:Article/layout/new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -103,7 +103,7 @@ class ArticleController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('AdBundle:administration:Article/layout/show.html.twig', array(
+        return $this->render('AdBundle:Administration:Article/layout/show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -126,7 +126,7 @@ class ArticleController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('AdBundle:administration:Article/layout/edit.html.twig', array(
+        return $this->render('AdBundle:Administration:Article/layout/edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -175,7 +175,7 @@ class ArticleController extends Controller
             return $this->redirect($this->generateUrl('adminArticle_edit', array('id' => $id)));
         }
 
-        return $this->render('AdBundle:administration:Article/layout/edit.html.twig', array(
+        return $this->render('AdBundle:Administration:Article/layout/edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

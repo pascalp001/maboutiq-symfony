@@ -15,11 +15,13 @@ class AccueilController extends Controller
         $articles = $em->getRepository('EcomBundle:Article')->findArticles();
         $p = count($promoProds);
         $a = count($articles);
+        //echo '$p='.$p.' ; $a='.$a;
         for($i =0; $i<$a+$p; $i++)
         {
             $j = rand(0,100);
             if( !in_array($j, $ind)) $ind[$i] = $j;
     	} 
+        //var_dump($ind); die();
         $i=0;
         while($i < $a+$p)
         {

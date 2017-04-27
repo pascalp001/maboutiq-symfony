@@ -13,10 +13,9 @@ class ArticleRepository extends \Doctrine\ORM\EntityRepository
 	public function findArticles()
 	{
 		$qb = $this->createQueryBuilder('a')
-			->where('a.datedeb <= :now')
-			->andWhere('a.datefin IS NULL')
-			->orWhere('a.datedeb <= :now')
-			->andWhere('a.datefin >= :now')
+			->where('a.datefin IS NULL')
+			->orWhere('a.datefin >= :now')
+			->andWhere('a.datedeb <= :now')			
 			->setParameter('now', new \DateTime(), \Doctrine\DBAL\Types\Type::DATETIME)
 			;
 		return $qb->getQuery()->getResult();

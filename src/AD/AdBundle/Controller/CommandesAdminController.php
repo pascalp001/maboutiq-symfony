@@ -408,4 +408,44 @@ class CommandesAdminController extends Controller
             ->getForm()
         ;
     }
+
+    function nbreVisitesAction(){
+        $em = $this->getDoctrine()->getManager();
+        $tabVisites=array(); $tabSemVisites=array();
+
+        for ( $s=1 ; $s<9 ; $s++)
+        {
+            $tabSemVisites[$s]=0;
+            $semaine = (int)date('W')-$s; $annee = (int)date('Y');   
+
+            if($semaine == 0){$semaine = 54-$s; $annee = (int)date('Y')-1;}  
+            
+            $Visites = $em->getRepository('EcomBundle:Visites')->findBy(array('semaine'=>$semaine, 'annee'=>$annee));
+            if(!$Visites){ $tabSemVisites[$s]= 0 ; }
+            else{$tabSemVisites[$s]=$Visites[0]->getNbrevisites();   }   
+
+        }
+        //var_dump($tabSemVisites); die();  
+        // Semaine précédente :
+        $tabVisites[5] = $tabSemVisites[1];
+
+        // Semaine antérieure :
+        $tabVisites[4] = $tabSemVisites[2];
+
+        // 4 dernières semaines :
+        $tabVisites[3] = $tabSemVisites[1]+$tabSemVisites[2]+$tabSemVisites[3]+$tabSemVisites[4];
+
+        // 4 semaines précédentes :
+        $tabVisites[2] = $tabSemVisites[5]+$tabSemVisites[6]+$tabSemVisites[7]+$tabSemVisites[8];
+
+        // Total :
+        $tabVisites[1]=0;$visites=0;
+        $visites = $em->getRepository('EcomBundle:Visites')->findAllVisites();
+        $tabVisites[1] = $visites;  
+        
+        
+
+        return $this->render('AdBundle:Administration:Commandes/modulesUsed/nbVisites.html.twig', array(
+            'tabVisites' => $tabVisites ));
+    }
 }

@@ -2,19 +2,26 @@
 {% block body %}
 <div class="container">
     <div class="row">
-        <h1>LE SITE ET SES FONCTIONNALITÉS</h1>
+        <h1>PRÉSENTATION DU SITE ET DE SES FONCTIONNALITÉS</h1>
         <div class="col-xs-12 thumbnail">
         	<div class="caption">
         	<h1 class="h1b">PARTIE CLIENT</h1>
         	<h3 class="h3b">Le bandeau du haut : <span class="h4"> Menu général client</span></h3>
+            <div width="100%"><img src="{{ asset('img/client_menuH.jpg')}}" width="90%"></div>
         	<p>Il comprend un logo (accès à la page d'accueil), les "pages" : l'accès à la boutique, au panier, et autres pages<br/>
-        		Sur la droite, il y a un menu 'Se connecter S'inscrire' (précisions plus loin) </p>
-
-        	<h3 class="h3b">La page d'accueil : <span class="h4"> La page d'accueil comprend une image d'accueil et une liste des actualités et promos en cours</span></h3>
-        	
+        		Sur la droite, il y a un menu 'Se connecter S'inscrire' (précisions plus loin). Au milieu, figure sur certaines pages un menu 'rechercher' accédant directement aux produits concernés. </p>
+            <h3 class="h3b">Le Responsive-Design: <span class="h4"> Menus et présentations ont été élaborés en prenant en compte le mieux possible la taille de l'écran.</span></h3>
+            <div width="100%">
+                <img src="{{ asset('img/respons_accueil1.jpg')}}" width="21%">
+                <img src="{{ asset('img/respons_accueil2.jpg')}}" width="22%">
+                <img src="{{ asset('img/respons_produits.jpg')}}" width="21%">
+                <img src="{{ asset('img/respons_panier.jpg')}}" width="21%">
+            </div>
+        	<h3 class="h3b">La page d'accueil : <span class="h4"> La page d'accueil comprend une image d'accueil et une liste des actualités et promos en cours. Articles et promos sont proposés de manière aléatoire. On peut aussi les présenter en carousel.</span></h3>
+        	<div><img src="{{ asset('img/client_accueil.jpg')}}" width="90%"></div>
         	
         	<h3 class="h3b">La boutique : <span class="h4"> La page boutique présente la liste des produits.</span></h3>
-        	
+        	<div width="100%"><img src="{{ asset('img/client_produits.jpg')}}" width="90%"></div>
         	<ul>
         		<li>Dans le bandeau du haut : Possibilité de rechercher un nom de produit</li>
         		<li>A gauche : menu vertical &#10157; tri des produits par nom, par popularité et par prix ; filtre par catégorie ; dans le bas, possibilité de se connecter ou de s'inscrire</li>
@@ -22,9 +29,9 @@
         		<li>En haut à droite sous le bandeau : nombre d'articles dans le panier ; accès possible au panier</li>
         		<li>Grille bootstrap des produits disponibles triés par id par défaut, filtrés ou triés selon le choix du menu latéral</li>
         		<li>Pagination</li>
-        		<li>Informations résumées du produit, image moyenne, promotions en cours</li>
+        		<li>Informations résumées du produit, image du produit, promotions en cours</li>
         		<li>Est indiqué les produits déjà dans le panier et les ruptures temporaires</li>
-        		<li>Ajout et accès au panier, ou accès 'plus d'infos' à présentation plus détaillée</li>
+        		<li>Ajout et accès au panier, ou accès 'plus d'infos' vers une présentation plus détaillée du produit</li>
         	</ul>
         	<h3 class="h3b">Détail d'un produit : <span class="h4">Présentation plus détaillée d'un produit </span></h3>
         	<ul>
@@ -38,22 +45,35 @@
         	</ul>
             <h3 class="h3b">Panier > Connexion > Adresses > Livraison > Paiement : <span class="h4">Création progressive de la commande </span></h3>
             <ul>
+            <h4 class="h4b">Récapitulatif >  = le panier</h4>
+            <div width="100%"><img src="{{ asset('img/client_panier.jpg')}}" width="90%"></div>
+            
                 <li>Un bouton en haut à gauche ouvre le menu latéral (produits, tri, filtre, connexion/déconnexion)</li>
                 <li>Un bandeau Panier > Connexion > Adresses > Livraison > Paiement permet de visualiser la progression en se colorant progressivement. Un accès direct est possible pour les parties accessibles au fur et à mesure de la progression.</li>
                 <li>Le panier : possibilité de modifier les quantités sur n'importe quel produit du panier </li> 
                 <li>Possibilité de retour à la boutique pour rajouter un produit (retour à la page quittée avec conservation des choix de tri ou de filtre) ou aller plus loin vers la commande </li> 
+            <h4 class="h4b">Connexion > </h4>
                 <li>La connexion : en validant le panier pour aller plus loin, si la connexion n'est pas encore établie, on est redirigé vers le module de connexion/inscription</li> 
                 <li>La connexion/inscription peut aussi se faire depuis le menu du haut à droite, ou dans le menu latéral, en bas.</li>	
                 <li>Le menu connexion/inscription utilise fosUserBundle. Il permet la connexion avec username et mot de passe, l'inscription avec username, adresse e-mail et mot de passe, le mot de passe oublié avec envoi d'un mail.</li>
+                <div width="100%">
+                    <img src="{{ asset('img/client_connexion.jpg')}}" width="50%">
+                    <img src="{{ asset('img/client_inscription.jpg')}}" width="40%">
+                </div>
+                <h4 class="h4b">Adresse > : création et validation des adresses de facturation et livraison</h4>
                 <li>Adresses (accès direct ou après connexion) : récupération des adresses de facturation et livraison ; possibilité de rentrer une nouvelle adresse ; possibilité de limiter la nouvelle adresse à la simple livraison ou simple facturation</li>
                 <li>Possibilité de retour au panier ou aller plus loin dans la commande</li>
+                <h4 class="h4b">Livraison > Partie 1 : choix du mode de livraison</h4>
                 <li>Livraison : un calcul est effectué des frais de port selon quelques tarifs, et les dimensions et poids probables du colis. On peut ainsi choisir entre 2 ou 3 modes de livraison possibles.</li>
                 <li>Une option est proposée pour Mondial Relay, avec intégration de l'API Mondial Relay (recherche du lieu de livraison)</li>
                 <li>Retour encore possible en arrière, mais il faudra revalider le nouveau calcul éventuel des frais de port</li>
+                <h4 class="h4b">Livraison > Partie 2 : validation de la commande</h4>
                 <li>Validation de la commande : l'étape suivante reprend le panier et les frais de port ; pour aller plus loin, il faut accepter les CGV et valider</li>
+                <h4 class="h4b">Paiement > Partie 1 : choix du mode de paiement</h4>
                 <li>Mode de paiement : on choisira entre règlement immédiat par CB ou par Paypal, ou différé par virement ou par chèque ; à ce niveau, les stocks 'virtuels' sont diminués à hauteur des quantités commandées.</li>
                 <li>En cas de règlement immédiat, un factice de la banque ou de Paypal est proposé. La validation envoie vers un récapitulatif des commandes passées par le client. En cas de règlement différé, accès direct au récapitulatif, avec mention du règlement en attente.</li>
-                <li>Un message est affiché annonçant le succès de l'enregistrement de la commande. Un mail est envoyé reprenant les éléments de la commande.</li>
+                <h4 class="h4b">Paiement > Partie 2 : récapitulatif des commandes passées par le client</h4>
+                <li>La liste des commandes est affichée avec le statut de chacune d'elles. Un message est affiché annonçant le succès de l'enregistrement de la commande. Un mail est envoyé reprenant les éléments de la commande.</li>
                 <li>Il n'y a bien sûr plus la possibilité de retour en arrière ('précédent' retourne un message indiquant l'erreur)</li>
 
         	</div>
@@ -80,19 +100,41 @@
                     <li>Annuler : en cas de rétractation du client ou autres situations particulières</li>
                     </ul>
             </p>
+            <h3 class="h3b">Compteur de visites : <span class="h4">Ce petit tableau, placé sous la liste des commandes, fournit 3 éléments utiles :</span></h3>
+            <ul>
+                <li>Le traditionnel 'Nombre de visites' = nombre de visites cumulées depuis l'origine</li>
+                <li>Un total des visites de la semaine passée, qu'on peut comparer à la semaine précédente</li>
+                <li>Un total des visites des 4 semaines passées, qu'on peut comparer au total pour les 4 semaines précédentes</li>
+            </ul>
+            <p>Ainsi, on dispose d'un outil permettant de vérifier l'impact d'une action commerciale ou d'une modification du référencement.</p>
+            <div><img src="{{ asset('img/admin_visites.jpg')}}" width="90%"></div>
+            <br/>
             <h3 class="h3b">Validation des avis reçus : <span class="h4">Affiche un tableau des avis reçus : produits, note, titre et commentaire ; on peut valider, modifier ou supprimer chaque avis.</span></h3><br/>
             <div><img src="{{ asset('img/admin_avis.jpg')}}" width="90%"></div>
             <h3 class="h3b">Liste des produits : <span class="h4">Tableau listant les produits avec quelques informations importantes</span></h3><br/>
             <div><img src="{{ asset('img/admin_produits.jpg')}}" width="90%"></div>
-            <p>On peut 'voir' chaque produit en détail, 'modifier' un produit, visualiser l'ensemble des 'avis'.<br/> On peut créer un nouveau produit.</p>
+            <p>On peut 'voir' chaque produit en détail, 'modifier' un produit, visualiser l'ensemble des 'avis' concernant ce produit.<br/> On peut créer un nouveau produit.</p>
             <h3 class="h3b">Promo sur produits : <span class="h4">Permet de lister les promotions, supprimer les promos passées, créer de nouvelles.</span></h3><br/>
-            <h3 class="h3b">Réassort : <span class="h4">Tableau comprenant un cadencier des ventes, et d'autres indices permettant de juger de la nécessité du réassort : popularité, stocks réels (physiquement présents = commandes non préparées non déduites) et stocks virtuels (commandes non encore préparées déduites)</span></h3><br/>
+            <h3 class="h3b">Réassort : <span class="h4">Ce tableau très complet fournit tous les éléments nécessaires permettant de juger de la nécessité du réassort : </span></h3>
+            <br/>
             <div><img src="{{ asset('img/admin_reassort.jpg')}}" width="90%"></div>
+            <br/>
+            <h4>On trouvera ainsi, classé par fournisseur :</h4>
+            <ul>
+            <li>un cadencier des ventes, indiquant chaque mois les quantités vendues (livrées + non livrées)</li>
+            <li>la popularité du produit</li> 
+            <li>le stock réel (physiquement présents = commandes non préparées non déduites) </li>
+            <li>le stock virtuel (commandes non encore préparées déduites)</li>
+            <li>Une coloration en orange pour les stocks en dessous de la moyenne des ventes</li>
+            <li>Une coloration en jaune sur fond rouge pour les ruptures</li>
+            </ul><br/>
             <h3 class="h3b">Démarque : <span class="h4">Permet de retirer des stocks les articles abîmés ou impropres à la vente.</span></h3><br/>
             <h3 class="h3b">Inventaire : <span class="h4">Permet de rentrer l'inventaire des stocks, d'abord provisoire (avant corrections éventuelles des erreurs de comptage), puis définitif.</span></h3><br/>
             <h3 class="h3b">Avis validés : <span class="h4">Liste des avis reçus</span></h3><br/>
+            <h3 class="h3b">Article : <span class="h4">Permet de rentrer un nouvel article (informations, évènements, ...)</span></h3><br/>
             <h3 class="h3b">Catégorie de produits : <span class="h4">Permet de rentrer une nouvelle catégorie</span></h3><br/>
             <h3 class="h3b">Fournisseurs : <span class="h4">Permet de rentrer un nouveau fournisseur, de modifier les coordonnées ou supprimer un fournisseur</span></h3><br/>
+            <h3 class="h3b">Tarifs de frais de port : <span class="h4">Permet de rentrer ou mettre à jour un tarif de frais de port (actuellement : La Poste - France, et Mondial-Relay - France </span></h3><br/>
 
     </div>
 </div>

@@ -21,6 +21,24 @@ class ProduitsController extends Controller
         if($session->has('page')) 
             {$page = $session->get('page');}
         else{ $page=1; }
+
+        //Compteur de visites :
+        if(!$session->has('visite')) 
+            {
+                $semaine = (int)date('W');
+                $annee = (int)date('Y');
+                $Visites = $em->getRepository('EcomBundle:Visites')->findBy(array('semaine'=>$semaine, 'annee'=>$annee));
+                if(!$Visites){
+                    $Visites = new Visites();
+                    $Visites->setSemaine($semaine);
+                    $Visites->setAnnee($annee);
+                    $Visites->setNbrevisites(0);
+                }
+                $Visites[0]->setNbrevisites($Visites[0]->getNbrevisites()+1);
+                $em->persist($Visites[0]);
+                $em->flush();
+                $session->set('visite', 1);
+            }
         //Si tri et categorie = null, on annule la catégorie et/ou le tri éventuellement laissés précédemment en session :
         if(null === $categorie && null === $tri ) {
             $session->set('categorie', null);
