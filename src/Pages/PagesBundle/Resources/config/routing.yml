@@ -8,4 +8,4 @@ page:
 
 cgv:
     path:    /cgv
-    defaults: { _controller: EcomBundle:Panier:showcgv}    
+    defaults: { _controller: EcomBundle:Panier:showcgvPDF}    

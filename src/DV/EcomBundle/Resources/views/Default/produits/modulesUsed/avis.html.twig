@@ -1,10 +1,10 @@
 
 {#% if addAvis == true %#}
   <div ><hr class="hrb"/>
-  <form action="{{path('addAvisProduits',{'id': id})  }}" method="post">   
+  {{ form_start(form1, {'action':path('addAvisProduits',{'id': id}) })  }}
     <div class="row" >    
-     <div class="h4 col-xs-offset-1 col-xs-3">Note du produit :</div>
-      <div class="h4 col-xs-offset-1 col-xs-7" >Votre avis sur le produit :</div>
+     <div class="h4 col-xs-offset-1 col-xs-3" style="color:#678">Note du produit :</div>
+      <div class="h4 col-xs-offset-1 col-xs-7" style="color:#678">Votre avis sur le produit :</div>
     </div>
     <div class="row" >
                  
@@ -27,17 +27,17 @@
       </div>  
       <div  class="col-xs-9">
         <div class="row" ><br/>
-          <div class="col-xs-10">{#{ form_widget(form.titre) }#}</div>          
+          <div class="col-xs-10">{{ form_widget(form1.titre) }}</div>
+          <div class="col-xs-1 " >{{ form_widget(form1.submit) }}</div>         
         </div>
         <div class="row"  >
-          <div class="col-xs-10" >{#{ form_widget(form.comment) }#} </div>
-          <div class="col-xs-1 " >{#{ form_widget(form.submit) }#}{#{ form_widget(form.__token) }#}</div>
-          {{ form(form1) }}
+          <div class="col-xs-10" >{{ form_widget(form1.comment) }} </div>
+          
         </div>
       </div>
-
-    </div>
-  </form>
+{#{ form(form1) }#}
+    </div>{{ form_widget(form1._token) }}
+  {{ form_end(form1) }}
 </div>
 {#% endif %#}
 

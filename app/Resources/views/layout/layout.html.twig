@@ -31,7 +31,14 @@
 		      	<ul class="nav navbar-nav">
 			        <li class="active"><a href="{{path('produits')}}">Boutique <span class="sr-only">(current)</span></a></li>
 			        <li><a href="{{path('panier')}}">Panier</a></li>
-                    <li><a href="{{path('site')}}">Présentation du site</a></li>
+              <li class="dropdown">
+                <a href="{{path('site')}}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Présentation du site<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="{{path('site')}}#clid">Côté Client</a></li>
+                  <li><a href="{{path('site')}}#admid">Côté Administrateur</a></li>
+                  <li><a href="{{path('site')}}#stock">La Gestion des Stocks</a></li>   
+                </ul> 
+              </li>               
 			        <li class="dropdown">
 			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Autres <span class="caret"></span></a>
 			          <ul class="dropdown-menu">
@@ -39,9 +46,9 @@
 			            <li><a href="#">FAQ</a></li>
 			            <li><a href="#">Documentation</a></li>
 			            <li role="separator" class="divider"></li>
-			            <li><a href="#">Nous contacter</a></li>
+			            <li><a href="{{path('nous_contacter')}}">Nous contacter</a></li>
 			            <li role="separator" class="divider"></li>
-			            <li><a href="tagada">CGV</a></li>
+			            <li><a href="{{path('cgv')}}" target="_blank">CGV</a></li>
 			          </ul>
 			        </li>
             </ul>      

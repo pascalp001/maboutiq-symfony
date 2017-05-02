@@ -8,6 +8,7 @@ use DV\EcomBundle\Form\RechercheType ;
 use DV\EcomBundle\Entity\Categories;
 use DV\EcomBundle\Form\AvisType ;
 use DV\EcomBundle\Entity\Avis;
+use DV\EcomBundle\Entity\Visites;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Security\Core\Security;
 
@@ -33,6 +34,9 @@ class ProduitsController extends Controller
                     $Visites->setSemaine($semaine);
                     $Visites->setAnnee($annee);
                     $Visites->setNbrevisites(0);
+                    $em->persist($Visites);
+                    $em->flush(); 
+                    $Visites = $em->getRepository('EcomBundle:Visites')->findBy(array('semaine'=>$semaine, 'annee'=>$annee));                   
                 }
                 $Visites[0]->setNbrevisites($Visites[0]->getNbrevisites()+1);
                 $em->persist($Visites[0]);

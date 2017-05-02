@@ -4,7 +4,7 @@
 {# % form_theme form.image 'EcomBundle:Default:produits/modulesUsed/imagesProduit.html.twig' % #}
 <div >
     <h1>Creation d'un nouveau produit</h1><br/>
-    <form action="{{path('adminProduits_create') }}" method="POST" {{form_enctype(form) }}  class="form-group" >
+    {{form_start(form, {'action':path('adminProduits_create') } ) }}
         
         <div class="row form-group form-group-bordered">
             <label class="col-sm-2 control-label" for="input">{{ form_label(form.nom) }} </label>
@@ -132,7 +132,7 @@
         <div class="col-sm-4">        
             {{ form_widget(form.submit )}}
         </div>
-    </div>
+    </div>{{ form_widget(form._token)}}
     {{form_end(form)}} 
 
 </div>

@@ -12,14 +12,13 @@ class AvisType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $option)
 	{
 		$builder->add('stars', HiddenType::class, array('label'=>false, 'attr'=> array('class'=>'rate')))
-				->add('titre', TextType::class, array('label'=>false, 'attr'=> array('class'=>'form-control', 'placeholder'=>'Un titre à votre avis', 'style'=>'color:#132; line-height: 20px; font-size: 15px;')))
-				->add('comment', TextareaType::class, array('label'=>false, 'attr'=> array('class'=>'form-control ', 'placeholder'=>'Votre avis...', 'style'=>'color:#132; line-height: 20px; font-size: 15px;')))		
-            	->getForm();
+				->add('titre', TextType::class, array('label'=>false, 'attr'=> array('class'=>'form-control', 'placeholder'=>'Un titre à votre avis', 'style'=>'color:#132; line-height: 20px; font-size: 15px; font-weight: 800;')))
+				->add('comment', TextareaType::class, array('label'=>false, 'attr'=> array('class'=>'form-control ', 'placeholder'=>'Votre avis...', 'style'=>'color:#132; line-height: 20px; font-size: 15px; font-style:italic;')))
             	;
 	}
     public function getBlockPrefix()
       {
-          return 'dv_ecombundle_avis'; // Syntaxe particulière : minuscules et underscores
+          return 'dv_ecombundle_avis'; 
       }
 
 }

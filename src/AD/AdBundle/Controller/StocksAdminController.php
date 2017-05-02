@@ -205,6 +205,50 @@ class StocksAdminController extends Controller
         ));
     }
 
+    public function reassortPDFAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $mois0 = (int)date('m'); // = mois en cours
+        $tabMois = array('janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre');
+        $moistxt = $tabMois[$mois0-1];
+
+        $moy=array(); $nm=array();$cmdesV = array();
+
+        // Extraction des produits :
+        $Produits = $em->getRepository('EcomBundle:Produits')->findAll();
+
+        $cadencierV = $this->cadencierMaker('0', $Produits);
+        $cadencierP = $this->cadencierMaker('1', $Produits);
+        foreach($Produits as $Produit)
+        {   
+            $id=$Produit->getId();
+            $cmdesV[$id] = 0;
+            $moyVtes[$id] = 0;
+            for($i=1; $i<13; $i++ )
+            {
+                $cmdesV[$id] += $cadencierV[$id][$i];
+            }
+            $moyVtes[$id] =  $this->moyVtes($mois0, $cadencierV, $cadencierP, $id);
+        }
+        //var_dump($moyVtes); die();
+        //Création du tableau des 12 derniers mois :
+        $cad = array();
+        for($i=1; $i<13; $i++ )
+        {
+            $cad[$i] = ($mois0+$i-1)%12+1;
+        }        
+        // On dispose donc pour chaque produit.id 
+        // - d'un tableau $cadencierP[$id] sur 12 mois
+        // - d'un tableau $cadencierV[$id] sur 12 mois
+        // - d'un tableau $cmdesV[$id] sur 12 mois
+
+        $Fournisseurs = $em->getRepository('AdBundle:Fournisseurs')->findAll();
+        $Produits = $em->getRepository('EcomBundle:Produits')->findAllByFournisseur();
+        $vendeur = $em->getRepository('AdBundle:Vendeur')->findOneById('1');
+
+        $this->container->get('setNewReassort')->reassort($vendeur, $Produits, $Fournisseurs, $moistxt, $cad, $cadencierP, $cadencierV, $cmdesV, $moyVtes);
+
+    }
 
    public function nbRupturesAction()
     {

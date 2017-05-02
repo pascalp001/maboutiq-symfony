@@ -3,6 +3,10 @@ adminStocks_reassort:
     path:     /reassort
     defaults: { _controller: "AdBundle:StocksAdmin:reassort" }
 
+adminStocks_reassortPDF:
+    path:     /PDF/reassort
+    defaults: { _controller: "AdBundle:StocksAdmin:reassortPDF" }
+
 adminStocks_demarque:
     path:     /demarque
     defaults: { _controller: "AdBundle:StocksAdmin:demq" }

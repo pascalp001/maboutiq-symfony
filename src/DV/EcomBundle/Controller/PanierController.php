@@ -509,4 +509,12 @@ class PanierController extends Controller
         $vendeur = $em->getRepository('AdBundle:Vendeur')->findOneById($id);
         return $this->render('PagesBundle:Default:pages/layout/cgv.html.twig', array( 'vendeur'=> $vendeur));   
    }
+    public function showcgvPDFAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $vendeur = $em->getRepository('AdBundle:Vendeur')->findOneById('1');
+
+        $this->container->get('setNewCgv')->showCgv($vendeur);
+    }
+
 }

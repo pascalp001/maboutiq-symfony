@@ -3,5 +3,13 @@ accueil:
     defaults: { _controller: EcomBundle:Accueil:index }
 
 site:
-    path:     /construction du site
+    path:     /presentation_du_site
     defaults: { _controller: EcomBundle:Accueil:site }
+
+nous_contacter:
+    path:     /nous_contacter
+    defaults: { _controller: EcomBundle:Accueil:nouscontacter }
+
+envoi_message:
+    path:     /nous_contacter/message
+    defaults: { _controller: EcomBundle:Accueil:nouscontacter }

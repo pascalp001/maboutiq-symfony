@@ -9,3 +9,11 @@ services:
     setNewBL:
         class:  AD\AdBundle\Services\GetBL
         arguments: ['@service_container']
+
+    setNewCgv:
+        class:  AD\AdBundle\Services\GetCgv
+        arguments: ['@service_container']
+
+    setNewReassort:
+        class:  AD\AdBundle\Services\GetReassort
+        arguments: ['@service_container']

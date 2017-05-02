@@ -102,6 +102,9 @@ class CommandesAdminController extends Controller
         {   
                 $em = $this->getDoctrine()->getManager();
                 $Commande = $em->getRepository('EcomBundle:Commandes')->find($id);
+                $Vendeur = $em->getRepository('AdBundle:Vendeur')->find('1');
+                $logo1 = $Vendeur->getUrllogo1();
+                $vendeur = $Vendeur->getNomcomplet();
                 //if (!$Commande) {
                  //   throw $this->createNotFoundException('Unable to find Commandes'.$id.' entity.');
                 //}
@@ -141,18 +144,18 @@ class CommandesAdminController extends Controller
                         //Problème : stock insuffisant - avoir ou envoi plus tard ?
                         //Il va manquer $avoir[$id]['produit'][$id => $qte]
                         $message = $message->setBody($this->renderView('EcomBundle:Default:SwiftLayout/prepareCommande.html.twig', 
-                        array('utilisateur'=> $Commande->getUtilisateur()))); 
+                        array('utilisateur'=> $Commande->getUtilisateur(), 'vendeur'=>$vendeur))); 
                     }
                     else
                     {
                        $message = $message->setBody($this->renderView('EcomBundle:Default:SwiftLayout/prepareCommande.html.twig', 
-                        array('utilisateur'=> $Commande->getUtilisateur())));  
+                        array('utilisateur'=> $Commande->getUtilisateur(), 'vendeur'=>$vendeur)));  
                     }
                 }
             
 
                 if($livreId[$id]) { $message = $message->setBody($this->renderView('EcomBundle:Default:SwiftLayout/livreCommande.html.twig', 
-                        array('utilisateur'=> $Commande->getUtilisateur()))); }
+                        array('utilisateur'=> $Commande->getUtilisateur(), 'vendeur'=>$vendeur))); }
 
                 $this->get('mailer')->send($message);            
             }

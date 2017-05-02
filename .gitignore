@@ -13,3 +13,7 @@
 /.buildpath
 /.project
 arch/
+/.htaccess
+/.travis.yml
+/Composer-Setup.exe
+/index.php

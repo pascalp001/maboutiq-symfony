@@ -1,6 +1,13 @@
 {% extends '::layout/layoutAdmin.html.twig' %}
 
 {% block body %}
+    
+        <a href="{{ path('adminStocks_reassortPDF')}}"  target="_blank">
+            <button type="button" class="btn btn-greyish pull-right">
+            <img src="{{ asset( 'img/imprimer-icone-3918-48.png')}}"/>
+            </button>
+        </a>
+    
     <h1>Cadencier (jusqu'à {{moistxt}}) et réassort</h1>
         {{ form_start(form) }}
         <table class="table table-store records_list">

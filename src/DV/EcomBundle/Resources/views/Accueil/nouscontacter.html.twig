@@ -1,0 +1,48 @@
+{% extends "::layout/layout.html.twig" %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>NOUS CONTACTER</h1>
+        <div class="col-xs-12 thumbnail">
+        	<div class="caption">
+        		<h2>Nous contacter par e-mail : <span class="h3b">pascalp001@free.fr</span></h2>
+        		<br/>
+        		<h2>Nous contacter par Téléphone : <span class="h3b">06 20 444 777</span></h2>
+        		<br/>        		
+        		<h2>Nous adresser un message directement : </h2>
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}  
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <div class="alert alert-warning">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}  
+        		<div><h3>Formulaire d'envoi d'un message</h3>
+        			<br/>
+				    {{ form_start(form)}}
+				    <div class="row form-group form-group-bordered">
+				    {{ form_row(form.titre)}}
+					</div>
+				    <div class="row form-group form-group-bordered">
+				    {{ form_row(form.content)}}
+					</div>    
+				    <div class="row form-group form-group-bordered">
+				    {{ form_row(form.email)}}
+					</div>	
+				    <div class="row form-group form-group-bordered">
+				    {{ form_row(form.tel)}}
+					</div>	
+					<div><center>{{ form_widget(form.submit) }}</center></div>	
+        			
+        			{{ form_widget(form._token)}}
+        			{{ form_end(form)}} 
+        		</div>
+        		<br/>
+        	</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
