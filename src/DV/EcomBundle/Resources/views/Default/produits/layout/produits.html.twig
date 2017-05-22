@@ -1,113 +1,124 @@
 {% extends "::layout/layout.html.twig" %}
  {% block titre %} Pascalp Version Développement > Liste des produits disponibles {% endblock %}
 {% block body %}
+
 <div class="container ">
-
-    <div class="pull-right panier h5b" >{% render(controller('EcomBundle:Panier:menu')) %}</div>  
-    <div class="pull-center-top" >{% render(controller('EcomBundle:Produits:recherche')) %}</div>        
     <div class="row">
-    	<div class="col-xs-2 sidebar fixe">
-        {% include '::modulesBase/nav.html.twig' %}   
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %}  
-        {% else %}
-            {% include 'UtilisateursBundle:Default:modulesUsed/utilisateurs.html.twig' %}  
-        {% endif %}
-        
-        </div>   
-
-        <div class="col-xs-10 "><ul class=""  >
-            <div class="row">
-                    {% if produits|length != 0 %}
-                        {% if produits.pagecount is defined and produits.pagecount > 1 and produits.page and produits.page>1 %}
-                            {% set pageSet0 = produits.page %}
-                        {% elseif page is defined and page > 1 %}
-                                {% set pageSet0 = page %}
-                        {% else %}
-                                {% set pageSet0 = '1' %}
-                        {% endif %}
+<div class="pull-right panier h5b" >{% render(controller('EcomBundle:Panier:menu')) %}</div>  
+<div class="pull-center-top" >{% render(controller('EcomBundle:Produits:recherche')) %}</div>  
+ </div>
+<div class="sidebar fixe inverse show" >
+    {% include '::modulesBase/nav.html.twig' %}   
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %}  
+    {% else %}
+        {% include 'UtilisateursBundle:Default:modulesUsed/utilisateurs.html.twig' %}  
+    {% endif %}      
+    <!--div id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-minimal mCSB_scrollTools_vertical" style="display: block;">
+        <div class="mCSB_draggerContainer">
+            <div id="mCSB_1_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; display: block; height: 57px; max-height: 206px; top: 159px;" oncontextmenu="return false;">
+                <div class="mCSB_dragger_bar" style="line-height: 50px;"></div>
                     
-                        {% for produit in produits %}
+            </div>
+            <div class="mCSB_draggerRail"></div>
+        </div>
+    </div-->
+    <div class="base-sidebar" >&nbsp;</div>
+</div> 
 
-                            {% set prix = produit.prix  %}
-                            {% if produit.promoProd != null %} 
-                                {% for promo in produit.promoProd %}
-                                    {% if promo.datedeb is defined and promo.datedeb <= now and promo.datefin >= now and promo.nom is defined and  promo.apartirdeqte == 1 %}
-                                        {% if promo.remisePourcent > 0 %} 
-                                            {% set prix = (produit.prix * (100 - promo.remisepourcent)/100)|number_format(2)  %}
-                                        {%  else  %}
-                                            {% if promoProd.remiseEuro > 0 %} 
-                                              {% set prix = (produit.prix - promo.remiseEuro)|tva(produit.tva.multiplicate)|number_format(2)  %}  
-                                            {% endif %}
+
+    <div class="row" id="row-main">
+        <div class="col-xs-offset-2 col-xs-10 show" id="content"> 
+            <div class="row">
+                {% if produits|length != 0 %}
+                    {% if produits.pagecount is defined and produits.pagecount > 1 and produits.page and produits.page>1 %}
+                        {% set pageSet0 = produits.page %}
+                    {% elseif page is defined and page > 1 %}
+                            {% set pageSet0 = page %}
+                    {% else %}
+                            {% set pageSet0 = '1' %}
+                    {% endif %}
+                
+                    {% for produit in produits %}
+
+                        {% set prix = produit.prix  %}
+                        {% if produit.promoProd != null %} 
+                            {% for promo in produit.promoProd %}
+                                {% if promo.datedeb is defined and promo.datedeb <= now and promo.datefin >= now and promo.nom is defined and  promo.apartirdeqte == 1 %}
+                                    {% if promo.remisePourcent > 0 %} 
+                                        {% set prix = (produit.prix * (100 - promo.remisepourcent)/100)|number_format(2)  %}
+                                    {%  else  %}
+                                        {% if promoProd.remiseEuro > 0 %} 
+                                          {% set prix = (produit.prix - promo.remiseEuro)|tva(produit.tva.multiplicate)|number_format(2)  %}  
                                         {% endif %}
                                     {% endif %}
-                                {% endfor %}                                   
-                            {% endif %} 
+                                {% endif %}
+                            {% endfor %}                                   
+                        {% endif %} 
 
-                            <li class="col-md-4 col-sm-6 col-xs-12 list-unstyled" style="margin-left:-10px;" >
-                                <div class="thumbnail produit" >
-                                    <div class="row " style="min-height:130px;">
-                                        <div class="col-md-5">
-                                            {% if produit.page is defined and produit.page > 1 %}
-                                                <a  href="{{ path('presentationpage', {'id': produit.id  , 'page': produit.page })  }}">
-                                                <img src="{{ produit.image.AssetPath|imagine_filter('imgProduitFormat1') }}" alt="image {{ produit.image.name }}" title="{{produit.image.name}}"  >
-                                                </a>
-                                            {% else %}
-                                                <a  href="{{ path('presentation', {'id': produit.id  , 'page': pageSet0 })  }}">
-                                                <img src="{{ produit.image.AssetPath|imagine_filter('imgProduitFormat1') }}" alt="image {{ produit.image.name }}" title="{{produit.image.name}}"  >
-                                                </a>
-                                            {% endif %}
-                                            {% if produit.promoProd is defined and produit.promoProd != null and produit.promoProd[0].nom is defined %}<div class="promo"> {{produit.promoProd[0].nom}} </div>{% endif %} 
-                                        </div>
-                                        <div class="col-md-7">   
-                                            <div class="caption">
-                                                <h4 style="min-height:40px">{{produit.nom}}<span class="h6b"> <br/>(Cat: {{produit.categorie.nom}})</span></h4> {% if produit.taille != null %}<span class="h7b">taille {{produit.taille}} mm </span>{% endif %}
-                                                <br/> {{produit.prix|tva(produit.tva.multiplicate) |number_format(2) }} € <span class="smallf">TTC</span>
-                                            </div>
-                                        </div>
+                        <li class="col-md-4 col-sm-6 col-xs-12 list-unstyled" style="margin-left:-10px; " >
+                            <div class="thumbnail produit" style="min-height:350px;" >
+                                <div class="row " style="min-height:130px;">
+                                    <div class="col-md-5">
+                                        {% if produit.page is defined and produit.page > 1 %}
+                                            <a  href="{{ path('presentationpage', {'id': produit.id  , 'page': produit.page })  }}">
+                                            <img src="{{ produit.image.AssetPath|imagine_filter('imgProduitFormat1') }}" alt="image {{ produit.image.name }}" title="{{produit.image.name}}"  >
+                                            </a>
+                                        {% else %}
+                                            <a  href="{{ path('presentation', {'id': produit.id  , 'page': pageSet0 })  }}">
+                                            <img src="{{ produit.image.AssetPath|imagine_filter('imgProduitFormat1') }}" alt="image {{ produit.image.name }}" title="{{produit.image.name}}"  >
+                                            </a>
+                                        {% endif %}
+                                        {% if produit.promoProd is defined and produit.promoProd != null and produit.promoProd[0].nom is defined %}<div class="promo"> {{produit.promoProd[0].nom}} </div>{% endif %} 
                                     </div>
-                                    <div class="row " style=" min-height:36px;">
-                                        <div class="col-md-12 caption" style="margin-top:-20px; ">    
-                                            {{produit.descripcourt}}
+                                    <div class="col-md-7">   
+                                        <div class="caption">
+                                            <h4 style="min-height:40px">{{produit.nom}}<span class="h6b"> <br/>(Cat: {{produit.categorie.nom}})</span></h4> {% if produit.taille != null %}<span class="h7b">taille {{produit.taille}} mm </span>{% endif %}
+                                            <br/> {{produit.prix|tva(produit.tva.multiplicate) |number_format(2) }} € <span class="smallf">TTC</span>
                                         </div>
-                                    </div>                             
-                                    <div class="row ">
-                                        <div class="col-md-5" style="padding-left:2%; margin-left:0">                       
-                                                <a class="btn btn-primary" href="{{ path('presentation', {'id': produit.id, 'page': pageSet0})  }}">Plus d'infos</a>
-                                        </div>
-                                        <div class="col-md-7">   
-                                            {% if (panier[produit.id] is not defined and produit.stockvirtuel > 0) %}                          
-                                                <a class="btn btn-success" href="{{ path('ajoutpanier1',{'id':produit.id, 'prix':prix })  }}">Ajouter au panier</a>
-                                            {% else %}
-                                                {% if panier[produit.id] is defined  %}                          
-                                                    <span class="fontxs">Déjà dans le panier</span><a href="{{path('panier' ) }}" class="glyphicon glyphicon-eye-open btn-eye" title="voir le panier" ></a> 
-                                                {% else %}
-                                                    <span class="fontxs">Article non disponible</span>
-                                                {% endif %}                                            
-                                            {% endif %}
-                                        </div>
-                                     
                                     </div>
                                 </div>
-                            </li>
-                        {% if loop.index%4 == 3 %} </div><div class="row"> {% endif %} 
-                       {% endfor %} 
-                    </ul>
-                    {% else %}
-                        Aucun produit
-                    {% endif %}
-                </div>
-
-                <!--<div class="col-md-12">-->
-                    <div class="navigation" style="list-style: none;">
-                    {{ knp_pagination_render(produits) }}
-                    </div>
-                <!--</div>-->
+                                <div class="row " style=" min-height:36px;">
+                                    <div class="col-md-12 caption" style="margin-top:-20px; ">    
+                                        {{produit.descripcourt}}
+                                    </div>
+                                </div>                             
+                                <div class="row ">
+                                    <div class="col-md-5" style="padding-left:2%; margin-left:0">                       
+                                            <a class="btn btn-primary" href="{{ path('presentation', {'id': produit.id, 'page': pageSet0})  }}">Plus d'infos</a>
+                                    </div>
+                                    <div class="col-md-7">   
+                                        {% if (panier[produit.id] is not defined and produit.stockvirtuel > 0) %}                          
+                                            <a class="btn btn-success" href="{{ path('ajoutpanier1',{'id':produit.id, 'prix':prix })  }}">Ajouter au panier</a>
+                                        {% else %}
+                                            {% if panier[produit.id] is defined  %}                          
+                                                <span class="fontxs">Déjà dans le panier</span><a href="{{path('panier' ) }}" class="glyphicon glyphicon-eye-open btn-eye" title="voir le panier" ></a> 
+                                            {% else %}
+                                                <span class="fontxs">Article non disponible</span>
+                                            {% endif %}                                            
+                                        {% endif %}
+                                    </div>
+                                 
+                                </div>
+                            </div>
+                        </li>
+                    {#% if loop.index%4 == 3 %} </div><div class="row"> {% endif %#} 
+                   {% endfor %} 
+                
+                {% else %}
+                    Aucun produit
+                {% endif %}
             </div>
-        </div>
 
+        <!--<div class="col-md-12">-->
+            <div class="navigation" style="list-style: none;">
+            {{ knp_pagination_render(produits) }}
+            </div>
+        <!--</div>-->
+        </div>
     </div>
 
 </div>
+
 
 {% endblock %}

@@ -22,7 +22,7 @@
             </div>
         </div>
     </div>
-    <div class="row listeActual"  >
+    <div class="row listeActual "  >
     
     {% for ind in inds|sort() %}
         {% set i = table[ind] %}  
@@ -46,8 +46,8 @@
                             
                         </div>
                     </div>
-                    <div class="row" style="min-height:225px;">
-                        <h2 style=" color:#02d; font-weight:600" >{{i[0].articlePub}}</h2>
+                    <div class="row listepub" style="min-height:225px;">
+                        <h2  class="listepub" style=" color:#02d; font-weight:600" >{{i[0].articlePub}}</h2>
                     </div>
                     <div class="row caption" style="min-height:45px;">
                         

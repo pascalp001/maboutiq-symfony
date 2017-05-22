@@ -1,24 +1,37 @@
-
     
-<div class="well sidebar" style="padding-right:5px;">
+<div class="well sidebar" style="padding-right:0px;">
+	<div class="sidebar poignee toggle-sidebar" ><img src="{{ asset('./img/poigneeR.jpg')}}" ></div>
 	
-    <ul class="nav nav-list">     
-    	 {% if is_granted('ROLE_ADMIN') %} <li class="nav-header"><a href="{{path('adminCommandes') }}" class="sidebar super" >Administration <span style="font-size:1.1em">&nbsp; &#11166;</span></a></li> {% endif %}
-    	<li class="nav-header " ><a class="sidebar super" >Produits</a></li>
-    	<li class="nav-header "><a href="{{path('produits') }}" class="sidebar sup"> Trier par...</a></li>
-		<li><a href="{{path('produits_tripar_nomAsc', {'tri' : 'nom_asc'}) }}" class="sidebar sub">Par nom de A à Z</a></li>
-		<li><a href="{{path('produits_tripar_nom_desc', {'tri' : 'nom_desc'}) }}" class="sidebar sub">Par nom de Z à A</a></li>
-		<li><a href="{{path('produits_tripar_pop_asc', {'tri' : 'pop_asc'}) }}" class="sidebar sub">Par popularité croissante</a></li>
-		<li><a href="{{path('produits_tripar_pop_desc', {'tri' : 'pop_desc'}) }}" class="sidebar sub">Par popularité décroissante</a></li>
-		<li><a href="{{path('produits_tripar_prix_asc', {'tri' : 'prix_asc'}) }}" class="sidebar sub">Par prix croissant</a></li>
-		<li><a href="{{path('produits_tripar_prix_desc', {'tri' : 'prix_desc'}) }}" class="sidebar sub">Par prix décroissant</a></li>
-	</ul>	
-    <ul class="nav nav-list">
-    	<div style="height:20px;">&nbsp;</div>
-        <li class="nav-header"><a href="{{path('produits') }}" class="sidebar sup"> Nos produits par catégorie</a></li>
-         {% render(controller('EcomBundle:Categories:menu')) %}
-   
+    <ul class="nav nav-list sidebar" >     
+    	 {% if is_granted('ROLE_ADMIN') %}
+    	 	 <li class="nav-header header" ><a href="{{path('adminCommandes') }}" class="sidebar super" style="padding-right: 0px;" > Administration <span style="font-size:1.1em">&#11166;</span></a></li> 
+    	 {% endif %}
+    	  <li class="nav-header sidebar " ><a href="{{path('accueil') }}" class="sidebar sup"><span class="glyphicon glyphicon-home" style="padding-bottom:14px;">&nbsp;</span> Accueil</a>
+
+    	<li class="nav-header header" ><a href="{{path('produits') }}" class="sidebar super" >Produits</a></li>
+
+    	  <li class="nav-header sidebar sm-sub toggled" ><a href="{{path('produits') }}" class="sidebar sup"><span class="glyphicon glyphicon-sort-by-alphabet" style="padding-bottom:14px;">&nbsp;</span> Trier par...<span class="caret push-D">&nbsp;</span></a>
+    	  	<ul style="display:none;">
+				<li class=""><a href="{{path('produits_tripar_nomAsc', {'tri' : 'nom_asc'}) }}" class="sidebar sub">Par nom de A à Z</a></li>
+				<li class=""><a href="{{path('produits_tripar_nom_desc', {'tri' : 'nom_desc'}) }}" class="sidebar sub">Par nom de Z à A</a></li>
+				<li class=""><a href="{{path('produits_tripar_pop_asc', {'tri' : 'pop_asc'}) }}" class="sidebar sub">Par popularité croissante</a></li>
+				<li class=""><a href="{{path('produits_tripar_pop_desc', {'tri' : 'pop_desc'}) }}" class="sidebar sub">Par popularité décroissante</a></li>
+				<li class=""><a href="{{path('produits_tripar_prix_asc', {'tri' : 'prix_asc'}) }}" class="sidebar sub">Par prix croissant</a></li>
+				<li class=""><a href="{{path('produits_tripar_prix_desc', {'tri' : 'prix_desc'}) }}" class="sidebar sub">Par prix décroissant</a></li>
+			</ul>
+		  </li>
+
+	    	<div style="height:5px;">&nbsp;</div>
+
+	      <li class="nav-header sidebar sm-sub toggled"><a href="{{path('produits') }}" class="sidebar sup"><span class="glyphicon glyphicon-check" style="padding-bottom:14px;margin-right:0px;">&nbsp;</span> Filtrer par catégorie<div class="caret push-D">&nbsp;</div></a>
+	        <ul style="display:none;">
+
+	         	{% render(controller('EcomBundle:Categories:menu')) %}
+	        </ul>
+	      </li>
+   		<li class="nav-header header" ><a href="{{path('panier') }}" class="sidebar super" >Panier</a></li>
     </ul>	
+
 	
 </div>
 

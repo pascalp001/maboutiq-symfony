@@ -27,13 +27,14 @@ class CommandesController extends Controller
 
       return $this->render('EcomBundle:Default:panier/layout/validation.html.twig',
           array('commande' => $commande));
+  }    
       // La suite des actions se passe dans CommandesController.php via routingCommande.yml :
       // paiementAction permet le choix du mode de paiement et affiche paiement.html.twig
       // Choix 1 (CB banque) et 2 (Paypal) : accès à l'API externe correspondant ; envoi id vendeur+id commande+TTC+date ; réception OK ; payer = 1 ;
       // Choix 3 (virement) et 4 (chèque) : rien (payer reste à 0)
       // validationCommandeAction valide la commande complète, efface les données de la commande en session, envoie un mail, envoie un message 'succès', redirige vers paiementfaitAction
       // paiementfaitAction affiche les commandes du client et paiementfait.html.twig (avant retour boutique) ; affiche statut paiement 'en attente' si virement ou chèque
- }
+ 
 
   public function prepareCommandeAction(Request $request)
   {
@@ -45,16 +46,21 @@ class CommandesController extends Controller
       //echo '<pre>';var_dump($session);echo '</pre>';
       //die();
       //Création de l'objet commande si l'id n'et pas déjà en session :
-      if (!$session->has('commande') || null===$session->get('commande'))  { $commande = new Commandes();}
+      if (!$session->has('commande') || null===$session->get('commande'))  { 
+        $commande = new Commandes(); 
+      }
       elseif($em->getRepository('EcomBundle:Commandes')->find($session->get('commande'))) 
       {
        $commande = $em->getRepository('EcomBundle:Commandes')->find($session->get('commande'));
       }
-      else { $commande = new Commandes();}
+      else { 
+        $commande = new Commandes();
+      }
 
       //On prépare la commande :      
       $commande->setDate(new \DateTime());
-      $commande->setReference(0); //On initialise la référence à 0, mais un service va déterminer le numéro de commande      
+      $commande->setReference(0); //On initialise la référence à 0, mais un service va déterminer le numéro de commande  
+
       //Commande.commande va contenir le panier, les frais de port, le total HT et TTC, de manière non relationnelle :
       $commande->setCommande($this->facture($request));       
       $commande->setPayer(0);
@@ -71,7 +77,7 @@ class CommandesController extends Controller
         $em->persist($commande);       
       }
 
-       $em->flush();
+       $em->flush(); // ************La commande existe en BDD reference=0 valider=0 quantités existent**********************************
        $session->set('commande', $commande->getId());
 
       //Retour à validationAction
@@ -110,7 +116,12 @@ class CommandesController extends Controller
 
     foreach($produits as $produit)
     {
-      $prixHT = ( $panier[$produit->getId()]['prix'] * $panier[$produit->getId()]['qte']);
+      // Dernière vérification que les quantités sont toujours disponibles :
+      $qte = $panier[$produit->getId()]['qte'];
+      $stock = $produit->getStockvirtuel();
+      if( $stock < $qte) { $panier[$produit->getId()]['qte'] = $stock; }
+
+      $prixHT = ( $panier[$produit->getId()]['prix'] * $panier[$produit->getId()]['qte'] );// prixHT<>$prixHT /!\
       $prixTTC = $prixHT * $produit->getTva()->getMultiplicate();
       $totalHT += $prixHT;
 
@@ -148,36 +159,23 @@ class CommandesController extends Controller
       //echo '<pre>';var_dump($session);echo '</pre>';
       //die();
     if (!$session->has('commande')|| null===$session->get('commande')){
-      //echo '<pre>';var_dump($session);echo '</pre>';
       // Retour en arrière avant la validation et la création de l'objet commande - panier, adresses et frais de port sont encore en session
       return $this->redirect($this->generateUrl('validation'));             
     }
     $id = $session->get('commande');
-    $showboite = false; $idv=1;
+    $showboite = false; $idv=1; $arrayId=array();
 
-    // Mise à jour du stock virtuel :
-    $panier = $session->get('panier');
-    $em = $this->getDoctrine()->getManager();  
-    $produits =  $em->getRepository('EcomBundle:Produits')->findArray(array_keys($session->get('panier')));
-    foreach($produits as $produit)
-    {   
-      $stockvirtuel = $produit->getStockvirtuel() - $panier[$produit->getId()]['qte'];
-      $produit->setStockvirtuel($stockvirtuel);
-      $em->persist($produit);
-    }    
-    $em->flush();
-   
     $em = $this->getDoctrine()->getManager();
     $commande = $em->getRepository('EcomBundle:Commandes')->find($id);    
     $vendeur = $em->getRepository('AdBundle:Vendeur')->findOneById($idv);
 
+    // Formulaire de la page 'choix du mode de paiement' :
     $buildform = $this->createFormBuilder();
     $buildform->add('modbq', HiddenType::class, array('label'=>false, 'attr'=> array('class'=>'modbq', 'value'=>'1')))
-              ->add('submit', SubmitType::class, array('label' => 'Payer la commande', 'attr'=>array('class'=>'btn btn-info pull-right', 'style'=>'color:#fff; font-weight:600;')));
+              ->add('submit', SubmitType::class, array('label' => 'Payer la commande', 'attr'=>array('class'=>' btn btn-success ', 'style'=>'color:#fff; font-weight:600;')));
     $form = $buildform->getForm();
 
-    // On récupère le choix du mode de paiement
-            
+    // On récupère le choix du mode de paiement :            
     if($request->getMethod() == "POST")
       {  
         $form->handleRequest($request);                               
@@ -195,7 +193,26 @@ class CommandesController extends Controller
           //On actualise la commande "supposée certaine à ce stade (vente réalisée)" avec un numéro de commande / facturation :         
           $commande->setReference($this->container->get('setNewReference')->reference());
           $em->persist($commande);
-          $em->flush();  
+          $em->flush();   // ************La reference est créée - valider=0 quantités existent mais stock virtuel intact******************
+
+          // Mise à jour du stock virtuel :
+          $panier = $session->get('panier');
+          foreach($panier as $idp=>$value)
+          {
+            $arrayId[$idp] = $idp;
+          }
+          
+          $em = $this->getDoctrine()->getManager();  
+          $produits =  $em->getRepository('EcomBundle:Produits')->findArray(array_keys($arrayId));
+          //var_dump($produits);
+          foreach($produits as $produit)
+          {   
+            $stockvirtuel = $produit->getStockvirtuel() - $panier[$produit->getId()]['qte'];
+            $produit->setStockvirtuel($stockvirtuel);
+            $em->persist($produit);
+          }    
+          $em->flush();  // *************** stock virtuel diminué - valider=0****************************************************************
+          //echo '<br/> là on a '.$stockvirtuel; //die();
 
           $montant =  $commande->getCommande()['totalTTC'];
 
@@ -236,19 +253,21 @@ class CommandesController extends Controller
       $session = $request->getSession();
       if (!$session->has('commande')|| null===$session->get('commande')){
         // Erreur d'exécution : retour en arrière avant la validation et la création de l'objet commande - validation devenue impossible
-      $session->remove('panier');
-      $session->remove('adresse');
-      $session->remove('livraison');
-      $session->remove('tabFrPort');     
-      $session->remove('commande');
-            // Message "erreur" :
-      $this->get('session')->getFlashBag()->add('error', 'Une erreur malencontreuse est survenue. Votre commande n\'a pas pu être enregistrée correctement. Un message vous sera envoyé prochainement pour vous indiquer si la commande a bien pu être enregistrée ou non, et si le paiement a été reçu ou non. ');
-      //echo('ici');die();
+        $session->remove('panier');
+        $session->remove('adresse');
+        $session->remove('livraison');
+        $session->remove('tabFrPort');     
+        $session->remove('commande');
+        // Message "erreur" :
+        $this->get('session')->getFlashBag()->add('error', 'Une erreur malencontreuse est survenue. Votre commande n\'a pas pu être enregistrée correctement. Un message vous sera envoyé prochainement pour vous indiquer si la commande a bien pu être enregistrée ou non, et si le paiement a été reçu ou non. ');
+        //echo('ici');die();
         return $this->redirect($this->generateUrl('paiementfait'));             
       }
       $id = $session->get('commande');
       $commande = $em->getRepository('EcomBundle:Commandes')->find($id);
-      $commande->setValider(1); 
+
+      // Ici, on passe la commande à 1 = validée :
+      $commande->setValider(1); // ****************** valider=1 *****************************************************
 
       // Si règlement fait par CB ou Paypal, payer = 1 :
       if($commande->getModpmt() == 1 || $commande->getModpmt() == 2) $commande->setPayer("1");
@@ -271,14 +290,16 @@ class CommandesController extends Controller
       $Vendeur = $em->getRepository('AdBundle:Vendeur')->find('1');
       $logo1 = $Vendeur->getUrllogo1();
       $vendeur = $Vendeur->getNomcomplet();
-      $message = \Swift_Message::newInstance()
-              ->setSubject('Validation de votre commande')
+      $message = \Swift_Message::newInstance();
+      $basePath = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
+      $imgUrl = $basePath.'/img/LogoProG8.PNG';
+      $message->setSubject('Validation de votre commande')
               ->setFrom(array('pascal.p8610@gmail.com'=>"ProG-dev"))
               ->setTo($commande->getUtilisateur()->getEmailCanonical())
               ->setCharset('utf-8')
               ->setContentType('text/html')
               ->setBody($this->renderView('EcomBundle:Default:SwiftLayout/validCommande.html.twig', 
-                array('logo1'=>$logo1, 'vendeur'=>$vendeur,'commande'=> $commande)));
+                array('logo1'=>$logo1, 'vendeur'=>$vendeur,'commande'=> $commande, 'url'=>$imgUrl)));
       $this->get('mailer')->send($message);
 
       // Message "succès" :

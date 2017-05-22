@@ -1,29 +1,21 @@
 {% extends "::layout/layout.html.twig" %}
 {% block titre %} Pascalp Version Développement > Validation de la commande {% endblock %}
 {% block body %}
+<div class="sidebar fixe" >
+    {% include '::modulesBase/nav.html.twig' %}   
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %}  
+    {% else %}
+        {% include 'UtilisateursBundle:Default:modulesUsed/utilisateurs.html.twig' %}  
+    {% endif %}            
+</div>         
 <div class="container">
-    <div class="row">
-        <div class="col-xs-1">
-            <button type="button" class="btn btn-default navbar-nontoggle toggle-sidebar">
-
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-            </button>
-        </div> 
-        <div class="col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}
+    <div class="row barremenupanier">
+        <div class="col-xs-offset-1 col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}
         </div>
     </div>
     <div class="wedge5"> &nbsp; </div>   
     <div class="row" id="row-main">
-        <div class="col-xs-2 " id="sidebar">  
-            {% include '::modulesBase/nav.html.twig' %}
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %}  
-            {% else %}
-                {% include 'UtilisateursBundle:Default:modulesUsed/utilisateurs.html.twig' %}  
-            {% endif %}
-        </div> 
         <div class="col-xs-12" id="content"> 
             <div class="wedge15;"> &nbsp; </div> 
             <h2>Valider ma commande</h2>
@@ -130,34 +122,4 @@
         </div>
     </div>
 </div>
-{% endblock %}
-{% block javascripts %}
-<script src="{{ asset('js/plugin/jquery/jquery.min.js')}}"></script>    
-<script>
-$(document).ready(function () { 
- $("#valider").prop("disabled", true);
- $("#checkcgv").prop("checked", false);
-});
-
-toggle1=true; toggle=false;
-function cgv() {  
-    if(toggle1){$("#valider").prop("disabled", false); toggle1=!toggle1;}
-    else {$("#valider").prop("disabled", true); toggle1=!toggle1;}
-}
-
-$(".toggle-sidebar").click(function () {
-    toggle=!toggle;
-    if(toggle)
-    {    
-        $("#sidebar").toggleClass("show", 1000, "swing" );
-        $("#content").removeClass("col-md-12").addClass("col-md-10"); 
-    } 
-    else
-    {          
-        $("#sidebar").toggleClass("show", 1000, "swing");
-        $("#content").removeClass("col-md-10").addClass("col-md-12");
-    }      
-    return false;
-  });
-</script>
 {% endblock %}

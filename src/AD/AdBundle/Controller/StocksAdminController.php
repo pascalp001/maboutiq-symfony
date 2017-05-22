@@ -27,8 +27,8 @@ class StocksAdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         // Extraction des commandes préparées et non préparées 
         // Crée les objets $CommandesV et $CommandesP :
-        $Commandes = $em->getRepository('EcomBundle:Commandes')->findByPreparer($v);
-
+        $Commandes = $em->getRepository('EcomBundle:Commandes')->findAvecPreparer($v);
+        //var_dump($Commandes); die();
         $cadencier = array(); //Tableau des commandes 
 
         // Initialisation du tableau $cadencier[produit][mois] :
@@ -51,14 +51,17 @@ class StocksAdminController extends Controller
 
             // Extraction des produits et quantités de la commande, cumul des quantités :            
             $commande = $Commande->getCommande();
-            $produits = $commande['produit'];
-            foreach($produits as $id => $produit)
-            {
-                $qtePanier = $produit['quantite'];
-                $cadencier[$id][$mois] += $qtePanier;
+            if(array_key_exists('produit', $commande)){
+                $produits = $commande['produit'];
+                foreach($produits as $id => $produit)
+                {
+                    $qtePanier = $produit['quantite'];
+                    $cadencier[$id][$mois] += $qtePanier;
+                }                
             }
-        }
 
+        }
+        //var_dump($cadencier); die();
         return $cadencier;
     }
 
@@ -70,11 +73,11 @@ class StocksAdminController extends Controller
             for($m = $mois0+1 ; $m<13 ; $m++)
             {
                 if($moy==0){
-                    $moy=$cadencierP[$id][$m] +$cadencierV[$id][$m]; 
+                    $moy=$cadencierP[$id][$m] + $cadencierV[$id][$m]; 
                     if($moy!=0){$nm=1;}
                 }
                 else{
-                    $moy=$moy+$cadencierP[$id][$m] +$cadencierV[$id][$m];
+                    $moy=$moy + $cadencierP[$id][$m] + $cadencierV[$id][$m];
                     $nm++;
                 }                
             }
@@ -254,12 +257,13 @@ class StocksAdminController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $mois0 = (int)date('m'); // = mois en cours
-        $moy=array(); $nm=array();$cmdesV = array();
+        $moy=array(); $nm=array();$cmdesV = array(); $moyVtes = array();
         $Produits = $em->getRepository('EcomBundle:Produits')->findAll();
         $nbRupt = 0 ; $nbSensb = 0 ;
 
         $cadencierV = $this->cadencierMaker('0', $Produits);
         $cadencierP = $this->cadencierMaker('1', $Produits);
+
         foreach($Produits as $Produit)
         {   
             $id=$Produit->getId();
@@ -290,6 +294,7 @@ class StocksAdminController extends Controller
             $PrdDemarque->setId($id);
             $PrdDemarque->setNom($produit->getNom()); 
             $PrdDemarque->setStockreel($produit->getStockreel());
+            $PrdDemarque->setStockvirtuel($produit->getStockvirtuel());
 
             $Demarque->addPrdDemarque($PrdDemarque);
         }

@@ -1,0 +1,63 @@
+D:\wamp\www\ECom\src\AD\AdBundle\Controller\CommandesAdminController.php:146:
+array (size=1)
+  16 => int 4
+
+id=16 ; qte=4
+
+D:\wamp\www\ECom\src\AD\AdBundle\Controller\CommandesAdminController.php:190:
+array (size=10)
+  'tva' => 
+    array (size=1)
+      '%20' => float 0.21
+  'produit' => 
+    array (size=1)
+      16 => 
+        array (size=4)
+          'reference' => string 'boulon jaune' (length=12)
+          'quantite' => int -4
+          'prixHT' => float 1.05
+          'prixTTC' => float 1.26
+  'livraison' => 
+    array (size=8)
+      'prenom' => string 'pascal' (length=6)
+      'nom' => string 'pascalp' (length=7)
+      'telephone' => string '06 20 44 47 77' (length=14)
+      'adresse' => string 'rue de Gravelines' (length=17)
+      'cp' => string '86100' (length=5)
+      'ville' => string 'Châtellerault' (length=14)
+      'pays' => string 'France' (length=6)
+      'complement' => null
+  'facturation' => 
+    array (size=8)
+      'prenom' => string 'pascal' (length=6)
+      'nom' => string 'pascalp' (length=7)
+      'telephone' => string '06 20 44 47 77' (length=14)
+      'adresse' => string 'rue de Gravelines' (length=17)
+      'cp' => string '86100' (length=5)
+      'ville' => string 'Châtellerault' (length=14)
+      'pays' => string 'France' (length=6)
+      'complement' => null
+  'totalHT' => float 4.2
+  'org' => string '' (length=0)
+  'nom' => string '' (length=0)
+  'frPort' => int 0
+  'totalTTC' => float 4.41
+  'token' => string '799e8c75ff8cd4a279349c37398a9b782640a3d3' (length=40)
+
+  D:\wamp\www\ECom\src\AD\AdBundle\Controller\CommandesAdminController.php:312:
+array (size=1)
+  65 => 
+    array (size=1)
+      17 => int 3
+
+D:\wamp\www\ECom\src\AD\AdBundle\Controller\CommandesAdminController.php:333:
+array (size=1)
+  17 => 
+    array (size=6)
+      'nom' => string 'boulon violet' (length=13)
+      'taille' => float 22
+      'qte' => int 3
+      'qtePanier' => string '7' (length=1)
+      'prixHT' => float 1.08
+      'prixTTC' => float 1.3
+

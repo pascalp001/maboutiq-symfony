@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <h1>Liste des commandes {{archive}}</h1>
+    <h2>Liste des commandes {{archive}}</h2>
 
     <table class="table table-store records_list">
         <thead>
@@ -33,13 +33,14 @@
                 <td style="text-align:left">{{ entity.utilisateur.username }} 
                     {% if entity.commande.facturation.nom is defined %}({% endif %}
                     {% if entity.commande.facturation.prenom is defined %} {{ entity.commande.facturation.prenom }}{% endif %}
-                    {{ entity.commande.facturation.nom }}
-                    {% if entity.commande.facturation.nom is defined %} ){% endif %}</td>
+                    
+                    {% if entity.commande.facturation.nom is defined %}{{ entity.commande.facturation.nom }} ){% endif %}</td>
 
                 <td {% if entity.valider != 1 %} style="color:red;" {% endif %}><div style="width:20px;border:1px solid #99a;border-radius:4px;margin-left:14px; background:#ccc;">{% if entity.valider != 1 %} 0 {% else %}{{ entity.valider }}{% endif %}</div></td>
 
             <form action="{{path('adminCommandes_modif', {'id': entity.id })  }}" method="post">
-                <td style="text-align:left; ">{% if entity.valider == 1 %}
+                <td style="text-align:left; ">
+                    {% if entity.valider == 1 and  entity.reference matches '/^[^89]/' %}
                         {% if entity.payer == 0 %} 
                             <input type="checkbox"  name="paye[{{entity.id}}]" value="false" id="paye{{entity.id}}" class="form-store"  onClick="$(this).attr({'value':'true','checked':'checked'});this.form.submit();" >
                             <label for="paye{{entity.id}}" style="font-size:0.8em">&nbsp; attente
@@ -50,43 +51,69 @@
                             <label for="paye{{entity.id}}" style="font-size:0.8em" >&nbsp; payé
                             {% if entity.modpmt == 1 %}(CB){% endif %}
                             {% if entity.modpmt == 2 %}(Payp){% endif %}</label>
+                            {% if entity.modpmt == 3 %}(virt){% endif %}
+                            {% if entity.modpmt == 4 %}(chq){% endif %}</label>
                         {% endif %}
                     {% else %}&nbsp;&nbsp;&nbsp; -  
                     {% endif %}
                 </td>
 
-                <td>{% if entity.valider == 1 %}
-                        {% if entity.preparer == 0 %}
-                        <input type="checkbox"  name="prepare[{{entity.id}}]" value="false" id="prepare{{entity.id}}" {% if entity.payer == 0 %} disabled {% else %} onClick="$(this).attr({'value':'true','checked':'checked'});this.form.submit();" {% endif %}class="form-store"  >
-                        <label for="prepare{{entity.id}}"  style="font-size:0.8em">&nbsp; préparer</label>
+                <td>{% if entity.reference matches '/^[89]/' or entity.valider == 0 %} &nbsp;&nbsp;&nbsp; -  
+                    {% else %}
+                        {% if entity.preparer <= 0 %}
+                            <input type="checkbox"  name="prepare[{{entity.id}}]" value="false" id="prepare{{entity.id}}" {% if entity.payer == 0 %} disabled {% else %} onClick="$(this).attr({'value':'true','checked':'checked'});this.form.submit();" {% endif %}class="form-store"  >
+                            <label for="prepare{{entity.id}}"  style="font-size:0.8em">&nbsp; 
+                                {% if entity.preparer == -1 %}<span style="color:orange">préparer</span>
+                                {% elseif entity.preparer == -2 %}<span style="color:red; font-style:italic;">préparer</span>
+                                {% else %} préparer
+                                {% endif %}
+                            </label>
+                        {% elseif entity.preparer == 3 %}
+                            <input type="checkbox"  name="prepare[{{entity.id}}]" value="true" disabled id="prepare{{entity.id}}" class="form-store"  >
+                            <label for="prepare{{entity.id}}"  style="font-size:0.8em; background:#f77;">&nbsp; annulé</label>
                         {% else %}  
-                        <input type="checkbox"  name="prepare[{{entity.id}}]" value="true" checked disabled id="prepare{{entity.id}}" class="form-store"  >
-                        <label for="prepare{{entity.id}}"  style="font-size:0.8em">&nbsp; préparé</label>
+                            <input type="checkbox"  name="prepare[{{entity.id}}]" value="true" checked disabled id="prepare{{entity.id}}" class="form-store"  >                             
+                            {% if entity.preparer == 2 %}<label for="prepare{{entity.id}}"<label for="prepare{{entity.id}}"   style="font-size:0.8em; color:#f60;">&nbsp; prép.partiel</label>
+                            {% else %}<label for="prepare{{entity.id}}"  style="font-size:0.8em; ">&nbsp; préparé</label>
+                            {% endif %}
                         {% endif %}
-                    {% else %}&nbsp;&nbsp;&nbsp; -  
                     {% endif %}
+
                 </td>
 
                 <td>{% if entity.valider == 1 %}  
-                        {% if entity.livrer == 0 %}
-                         <input type="checkbox"  name="livre[{{entity.id}}]" value="false" id="livre{{entity.id}}" {% if entity.preparer == 0 %}disabled {% else %} onClick="$(this).attr({'value':'true','checked':'checked'});this.form.submit();" {% endif %} class="form-store" >
-                         <label for="livre{{entity.id}}" style="font-size:0.8em">&nbsp; livrer </label> 
-                        {% else %} 
+                        {% if entity.livrer == 0 and entity.preparer < 3 %}
+                         <input type="checkbox"  name="livre[{{entity.id}}]" value="false" id="livre{{entity.id}}" {% if entity.preparer <= 0 %}disabled {% else %} onClick="$(this).attr({'value':'true','checked':'checked'});this.form.submit();" {% endif %} class="form-store" >
+                         <label for="livre{{entity.id}}" style="font-size:0.8em">{% if entity.reference matches '/^[89]/' %} Envoyer{% else %}&nbsp; livrer {% endif %}</label> 
+                        {% elseif entity.livrer == 2 %} 
+                         <input type="checkbox"  name="livre[{{entity.id}}]" value="false" disabled id="livre{{entity.id}}"  class="form-store" >
+                         <label for="livre{{entity.id}}" style="font-size:0.8em; background:#f77;">&nbsp; annulé </label> 
+                        {% elseif entity.livrer == 3 %} 
                          <input type="checkbox"  name="livre[{{entity.id}}]" value="true" checked disabled id="livre{{entity.id}}"  class="form-store" >
-                         <label for="livre{{entity.id}}" style="font-size:0.8em">&nbsp; livré </label> 
+                         <label for="livre{{entity.id}}" style="font-size:0.8em; background:#f77;">&nbsp; rétracté </label> 
+                        {% elseif entity.preparer == 3 %} 
+                         <input type="checkbox"  name="livre[{{entity.id}}]" value="false" id="livre{{entity.id}}" disabled  class="form-store" >
+                         <label for="livre{{entity.id}}" style="font-size:0.8em;background:#f77;">&nbsp; annulé </label> 
+                        {% else %}   
+                         <input type="checkbox"  name="livre[{{entity.id}}]" value="true" checked disabled id="livre{{entity.id}}"  class="form-store" >
+                         <label for="livre{{entity.id}}" style="font-size:0.8em">{% if entity.reference matches '/^[89]/' %} Envoyé{% else %}&nbsp; livré {% endif %}</label>                          
                         {% endif %}                 
                     {% else %}&nbsp;&nbsp;&nbsp; -  
                     {% endif %}
                 </td>
 
-                <td>{% if entity.valider == 1 %}
+                <td>{% if entity.valider == 1 and  entity.reference matches '/^[^89]/' %}
                     <a href="{{ path('adminShowBL', { 'id': entity.id }) }}" target="_blank" ><i class="glyphicon glyphicon-eye-open">BL</i></a> 
-                    {% else %}&nbsp;&nbsp;&nbsp; -  
+                    {% else %}
+                        {% if entity.valider == 1 and  entity.reference matches '/^[9]/' %}<button type="button" class="btn-greyish" >Ré-générer</button>
+                        {% else %}&nbsp;&nbsp;&nbsp; -  
+                        {% endif %}
                     {% endif %}
                 </td>
 
-                <td>{% if entity.valider == 1 %}
-                 <a href="{{ path('adminShowFacture', { 'id': entity.id }) }}" target="_blank" ><i class="glyphicon glyphicon-eye-open">Fact</i></a> 
+                <td>{% if entity.valider == 1  %}
+                 <a href="{{ path('adminShowFacture', { 'id': entity.id }) }}" target="_blank" ><i class="glyphicon glyphicon-eye-open">
+                    {% if entity.valider == 1 and  entity.reference matches '/^[^89]/' %}Fact{% else %}<span style="color:#959;"> Avoir</span>{% endif %}</i></a> 
                     {% else %}&nbsp;&nbsp;&nbsp; -  
                     {% endif %}
                 </td>
@@ -105,8 +132,23 @@
                      {% endif %}                
                 </td>
                 <td>
-                    <button type="checkbox"  name="suppr[{{entity.id}}]" value="false" id="suppr{{entity.id}}" onClick="this.form.submit();" class="form-store" style="font-size:0.8em; background:transparent;">
-                    <label for="suppr{{entity.id}}"  >&nbsp; <span class="glyphicon glyphicon-trash"></span>  </button>              
+                  {% if entity.preparer != 3 and entity.livrer != 3 %}
+                    <button type="checkbox"  name="suppr[{{entity.id}}]" value="false" id="suppr{{entity.id}}" onClick="this.form.submit();" class="form-store" style="font-size:0.8em; background:transparent;" 
+                    {% if entity.valider == 0 and  entity.reference == 0 %}title="Supprime la commande annulée"
+                    {% elseif entity.valider == 0 and  entity.reference != 0 %}title="Supprime la commande annulée et corrige le stock virtuel"
+                    {% elseif entity.valider == 1 and  entity.reference matches '/^[^89]/' %}
+                        {% if entity.payer == 0 %}title="crée un avoir sur la totalité de la commande - stock virtuel corrigé - Pas de remboursement"{% endif %} 
+                        {% if entity.payer == 1 and entity.preparer == 0 %}title="crée un avoir sur la totalité de la commande - stock virtuel corrigé - Remboursement"{% endif %} 
+                        {% if entity.payer == 1 and entity.preparer == 1 and entity.livrer == 0 %}title="crée un avoir sur la totalité de la commande - stock virtuel et réel corrigés - Remboursement"{% endif %} 
+                        {% if entity.payer == 1 and entity.preparer == 2 and entity.livrer == 0 %}title="crée un avoir sur l'ensemble ( commande - avoir ) Stock virtuel et réel corrigés - Remboursement"{% endif %} 
+                        {% if entity.payer == 1 and entity.preparer == 1 and entity.livrer == 1 %}title="crée un avoir sur la totalité de la commande - stock virtuel et réel corrigés - Remboursement - Marchandises à reprendre"{% endif %} 
+                        {% if entity.payer == 1 and entity.preparer == 2 and entity.livrer == 1 %}title="crée un avoir sur l'ensemble ( commande - avoir ) - stock virtuel et réel corrigés - Remboursement - Marchandises à reprendre"{% endif %} 
+                    {% endif %} 
+                    {% if entity.reference matches '/^[8]/' %}title="supprime l'avoir total et la commande correspondante"{% endif %} 
+                    {% if entity.reference matches '/^[9]/' %}title="annule un avoir partiel et corrige stocks virtuels et réels"{% endif %} 
+                        >
+                    <label for="suppr{{entity.id}}"  >&nbsp; <span class="glyphicon glyphicon-trash"></span> </label> </button>   
+                  {% endif %}            
                 </td>
             </form>
             </tr>

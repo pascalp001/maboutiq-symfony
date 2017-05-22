@@ -26,7 +26,12 @@
             <tr>
                 <td class="middle">{{form.id.vars.value}}</td>
                 <td class="bordVD middle">{{ form.nom.vars.value }}</td>                  
-                <td class="bordVGD middle">{{ form.stockreel.vars.value }}</td>
+                <td class="bordVGD middle"
+                {% if form.stockvirtuel.vars.value == 0 %}style="color:orange"{% endif %}
+                {% if form.stockvirtuel.vars.value < 0 %}style="color:red; font-style:italic;"{% endif %}
+                >
+                {% if form.stockvirtuel.vars.value <= 0 %}&#9888;&nbsp;{% endif %}
+                {{ form.stockreel.vars.value }}</td>
                 <td class="bordVD middle">{{form_widget(form.casse)}}</td> 
                 <td class="bordVD middle">{{form_widget(form.defect)}}</td>                 
                 <td class="bordVG middle">{{form_widget(form.autre) }}</td>

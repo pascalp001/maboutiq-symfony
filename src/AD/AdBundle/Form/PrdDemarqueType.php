@@ -18,6 +18,7 @@ class PrdDemarqueType extends AbstractType
 		$builder->add('id', HiddenType::class)
 				->add('nom', HiddenType::class)
 				->add('stockreel', HiddenType::class)
+				->add('stockvirtuel', HiddenType::class)
 				->add('casse', IntegerType::class, array('label'=>false,  'attr'=> array('value'=>'0','min'=>'0','class'=>'form-control', 'style'=>'width:100px; cursor:pointer')))
 				->add('defect', IntegerType::class, array('label'=>false,  'attr'=> array('value'=>'0','min'=>'0','class'=>'form-control', 'style'=>'width:100px; cursor:pointer')))
 				->add('autre', IntegerType::class, array('label'=>false,  'attr'=> array('value'=>'0','min'=>'0','class'=>'form-control', 'style'=>'width:100px; cursor:pointer')))

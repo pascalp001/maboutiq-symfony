@@ -3,28 +3,20 @@
 {% block body %}
 <div class="container ">	
 	<div class="pull-right panier" >{% render(controller('EcomBundle:Panier:menu')) %}</div>  
-	<div class="pull-center-top">{% render(controller('EcomBundle:Produits:recherche')) %}</div>   
-	<div class="row barremenupanier">
-        <div class="col-xs-1">
-            <button type="button" class="btn btn-default navbar-nontoggle toggle-sidebar">
+	<div class="pull-center-top">{% render(controller('EcomBundle:Produits:recherche')) %}</div> 
+ 
+<div class="sidebar fixe " >
+    {% include '::modulesBase/nav.html.twig' %}   
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %}  
+    {% else %}
+        {% include 'UtilisateursBundle:Default:modulesUsed/utilisateurs.html.twig' %}  
+    {% endif %}            
+</div> 
 
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-            </button>
-        </div> 
-    </div>  
-
+<div class="container ">
     <div class="row" id="row-main">
-        <div class="col-xs-2 " id="sidebar">  
-            {% include '::modulesBase/nav.html.twig' %}
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %}  
-            {% else %}
-                {% include 'UtilisateursBundle:Default:modulesUsed/utilisateurs.html.twig' %}  
-            {% endif %}
-        </div> 
-        <div class="col-xs-12 thumbnail" id="content"> 
+        <div class="col-xs-offset-1 col-xs-11 thumbnail" id="content">   
 
 	    	<form action="{{path('ajoutpanier2',{'id': produit.id})  }}" method="get">
 		        <div class="row ">

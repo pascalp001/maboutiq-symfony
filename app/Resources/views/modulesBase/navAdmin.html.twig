@@ -1,73 +1,51 @@
 
-<div class="well sidebar">
-    <ul class="nav nav-list">
+<div class="well sidebar"  style="padding-right:0px;">
+    <div class="sidebar poignee toggle-sidebar" ><img src="{{ asset('./img/poigneeR.jpg')}}" ></div>
+    
+    <ul class="nav nav-list sidebar">
     	<!--<div style="height:100px;">&nbsp;</div>-->
         <li>
-        	<a href="{{path('adminCommandes') }}"  class="sidebar sup" style="padding-bottom:0; margin-bottom:0;">Commandes en cours</a>
+        	<a href="{{path('adminCommandes') }}"  class="nav-header sidebar sup sm-sub " style="padding-bottom:0; margin-bottom:0;">Commandes en cours</a>
             {% render(controller('AdBundle:CommandesAdmin:nbCmdes')) %}
         </li>
         <li class="nav-header">
             <a href="{{path('adminAvis') }}" class="sidebar sup"  style="padding-bottom:0; margin-bottom:0;">Nouveaux avis à valider</a>
             {% render(controller('AdBundle:AvisAdmin:nbAvis')) %}
         </li>
-        <hr class="hrb"/>
-        <li class="nav-header">
-            <a href="{{path('adminUtilisateurs') }}"  class="sidebar sup" >Liste des clients</a>
-        </li>
 
-        <li>
-            <a href="{{path('adminCommandesArchives') }}"  class="sidebar sup" style="padding-right:0px">Commandes archivées</a>
-        </li>   	    	
+          <li class="nav-header sidebar sm-sub toggled" ><a href="{{path('adminCommandes') }}" class="sidebar sup"> Commandes divers...<span class="caret push-D">&nbsp;</span></a>
+            <ul style="display:none;">
+                <li class=""><a href="{{ path('adminUtilisateurs') }}" class="sidebar sub">Liste des clients</a></li>
+                <li class=""><a href="{{ path('adminCommandesArchives') }}" class="sidebar sub">Commandes archivée</a></li>
+                <li class=""><a href="{{ path('adminAvis_valid') }}" class="sidebar sub">Avis validés</a></li>
+                <li class=""><a href="{{ path('adminTarif') }}" class="sidebar sub">Tarifs frais de port</a></li>
 
-    </ul>
-</div>
-
-<div class="well sidebar">
-    <ul class="nav nav-list">
-        <!--<div style="height:100px;">&nbsp;</div>-->
-       <li class="nav-header">
-            <a href="{{path('adminProduits') }}" class="sidebar sup" >Produits</a>
-        </li> 
-       <li class="nav-header">
-            <a href="{{path('adminPromoProds') }}" class="sidebar sup" >Promo sur produits</a>
-        </li>
-        <li>
-            <a href="{{path('adminStocks_reassort') }}"  class="sidebar sup"  style="padding-bottom:0; margin-bottom:0;">Réassort/cadencier</a>
+            </ul>
+          </li>  
+        <hr class="hrb"/>      	    	
+          <li class="nav-header sidebar sm-sub toggled" ><a href="{{path('adminStocks_reassort') }}" class="sidebar sup"> Produits et stocks...<span class="caret push-D">&nbsp;</span></a>
             {% render(controller('AdBundle:StocksAdmin:nbRuptures')) %}
-        </li> 
-        <li>
-            <a href="{{path('adminStocks_demarque') }}"  class="sidebar sup">Démarque</a>
-        </li>  
-        <li>
-            <a href="{{path('adminStocks_inventr') }}"  class="sidebar sup">Inventaire</a>
-        </li> 
-        <li >
-            <a href="{{path('adminAvis_valid') }}" class="sidebar sup" >Avis validés</a>
-        </li>         
+            <ul style="display:none;">
+                <li class=""><a href="{{ path('adminStocks_reassort') }}" class="sidebar sub">Réassort/cadencier</a></li>
+                <li class=""><a href="{{ path('adminStocks_demarque') }}" class="sidebar sub">Démarque</a></li>
+                <li class=""><a href="{{ path('adminStocks_inventr') }}" class="sidebar sub">Inventaire</a></li>
+                <li class=""><a href="{{ path('adminProduits') }}" class="sidebar sub">Produits</a></li>
+                <li class=""><a href="{{ path('adminPromoProds') }}" class="sidebar sub">Promo sur produits</a></li>
+                <li class=""><a href="{{ path('adminCategories') }}" class="sidebar sub">Catégories de produits</a></li>
+                <li class=""><a href="{{ path('adminFournisseurs') }}" class="sidebar sub">Fournisseurs</a></li>
+            </ul>
+          </li>  
+        <hr class="hrb"/>      
+
+          <li class="nav-header sidebar sm-sub toggled" ><a href="" class="sidebar sup"> Présentation...<span class="caret push-D">&nbsp;</span></a>
+            <ul style="display:none;">
+                <li class=""><a href="{{ path('adminArticle') }}" class="sidebar sub">Articles</a></li>
+                <li class=""><a href="{{ path('adminPages') }}" class="sidebar sub">Pages du footer</a></li>
+                <li class=""><a href="" class="sidebar sub">Paramètres</a></li>
+            </ul>
+          </li>  
+        <hr class="hrb"/>      
     </ul>
 </div>
-<div class="well sidebar">
-    <ul class="nav nav-list">
-        <!--<div style="height:100px;">&nbsp;</div>-->
-        <li>
-            <a href="{{path('adminArticle') }}" class="sidebar sup ">Articles</a>
-        </li>
-    </ul>
-</div>
-<div class="well sidebar">
-    <ul class="nav nav-list">
-    	<!--<div style="height:100px;">&nbsp;</div>-->
-        <li>
-            <a href="{{path('adminCategories') }}" class="sidebar sup ">Catégories de produits</a>
-        </li>
-        <li>
-            <a href="{{path('adminFournisseurs') }}" class="sidebar sup ">Fournisseurs</a>
-        </li>
-        <li class="nav-header">
-        	<a href="{{path('adminPages') }}" class="sidebar sup" >Pages du footer</a>
-        </li>
-        <li class="nav-header">
-        	<a href="{{path('adminTarif') }}" class="sidebar sup" >Tarifs frais de port</a>
-        </li>
-    </ul>
-</div>
+
+

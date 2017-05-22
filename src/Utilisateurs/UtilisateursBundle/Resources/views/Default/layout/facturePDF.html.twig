@@ -11,7 +11,10 @@
         <table id="enTete">
             <tr>
                 <td colspan="1"></td>
-                <td colspan="1"><h1>Facture</h1></td>
+                <td colspan="1">
+                    <h1>{% if facture.reference matches '/^[^8-9]/' %}FACTURE
+                    {% else %}AVOIR 
+                    {% endif %}</h1></td>
                 <td colspan="1"></td>
             </tr>
             <tr>
@@ -26,9 +29,9 @@
             </tr>
         </table>
         <ul id="coordonnes">
-            <li>{{ facture.commande.facturation.nom }} {{ facture.commande.facturation.prenom }}</li>
-            <li>{{ facture.commande.facturation.adresse }}</li>
-            <li>{{ facture.commande.facturation.cp }} {{ facture.commande.facturation.ville }} - {{ facture.commande.facturation.pays }}</li>
+            <li>{% if facture.commande.facturation.nom is defined %}{{ facture.commande.facturation.nom }} {{ facture.commande.facturation.prenom }}{% endif %}</li>
+            <li>{% if facture.commande.facturation.adresse is defined %}{{ facture.commande.facturation.adresse }}{% endif %}</li>
+            <li>{% if facture.commande.facturation.ville is defined %}{{ facture.commande.facturation.cp }} {{ facture.commande.facturation.ville }} - {{ facture.commande.facturation.pays }}{% endif %}</li>
         </ul>
         <table id="entity">
             <tr>
@@ -38,17 +41,20 @@
                 <td width="105">MONTANT HT</td>
                 <td width="105">MONTANT TTC</td>
             </tr>
-            {% for produit in facture.commande.produit %}
-                <tr>
-                    <td class="color">{{ produit.reference }}</td>
-                    <td class="color">{{ produit.quantite }}</td>
-                    <td class="color">{{ produit.prixHT }} €</td>
-                    <td class="color">{{ produit.quantite * produit.prixHT }} €</td>
-                    <td class="color">{{ produit.quantite * produit.prixTTC }} €</td>
-                </tr>
-            {% endfor %}
+            {% if facture.commande.produit is defined %}
+                {% for produit in facture.commande.produit %}
+                    <tr>
+                        <td class="color">{{ produit.reference }}</td>
+                        <td class="color">{{ produit.quantite }}</td>
+                        <td class="color">{{ produit.prixHT }} €</td>
+                        <td class="color">{{ produit.quantite * produit.prixHT }} €</td>
+                        <td class="color">{{ produit.quantite * produit.prixTTC }} €</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
         </table>
         <table id="total">
+            {% if facture.commande.produit is defined %}
             <tr>
                 <td width="120">TOTAL HT :</td>
                 <td width="100" class="color">{{ facture.commande.totalHT }} €</td>
@@ -56,20 +62,26 @@
             {% for key, tva in facture.commande.tva %}
             <tr>
                 <td width="120">TVA <span class="color min">{{ key }}</span> :</td>
-                <td width="100" class="color">{{ tva }} €
+                <td width="100" class="color">{{ tva|number_format(2) }} €
                 </td>
             </tr>
              {% endfor %}
             <tr>
-                <td width="120">FRAIS DE PORT* :</td>
+                {% if facture.reference matches '/^[^9]/' %}
+                <td width="120">FRAIS DE PORT{% if facture.reference matches '/^[^89]/' and facture.commande.org is defined %} *{% endif %}  :</td>
                 <td width="100" class="color">{{ facture.commande.frPort }} €</td>
+                    {% else %}<td>&nbsp;</td> <td>-</td>
+                    {% endif %}                
             </tr>
             <tr>
                 <td width="120">TOTAL TTC :</td>
                 <td width="100" class="color">{{ facture.commande.totalTTC }} €</td>
             </tr>
-        </table>  
-        <span style="margin-top:50px;">* : Transport effectué par {{ facture.commande.org }}</span>
+            {% endif %}
+        </table>
+        {% if facture.reference matches '/^[^89]/' and facture.commande.org is defined %}                 
+        <span style="margin-top:50px;">* : Transport effectué par {{ facture.commande.org }}</span>                  
+        {% endif %}         
         <div id="footer">
 
             <span class="color strong" > {{ adresse }} </span>

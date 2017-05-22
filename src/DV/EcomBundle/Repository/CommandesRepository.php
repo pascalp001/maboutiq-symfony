@@ -34,4 +34,35 @@ class CommandesRepository extends EntityRepository
 			->setParameter('utilisateur', $utilisateur);
 		return $qb->getQuery()->getResult();		
 	}
+
+	public function findAvecPreparer($v)
+	{
+		if($v=='0')
+		{	$qb = $this->createQueryBuilder('c')
+			->select('c')
+			->where('c.preparer <= :v')
+			->orderBy('c.id')
+			->setParameter('v', $v);
+		}
+		else
+		{	$qb = $this->createQueryBuilder('c')
+			->select('c')
+			->where('c.preparer >= :v')
+			->orderBy('c.id')
+			->setParameter('v', $v);
+		}
+		return $qb->getQuery()->getResult();		
+	}
+
+	public function findLastRef()
+	{
+		$qb = $this->createQueryBuilder('c')
+			->select('c.reference')
+			->where('c.reference LIKE :regex' )
+			->andWhere('c.valider = 1')
+			->orderBy('c.reference', 'desc') 			
+			->setMaxResults(1)
+			->setParameter('regex', '1%');
+		return $qb->getQuery()->getResult();
+	}
 }

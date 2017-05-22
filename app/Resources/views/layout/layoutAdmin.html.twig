@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no">
     <meta charset="UTF-8" />
     <title>{% block titre %}Pascalp e-commerce Version Développement{% endblock %}</title>
     <meta name="keywords" content="{% block motsCles %}{% endblock %}"/>
@@ -10,7 +12,7 @@
         <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-theme.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/main.css')}}" />    
         <link rel="stylesheet" href="{{ asset('css/style.css')}}" />
-
+        <link rel="stylesheet" href="{{ asset('js/plugin/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css')}}" />
     {% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('LogoProGdev.ico') }}" />
 </head>
@@ -24,28 +26,28 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{path('admin')}}"><img src="{{ asset('img/LogoProG8.PNG')}}" width="70px" title="LOGO!!!" alt="LOGO!!!" style="margin-top:-5px" ><span class="h5" >&#10159; ADMINISTRATION</span></a>
+                <a class="navbar-brand" href="{{path('admin')}}"><img src="{{ asset('img/LogoProG8.PNG')}}" width="70px" title="LOGO!!!" alt="LOGO!!!" style="margin-top:-5px" ><span class="h6" >&#10159; ADMINISTRATION</span></a>
             </div>
-        </div>
-        <div class="collapse navbar-collapse" id="example-navbar-collapse" >
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="{{path('produits')}}">Retour vers client <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Page1</a></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Autres <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Action 1</a></li>
-                    <li><a href="#">Action 2</a></li>
-                    <li><a href="#">Action 3</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">Action 4</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">Action 5</a></li>
-                  </ul>
-                </li>
+        
+            <div class="collapse navbar-collapse" id="example-navbar-collapse" >
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="{{path('produits')}}">Retour vers client <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Page1</a></li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Autres <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li><a href="#">Action 1</a></li>
+                        <li><a href="#">Action 2</a></li>
+                        <li><a href="#">Action 3</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Action 4</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Action 5</a></li>
+                      </ul>
+                    </li>
 
-            </ul>
-        </div>    
+                </ul>
+            </div>    
             <div class="pull-right modulelogin-conteneur"  >
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %} 
                     {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnectedH.html.twig' %} 
@@ -53,23 +55,28 @@
                     {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursH.html.twig' %}  
                 {% endif %} 
             </div> 
-            
-        
-
+         </div>   
     </div>
 {% block layout %}
+<div class="sidebar fixe" >
+    {% include '::modulesBase/navAdmin.html.twig' %}   
+          
+</div> 
     <div class="container" >
-        <div class="adm">
+        <!--div class="adm">
                 <button type="button" class="btn btn-default navbar-nontoggle" id="toggle2-sidebar"  >
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                 </button>
-            </div>
+        </div-->
         <div class="row" id="row-main" style="margin-top:-8px; ">
-            <div class="col-xs-2 " id="sidebar">  
-                {% include '::modulesBase/navAdmin.html.twig' %}
-            </div>
+            <!--div class="col-xs-2 " id="sidebar">  
+                {#% include '::modulesBase/navAdmin.html.twig' %#}
+            </div-->
+
+
+
             <div class="col-xs-12" id="content">
                 {% block body %} {% endblock %}
             </div>
@@ -91,6 +98,8 @@
     <script src="{{ asset('js/plugin/jquery/jquery3.1.1.min.js')}}"></script>
     <script src="{{ asset('js/plugin/jquery-ui-1.12.1.custom/jquery-ui.js')}}"></script>
     <script src="{{ asset('bootstrap/js/bootstrap.js')}}"></script>   
+    <script src="{{ asset('js/plugin/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+    <script src="{{ asset('js/plugin/malihu-custom-scrollbar-plugin/jquery-mousewheel/jquery.mousewheel.min.js')}}"></script>
 
 <!-- script pour afficher ou non la sidebar menu -->
   <script>
@@ -102,6 +111,68 @@ $(document).ready(function() {
     var tva = parseFloat(re.exec($('#tva input:checked + label').text()));
     var prixTTC = parseFloat(parseFloat(Math.round(prixHT*(1+tva/100)*100))/100).toFixed(2);
     $('#prixTTC span').text('=> TTC : '+prixTTC+' €');
+
+    var largeurFenetre = document.body.clientWidth;
+  $(".largeurF").html(largeurFenetre);
+        var toggle=false; var togglestars = true;
+
+  $("#valider").prop("disabled", true); //validation
+  $("#checkcgv").prop("checked", false);//validation
+
+  $(".toggle-sidebar").click(function () {
+        toggle=!toggle;
+      if(toggle)
+      {   
+          $(".sidebar.fixe").toggleClass("show", 200, "swing" );
+          if( $(this).parent().parent().attr("class")=="sidebar fixe inverse"  || $(this).parent().parent().attr("class")=="sidebar fixe inverse show"  ){
+            // Cas page produit
+          $("#content").removeClass("col-xs-offset-2 col-xs-10 show").addClass("col-xs-12 ");
+          $(".sidebar.poignee > img").attr("src","{{ asset('./img/poigneeR.jpg')}}");              
+          }
+          else{
+            if( /col-xs-12/.test($("#content").attr("class"))){ $("#content").removeClass("col-xs-12").addClass("col-xs-offset-2 col-xs-10");}
+            // page presentation :
+            if( /col-xs-offset-1 col-xs-11/.test($("#content").attr("class"))){$("#content").removeClass("col-xs-offset-1 col-xs-11").addClass("col-xs-offset-3 col-xs-9");}            
+          $("#content").removeClass("non-show").addClass("show-bas");
+          $(".barremenupanier").children().removeClass("col-xs-offset-1 col-xs-11").addClass("col-xs-offset-2 col-xs-10");
+          $(".sidebar.poignee > img").attr("src","{{ asset('./img/poigneeL.jpg')}}");              
+          }
+
+      } 
+      else
+      {          
+          $(".sidebar.fixe").toggleClass("show", 200, "swing");
+          if( $(this).parent().parent().attr("class")=="sidebar fixe inverse" || $(this).parent().parent().attr("class")=="sidebar fixe inverse show"){
+             // Cas page produit
+          $("#content").removeClass("col-xs-12 ").addClass("col-xs-offset-2 col-xs-10 show"); 
+          $(".sidebar.poignee > img").attr("src","{{ asset('./img/poigneeL.jpg')}}");              
+          }   
+          else{    
+            if( /col-xs-offset-2 col-xs-10/.test($("#content").attr("class"))){ $("#content").removeClass("col-xs-offset-2 col-xs-10 " ).addClass("col-xs-12");}     
+            // page presentation :
+            if( /col-xs-offset-3 col-xs-9/.test($("#content").attr("class"))){$("#content").removeClass("col-xs-offset-3 col-xs-9").addClass("col-xs-offset-1 col-xs-11");}              
+          $("#content").removeClass("show-bas").addClass("non-show");
+          $(".barremenupanier").children().removeClass("col-xs-offset-2 col-xs-11").addClass("col-xs-offset-1 col-xs-10");
+          $(".sidebar.poignee > img").attr("src","{{ asset('./img/poigneeR.jpg')}}");
+          }
+      }      
+      return false;
+  });
+
+    /* Script détails menu du sidebar */
+  $('body').on('click', '.sm-sub > a', function(e) {
+      e.preventDefault();
+      
+      var s = $('.sidebar.fixe').css('width'); //This is to get the screen size. If it's 64px it's a mid screen size otherwise large/small screen.
+      var x = $(this).closest('.sm-sub');
+      
+      if (s <= '600px' && s >= '160px') { //Only fire this on large/small screen.
+          x.find('ul').slideToggle(200);
+          x.toggleClass('toggled');
+          
+      }
+  });
+
 });
 
     /* Modification du prixHT => recalcul prix TTC -  Administration/Produits/layout/edit.html.twig */

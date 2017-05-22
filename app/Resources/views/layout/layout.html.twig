@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no">
     <meta charset="UTF-8" />
     <title>{% block titre %}Pascalp boutique e-commerce Version Développement{% endblock %}</title>
     <meta name="keywords" content="{% block motsCles %}{% endblock %}"/>
@@ -10,6 +12,8 @@
         <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-theme.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/main.css')}}" />    
         <link rel="stylesheet" href="{{ asset('css/style.css')}}" />
+        <link rel="stylesheet" href="{{ asset('js/plugin/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css')}}" />
+        
 
     {% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('LogoProGdev.ico') }}" />
@@ -87,7 +91,7 @@
                     </div>
 
                     <div class="col-md-2">
-                        <h4>Nous contacter</h4>
+                        <h4><a href="{{path('nous_contacter')}}">Nous contacter</a></h4>
                         <p><i class="icon-phone"></i>&nbsp;Tel: {{telephone}}</p>
                         <p><i class="icon-print"></i>&nbsp;Fax: - </p>
                     </div>
@@ -106,28 +110,74 @@
 {% block javascripts %}
 <script src="{{ asset('js/plugin/jquery/jquery.min.js')}}"></script>
 <script src="{{ asset('js/plugin/jquery-ui-1.12.1.custom/jquery-ui.js')}}"></script>
+<script src="{{ asset('js/plugin/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+<script src="{{ asset('js/plugin/malihu-custom-scrollbar-plugin/jquery-mousewheel/jquery.mousewheel.min.js')}}"></script>
 <script src="{{ asset('bootstrap/js/bootstrap.js')}}"></script>   
 <script> 
     <!-- script pour afficher ou non la sidebar menu -->
  
 $(document).ready(function () {
     var largeurFenetre = document.body.clientWidth;
-    $(".largeurF").html(largeurFenetre);
+  $(".largeurF").html(largeurFenetre);
         var toggle=false; var togglestars = true;
-    $(".toggle-sidebar").click(function () {
+
+  $("#valider").prop("disabled", true); //validation
+  $("#checkcgv").prop("checked", false);//validation
+
+  $(".toggle-sidebar").click(function () {
         toggle=!toggle;
-        if(toggle)
-        {   
-            $("#sidebar").toggleClass("show", 1000, "swing" );
-            $("#content").removeClass("col-xs-12").addClass("col-xs-10"); 
-        } 
-        else
-        {          
-            $("#sidebar").toggleClass("show", 1000, "swing");
-            $("#content").removeClass("col-xs-10").addClass("col-xs-12");
-        }      
-        return false;
-    });
+      if(toggle)
+      {   
+          $(".sidebar.fixe").toggleClass("show", 200, "swing" );
+          if( $(this).parent().parent().attr("class")=="sidebar fixe inverse"  || $(this).parent().parent().attr("class")=="sidebar fixe inverse show"  ){
+            // Cas page produit
+          $("#content").removeClass("col-xs-offset-2 col-xs-10 show").addClass("col-xs-12 ");
+          $(".sidebar.poignee > img").attr("src","{{ asset('./img/poigneeR.jpg')}}");              
+          }
+          else{
+            if( /col-xs-12/.test($("#content").attr("class"))){ $("#content").removeClass("col-xs-12").addClass("col-xs-offset-2 col-xs-10");}
+            // page presentation :
+            if( /col-xs-offset-1 col-xs-11/.test($("#content").attr("class"))){$("#content").removeClass("col-xs-offset-1 col-xs-11").addClass("col-xs-offset-3 col-xs-9");}            
+          $("#content").removeClass("non-show").addClass("show-bas");
+          $(".barremenupanier").children().removeClass("col-xs-offset-1 col-xs-11").addClass("col-xs-offset-2 col-xs-10");
+          $(".sidebar.poignee > img").attr("src","{{ asset('./img/poigneeL.jpg')}}");              
+          }
+
+      } 
+      else
+      {          
+          $(".sidebar.fixe").toggleClass("show", 200, "swing");
+          if( $(this).parent().parent().attr("class")=="sidebar fixe inverse" || $(this).parent().parent().attr("class")=="sidebar fixe inverse show"){
+             // Cas page produit
+          $("#content").removeClass("col-xs-12 ").addClass("col-xs-offset-2 col-xs-10 show"); 
+          $(".sidebar.poignee > img").attr("src","{{ asset('./img/poigneeL.jpg')}}");              
+          }   
+          else{    
+            if( /col-xs-offset-2 col-xs-10/.test($("#content").attr("class"))){ $("#content").removeClass("col-xs-offset-2 col-xs-10 " ).addClass("col-xs-12");}     
+            // page presentation :
+            if( /col-xs-offset-3 col-xs-9/.test($("#content").attr("class"))){$("#content").removeClass("col-xs-offset-3 col-xs-9").addClass("col-xs-offset-1 col-xs-11");}              
+          $("#content").removeClass("show-bas").addClass("non-show");
+          $(".barremenupanier").children().removeClass("col-xs-offset-2 col-xs-11").addClass("col-xs-offset-1 col-xs-10");
+          $(".sidebar.poignee > img").attr("src","{{ asset('./img/poigneeR.jpg')}}");
+          }
+      }      
+      return false;
+  });
+
+    /* Script détails menu du sidebar */
+  $('body').on('click', '.sm-sub > a', function(e) {
+      e.preventDefault();
+      
+      var s = $('.sidebar.fixe').css('width'); //This is to get the screen size. If it's 64px it's a mid screen size otherwise large/small screen.
+      var x = $(this).closest('.sm-sub');
+      
+      if (s <= '600px' && s >= '160px') { //Only fire this on large/small screen.
+          x.find('ul').slideToggle(200);
+          x.toggleClass('toggled');
+          
+      }
+  });
+
 });
 
 /* Script note avis */
@@ -254,6 +304,7 @@ $(function() {
     ui.loupe.off('mousemove', mouseMove);
   });
 });
+
 var i = 0; var togglestars = true;
 function showStars(i){
   if(togglestars){
@@ -263,6 +314,20 @@ function showStars(i){
     $('#star-'+i+':hover').parent().nextAll().children().removeClass('is-active');
     currentRating(i);
   }
+}
+
+
+toggle1=true; 
+function cgv() {  
+    if(toggle1){
+        $("#valider").prop("disabled", false); 
+        $("#valider").removeClass("btn-info").addClass("btn-success");
+        toggle1=!toggle1;
+    }
+    else {
+        $("#valider").prop("disabled", true); 
+        $("#valider").removeClass("btn-success").addClass("btn-info");
+        toggle1=!toggle1;}
 }
 </script>
 

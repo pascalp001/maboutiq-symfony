@@ -281,7 +281,7 @@ class PanierController extends Controller
             default: $minI ="3"; 
         } 
         $form->add('modport', HiddenType::class, array( 'attr' => array('value' =>$minI,'class' => 'cb_Modpost')))
-             ->add('submit', SubmitType::class, array('label' => 'Valider ce choix de livraison', 'attr'=>array('class'=>'btn btn-info pull-right')));
+             ->add('submit', SubmitType::class, array('label' => 'Valider ce choix de livraison', 'attr'=>array('class'=>'btn btn-success pull-right', 'style'=>'margin-right:40px; ')));
 
        // 6 - On récupère le choix et les frais de port correspondants, pour créer la commande, l'enregistrer et la retourner vers validation.html.twig
         if($request->getMethod() == "POST")

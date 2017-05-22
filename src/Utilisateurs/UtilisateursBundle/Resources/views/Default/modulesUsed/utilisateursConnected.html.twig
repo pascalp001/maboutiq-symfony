@@ -1,19 +1,26 @@
-<div class="well sidebar">
-    <ul class="nav nav-list">
-        <li>
-            <a class="sidebar sup" href="{{path('factures')}}">Mon compte</a>
+<div class="well sidebar" style="padding-right:0px;">
+    <ul class="nav nav-list sidebar">
+        <li class="nav-header header" ><a class="sidebar super" >Espace client</a></li>
+        <li  class="nav-header sidebar sm-sub toggled" >
+            <a class="sidebar sup" href="{{path('factures')}}"  class="sidebar sup" ><span class="glyphicon glyphicon-sort-by-alphabet" style="padding-bottom:14px;">&nbsp;</span>Mon compte<span class="caret push-D">&nbsp;</span></a>
+            <ul style="display:none;">
+                <li class="sm-sub ">
+                    <a class="sidebar  " href="{{path('factures')}}">Mes commandes</a>
+                </li >
+                <li class="sm-sub ">
+                    <a class="sidebar  " href="{{path('fos_user_profile_show')}}">Mes informations</a>
+                </li >
+                <li class="sm-sub ">
+                    <a class="sidebar  " href="{{path('fos_user_profile_edit')}}">Modifier mes informations</a>
+                </li>
+                <li class="sm-sub ">
+                    <a class="sidebar  " href="{{path('fos_user_change_password')}}">Changer mon mot de passe</a>
+                </li>
+            </ul>
         </li>
-        <li>
-            <a class="sidebar sup" href="{{path('fos_user_profile_show')}}">Mes informations</a>
-        </li>
-        <li>
-            <a class="sidebar sub" href="{{path('fos_user_profile_edit')}}">Modifier mes informations</a>
-        </li>
-        <li>
-            <a class="sidebar sub" href="{{path('fos_user_change_password')}}">Changer mon mot de passe</a>
-        </li>
-        <li>
-            <a class="sidebar sub" href="{{path('fos_user_security_logout')}}">Déconnexion</a>
+        <li class="nav-header sidebar ">
+            <a class="sidebar sup" href="{{path('fos_user_security_logout')}}"><span class="glyphicon glyphicon-log-out" style="padding-bottom:14px;">&nbsp;</span>Déconnexion</a>
         </li>
     </ul>
+    <div class="wedge10"> &nbsp; </div>  
 </div>

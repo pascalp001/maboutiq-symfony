@@ -15,10 +15,24 @@ class GetReference
 
 	public function reference()
 	{
-		$reference = $this->em->getRepository('EcomBundle:Commandes')->findOneBy(array('valider'=>1), array('id'=> 'DESC') ,1 ,1); //1 seul élément	
-		if (!$reference || $reference->getReference()==0) return (int)("1".date('y').date('m')."001"); //si pas encore de facture
+		$reference = $this->em->getRepository('EcomBundle:Commandes')->findLastRef();
+		$lastRef = array();
+		if($reference) {$lastRef = $reference[0];} 
+		//var_dump($lastRef ); die();
+		$match = array(); 
+		//1 seul élément	
+		if (!$reference || $lastRef['reference']=='0') return (int)("1".date('y').date('m')."001"); //si pas encore de facture
 		else {			
-			$ref = $reference->getReference();
+			$ref =  $lastRef['reference'];
+
+			$match = preg_match('/^\d{1}(\d{2})/',$ref, $matches);
+			if(strlen($ref) == 8 && (int)$matches[1] < (int)date('y')){
+				$ref=preg_replace('/^\d{1}(\d{7})/',  date('y').'01001' ,$ref); 
+			}
+			$match = preg_match('/^\d{3}(\d{2})/',$ref, $matches);
+			if(strlen($ref) == 8 && (int)$matches[1] < (int)date('m')){
+				$ref=preg_replace("/^\d{3}(\d{5})/",date('m').'001',$ref); 
+			}
 			for($i=0;$i<8;$i++)
 			{
 				//Codage de la référence : [type client]:1 [année]:17 [mois]:03 [n° à 3 chiffres]: 004

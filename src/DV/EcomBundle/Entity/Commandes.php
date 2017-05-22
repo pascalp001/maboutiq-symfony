@@ -49,16 +49,16 @@ class Commandes
     private $modpmt;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="preparer", type="boolean")
+     * @ORM\Column(name="preparer", type="integer")
      */
     private $preparer;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="livrer", type="boolean")
+     * @ORM\Column(name="livrer", type="integer")
      */
     private $livrer;
 
@@ -278,7 +278,7 @@ class Commandes
     /**
      * Set preparer
      *
-     * @param boolean $preparer
+     * @param integer $preparer
      *
      * @return Commandes
      */
@@ -292,7 +292,7 @@ class Commandes
     /**
      * Get preparer
      *
-     * @return boolean
+     * @return integer
      */
     public function getPreparer()
     {
@@ -301,7 +301,7 @@ class Commandes
     /**
      * Set livrer
      *
-     * @param boolean $livrer
+     * @param integer $livrer
      *
      * @return Commandes
      */
@@ -315,7 +315,7 @@ class Commandes
     /**
      * Get livrer
      *
-     * @return boolean
+     * @return integer
      */
     public function getLivrer()
     {

@@ -28,6 +28,12 @@ class PrdDemarque
     private $stockreel;
 
     /**
+     * @var integer
+     *
+     */
+    private $stockvirtuel;
+
+    /**
      * @var boolean
      *
      */
@@ -115,6 +121,30 @@ class PrdDemarque
     public function getStockreel()
     {
         return $this->stockreel;
+    }
+
+    /**
+     * Set stockvirtuel
+     *
+     * @param integer $stockvirtuel
+     *
+     * @return PrdDemarque
+     */
+    public function setStockvirtuel($stockvirtuel)
+    {
+        $this->stockvirtuel = $stockvirtuel;
+
+        return $this;
+    }
+
+    /**
+     * Get stockvirtuel
+     *
+     * @return integer
+     */
+    public function getStockvirtuel()
+    {
+        return $this->stockvirtuel;
     }
 
     /**

@@ -3,8 +3,11 @@
 {% block body %}
     
 <div class="container">
-  <div class="col-xs-1"> &nbsp; </div> 
-  <div class="col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}         
+
+    <div class="row barremenupanier">
+        <div class="col-xs-offset-1 col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}
+        </div>
+    </div> 
   <div class="wedge15"> &nbsp; </div>   
  {% if showboite %} 
     <!-- ******** Boîte de dialogue : ************ -->
@@ -15,6 +18,8 @@
 
  {% endif %}     
 <!-- Choix des modalités de règlement : ************************************************ -->  
+  <div class="row ">
+    <div class="col-xs-12" id="content"> 
       <div class="row bordure">
           <div class="col-xs-12 col-sm-offset-2 col-sm-8 " >
 
@@ -184,12 +189,13 @@
 			<a href="{{path ('validation')}}" class="btn btn-greyish ">Retour</a>
           </div>
 
-          <div class="col-sm-offset-4 col-md-offset-8 col-xs-2" >
+          <div class="col-sm-offset-4 col-sm-2 col-md-offset-8 col-md-2 col-xs-2" >
 
             <div class="clearfix"></div>
             {# Formulaire pour envoi vers l'API banque (ici envoyé vers validationCommandeAction(): #}
             
-    			{{ form(form)}}       
+    			{{ form(form)}}     
+          {{ form_widget(form.submit)}}      
           </div>
         </div>         
       </div>
@@ -198,6 +204,8 @@
 
     </div>
   </div >
+</div>
+</div>
 
 <!-- BOÎTE DE DIALOGUE : paiement effectué - Cette partie n'est pas utilisée -->
 {% if showboite %}

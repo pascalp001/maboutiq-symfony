@@ -1,0 +1,38 @@
+<div style="background:#7E05F9;">&nbsp;</div>
+<div style="background:#B290F8;">
+<img src="{{ url}}" style="margin-top:-1px; width:150px;" >
+<h1>{{ vendeur }}</h1>
+<br/>
+<p>Bonjour {{ utilisateur.username }} </p>
+
+<p>Votre commande est en cours de préparation.<br/><br/>
+Toutefois, il apparait que la commande ne pourra pas être livré en totalité : <br/>
+En effet, malgré nos soins, il apparait qu{% if avoirComplet|length == 1 %}'un article s'avère{% else %}e {{ avoirComplet|length }} articles s'avèrent {% endif %} défectueux et impropre{% if avoirComplet|length > 1 %}s{% endif %} à la vente. <br/>
+Nous en sommes désolé.<br/>
+<br/>
+</p></div>
+<p>
+Il nous manque ainsi :
+{% for id in avoirComplet %}
+	<hr/>{{ id['qte'] }} articles sur les {{ id['qtePanier'] }} commandés pour le produit {{ id['nom'] }} {% if id['taille'] != null %}- (taille {{ id['taille'] }} ){% endif %}  (au prix de {{ id['prixTTC'] }} )
+{% endfor %}
+</p>
+<hr/>
+<div style="background:#B290F8;">
+{% if avoirComplet|length == 1 %}Ce produit va être mis en commande mais ne sera pas reçu 
+{% else %}Ces produits vont être mis en commande mais ne seront pas reçus 
+{% endif %}avant deux ou trois semaines.<br/>
+Vous disposez d'un délai de 48 heures pour nous informer de votre choix :<br/>
+ - Soit être livré des quantités disponibles actuelles et être remboursé du reste ;<br/>
+ - Soit différer votre commande en attendant que tous les articles soient livrés en une seule fois ;<br/>
+ - Soit être livré des quantités disponibles actuelles et être livré du reste plus tard, mais nous vous demanderons un surplus correspondant à 50% des frais de port si ceux-ci excèdent 50% du prix des marchandises ;<br/>
+ - Soit annuler la totalité de la commande que nous vous rembourserons intégralement.<br/>
+
+A défaut de nous indiquer votre souhait dans les 48 heures à compter de l'envoi de ce message, la proposition 1 sera retenue : <br/>les marchandises disponibles vous seront livrées, et nous vous enverrons un remboursement du reste.<br/><br/>
+Dans tous les cas, un message vous sera envoyé au départ de votre colis.<br/><br/>
+
+L'équipe ProG-developpement IT vous remercie pour votre commande.<br/>
+
+Cordialement.</p>
+<br/>
+<div style="background:#7E05F9;">&nbsp;</div>

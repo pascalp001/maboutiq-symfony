@@ -1,13 +1,15 @@
 
 
 
-<div class="well sidebar">
+<div class="well sidebar" style="padding-right:0px;">
     <ul class="nav nav-list">
-        <li>
-            <a href="{{path('fos_user_security_login')  }}" class="sidebar sup">Se connecter</a> 
+    	<li class="nav-header header" ><a class="sidebar super" >Connexion/insription</a></li>
+        <li  class="nav-header sidebar">
+            <a href="{{path('fos_user_security_login')  }}" class="sidebar sup"><span class="glyphicon glyphicon-user">&nbsp;</span>Se connecter</a> 
         </li>
-        <li>
-            <a href="{{path('fos_user_registration_register') }}" class="sidebar sup" >S'inscrire</a>
+        <li class="nav-header sidebar">
+            <a href="{{path('fos_user_registration_register') }}" class="sidebar sup" ><span class="glyphicon glyphicon-log-in">&nbsp;</span>S'inscrire</a>
         </li>
     </ul>
+    <div class="wedge50"> &nbsp; </div>  
 </div>

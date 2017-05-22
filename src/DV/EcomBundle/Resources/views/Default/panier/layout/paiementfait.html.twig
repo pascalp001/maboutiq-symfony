@@ -1,28 +1,29 @@
 {% extends "::layout/layout.html.twig" %}
 {% block titre %} Pascalp Version Développement > Paiement effectué {% endblock %}
 {% block body %}
+<div class="sidebar fixe" >
+    {% include '::modulesBase/nav.html.twig' %}   
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %}  
+    {% else %}
+        {% include 'UtilisateursBundle:Default:modulesUsed/utilisateurs.html.twig' %}  
+    {% endif %}            
+</div>     
 <div class="container">
-    <div class="row">
-        <div class="col-xs-1">
-            <button type="button" class="btn btn-default navbar-nontoggle toggle-sidebar">
 
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-        </div> 
-        <div class="col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}  
+
+    <div class="row barremenupanier">
+
+        <div class="col-xs-offset-1 col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}
             <div class="wedge10"> &nbsp; </div> 
             <div class="pull-right panier" >{% render(controller('EcomBundle:Panier:menu')) %}</div>
             <div class="wedge5"> &nbsp; </div> 
-        </div>    
+        </div>
     </div>
-	<div class="row" id="row-main">
-        <div class="col-xs-2 "  id="sidebar">
-        {% include '::modulesBase/nav.html.twig' %}   
-        {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %} 
-        </div> 
-		<div class="col-xs-12" id="content">
+    <div class="wedge5"> &nbsp; </div>   
+    <div class="row" id="row-main">
+        <div class="col-xs-12" id="content"> 
+
             {% for flashMessage in app.session.flashbag.get('success') %}
                 <div class="alert alert-success">
                     {{ flashMessage }}
@@ -54,7 +55,7 @@
                         {% else %}<tr style=" color: #667; ">{% endif %}
                             <td>ref : {{ commande.reference }}</td>
                             <td>{{ commande.date |date('d/m/Y') }}</td>
-                            <td>{{ commande.commande.totalTTC }}€</td>
+                            {% if commande.commande.totalTTC is defined %} <td>{{ commande.commande.totalTTC }}€</td>{% else %}<td> -</td>{% endif %} 
                             {% if commande.livrer == 1 %} <td>livré</td>
                             {% else %}
                                 {% if commande.preparer == 1 %} <td>préparé</td>
@@ -70,7 +71,7 @@
                     </tbody>
                 </table>
                 <div class="wedge20"> &nbsp; </div> 
-                <a href="{{path ('produits')}}" class="btn btn-primary ">Retour boutique</a>
+                <a href="{{path ('produits')}}" class="btn btn-success ">Retour boutique</a>
         </div>
     </div>
 </div>

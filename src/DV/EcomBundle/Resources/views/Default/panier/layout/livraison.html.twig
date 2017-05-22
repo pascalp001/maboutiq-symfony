@@ -3,12 +3,13 @@
 {% block body %}
     
 <div class="container">
-  <div class="col-xs-1"> &nbsp; </div> 
-  <div class="col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}         
-    <div class="wedge15"> &nbsp; </div>   
-
-    <div class="bordure">
-
+  <div class="row barremenupanier">
+      <div class="col-xs-offset-1 col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}
+      </div>
+  </div>          
+  <div class="wedge15"> &nbsp; </div>   
+  <div class="row"  >                
+    <div class=" col-sm-12 bordure" id="content">
       <div class="row"  >                
         <div class=" col-sm-6">
           <h4>Choisissez votre option de livraison pour cette adresse :</h4>

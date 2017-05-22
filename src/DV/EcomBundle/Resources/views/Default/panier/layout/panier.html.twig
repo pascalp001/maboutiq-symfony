@@ -8,29 +8,21 @@
     {% set refTva = refTva|merge({ ('%' ~produit.tva.valeur) : 0 }) %}   
 {% endfor %}
 {% block body %}
+<div class="sidebar fixe" >
+    {% include '::modulesBase/nav.html.twig' %}   
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %}  
+    {% else %}
+        {% include 'UtilisateursBundle:Default:modulesUsed/utilisateurs.html.twig' %}  
+    {% endif %}            
+</div>     
 <div class="container">
     <div class="row barremenupanier">
-        <div class="col-xs-1">
-            <button type="button" class="btn btn-default navbar-nontoggle toggle-sidebar">
-
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-            </button>
-        </div> 
-        <div class="col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}
+        <div class="col-xs-offset-1 col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}
         </div>
     </div>
     <div class="wedge5"> &nbsp; </div>   
     <div class="row" id="row-main">
-        <div class="col-xs-2 " id="sidebar">  
-            {% include '::modulesBase/nav.html.twig' %}
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnected.html.twig' %}  
-            {% else %}
-                {% include 'UtilisateursBundle:Default:modulesUsed/utilisateurs.html.twig' %}  
-            {% endif %}
-        </div> 
         <div class="col-xs-12" id="content"> 
             {% for flashMessage in app.session.flashbag.get('success') %}
                 <div class="alert alert-success">{{flashMessage}}</div>
@@ -72,7 +64,7 @@
                                     else{$('input#prixr{{i}}').val(parseFloat($('#prixn{{i}}').text())); 
                                     };  this.form.submit();" 
                                 style="min-width: 70px;" >
-                                    {% for ip in 0.. min(10,max(0,produit.stockvirtuel+panier[produit.id]['qte']))  %}
+                                    {% for ip in 0.. min(10,max(0,produit.stockvirtuel))  %}
                                     <option value="{{ip}}" {% if ip == panier[produit.id]['qte'] %} selected="selected" {% endif %} >{{ ip }}</option>
                                     {% endfor %}
                                 </select>&nbsp;

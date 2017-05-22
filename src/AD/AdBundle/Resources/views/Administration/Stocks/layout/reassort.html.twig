@@ -69,23 +69,26 @@
                     {% if form.cmdeV12.vars.value > 0 %} +<span style="color:green">{{ form.cmdeV12.vars.value}}</span> {% endif  %}</td>
                 <td class="bordVGD middle">{{ form.popularite.vars.value }}</td>    
                                
-                <td class="bordVG middle" 
-                    {% if form.stockreel.vars.value == 0 %} style="background-color: red; color:yellow; font-weight:800; font-style: italic; "
+                <td class="bordVG middle" >
+
+                <div {% if form.stockreel.vars.value == 0 %} style="width:60%; padding: 10px; background-color: #F66; color:yellow; font-weight:800; font-style: italic; border-radius:50%; "
                     {% else %}   
-                        {% if form.stockreel.vars.value <= moyVtes[ form.id.vars.value ] %} style="color: #F40; font-weight:800; font-style: oblique;"
+                        {% if form.stockreel.vars.value <= moyVtes[ form.id.vars.value ] %} style="color: #d50; font-weight:800; font-style: oblique;"
                         {% endif %}
                     {% endif %}>
                     {{ form.stockreel.vars.value }}
+                </div>
                 </td>
                 
                 <td class="bordVD middle">{{form_widget(form.reassort)}}</td>                
-                <td class="bordVG middle"
-                    {% if form.stockreel.vars.value - form.cmdeV.vars.value  == 0 %} style="background-color: red; color:yellow; font-weight:800; font-style: italic; "
+                <td class="bordVG middle">
+                <div {% if form.stockreel.vars.value - form.cmdeV.vars.value  <= 0 %} style="width:60%; padding: 10px; background-color: #F66; color:yellow; font-weight:800; font-style: italic; border-radius:50%;"
                     {% else %}   
-                        {% if form.stockreel.vars.value - form.cmdeV.vars.value <= moyVtes[ form.id.vars.value ] %} style="color: #F40; font-weight:800; font-style: oblique;"
+                        {% if form.stockreel.vars.value - form.cmdeV.vars.value <= moyVtes[ form.id.vars.value ] %} style="color: #d50; font-weight:800; font-style: oblique;"
                         {% endif %}
                     {% endif %}>
-                    {{form.stockreel.vars.value - form.cmdeV.vars.value }}
+                     {{form.stockreel.vars.value - form.cmdeV.vars.value }}
+                 </div>
                 </td>
                 <td style="font-size:0.7em; vertical-align:middle">
                     {{ form.stockvirtuel.vars.value }}

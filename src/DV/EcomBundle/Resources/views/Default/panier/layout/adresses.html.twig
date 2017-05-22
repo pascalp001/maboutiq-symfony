@@ -1,12 +1,15 @@
 {% extends "::layout/layout.html.twig" %}
 {% block body %}
 <div class="container">
-	<div class="col-xs-1"> &nbsp; </div> 
-    <div class="col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}         
+
+    <div class="row barremenupanier">
+        <div class="col-xs-offset-1 col-xs-11">{% render(controller('EcomBundle:Panier:menupanier')) %}
+        </div>
+    </div>    
     <div class="wedge15"> &nbsp; </div>   
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" id="content">
             
             <div id="collapseOne" class="accordion-body collapse in">
                 <div class="accordion-inner">
@@ -49,7 +52,7 @@
 
                                 </br></br>
                                 {#{ form_widget(formA.submit) }#}
-                                <button class="btn btn-primary" type="submit">Valider mes adresses <br/>de facturation et de livraison</button>
+                                <button class="btn btn-success" type="submit">Valider mes adresses <br/>de facturation et de livraison</button>
                             {#{form_end(formA)}#}
                                 </form>
                         {% else %} Pas d'adresse connue actuellement...
@@ -58,7 +61,8 @@
                         <a  href="{{ path('panier') }}" class="btn btn-greyish">Retour : revoir le panier</a>
                     </div>
                     <div class=" col-sm-1 gloup-md" style="font-size:100px; "><br/><div > &#9668; </div></div>
-                    <div class="col-sm-offset-1 col-sm-4" style="border:3px solid #ccc;">
+                    <div class=" col-sm-1 gloup-sm" >&nbsp;</div>
+                    <div class=" col-sm-4" style="border:3px solid #ccc;">
                         <center><h4>Ajouter une nouvelle adresse</h4></center>
                         {{ form_start(form, {'action': path('adresses'), 'method':'POST'})}}
                         

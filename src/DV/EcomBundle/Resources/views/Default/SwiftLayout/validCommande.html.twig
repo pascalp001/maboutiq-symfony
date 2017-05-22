@@ -1,7 +1,6 @@
 <div style="background:#7E05F9;">&nbsp;</div>
 <div style="background:#B290F8;">
-<img src="{{ asset( 'web/img/LogoProG8.PNG' )}}" style="margin-top:-5px" >
-<img src="web/img/LogoProG8.PNG"  style="margin-top:-5px" >
+<img src="{{ url}}" style="margin-top:-5px; width:150px;" >
 <h1>{{ vendeur }}</h1>
 <br/>
 <p>Bonjour {{ commande.utilisateur.username }} </p>
@@ -38,16 +37,18 @@ Mode de livraison : {{ commande.commande['org'] }} ( {{ commande.commande['nom']
 		<th style="width:100px;"> Prix unitaire</th>
 		<th style="width:100px;"> Total TTC</th>
 	</tr>
-	<tr>
+	
 	{% if commande.commande['produit']|length != 0 %}
 		{% for produit in commande.commande['produit'] %}
+			<tr>
 			<td style="border-bottom 1px solid #333;">{{ produit['reference'] }}</td>
 			<td style="border-bottom 1px solid #333;">{{ produit['quantite'] }}</td>
 			<td style="border-bottom 1px solid #333;">{{ produit['prixTTC'] }}</td>
 			<td style="border-bottom 1px solid #333;">{{ produit['quantite'] * produit['prixTTC']  | number_format(2) }}</td>
+			</tr>
 		{% endfor %}
 	{% endif %}	
-	</tr>
+	
 	<tr>
 		<td >&nbsp; </td>
 		<td colspan="3">Sous-total(hors frais de port): {{ commande.commande['totalTTC'] - commande.commande['frPort']  }}</td>
