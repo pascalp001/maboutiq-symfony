@@ -16,7 +16,7 @@
 
 <div class="container ">
     <div class="row" id="row-main">
-        <div class="col-xs-offset-1 col-xs-11 thumbnail" id="content">   
+        <div class="col-xs-offset-1 col-xs-11 thumbnail presentation" id="content">   
 
 	    	<form action="{{path('ajoutpanier2',{'id': produit.id})  }}" method="get">
 		        <div class="row ">
@@ -82,17 +82,17 @@
 	                </div>
 	            </div>
 	            <div class="row ">
-	                <div class="col-md-offset-2 col-md-4">
+	                <div class="col-md-offset-2 col-md-4 col-xs-4">
 		                    <a  href="{{ path('produits') }}" class="btn btn-greyish">Retour</a>
 		            </div>
 		            {% if panier[produit.id] is not defined and produit.stockvirtuel > 0 %}  
-		                <div class="col-md-5">	            
+		                <div class="col-md-5 col-xs-5">	            
 			                    <button type="submit" class="btn btn-success" >Ajouter au panier</button>                   	
 			                                   
 			            </div>
 			        {% else %}
 			        	{% if produit.stockvirtuel > 0 %} 
-		                <div class="col-md-5">	            
+		                <div class="col-md-5 col-xs-5">	            
 			                <a href="{{path('panier') }}" class="btn btn-brownish" >Voir votre panier</a>                   	                
 			            </div>	
 			            {% endif %}	        	

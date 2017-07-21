@@ -9,7 +9,7 @@
   </div>          
   <div class="wedge15"> &nbsp; </div>   
   <div class="row"  >                
-    <div class=" col-sm-12 bordure" id="content">
+    <div class=" col-sm-12 bordure livrais" id="content">
       <div class="row"  >                
         <div class=" col-sm-6">
           <h4>Choisissez votre option de livraison pour cette adresse :</h4>
@@ -33,12 +33,12 @@
                 <img src="{{ asset(frPort['autre'].img)}}" style="height:88px">               
               </center>
             </div>
-            <div class=" col-sm-2 fondGrisClair" style="height:88px">
+            <div class=" col-sm-2 fondGrisClair gloup-sm" style="height:88px">
               <h4 style="color:red; width:100px">e-LIVRAISON DE VOS COLIS</h4>
             </div>     
-            <div class=" col-sm-6 bordvertiL90">
-              <em>Mondial Relay</em> expédiés sous 48h et livrés en 3 jours ouvrés. Le meilleur prix et la livraison la plus rapide
-                <br/><button type="button" onClick="lancerMR()">Sélectionnez votre Point Relais®Mondial Relay.</button>
+            <div class=" col-sm-6 ">
+              <em>Mondial Relay</em> <span class="h6">Expédié sous 48h et livrés en 3 jours ouvrés. Le meilleur prix et la livraison la plus rapide</span>
+                <br/><button type="button" class="btn btn-greyish mondial" onClick="lancerMR()">Sélectionnez votre Point Relais®Mondial Relay.</button>
                 <div class="row">
                   <div class="col-sm-12" >  
                       <div id="MR_show" style="background:#edffb2; border:solid 1px #a5f913; padding:5px; font-family:verdana; font-size:10px; margin-top: 10px; margin-left: -5px; display:none">  
@@ -72,7 +72,7 @@
                 </div>
 
             </div>
-            <div class=" col-sm-2 bordvertiR90">
+            <div class=" col-sm-2 ">
               {{frPort['autre'].frPort}}€ TTC 
             </div>
           </div>
@@ -94,10 +94,10 @@
             <div class=" col-sm-4 fondGrisClair">
               <img src="{{ asset(frPort['colissimo'].img)}}" style="height:88px">
             </div>
-            <div class=" col-sm-6 bordvertiL90">
-              <em>Colissimo</em> expédiés sous 48h à 72h
-            </div>
-            <div class=" col-sm-2 bordvertiL90">
+            <div class=" col-sm-6 ">
+              <em>Colissimo</em><span class="h6"> Expédié sous 48h à 72h</span>
+            </div><div class="spec-xs wedge15">&nbsp;</div>
+            <div class=" col-sm-2 ">
               {{frPort['colissimo'].frPort}} € TTC
             </div>
           </div>
@@ -119,10 +119,10 @@
             <div class=" col-sm-4 fondGrisClair">
               <img src="{{ asset(frPort['petit'].img)}}" style="height:88px">
             </div>
-            <div class=" col-sm-6 bordvertiL90">
-              <em>Lettre suivie</em> expédiés dans enveloppe bulle affranchie ("document" de moins de 3cm d'épaisseur) sous 48h à 72h
-            </div>
-            <div class=" col-sm-2 bordvertiL90">
+            <div class=" col-sm-6 ">
+              <em>Lettre suivie</em><span class="h6"> Expédié  dans enveloppe bulle affranchie ("document" de moins de 3cm d'épaisseur) sous 48h à 72h</span>
+            </div><div class="spec-xs wedge15">&nbsp;</div>
+            <div class=" col-sm-2 ">
               {{frPort['petit'].frPort}}€ TTC 
             </div>
           </div>
@@ -130,13 +130,13 @@
       </div>
       {% endif %}
       <div class="row " >
-        <div class=" col-sm-3 ">
-      <a href="{{path ('produits')}}" class="btn btn-primary ">Continuer mes achats</a>
+        <div class=" col-xs-3 ">
+          <a href="{{path ('produits')}}" class="btn btn-primary livrais">Continuer mes achats</a>
         </div>
-        <div class=" col-sm-3 ">
-      <a href="{{path ('panier')}}" class="btn btn-greyish ">Retour vers le panier</a>
+        <div class=" col-xs-3 ">
+          <a href="{{path ('panier')}}" class="btn btn-greyish livrais">Retour vers le panier</a>
         </div>
-        <div class=" col-sm-offset-3 col-sm-3 ">
+        <div class=" col-sm-offset-3 col-sm-3 col-xs-3">
           {{ form_start(form, {'action': path('frlivraison')}) }}
             <input type="hidden" id="cb_ID" name="" value="" >
             {{ form(form) }}

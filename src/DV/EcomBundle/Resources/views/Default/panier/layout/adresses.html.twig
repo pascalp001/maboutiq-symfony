@@ -57,12 +57,14 @@
                                 </form>
                         {% else %} Pas d'adresse connue actuellement...
                         {% endif %}
-                        <br/><br/>
+                        <br/><br class=" gloup-sm"/>
                         <a  href="{{ path('panier') }}" class="btn btn-greyish">Retour : revoir le panier</a>
                     </div>
+                    
                     <div class=" col-sm-1 gloup-md" style="font-size:100px; "><br/><div > &#9668; </div></div>
                     <div class=" col-sm-1 gloup-sm" >&nbsp;</div>
-                    <div class=" col-sm-4" style="border:3px solid #ccc;">
+                    <div class=" wedge20 spec-xs" >&nbsp;</div>
+                    <div class=" col-sm-4 col-xs-12 adresse" style="border:3px solid #ccc;">
                         <center><h4>Ajouter une nouvelle adresse</h4></center>
                         {{ form_start(form, {'action': path('adresses'), 'method':'POST'})}}
                         
@@ -107,12 +109,12 @@
                                 {'class':'form-control', 'value':'France'} }) }}</div>     
                         </div> 
                         <div class="row form-group ">
-                            <div class="col-sm-offset-1 col-sm-1">{{ form_widget(form.fact, {'attr' :
+                            <div class="col-sm-offset-1 col-sm-1 col-xs-1">{{ form_widget(form.fact, {'attr' :
                                 {'class':'form-control'} }) }}</div> 
-                            <div class="col-sm-3 control-label" for="input">{{ form_label(form.fact) }}</div>    
-                            <div class="col-sm-offset-2 col-sm-1">{{ form_widget(form.livr, {'attr' :
+                            <div class="col-sm-3 control-label col-xs-9 " for="input">{{ form_label(form.fact) }}</div>    
+                            <div class="col-sm-offset-2 col-sm-1 col-xs-1">{{ form_widget(form.livr, {'attr' :
                                 {'class':'form-control'} }) }}</div> 
-                            <div class="col-sm-3 control-label" for="input">{{ form_label(form.livr) }}</div>  
+                            <div class="col-sm-3 control-label col-xs-5 " for="input">{{ form_label(form.livr) }}</div>  
                         </div> 
                          <center><button type="submit" class="btn btn-primary" >Ajouter cette adresse</button></center>
                          <br/>

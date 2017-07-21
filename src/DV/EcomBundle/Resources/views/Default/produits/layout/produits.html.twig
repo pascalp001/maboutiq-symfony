@@ -80,14 +80,14 @@
                                 </div>
                                 <div class="row " style=" min-height:36px;">
                                     <div class="col-md-12 caption" style="margin-top:-20px; ">    
-                                        {{produit.descripcourt}}
+                                        <p >{{produit.descripcourt}}</p>
                                     </div>
                                 </div>                             
                                 <div class="row ">
-                                    <div class="col-md-5" style="padding-left:2%; margin-left:0">                       
+                                    <div class="col-md-5 col-xs-4" style="padding-left:2%; margin-left:0">                       
                                             <a class="btn btn-primary" href="{{ path('presentation', {'id': produit.id, 'page': pageSet0})  }}">Plus d'infos</a>
                                     </div>
-                                    <div class="col-md-7">   
+                                    <div class="col-md-7 col-xs-4">   
                                         {% if (panier[produit.id] is not defined and produit.stockvirtuel > 0) %}                          
                                             <a class="btn btn-success" href="{{ path('ajoutpanier1',{'id':produit.id, 'prix':prix })  }}">Ajouter au panier</a>
                                         {% else %}

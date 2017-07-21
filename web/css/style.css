@@ -117,7 +117,7 @@ body {margin:80px 20px 20px 80px;}
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
-
+.presentation .col-xs-2, .presentation .col-xs-5,.presentation .col-xs-6 {margin-right:0px; margin-left:0px; padding:0px;}
 /*Media taille image, fontes, étoiles */
 @media screen and (min-width:1025px){
     .imgwidth5 {width:400px;}
@@ -302,6 +302,7 @@ body {margin:80px 20px 20px 80px;}
     .h5-clair {font-size:1.1rem;  color:#bbb;}
     .h5-moy {font-size:1.1rem;  color:#777;}  
     .h5-fonc {font-size:1.1rem;  color:#333;} 
+    .h5b {font-size:1.1rem;  color:#225;}
     .h6b {font-size:1.0rem;  color:#225;}
     .h7b {font-size:0.9rem;  color:#225;}
      .smallf {font-size: 0.7rem; color:#555;}
@@ -320,6 +321,8 @@ body {margin:80px 20px 20px 80px;}
     .gloup-md {display: none;}
     .gloup-sm {display: none;}
     .gloup-xs {display: none;} 
+    .spec-sm {display: block;}
+    .spec-xs {display: block;}
 }
 
 /*Tableaux */
@@ -839,7 +842,7 @@ li.nav-header.header a{
   position:absolute;
   width:100%;
   left:0px;
-  top:140px;
+  top:85px;
   z-index:100;
   min-width:330px;
   }
@@ -847,7 +850,7 @@ li.nav-header.header a{
   {
     position:fixed;
     left:140px;
-    top:130px;
+    top:75px;
     z-index:120;
     transform:rotate(-90deg);
   }
@@ -855,7 +858,10 @@ li.nav-header.header a{
   .sidebar.poignee:hover
   {
     left:140px;
-    top:130px;
+    top:75px;
+  }
+  .navbar-collapse.in{
+    z-index:2000;
   }
   .base-sidebar{
   min-height:0px;
@@ -869,7 +875,7 @@ li.nav-header.header a{
   .push-D {right:45px;}
   .container {
     left:0px;
-    margin-top: 130px;
+    margin-top: 70px;
     padding-left: 0px;
     margin-left: 0px;
     right:0px;
@@ -888,6 +894,40 @@ li.nav-header.header a{
     margin-right: 0px;
     overflow-x:scroll;
   }
+  p{    
+  max-width:255px;  
+  } 
+  .presentation#content  {
+    left:-5px;       
+    width:100%;
+    top:-50px;     
+    min-width:278px;  
+  } 
+  .livrais#content  {
+    left:-5px;       
+    width:100%;   
+    max-width:278px;  
+    overflow-y: hidden;
+  }     
+  .dl-horizontal.pull-right{
+    position:relative;
+    right: 10px;
+    width:50%;
+  }
+  .dl-horizontal.pull-right.valid{
+    width:70%;
+    right:0;
+  }
+  .dl-horizontal.pull-right dt{
+    display: inline-block;
+  }
+  .dl-horizontal.pull-right dd{
+    display: inline-block;
+  }
+  .col-xs-12.adresse{    
+    width:100%;    
+    max-width:268px;      
+  }
   .adtop70#content{
     margin-top:-70px;
   }
@@ -898,7 +938,31 @@ li.nav-header.header a{
     width:100%;
     margin-right:0;
   } 
-
+  .hrb { margin-left: -80px;  }
+  .btn.btn-greyish.mondial{
+    min-width:262px;margin-left:-30px;
+  }
+  .btn.pull-right.livrais{
+    position: absolute;
+    left:-100px;
+    right: 30px;
+    top:-15px;
+    min-width:200px;
+  }
+  .btn.btn-primary.livrais{
+    position: absolute;
+    left:133px;
+    top:12px;
+    min-width:125px;
+  }
+  .btn.btn-greyish.livrais{
+    position: absolute;
+    right: 0px;
+    top:12px;
+    min-width:125px;
+  }
+  .bordvertiL50 { height: 150px;  }
+  .bordvertiL70 { height: 170px;  }
 }
 /* Menu side-bar qui collapse vers la gauche */
 
@@ -1257,6 +1321,9 @@ ul.step li.last span {
   .barremenupanier{
     display:none;
   }
+  .navbar-brand{
+    padding-left:2px;
+  }
   ul.step li.step_todo span {
     padding-left: 0px;
   }
@@ -1279,6 +1346,7 @@ ul.step li.last span {
 }
 /* Module inscription / connexion / se déconnecter + rechercher *********************************** */
 .modulelogin-conteneur {
+  display:none;
   position: absolute;
   z-index:1300;
   right: 5px ;
@@ -1381,7 +1449,7 @@ a:hover .modulelogin-login {
  
 @media screen and (max-width:480px){
   .navbar-fixed-top{
-    min-height:150px;
+    min-height:86px;
     z-index:95;
   }
   .thumbnail.produit {
@@ -1476,13 +1544,17 @@ a:hover .modulelogin-login {
   }
 }
 @media screen and (max-width:480px){
+  
   .panier {
-    top:120px;
-    min-width:220px; 
+    top:75px;
+    left:0px;
+    width:100%;
+    min-width:300px; 
     padding-top:0;
     margin-top:-15px;
     margin-bottom:5px;
-    margin-right:20px;
+    margin-left:0px;
+    margin-right:0px;
     border-radius:0px;
     padding-left:15px;
     padding-right:15px;

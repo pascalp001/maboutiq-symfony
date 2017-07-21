@@ -24,9 +24,9 @@
                     <tr>
                         <th>Références</th>
                         <th>Quantité</th>
-                        <th>Prix unit. HT</th>
+                        <th class="gloup-sm">Prix unit. HT</th>
                         <th>Prix unit. TTC</th>
-                        <th>Total HT</th>
+                        <th class="gloup-sm">Total HT</th>
                         <th>Total TTC</th>
                     </tr>
                 </thead>
@@ -45,9 +45,9 @@
                         <td>
                             {{produit.quantite }}                               
                         </td>
-                        <td>{{produit.prixHT |number_format(2)}} €</td>
+                        <td class="gloup-sm">{{produit.prixHT |number_format(2)}} €</td>
                         <td>{{produit.prixTTC|number_format(2)}} €</td>
-                        <td>{{produit.prixHT * produit.quantite |number_format(2)}} €</td>  
+                        <td class="gloup-sm">{{produit.prixHT * produit.quantite |number_format(2)}} €</td>  
                         <td>{{produit.prixTTC * produit.quantite |number_format(2) }} €</td>                        
                     </tr>
                     {% endfor %}
@@ -81,7 +81,7 @@
                     <div class="col-sm-5">
                         <div class="row" >
                             <div class="col-sm-12" >
-                                <dl class="dl-horizontal pull-right" >
+                                <dl class="dl-horizontal pull-right valid" >
                                     <dt>Total HT :</dt> <dd>{{commande.commande.totalHT|number_format(2)}}€</dd>
                                     {% for key, tva in commande.commande.tva %}
                                       <dt>TVA {{key}} :</dt> <dd>{{ tva |number_format(2)}}€</dd>
@@ -91,9 +91,9 @@
                         </div>
                         <div class="row" >
                             <div class="col-sm-12">
-                                <dl class="dl-horizontal pull-right">
-                                    <dt>Frais de port :</dt><dd> {{commande.commande.frPort|number_format(2)}}€</dd>
-                                    <dt style="font-size: 13px;" >( {{commande.commande.org}} - {{commande.commande.nom}} )</dt><dd> &nbsp; </dd>
+                                <dl class="dl-horizontal pull-right valid">
+                                    <dt>Frais de port : </dt><dd> {{commande.commande.frPort|number_format(2)}}€</dd>
+                                    <dt class="h6">( {{commande.commande.org}} - {{commande.commande.nom}} )</dt><dd> &nbsp; </dd>
                                     <dt>Total TTC :</dt> <dd>{{commande.commande.totalTTC |number_format(2)}}€</dd>
                                 </dl>
                             </div>
